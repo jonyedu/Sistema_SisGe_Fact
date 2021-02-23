@@ -15,31 +15,25 @@ class SgModuloSeeder extends Seeder
     public function run()
     {
         SgModulo::where('codigo', 1)->update([
-            'imagen' => 'fas fa-first-aid'
+            'imagen' => 'fas fa-landmark'
         ]);
         SgModulo::where('codigo', 2)->update([
-            'imagen' => 'fas fa-hand-holding-medical'
+            'imagen' => 'fas fa-tools'
         ]);
         SgModulo::where('codigo', 3)->update([
-            'imagen' => 'fas fa-project-diagram'
+            'imagen' => 'fas fa-hand-holding-usd'
         ]);
         SgModulo::where('codigo', 4)->update([
-            'imagen' => 'fas fa-prescription-bottle-alt'
+            'imagen' => 'fas fa-print'
         ]);
         SgModulo::where('codigo', 5)->update([
-            'imagen' => 'fas fa-key'
+            'imagen' => 'fas fa-gift'
         ]);
         SgModulo::where('codigo', 6)->update([
-            'imagen' => 'fas fa-user-nurse'
+            'imagen' => 'fas fa-chart-pie'
         ]);
         SgModulo::where('codigo', 7)->update([
-            'imagen' => 'fas fa-hospital'
-        ]);
-        SgModulo::where('codigo', 8)->update([
-            'imagen' => 'fas fa-chalkboard-teacher'
-        ]);
-        SgModulo::where('codigo', 9)->update([
-            'imagen' => 'fas fa-chart-pie'
+            'imagen' => 'fas fa-key'
         ]);
 
     }

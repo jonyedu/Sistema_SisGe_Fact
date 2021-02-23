@@ -11,12 +11,15 @@ import SubModulo from "./components/Modulos/Seguridad/sub_modulo/SubModulo";
 import PerfilPorUsuario from "./components/Modulos/Seguridad/PerfilPorUsuario/PerfilPorUsuario";
 import Profesion from "./components/Modulos/Seguridad/Profesion/Profesion";
 
+//Administracion
+import Producto from "./components/Modulos/Administracion/Producto/ListarProducto";
+import ModificarCrearProducto from "./components/Modulos/Administracion/Producto/CrearModificarProducto";
+
 
 Vue.use(VueRouter);
 let prefijo = prefix;
 export default new VueRouter({
     routes: [
-
 
         //Seguridad
         {
@@ -54,6 +57,20 @@ export default new VueRouter({
                 prefijo +
                 "/modulos/seguridad/profesion/mostrar_profesion",
             component: Profesion
+        },
+
+        //Administracion
+        {
+            path:
+                prefijo +
+                "/modulos/administracion/producto/mostrar_producto",
+            component: Producto
+        },
+        {
+            path:
+                prefijo +
+                "/modulos/administracion/producto/crear_modificar_producto",
+            component: ModificarCrearProducto
         },
     ],
     mode: "history" //Evita que aparezca # en la ruta

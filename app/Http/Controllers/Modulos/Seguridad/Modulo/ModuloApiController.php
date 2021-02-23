@@ -31,7 +31,6 @@ class ModuloApiController extends Controller
     {
         try {
             $modulos = SgModulo::where('status', 1)
-                ->orderBy('orden', 'asc')
                 ->with(['subModulo' => function ($i) {
                     $i->where('status', 1);
                 }])
