@@ -24,19 +24,19 @@ window.Swal = swal;
 import VueSelectSides from "vue-select-sides";
 import "vue-select-sides/styles/themes/soft.scss";
 import VueGoogleCharts from 'vue-google-charts';
+//import BsStore from "vue-mdbootstrap";
 
 //nuevas librerias
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
 
 // main.js
-import VueMdb, { AxiosPlugin } from "vue-mdbootstrap";
+import VueMdb, { AxiosPlugin, BsStore } from "vue-mdbootstrap";
 
-// Default requirement
 Vue.use(VueMdb);
-// Optionally, install the MDBootstrap Axios plugin plugin
-// only requires if using BsGrid, BsTreeGrid, BsModel, BsStore, BsTreeStore or needs to perform HTTP Request
+//Vue.use(BsStore);
 Vue.use(AxiosPlugin);
+
 
 //Fin nuevas librerias
 

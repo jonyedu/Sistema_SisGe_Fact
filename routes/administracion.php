@@ -21,4 +21,14 @@ Route::group(['prefix' => '/modulos/administracion', 'middleware' => ['auth:web'
     Route::namespace('Modulos\Administracion\Producto')->prefix('producto')->group(function () {
         Route::get('cargar_all_producto', 'ProductoController@cargarProductoTabla');
     });
+
+    //Submenu de Laboratorio
+    Route::namespace('Modulos\Administracion\Laboratorio')->prefix('laboratorio')->group(function () {
+        Route::get('cargar_laboratorio_combo', 'LaboratorioController@cargarLaboratorioCombo');
+    });
+
+    //Submenu de Grupo
+    Route::namespace('Modulos\Administracion\Grupo')->prefix('grupo')->group(function () {
+        Route::get('cargar_grupo_combo', 'GrupoController@cargarGrupoCombo');
+    });
 });

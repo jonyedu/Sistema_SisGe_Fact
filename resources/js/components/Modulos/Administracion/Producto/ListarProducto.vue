@@ -112,7 +112,7 @@
                             <router-link
                                 :to="
                                     prefijo +
-                                        '/modulos/administracion/producto/crear_modificar_producto'
+                                        '/modulos/administracion/producto/crear_modificar_producto?item='+item
                                 "
                             >
                                 <bs-button
@@ -157,7 +157,10 @@ export default {
                 sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
                     browse:
-                        "/modulos/administracion/producto/cargar_all_producto"
+                        "/modulos/administracion/producto/cargar_all_producto",
+                    delete: { url: "/modulos/administracion/producto/eliminar_producto", method: "delete" },
+                    save: { url: "/modulos/administracion/producto/guardar_producto", method: "post" },
+                    update: { url: "/modulos/administracion/producto/actualizar_producto", method: "put" }
                 }
             })
         };
@@ -177,8 +180,6 @@ export default {
         this.prefijo = prefix;
     },
     beforeDestroy() {
-        this.source5.destroy();
-        this.source5 = null;
     },
     methods: {
         btnClick(item, title) {
