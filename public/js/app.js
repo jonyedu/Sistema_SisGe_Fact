@@ -79433,7 +79433,7 @@ var prefix = "/SisGe_Fact";
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\jonat\OneDrive\TrabajoBSPI\Proyecto\Repositorio Personal\Nuevo\Sistema_SisGe_Fact\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\facturacion_sisgefact\Sistema_SisGe_Fact\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })
