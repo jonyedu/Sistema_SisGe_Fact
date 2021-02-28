@@ -24,7 +24,21 @@ window.Swal = swal;
 import VueSelectSides from "vue-select-sides";
 import "vue-select-sides/styles/themes/soft.scss";
 import VueGoogleCharts from 'vue-google-charts';
+//import BsStore from "vue-mdbootstrap";
 
+//nuevas librerias
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
+
+// main.js
+import VueMdb, { AxiosPlugin, BsStore } from "vue-mdbootstrap";
+
+Vue.use(VueMdb);
+//Vue.use(BsStore);
+Vue.use(AxiosPlugin);
+
+
+//Fin nuevas librerias
 
 Vue.prototype.$funcionesGlobales = funcionesGlobales;
 
@@ -116,6 +130,11 @@ Vue.component(
     "crear-modificar-usuario",
     require("./components/Modulos/Seguridad/Usuario/CrearModificarUsuario.vue").default
 );
+
+/* Vue.component(
+    "crear-modificar-producto",
+    require("./components/Modulos/Administracion/Producto/CrearModificarProducto.vue").default
+); */
 
 new Vue({
     el: "#app",

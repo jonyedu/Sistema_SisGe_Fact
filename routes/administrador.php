@@ -20,7 +20,7 @@ Route::group(['prefix' => '/dashboard/modulos/procesos', 'middleware' => ['auth:
 
     Route::namespace('Modulos\Procesos')->prefix('grupos')->group(function () {
         //grupos
-        Route::get('grupos_fac', 'PargruposController@index');
+        Route::get('grupos_fac', 'PargruposController@cargarProductoTabla');
     //     Route::get('cargar_paciente_cedula/{cedula}', 'PargruposController@ConsultarPacienteHospitalizados');
     //     Route::get('busqueda_historia/{idhospitalizacion}', 'AuditoriaController@ConsultarHistoriaClinica');
     //     Route::get('busqueda_documentos_por_tipo/{idDocumento}/{idPaciente}/{garantia}', 'AuditoriaController@visualizarDocumentosPorTipo');
