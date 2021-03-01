@@ -49,11 +49,10 @@ class ProductoController extends Controller
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
-    public function modificarProducto(Request $request)
+    public function actualizarProducto(Request $request)
     {
         try {
-            Producto::where('status', 1)
-                ->where('codigo', $request->input('codigo'))
+            Producto::where('id', $request->input('producto_id'))
                 ->Update(
                     [
                         'codigo' => $request->input('codigo'),

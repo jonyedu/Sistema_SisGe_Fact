@@ -2,8 +2,23 @@
     <div class="content-wrapper">
         <div class="my-demo-wrapper">
             <bs-card shadow>
+                <bs-card-body>
+                    <bs-card-content class="text-right">
+                        <router-link
+                            :to="
+                                prefijo +
+                                    '/modulos/administracion/producto/crear_modificar_producto'
+                            "
+                        >
+                            <bs-button mode="icon" icon="plus" icon-size="sm">
+                            </bs-button>
+                        </router-link>
+                    </bs-card-content>
+                </bs-card-body>
+            </bs-card>
+            <bs-card shadow>
                 <bs-grid
-                    :data-source="source0"
+                    :data-source="productos"
                     :pageable="{
                         messages: {
                             empty: 'No hay Items',
@@ -14,8 +29,9 @@
                     row-hover
                     sortable
                     :flip-on-small-screen="false"
+                    :filterable="{minlength: 2, operator: 'contains'}"
                 >
-                    <bs-grid-toolbar slot="toolbar">
+                    <!-- <bs-grid-toolbar slot="toolbar">
                         <div class="row justify-content-end">
                             <div class="col-lg-6">
                                 <bs-grid-tool-search
@@ -26,7 +42,7 @@
                                 ></bs-grid-tool-search>
                             </div>
                         </div>
-                    </bs-grid-toolbar>
+                    </bs-grid-toolbar> -->
                     <bs-grid-column
                         label="#"
                         text-align="right"
@@ -112,7 +128,7 @@
                             <router-link
                                 :to="
                                     prefijo +
-                                        '/modulos/administracion/producto/crear_modificar_producto?item='+item
+                                        '/modulos/administracion/producto/crear_modificar_producto'
                                 "
                             >
                                 <bs-button
@@ -121,6 +137,7 @@
                                     size="sm"
                                     color="secondary"
                                     flat
+                                    @click="btnClickModificar(item)"
                                 ></bs-button>
                             </router-link>
 
@@ -130,7 +147,7 @@
                                 size="sm"
                                 color="danger"
                                 flat
-                                @click="btnClick(item, 'Delete Item')"
+                                @click="btnClickEliminar(item, 'Delete Item')"
                             ></bs-button>
                         </bs-grid-cell>
                     </template>
@@ -146,7 +163,7 @@ export default {
     data: function() {
         return {
             prefijo: "",
-            source0: new BsStore({
+            productos: new BsStore({
                 idProperty: "id",
                 dataProperty: "productos",
                 totalProperty: "total",
@@ -158,9 +175,21 @@ export default {
                 restProxy: {
                     browse:
                         "/modulos/administracion/producto/cargar_all_producto",
-                    delete: { url: "/modulos/administracion/producto/eliminar_producto", method: "delete" },
-                    save: { url: "/modulos/administracion/producto/guardar_producto", method: "post" },
-                    update: { url: "/modulos/administracion/producto/actualizar_producto", method: "put" }
+                    /* delete: {
+                        url:
+                            "/modulos/administracion/producto/eliminar_producto",
+                        method: "delete"
+                    },
+                    save: {
+                        url:
+                            "/modulos/administracion/producto/guardar_producto",
+                        method: "post"
+                    },
+                    update: {
+                        url:
+                            "/modulos/administracion/producto/actualizar_producto",
+                        method: "put"
+                    } */
                 }
             })
         };
@@ -179,11 +208,14 @@ export default {
         ); */
         this.prefijo = prefix;
     },
-    beforeDestroy() {
-    },
+    beforeDestroy() {},
     methods: {
-        btnClick(item, title) {
+        btnClickModificar(item) {
+            this.$store.state.producto = item;
+        },
+        btnClickEliminar(item) {
             this.$notification.info("Current item: " + item.descripcion, title);
+            this.$store.state.producto = item;
         }
     }
 };
