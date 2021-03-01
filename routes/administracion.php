@@ -20,6 +20,9 @@ Route::group(['prefix' => '/modulos/administracion', 'middleware' => ['auth:web'
     //Submenu de Producto
     Route::namespace('Modulos\Administracion\Producto')->prefix('producto')->group(function () {
         Route::get('cargar_all_producto', 'ProductoController@cargarProductoTabla');
+        Route::post('guardar_producto', 'ProductoController@guardarProducto');
+        Route::post('actualizar_producto', 'ProductoController@actualizarProducto');
+        Route::delete('eliminar_producto', 'ProductoController@eliminarProducto');
     });
 
     //Submenu de Laboratorio

@@ -1,6 +1,7 @@
 require('./bootstrap');
 
 import Vue from "vue";
+import store from './vueX/store'
 import VModal from "vue-js-modal";
 import VueGoodTablePlugin from "vue-good-table";
 import "vue-good-table/dist/vue-good-table.css";
@@ -27,15 +28,21 @@ import VueGoogleCharts from 'vue-google-charts';
 //import BsStore from "vue-mdbootstrap";
 
 //nuevas librerias
-import Vuelidate from 'vuelidate'
-Vue.use(Vuelidate)
-
 // main.js
 import VueMdb, { AxiosPlugin, BsStore } from "vue-mdbootstrap";
-
 Vue.use(VueMdb);
 //Vue.use(BsStore);
 Vue.use(AxiosPlugin);
+
+//import Vuelidate from 'vuelidate';
+
+import { required, email, minLength } from "vuelidate/lib/validators";
+Vue.use(required);
+Vue.use(email);
+Vue.use(minLength);
+
+
+
 
 
 //Fin nuevas librerias
@@ -141,5 +148,6 @@ new Vue({
     components: {
         App,
     },
-    router
+    router,
+    store,
 })
