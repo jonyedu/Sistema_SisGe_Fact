@@ -13,7 +13,8 @@ class ProductoController extends Controller
     public function cargarProductoTabla()
     {
         try {
-            $productos = Producto::with('laboratorio:id,nombre', 'grupo:Id,codigo')
+            $productos = Producto::where('status', 1)
+                ->with('laboratorio:id,nombre', 'grupo:Id,codigo')
                 ->get();
             return  response()->json(['productos' => $productos, 'total' => sizeOf($productos)], 200);
         } catch (Exception $e) {
@@ -21,14 +22,20 @@ class ProductoController extends Controller
         }
     }
 
-    public function guardarProducto(Request $request)
+    public function guardarModificarProducto(Request $request)
     {
+        //return  response()->json(['datos' => $request->input()]);
         try {
-            Producto::Create(
+            $user = Auth::user();
+            Producto::updateOrCreate(
+                [
+                    'id' => $request->input('producto_id'),
+                    'status' => 1
+                ],
                 [
                     'codigo' => $request->input('codigo'),
                     'nombre' => $request->input('nombre'),
-                    'nombrecorto' => $request->input('nombrecorto'),
+                    'nombrecorto' => $request->input('nombre_corto'),
                     'descripcion' => $request->input('descripcion'),
                     'posologia' => $request->input('posologia'),
                     'contraindicacion' => $request->input('contraindicacion'),
@@ -41,6 +48,9 @@ class ProductoController extends Controller
                     'refrigeracion' => $request->input('refrigeracion'),
                     'iva' => $request->input('iva'),
                     'imagen' => $request->input('imagen'),
+                    'usu_created_update' => $user->codigo,
+                    'pcip' => $_SERVER["REMOTE_ADDR"],
+                    'status' => 1
                 ]
             );
 
@@ -49,7 +59,7 @@ class ProductoController extends Controller
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
-    public function actualizarProducto(Request $request)
+    /* public function actualizarProducto(Request $request)
     {
         try {
             Producto::where('id', $request->input('producto_id'))
@@ -76,18 +86,17 @@ class ProductoController extends Controller
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
-    }
+    } */
     public function eliminarProducto($id)
     {
         try {
             $user = Auth::user();
             Producto::where('status', 1)
-                ->where('codigo', $id)
+                ->where('id', $id)
                 ->Update(
                     [
-                        'usuario_modificacion' => $user->codigo,
-                        'fecha_modificacion' => date("Y-m-d H:i:s"),
-                        'pcname' =>  $_SERVER["REMOTE_ADDR"],
+                        'usu_created_update' => $user->codigo,
+                        'pcip' =>  $_SERVER["REMOTE_ADDR"],
                         'status' => 0,
                     ]
                 );

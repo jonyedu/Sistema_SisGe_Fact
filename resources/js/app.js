@@ -25,7 +25,7 @@ window.Swal = swal;
 import VueSelectSides from "vue-select-sides";
 import "vue-select-sides/styles/themes/soft.scss";
 import VueGoogleCharts from 'vue-google-charts';
-//import BsStore from "vue-mdbootstrap";
+
 
 //nuevas librerias
 // main.js
