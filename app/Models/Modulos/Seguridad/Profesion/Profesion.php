@@ -11,7 +11,7 @@ class Profesion extends Model
     /**
      * @var string
      */
-    protected $table = 'tbProfesionUsuario';
+    protected $table = 'seg_profesion';
     /**
      * @var string
      */
@@ -23,6 +23,10 @@ class Profesion extends Model
         'codigo',
         'descripcion',
         'abreviatura',
+        'usu_created_update',
+        'created_at',
+        'updated_at',
+        'pcip',
         'status',
     ];
 }

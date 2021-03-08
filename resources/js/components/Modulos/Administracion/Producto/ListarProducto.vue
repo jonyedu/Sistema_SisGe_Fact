@@ -26,13 +26,14 @@
             </bs-card>
             <bs-card shadow>
                 <bs-grid
+                    ref="gridProducto"
                     :data-source="productos"
                     :pageable="{
                         messages: {
-                            empty: 'No hay Items',
-                            //display: 'items'
-                            pager: 'Items por Página'
-                        }
+                            empty: 'No hay Artículos',
+                            display: '{0}-{1} de {2} Artículos',
+                            pager: 'Artículos por Página'
+                        },
                     }"
                     row-hover
                     sortable
@@ -237,6 +238,7 @@ export default {
                 .delete(url)
                 .then(function() {
                     that.trueModalVisible = false;
+                    that.$refs.gridProducto.reload();
                     that.showNotificationProgress(
                         "Exito al procesar",
                         "Usted ha eliminado correctamente el producto." + that.item.descripcion,

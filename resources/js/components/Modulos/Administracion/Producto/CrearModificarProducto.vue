@@ -47,153 +47,153 @@
                         >
                         <bs-card-body>
                             <bs-card-content>
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <bs-text-field
-                                            prepend-icon-outer="user"
-                                            floating-label
-                                            outlined
-                                            v-model="productoForm.nombre"
-                                            :external-validator="
-                                                nombreValidator
-                                            "
-                                        >
-                                            <label>Nombres</label>
-                                        </bs-text-field>
-                                        <bs-text-field
-                                            prepend-icon-outer="user"
-                                            floating-label
-                                            outlined
-                                            v-model="productoForm.descripcion"
-                                            :external-validator="
-                                                descripcionValidator
-                                            "
-                                        >
-                                            <label>Descripción</label>
-                                        </bs-text-field>
-                                        <bs-text-field
-                                            prepend-icon-outer="user"
-                                            floating-label
-                                            outlined
-                                            v-model="productoForm.codigo"
-                                            :external-validator="
-                                                codigoValidator
-                                            "
-                                        >
-                                            <label>Codigo</label>
-                                        </bs-text-field>
-                                        <bs-combobox
-                                            prepend-icon-outer="user"
-                                            v-model="
-                                                productoForm.laboratorio_id
-                                            "
-                                            :data-source="cmb.laboratorios"
-                                            floating-label
-                                            outlined
-                                            :external-validator="
-                                                laboratorioValidator
-                                            "
-                                            minimum-items-for-search="5"
-                                        >
-                                            <label>Laboratorio</label>
-                                        </bs-combobox>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <bs-text-field
-                                            prepend-icon-outer="user"
-                                            floating-label
-                                            outlined
-                                            v-model="productoForm.nombre_corto"
-                                            :external-validator="
-                                                nombreCortoValidator
-                                            "
-                                        >
-                                            <label>Nombre Corto</label>
-                                        </bs-text-field>
-                                        <div class="row">
-                                            <div
-                                                class="col-lg-6 col-md-6 col-sm-6"
+                                <form ref="myform" novalidate>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="productoForm.nombre"
+                                                :external-validator="
+                                                    nombreValidator
+                                                "
                                             >
-                                                <bs-text-field
-                                                    prepend-icon-outer="user"
-                                                    floating-label
-                                                    outlined
-                                                    v-model="
-                                                        productoForm.stock_minimo
-                                                    "
-                                                    :external-validator="
-                                                        stockMinimoValidator
-                                                    "
-                                                >
-                                                    <label>Mínimo</label>
-                                                </bs-text-field>
-                                            </div>
-                                            <div
-                                                class="col-lg-6 col-md-6 col-sm-6"
+                                                <label>Nombres</label>
+                                            </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="productoForm.descripcion"
+                                                :external-validator="
+                                                    descripcionValidator
+                                                "
                                             >
-                                                <bs-text-field
-                                                    prepend-icon-outer="user"
-                                                    floating-label
-                                                    outlined
-                                                    v-model="
-                                                        productoForm.stock_maximo
-                                                    "
-                                                    :external-validator="
-                                                        stockMaximoValidator
-                                                    "
-                                                >
-                                                    <label>Máximo</label>
-                                                </bs-text-field>
-                                            </div>
-                                            <div
-                                                class="col-lg-6 col-md-6 col-sm-6"
+                                                <label>Descripción</label>
+                                            </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="productoForm.codigo"
+                                                :external-validator="
+                                                    codigoValidator
+                                                "
                                             >
-                                                <bs-text-field
-                                                    prepend-icon-outer="user"
-                                                    floating-label
-                                                    outlined
-                                                    v-model="productoForm.pvc"
-                                                    :external-validator="
-                                                        pvcValidator
-                                                    "
-                                                >
-                                                    <label>PVC</label>
-                                                </bs-text-field>
-                                            </div>
-                                            <div
-                                                class="col-lg-6 col-md-6 col-sm-6"
+                                                <label>Codigo</label>
+                                            </bs-text-field>
+                                            <bs-combobox
+                                                prepend-icon-outer="user"
+                                                v-model="
+                                                    productoForm.laboratorio_id
+                                                "
+                                                :data-source="cmb.laboratorios"
+                                                floating-label
+                                                outlined
+                                                :external-validator="
+                                                    laboratorioValidator
+                                                "
+                                                minimum-items-for-search="5"
                                             >
-                                                <bs-text-field
-                                                    prepend-icon-outer="user"
-                                                    floating-label
-                                                    outlined
-                                                    v-model="productoForm.iva"
-                                                    :external-validator="
-                                                        ivaValidator
-                                                    "
-                                                >
-                                                    <label>IVA</label>
-                                                </bs-text-field>
-                                            </div>
+                                                <label>Laboratorio</label>
+                                            </bs-combobox>
                                         </div>
-                                        <bs-combobox
-                                            prepend-icon-outer="user"
-                                            v-model="productoForm.grupo_id"
-                                            :data-source="cmb.grupos"
-                                            floating-label
-                                            outlined
-                                            :external-validator="grupoValidator"
-                                        >
-                                            <label>Grupo</label>
-                                        </bs-combobox>
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="productoForm.nombre_corto"
+                                                :external-validator="
+                                                    nombreCortoValidator
+                                                "
+                                            >
+                                                <label>Nombre Corto</label>
+                                            </bs-text-field>
+                                            <div class="row">
+                                                <div
+                                                    class="col-lg-6 col-md-6 col-sm-6"
+                                                >
+                                                    <bs-text-field
+                                                        prepend-icon-outer="user"
+                                                        floating-label
+                                                        outlined
+                                                        v-model="
+                                                            productoForm.stock_minimo
+                                                        "
+                                                        :external-validator="
+                                                            stockMinimoValidator
+                                                        "
+                                                    >
+                                                        <label>Mínimo</label>
+                                                    </bs-text-field>
+                                                </div>
+                                                <div
+                                                    class="col-lg-6 col-md-6 col-sm-6"
+                                                >
+                                                    <bs-text-field
+                                                        prepend-icon-outer="user"
+                                                        floating-label
+                                                        outlined
+                                                        v-model="
+                                                            productoForm.stock_maximo
+                                                        "
+                                                        :external-validator="
+                                                            stockMaximoValidator
+                                                        "
+                                                    >
+                                                        <label>Máximo</label>
+                                                    </bs-text-field>
+                                                </div>
+                                                <div
+                                                    class="col-lg-6 col-md-6 col-sm-6"
+                                                >
+                                                    <bs-text-field
+                                                        prepend-icon-outer="user"
+                                                        floating-label
+                                                        outlined
+                                                        v-model="productoForm.pvc"
+                                                        :external-validator="
+                                                            pvcValidator
+                                                        "
+                                                    >
+                                                        <label>PVC</label>
+                                                    </bs-text-field>
+                                                </div>
+                                                <div
+                                                    class="col-lg-6 col-md-6 col-sm-6 mt-3"
+                                                >
+                                                    <bs-switch
+                                                        v-model="productoForm.iva"
+                                                        color="primary"
+                                                        label-position="left"
+                                                        label-class="col-md-4 ml-3"
+                                                    >
+                                                        IVA
+                                                    </bs-switch>
+                                                </div>
+                                            </div>
+                                            <bs-combobox
+                                                prepend-icon-outer="user"
+                                                v-model="productoForm.grupo_id"
+                                                :data-source="cmb.grupos"
+                                                floating-label
+                                                outlined
+                                                :external-validator="grupoValidator"
+                                            >
+                                                <label>Grupo</label>
+                                            </bs-combobox>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </bs-card-content>
                         </bs-card-body>
                     </bs-card>
                 </div>
             </div>
         </div>
+        <bs-mask-loader :show="showLoader"></bs-mask-loader>
     </div>
 </template>
 
@@ -209,7 +209,6 @@ const productoValidator = {
     stock_maximo: { required },
     stock_minimo: { required },
     pvc: { required },
-    iva: { required },
     descripcion: { required },
     codigo: { required },
     grupo_id: { required },
@@ -219,6 +218,8 @@ export default {
     mixins: [validationMixin],
     data: function() {
         return {
+            //variable que controla el progreso
+            showLoader: false,
             //Variables para obtener el index
             prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
@@ -232,7 +233,7 @@ export default {
                         stock_maximo: "",
                         stock_minimo: "",
                         pvc: "",
-                        iva: "",
+                        iva: false,
                         descripcion: "",
                         codigo: "",
                         grupo_id: "",
@@ -414,18 +415,6 @@ export default {
                 }
             };
         },
-        ivaValidator() {
-            return {
-                hasError: this.$v.productoForm.iva.$error,
-                messages: {
-                    required: this.requiredErrorMsg
-                },
-                dirty: this.$v.productoForm.iva.$dirty,
-                validators: {
-                    required: this.$v.productoForm.iva.required
-                }
-            };
-        },
         laboratorioValidator() {
             return {
                 hasError: this.$v.productoForm.laboratorio_id.$error,
@@ -457,17 +446,21 @@ export default {
             var that = this;
             this.$v.$touch();
             if (!this.$v.$error) {
+                this.showLoader = true;
                 if (this.$store.getters.getProducto != null) {
                     this.productoForm
                         .update()
                         .then(function(response) {
+                            that.showLoader = false;
                             that.showNotificationProgress(
                                 "Exito al Procesar",
                                 "Producto modificado correctamente.",
                                 "success"
                             );
+                            that.lmpCampos();
                         })
                         .catch(function(error) {
+                            that.showLoader = false;
                             that.showNotificationProgress(
                                 "Error en GuardarActualizarProducto",
                                 "Por favor comuníquese con el administrador. " +
@@ -479,13 +472,16 @@ export default {
                     this.productoForm
                         .save()
                         .then(function(response) {
+                            that.showLoader = false;
                             that.showNotificationProgress(
                                 "Exito al Procesar",
                                 "Producto creado correctamente.",
                                 "success"
                             );
+                            that.lmpCampos();
                         })
                         .catch(function(error) {
+                            that.showLoader = false;
                             that.showNotificationProgress(
                                 "Error en GuardarActualizarProducto",
                                 "Por favor comuníquese con el administrador. " +
@@ -504,6 +500,11 @@ export default {
                 timeout: 5000
             };
             this.$notification[icon](options, title);
+        },
+        lmpCampos() {
+            this.$refs.myform.reset();
+            this.productoForm.reset();
+            this.$v.$reset();
         }
     }
 };

@@ -31,9 +31,9 @@ class ModuloApiController extends Controller
     {
         try {
             $modulos = SgModulo::where('status', 1)
-                ->with(['subModulo' => function ($i) {
+                /* ->with(['subModulo' => function ($i) {
                     $i->where('status', 1);
-                }])
+                }]) */
                 ->get();
             return  response()->json(['modulos' => $modulos], 200);
         } catch (Exception $e) {

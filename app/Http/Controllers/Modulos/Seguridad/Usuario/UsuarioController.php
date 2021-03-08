@@ -24,7 +24,7 @@ class UsuarioController extends Controller
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
-    public function guardarUsuario(UsuarioRequest $request)
+    public function guardarUsuario(Request $request)
     {
         try {
             $user = Auth::user();
@@ -33,10 +33,10 @@ class UsuarioController extends Controller
                     'nombre' => $request->input('nombre'),
                     'apellido' => $request->input('apellido'),
                     'usuario' => $request->input('usuario'),
-                    'password' => Hash::make($request->input('password')),
-                    'perfil' => $request->input('id_perfil'),
-                    'profesion' => $request->input('id_profesion'),
-                    'abreviatura' => $request->input('iniciales'),
+                    'password' => Hash::make($request->input('contrasenia')),
+                    'perfil' => $request->input('perfil_id'),
+                    'profesion' => $request->input('profesion_id'),
+                    'abreviatura' => ".",
                     'usr_ingreso' => $user->codigo,
                     'fec_ingreso' => date("Y-m-d H:i:s"),
                     'usr_modificacion' => $user->codigo,
@@ -52,21 +52,22 @@ class UsuarioController extends Controller
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
-    public function modificarUsuario(UsuarioRequest $request)
+    public function modificarUsuario(Request $request)
     {
+        return  response()->json(['msj' => $request->input()], 200);
         try {
             $user = Auth::user();
             SegUsuario::where('status', 1)
-                ->where('codigo', $request->input('codigo'))
+                ->where('codigo', $request->input('usuario_id'))
                 ->Update(
                     [
                         'nombre' => $request->input('nombre'),
                         'apellido' => $request->input('apellido'),
                         'usuario' => $request->input('usuario'),
-                        'password' => Hash::make($request->input('password')),
-                        'perfil' => $request->input('id_perfil'),
-                        'profesion' => $request->input('id_profesion'),
-                        'abreviatura' => $request->input('iniciales'),
+                        'password' => Hash::make($request->input('contrasenia')),
+                        'perfil' => $request->input('perfil_id'),
+                        'profesion' => $request->input('profesion_id'),
+                        'abreviatura' => ".",
                         'usr_modificacion' => $user->codigo,
                         'fec_modificacion' => date("Y-m-d H:i:s"),
                         'pc_name' => $_SERVER["REMOTE_ADDR"],
@@ -90,7 +91,7 @@ class UsuarioController extends Controller
                     [
                         'usr_modificacion' => $user->codigo,
                         'fec_modificacion' => date("Y-m-d H:i:s"),
-                        'pcname' =>  $_SERVER["REMOTE_ADDR"],
+                        'pc_name' =>  $_SERVER["REMOTE_ADDR"],
                         'status' => 0,
                     ]
                 );

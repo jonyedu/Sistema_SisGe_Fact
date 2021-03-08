@@ -28,7 +28,7 @@ class UsuarioRequest extends FormRequest
         return [
             'apellido' => 'required',
             'nombre' => 'required',
-            'id_profesion' => 'required',
+            'profesion_id' => 'required',
             'usuario' => 'required',
             'password' => 'required|string|min:8|max:12|confirmed|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|',//regex:/[-@$!%*#?&]/
             'password_confirmation' => 'required|string|min:8|max:12',

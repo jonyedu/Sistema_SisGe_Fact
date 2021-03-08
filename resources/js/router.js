@@ -4,8 +4,10 @@ import VueRouter from "vue-router";
 
 
 //Seguridad
-import Usuario from "./components/Modulos/Seguridad/Usuario/Usuario";
-import Modulo from "./components/Modulos/Seguridad/modulo/Modulo";
+import Usuario from "./components/Modulos/Seguridad/Usuario/ListarUsuario";
+import ModificarCrearUsuario from "./components/Modulos/Seguridad/Usuario/CrearModificarUsuario";
+import Modulo from "./components/Modulos/Seguridad/modulo/ListarModulo";
+import ModificarCrearModulo from "./components/Modulos/Seguridad/modulo/CrearModificarModulo";
 import Perfil from "./components/Modulos/Seguridad/Perfil/Perfil";
 import SubModulo from "./components/Modulos/Seguridad/sub_modulo/SubModulo";
 import PerfilPorUsuario from "./components/Modulos/Seguridad/PerfilPorUsuario/PerfilPorUsuario";
@@ -31,8 +33,20 @@ export default new VueRouter({
         {
             path:
                 prefijo +
+                "/modulos/seguridad/usuario/crear_modificar_usuario",
+            component: ModificarCrearUsuario
+        },
+        {
+            path:
+                prefijo +
                 "/modulos/seguridad/modulo/mostrar_modulo",
             component: Modulo
+        },
+        {
+            path:
+                prefijo +
+                "/modulos/seguridad/modulo/crear_modificar_modulo",
+            component: ModificarCrearModulo
         },
         {
             path:
