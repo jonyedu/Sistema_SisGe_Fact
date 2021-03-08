@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'BSPI') }}</title>
 
     <!-- Icono de la Pestaña -->
-    <link rel="shortcut icon" href="{{ asset('img/icono.png') }}">
+    <link rel="shortcut icon" href="{{ asset('icons/logo/SisGeFact.jpg') }}">
 
     <!-- Plantilla General de los CSS -->
     <link rel="stylesheet" href="{{ asset('css/plantilla.css') }}">
@@ -28,7 +28,7 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed" style="line-height: 2.1;">
     <!-- Es para la barra superior, donde muestra el Dashboard -->
     @livewire('navigation-dropdown')
 

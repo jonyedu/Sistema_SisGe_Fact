@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Modulos\Seguridad\PerfilPorUsuario;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Modulos\Seguridad\PerfilPorUsuario\PerfilPorUsuarioRequest;
-use App\Models\Modulos\Parametrizacion\SubModulo\SgOpcionAplicacion;
+use App\Models\Modulos\Seguridad\SubModulo\SgOpcionAplicacion;
 use App\Models\Modulos\Seguridad\Modulo\SgModulo;
 use App\Models\Modulos\Seguridad\PerfilPorUsuario\PerfilPorUsuario;
 use App\Models\Modulos\Seguridad\Usuario\SegUsuario;

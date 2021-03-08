@@ -11,24 +11,34 @@ export default new Vuex.Store({
     },
     state:{
         producto: null,
+        usuario: null,
 
     },
 
     //una mutacion se va a realizar siempre y cuando sea llamada desde una acccion
     mutations:{
-        addAmigo(state ){
+        addProducto(state ){
             state.producto = state.producto;
+        },
+        addUsuario(state ){
+            state.usuario = state.usuario;
         }
     },
     //eventos actions del store
     actions:{
-        addAmigoAction(context ){
-            context.commit('addAmigo');
-        }
+        addProductoAction(context ){
+            context.commit('addProducto');
+        },
+        addUsuarioAction(context ){
+            context.commit('addUsuario');
+        },
     },
     getters:{
         getProducto(state){
             return state.producto;
+        },
+        getUsuario(state){
+            return state.usuario;
         }
 
     }

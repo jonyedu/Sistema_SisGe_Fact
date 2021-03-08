@@ -1,585 +1,468 @@
 <template>
-    <div class="row m-3">
-        <!-- <div class="col-lg-12 col-md-12 col-sm-12">
-            <center>
-                <h5 class="mt-4">Modulo</h5>
-            </center>
-        </div> -->
+    <div class="content-wrapper">
+        <div class="my-demo-wrapper">
+            <div class="row">
+                <div class="col-lg-12 offset-lg-12">
+                    <bs-card shadow>
+                        <bs-card-body>
+                            <bs-card-content class="text-right">
+                                <router-link
+                                    :to="
+                                        prefijo +
+                                            '/modulos/seguridad/usuario/mostrar_usuario'
+                                    "
+                                >
+                                    <bs-tooltip
+                                        content="Volver hacia atras"
+                                        placement="bottom"
+                                    >
+                                        <bs-button
+                                            mode="icon"
+                                            icon="reply"
+                                            icon-size="sm"
+                                        >
+                                        </bs-button>
+                                    </bs-tooltip>
+                                </router-link>
 
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="card">
-                <div class="col-lg-12 col-md-12 col-sm-12 p-5">
-                    <form>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label for="nombre"
-                                        ><span class="text-danger">(*)</span>
-                                        Apellidos</label
-                                    >
-                                    <input
-                                        type="text"
-                                        :class="
-                                            errores.apellido === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        placeholder="Apellido"
-                                        v-model="form.apellido"
-                                    />
-                                    <small
-                                        v-if="errores.apellido !== ''"
-                                        class="text-danger"
-                                        >{{ errores.apellido[0] }}</small
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label for="abreviatura"
-                                        ><span class="text-danger">(*) </span
-                                        >Nombres</label
-                                    >
-                                    <input
-                                        type="text"
-                                        :class="
-                                            errores.nombre === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        placeholder="Nombre"
-                                        v-model="form.nombre"
-                                    />
-                                    <small
-                                        v-if="errores.nombre !== ''"
-                                        class="text-danger"
-                                        >{{ errores.nombre[0] }}</small
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label for="tipo"
-                                        ><span class="text-danger">(*)</span>
-                                        Profesión</label
-                                    >
-                                    <v-select
-                                        v-model="selectedProfesion"
-                                        :value="form.id_profesion"
-                                        :options="profesiones"
-                                        placeholder="Profesión"
-                                        label="display"
-                                        @input="setSelectedProfesion"
-                                        :class="
-                                            errores.id_profesion === ''
-                                                ? ''
-                                                : 'style-chooser'
-                                        "
-                                    >
-                                        <template slot="no-options"
-                                            >No se ha encontrado ningun
-                                            dato</template
-                                        >
-                                    </v-select>
-                                    <small
-                                        v-if="errores.id_profesion !== ''"
-                                        class="text-danger"
-                                        >{{ errores.id_profesion[0] }}</small
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label for="abreviatura"
-                                        ><span class="text-danger">(*) </span
-                                        >Usuario</label
-                                    >
-                                    <input
-                                        type="text"
-                                        :class="
-                                            errores.usuario === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        placeholder="Usuario"
-                                        v-model="form.usuario"
-                                    />
-                                    <small
-                                        v-if="errores.usuario !== ''"
-                                        class="text-danger"
-                                        >{{ errores.usuario[0] }}</small
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label for="abreviatura"
-                                        ><span class="text-danger">(*) </span
-                                        >Contraseña</label
-                                    >
-                                    <input
-                                        type="password"
-                                        :class="
-                                            errores.password === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        placeholder="Password"
-                                        v-model="form.password"
-                                    />
-                                    <small
-                                        v-if="errores.password !== ''"
-                                        class="text-danger"
-                                        >{{ errores.password[0] }}</small
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label for="abreviatura"
-                                        ><span class="text-danger">(*) </span
-                                        >Confirmar</label
-                                    >
-                                    <input
-                                        type="password"
-                                        :class="
-                                            errores.password_confirmation === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        placeholder="Confirmar"
-                                        v-model="form.password_confirmation"
-                                    />
-                                    <small
-                                        v-if="
-                                            errores.password_confirmation !== ''
-                                        "
-                                        class="text-danger"
-                                        >{{
-                                            errores.password_confirmation[0]
-                                        }}</small
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label for="tipo"
-                                        ><span class="text-danger">(*)</span>
-                                        Perfil</label
-                                    >
-                                    <v-select
-                                        v-model="selectedPerfil"
-                                        :value="form.id_perfil"
-                                        :options="perfiles"
-                                        label="display"
-                                        placeholder="Perfil"
-                                        @input="setSelectedPerfil"
-                                        :class="
-                                            errores.id_perfil === ''
-                                                ? ''
-                                                : 'style-chooser'
-                                        "
-                                    >
-                                        <template slot="no-options"
-                                            >No se ha encontrado ningun
-                                            dato</template
-                                        >
-                                    </v-select>
-                                    <small
-                                        v-if="errores.id_perfil !== ''"
-                                        class="text-danger"
-                                        >{{ errores.id_perfil[0] }}</small
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12">
-                                <div class="form-group">
-                                    <label for="abreviatura"
-                                        ><span class="text-danger">(*) </span
-                                        >Iniciales</label
-                                    >
-                                    <input
-                                        type="text"
-                                        :class="
-                                            errores.iniciales === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        placeholder="Iniciales"
-                                        v-model="form.iniciales"
-                                    />
-                                    <small
-                                        v-if="errores.iniciales !== ''"
-                                        class="text-danger"
-                                        >{{ errores.iniciales[0] }}</small
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-2 col-sm-12">
-                                <div class="form-group">
-                                    <label for="abreviatura"
-                                        ><span class="text-danger">(*) </span
-                                        >Email</label
-                                    >
-                                    <input
-                                        type="email"
-                                        :class="
-                                            errores.email === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        placeholder="Email"
-                                        v-model="form.email"
-                                    />
-                                    <small
-                                        v-if="errores.email !== ''"
-                                        class="text-danger"
-                                        >{{ errores.email[0] }}</small
-                                    >
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div
-                                class="col-lg-12 col-md-12 col-sm-12 mt-4 pt-1"
-                            >
-                                <div class="form-inline">
-                                    <button
-                                        type="button"
-                                        class="btn btn-success btn-block"
+                                <bs-tooltip
+                                    content="Guardar usuario"
+                                    placement="bottom"
+                                >
+                                    <bs-button
+                                        mode="icon"
+                                        icon="save"
+                                        icon-size="sm"
+                                        color="success"
                                         @click="guardarActualizarUsuario()"
                                     >
-                                        {{
-                                            usuarioMod === null
-                                                ? "Guardar"
-                                                : "Modificar"
-                                        }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                                    </bs-button>
+                                </bs-tooltip>
+                            </bs-card-content>
+                        </bs-card-body>
+                    </bs-card>
+                    <bs-card shadow>
+                        <bs-card-header class="bg-indigo text-white"
+                            >Mantenimiento de usuario</bs-card-header
+                        >
+                        <bs-card-body>
+                            <bs-card-content>
+                                <form ref="myform" novalidate>
+                                    <div class="row">
+                                        <div
+                                            class="col-lg-6 col-md-6 col-sm-12"
+                                        >
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="usuarioForm.apellido"
+                                                :external-validator="
+                                                    apellidoValidator
+                                                "
+                                            >
+                                                <label>Apellido</label>
+                                            </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="usuarioForm.usuario"
+                                                :external-validator="
+                                                    usuarioValidator
+                                                "
+                                            >
+                                                <label>Usuario</label>
+                                            </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="
+                                                    usuarioForm.contrasenia
+                                                "
+                                                :external-validator="
+                                                    contraseniaValidator
+                                                "
+                                                type="password"
+                                            >
+                                                <label>Contraseña</label>
+                                            </bs-text-field>
+                                            <bs-combobox
+                                                prepend-icon-outer="user"
+                                                v-model="
+                                                    usuarioForm.profesion_id
+                                                "
+                                                :data-source="cmb.profesiones"
+                                                floating-label
+                                                outlined
+                                                :external-validator="
+                                                    profesionValidator
+                                                "
+                                                minimum-items-for-search="5"
+                                            >
+                                                <label>Profesión</label>
+                                            </bs-combobox>
+                                        </div>
+                                        <div
+                                            class="col-lg-6 col-md-6 col-sm-12"
+                                        >
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="usuarioForm.nombre"
+                                                :external-validator="
+                                                    nombreValidator
+                                                "
+                                            >
+                                                <label>Nombre</label>
+                                            </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="usuarioForm.email"
+                                                :external-validator="
+                                                    emailValidator
+                                                "
+                                            >
+                                                <label>Email</label>
+                                            </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="
+                                                    usuarioForm.contrasenia_confirmar
+                                                "
+                                                :external-validator="
+                                                    contraseniaConfirmarValidator
+                                                "
+                                                type="password"
+                                            >
+                                                <label>Confirmar</label>
+                                            </bs-text-field>
+                                            <bs-combobox
+                                                prepend-icon-outer="user"
+                                                v-model="usuarioForm.perfil_id"
+                                                :data-source="cmb.perfiles"
+                                                floating-label
+                                                outlined
+                                                :external-validator="
+                                                    perfilValidator
+                                                "
+                                            >
+                                                <label>Perfil</label>
+                                            </bs-combobox>
+                                        </div>
+                                    </div>
+                                </form>
+                            </bs-card-content>
+                        </bs-card-body>
+                    </bs-card>
                 </div>
             </div>
         </div>
+        <bs-mask-loader :show="showLoader"></bs-mask-loader>
     </div>
 </template>
+
 <script>
+import { prefix } from "../../../../variables";
+import { validationMixin } from "vuelidate";
+import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+
+const usuarioValidator = {
+    apellido: { required },
+    usuario: { required },
+    contrasenia: { required, minLength: minLength(8) },
+    profesion_id: { required },
+    nombre: { required },
+    email: { required, email },
+    contrasenia_confirmar: { required, minLength: minLength(8), sameAs: sameAs('contrasenia') },
+    perfil_id: { required }
+};
 export default {
-    props: {
-        usuarioMod: {
-            type: Object
-        }
-    },
+    mixins: [validationMixin],
     data: function() {
         return {
-            selectedProfesion: "",
-            profesiones: [],
+            //variable que controla el progreso
+            showLoader: false,
+            //Variables para obtener el index
+            prefijo: "",
+            //Objeto donde tendrá todas las variables del formulario
+            usuarioForm: new BsModel(
+                {
+                    //Aqui es donde se declará las variables para los txt, cmb, etc
+                    schema: {
+                        usuario_id: 0,
+                        apellido: "",
+                        usuario: "",
+                        contrasenia: "",
+                        profesion_id: "",
+                        nombre: "",
+                        email: "",
+                        contrasenia_confirmar: "",
+                        perfil_id: "",
+                    },
+                    //Variables para realizar las peticiones al servidor, save, update, fetch, delete
+                    proxy: {
+                        save: {
+                            url:
+                                "/modulos/seguridad/usuario/guardar_usuario",
+                            method: "post"
+                        },
+                        update: {
+                            url:
+                                "/modulos/seguridad/usuario/modificar_usuario",
+                            method: "post"
+                        }
+                    }
+                },
+                null,
+                "uid"
+            ),
+            //Variables para la validaciones
+            requiredErrorMsg: "Este campo es obligatorio.",
+            minLengthErrorMsg: "Este campo debe tener al menos 8 caracteres.",
+            emailErrorMsg: "Por favor ingrese una dirección de correo electrónico válida.",
+            contraseniaConfirmarErrorMsg: "Las contraseñas deben ser idénticas.",
 
-            selectedPerfil: "",
-            perfiles: [],
-
-            errores: {
-                nombre: "",
-                apellido: "",
-                usuario: "",
-                password: "",
-                password_confirmation: "",
-                id_perfil: "",
-                id_profesion: "",
-                iniciales: "",
-                email: ""
-            },
-            form: {
-                codigo: "",
-                nombre: "",
-                apellido: "",
-                usuario: "",
-                password: "",
-                password_confirmation: "",
-                id_perfil: "",
-                id_profesion: "",
-                iniciales: "",
-                email: ""
+            //Objeto para almacenar el arreglo de cada combobox
+            cmb: {
+                //Combo Grupo
+                profesiones: {
+                    proxy: new BsStore({
+                        idProperty: "codigo",
+                        dataProperty: "profesiones",
+                        remoteSort: false,
+                        restProxy: {
+                            browse:
+                                "/modulos/seguridad/profesion/cargar_profesion_combo_box"
+                        }
+                    }),
+                    schema: { displayField: "descripcion", valueField: "codigo" }
+                },
+                //Combo Laboratorio
+                perfiles: {
+                    proxy: new BsStore({
+                        idProperty: "codigo",
+                        dataProperty: "perfiles",
+                        remoteSort: false,
+                        restProxy: {
+                            browse:
+                                "/modulos/seguridad/perfil/cargar_perfil_combo_box"
+                        }
+                    }),
+                    schema: { displayField: "descripcion", valueField: "codigo" }
+                }
             }
         };
     },
+    validations: {
+        usuarioForm: usuarioValidator
+    },
+
     mounted: function() {
-        this.setSelectedProfesion();
-        this.setSelectedPerfil();
-        if (this.$props.usuarioMod !== null) {
-            var usuario = this.$props.usuarioMod;
-            this.form.codigo = usuario.codigo;
-            this.form.apellido = usuario.apellido;
-            this.form.nombre = usuario.nombre;
-            this.selectedProfesion = usuario.profesion;
-            this.form.id_profesion = usuario.id_profesion;
-            this.form.usuario = usuario.usuario;
-            //this.form.password = usuario.password;
-            this.selectedPerfil = usuario.perfil;
-            this.form.id_perfil = usuario.id_perfil;
-            this.form.iniciales = usuario.iniciales;
-            this.form.email = usuario.email;
+        this.prefijo = prefix;
+        if (this.$store.getters.getUsuario != null) {
+            var usuario = this.$store.getters.getUsuario;
+            this.usuarioForm.usuario_id = usuario.codigo;
+            this.usuarioForm.apellido = usuario.apellido;
+            this.usuarioForm.usuario = usuario.usuario;
+            this.usuarioForm.profesion_id = usuario.profesion;
+            this.usuarioForm.nombre = usuario.nombre;
+            this.usuarioForm.email = usuario.email;
+            this.usuarioForm.perfil_id = usuario.perfil;
         }
-        /* let nombreModulo = this.$nombresModulo.datos_generales;
-        let nombreFormulario = this.$nombresFormulario.datos_generales
-            .generalidades.organizacion_bspi.crear_organizacion_bspi
-            .nombre_formulario;
-        this.$funcionesGlobales.registrarLogForm(
-            nombreModulo,
-            nombreFormulario,
-            "Ingreso"
-        ); */
     },
     beforeDestroy: function() {
-        /* let nombreModulo = this.$nombresModulo.datos_generales;
-        let nombreFormulario = this.$nombresFormulario.datos_generales
-            .generalidades.organizacion_bspi.crear_organizacion_bspi
-            .nombre_formulario;
-        this.$funcionesGlobales.registrarLogForm(
-            nombreModulo,
-            nombreFormulario,
-            "Salida"
-        ); */
+        this.$store.state.usuario = null;
     },
+    computed: {
+        //Metodo para validar el campo nombre
+        apellidoValidator() {
+            return {
+                hasError: this.$v.usuarioForm.apellido.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                },
+                dirty: this.$v.usuarioForm.apellido.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.apellido.required,
+                }
+            };
+        },
+        usuarioValidator() {
+            return {
+                hasError: this.$v.usuarioForm.usuario.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.usuarioForm.usuario.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.usuario.required
+                }
+            };
+        },
+        contraseniaValidator() {
+            return {
+                hasError: this.$v.usuarioForm.contrasenia.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                    minLength: this.minLengthErrorMsg
+                },
+                dirty: this.$v.usuarioForm.contrasenia.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.contrasenia.required,
+                    minLength: this.$v.usuarioForm.contrasenia.minLength
+                }
+            };
+        },
+        profesionValidator() {
+            return {
+                hasError: this.$v.usuarioForm.profesion_id.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.usuarioForm.profesion_id.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.profesion_id.required
+                }
+            };
+        },
+        nombreValidator() {
+            return {
+                hasError: this.$v.usuarioForm.nombre.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.usuarioForm.nombre.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.nombre.required
+                }
+            };
+        },
+        emailValidator() {
+            return {
+                hasError: this.$v.usuarioForm.email.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                    email: this.emailErrorMsg
+                },
+                dirty: this.$v.usuarioForm.email.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.email.required,
+                    email: this.$v.usuarioForm.email.email
+                }
+            };
+        },
+        contraseniaConfirmarValidator() {
+            return {
+                hasError: this.$v.usuarioForm.contrasenia_confirmar.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                    sameAsPassword: this.contraseniaConfirmarErrorMsg
+                },
+                dirty: this.$v.usuarioForm.contrasenia_confirmar.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.contrasenia_confirmar.required,
+                    minLength: this.$v.usuarioForm.contrasenia_confirmar.minLength,
+                    sameAsPassword: this.$v.usuarioForm.contrasenia_confirmar.sameAs,
+                }
+            };
+        },
+        perfilValidator() {
+            return {
+                hasError: this.$v.usuarioForm.perfil_id.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.usuarioForm.perfil_id.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.perfil_id.required
+                }
+            };
+        }
+    },
+
     methods: {
-        limpiarForm() {
-            this.errores = {
-                nombre: "",
-                apellido: "",
-                usuario: "",
-                password: "",
-                password_confirmation: "",
-                id_perfil: "",
-                id_profesion: "",
-                iniciales: ""
-            };
-            this.form = {
-                codigo: "",
-                nombre: "",
-                apellido: "",
-                usuario: "",
-                password: "",
-                password_confirmation: "",
-                id_perfil: "",
-                id_profesion: "",
-                iniciales: ""
-            };
-        },
-        setSelectedProfesion(value) {
-            let that = this;
-            //var loader = that.$loading.show();
-            let url = "/modulos/seguridad/profesion/cargar_profesion_combo_box";
-            if (value != null) {
-                this.form.id_profesion = value.id_profesion;
-            }
-            axios
-                .get(url)
-                .then(function(response) {
-                    let profesiones = [];
-                    response.data.profesiones.forEach(profesion => {
-                        let objeto = {};
-                        objeto.display = that.$funcionesGlobales.toCapitalFirstAllWords(
-                            profesion.descripcion
-                        );
-                        objeto.id_profesion = profesion.codigo;
-                        profesiones.push(objeto);
-                    });
-                    that.profesiones = profesiones;
-                    //loader.hide();
-                })
-                .catch(error => {
-                    that.flashMessage.show({
-                        status: "error",
-                        title: "Error al procesar setSelectedProfesion",
-                        message:
-                            "Por favor comuníquese con el administrador. " +
-                            error,
-                        clickable: true,
-                        time: 0,
-                        icon: "/iconsflashMessage/error.svg",
-                        customStyle: {
-                            flashMessageStyle: {
-                                background: "linear-gradient(#e66465, #9198e5)"
-                            }
-                        }
-                    });
-                    //loader.hide();
-                });
-        },
-        setSelectedPerfil(value) {
-            let that = this;
-            //var loader = that.$loading.show();
-            let url = "/modulos/seguridad/perfil/cargar_perfil_combo_box";
-            if (value != null) {
-                this.form.id_perfil = value.id_perfil;
-            }
-            axios
-                .get(url)
-                .then(function(response) {
-                    let perfiles = [];
-                    response.data.perfiles.forEach(perfil => {
-                        let objeto = {};
-                        objeto.display = that.$funcionesGlobales.toCapitalFirstAllWords(
-                            perfil.descripcion
-                        );
-                        objeto.id_perfil = perfil.codigo;
-                        perfiles.push(objeto);
-                    });
-                    that.perfiles = perfiles;
-                    //loader.hide();
-                })
-                .catch(error => {
-                    that.flashMessage.show({
-                        status: "error",
-                        title: "Error al procesar setSelectedPerfil",
-                        message:
-                            "Por favor comuníquese con el administrador. " +
-                            error,
-                        clickable: true,
-                        time: 0,
-                        icon: "/iconsflashMessage/error.svg",
-                        customStyle: {
-                            flashMessageStyle: {
-                                background: "linear-gradient(#e66465, #9198e5)"
-                            }
-                        }
-                    });
-                    //loader.hide();
-                });
-        },
-        guardarActualizarUsuario: function() {
-            let that = this;
-            let url = "";
-            let mensaje = "";
-            if (this.$props.usuarioMod !== null) {
-                url = "/modulos/seguridad/usuario/modificar_usuario";
-                mensaje = "Datos actualizados correctamente.";
-            } else {
-                url = "/modulos/seguridad/usuario/guardar_usuario";
-                mensaje = "Datos guardados correctamente.";
-            }
-            var loader = that.$loading.show();
-            axios
-                .post(url, this.form)
-                .then(function(response) {
-                    //Llamar metodo de parent para que actualice el grid.
-                    loader.hide();
-                    that.$emit("recargarUsuario");
-                    that.$emit("cerrarModalCrearUsuario");
-                    that.flashMessage.show({
-                        status: "success",
-                        title: "Proceso realizado exitosamente",
-                        message: mensaje,
-                        clickable: true,
-                        time: 5000,
-                        icon: "/iconsflashMessage/success.svg",
-                        customStyle: {
-                            flashMessageStyle: {
-                                background: "linear-gradient(#e66465, #9198e5)"
-                            }
-                        }
-                    });
-                    that.limpiarForm();
-                })
-                .catch(error => {
-                    if (error.response.status === 422) {
-                        this.errores = {
-                            nombre: "",
-                            apellido: "",
-                            usuario: "",
-                            password: "",
-                            password_confirmation: "",
-                            id_perfil: "",
-                            id_profesion: "",
-                            iniciales: "",
-                            email: "",
-                        };
-                        if (error.response.data.errors.apellido != null) {
-                            that.errores.apellido =
-                                error.response.data.errors.apellido;
-                        }
-                        if (error.response.data.errors.nombre != null) {
-                            that.errores.nombre =
-                                error.response.data.errors.nombre;
-                        }
-                        if (error.response.data.errors.id_profesion != null) {
-                            that.errores.id_profesion =
-                                error.response.data.errors.id_profesion;
-                        }
-                        if (error.response.data.errors.usuario != null) {
-                            that.errores.usuario =
-                                error.response.data.errors.usuario;
-                        }
-                        if (error.response.data.errors.password != null) {
-                            that.errores.password =
-                                error.response.data.errors.password;
-                        }
-                        if (
-                            error.response.data.errors.password_confirmation !=
-                            null
-                        ) {
-                            that.errores.password_confirmation =
-                                error.response.data.errors.password_confirmation;
-                        }
-                        if (error.response.data.errors.id_perfil != null) {
-                            that.errores.id_perfil =
-                                error.response.data.errors.id_perfil;
-                        }
-                        if (error.response.data.errors.iniciales != null) {
-                            that.errores.iniciales =
-                                error.response.data.errors.iniciales;
-                        }
-                        if (error.response.data.errors.email != null) {
-                            that.errores.email =
-                                error.response.data.errors.email;
-                        }
-                        that.flashMessage.show({
-                            status: "warning",
-                            title: "Se requiere de su atención",
-                            message: "Existen campos vacios.",
-                            clickable: true,
-                            time: 5000,
-                            icon: "/iconsflashMessage/warning.svg",
-                            customStyle: {
-                                flashMessageStyle: {
-                                    background:
-                                        "linear-gradient(#e66465, #9198e5)"
-                                }
-                            }
-                        });
-                    } else {
-                        that.flashMessage.show({
-                            status: "error",
-                            title: "Error al procesar guardarActualizarUsuario",
-                            message:
+        guardarActualizarUsuario() {
+            var that = this;
+            this.$v.$touch();
+            if (!this.$v.$error) {
+                this.showLoader = true;
+                if (this.$store.getters.getUsuario != null) {
+                    this.usuarioForm
+                        .update()
+                        .then(function(response) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Exito al Procesar",
+                                "Usuario modificado correctamente.",
+                                "success"
+                            );
+                            that.lmpCampos();
+                        })
+                        .catch(function(error) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Error en guardarActualizarUsuario",
                                 "Por favor comuníquese con el administrador. " +
-                                error,
-                            clickable: true,
-                            time: 0,
-                            icon: "/iconsflashMessage/error.svg",
-                            customStyle: {
-                                flashMessageStyle: {
-                                    background:
-                                        "linear-gradient(#e66465, #9198e5)"
-                                }
-                            }
+                                    error,
+                                "error"
+                            );
                         });
-                    }
-                    loader.hide();
-                });
+                } else {
+                    this.usuarioForm
+                        .save()
+                        .then(function(response) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Exito al Procesar",
+                                "Usuario creado correctamente.",
+                                "success"
+                            );
+                            that.lmpCampos();
+                        })
+                        .catch(function(error) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Error en guardarActualizarUsuario",
+                                "Por favor comuníquese con el administrador. " +
+                                    error,
+                                "error"
+                            );
+                        });
+                }
+            }
+        },
+        showNotificationProgress(title, message, icon) {
+            let options = {
+                message: message,
+                progressBar: true,
+                progressBarValue: null,
+                timeout: 5000
+            };
+            this.$notification[icon](options, title);
+        },
+        lmpCampos() {
+            this.$refs.myform.reset();
+            this.usuarioForm.reset();
+            this.$v.$reset();
         }
     }
 };
 </script>
-<style>
-.style-chooser .vs__dropdown-toggle,
-.style-chooser .vs__dropdown-menu {
-    border-color: #dc3545;
-    padding-right: 2.25rem;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right calc(0.375em + 0.1875rem) center;
-    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+
+<style lang="scss">
+.my-demo-wrapper {
+    padding: 24px;
+
+    .btn {
+        margin-bottom: 16px;
+        margin-right: 8px;
+    }
 }
 </style>

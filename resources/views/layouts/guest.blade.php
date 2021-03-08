@@ -9,7 +9,7 @@
     <title>{{ config('app.name', 'BSPI') }}</title>
 
     <!-- Icono de la Pestaña -->
-    <link rel="shortcut icon" href="{{ asset('img/icono.png') }}">
+    <link rel="shortcut icon" href="{{ asset('icons/logo/SisGeFact.jpg') }}">
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">

@@ -1,255 +1,468 @@
 <template>
-    <div class="row m-3">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <center>
-                <h5 class="mt-4">Modulo</h5>
-            </center>
-        </div>
+    <div class="content-wrapper">
+        <div class="my-demo-wrapper">
+            <div class="row">
+                <div class="col-lg-12 offset-lg-12">
+                    <bs-card shadow>
+                        <bs-card-body>
+                            <bs-card-content class="text-right">
+                                <router-link
+                                    :to="
+                                        prefijo +
+                                            '/modulos/seguridad/usuario/mostrar_usuario'
+                                    "
+                                >
+                                    <bs-tooltip
+                                        content="Volver hacia atras"
+                                        placement="bottom"
+                                    >
+                                        <bs-button
+                                            mode="icon"
+                                            icon="reply"
+                                            icon-size="sm"
+                                        >
+                                        </bs-button>
+                                    </bs-tooltip>
+                                </router-link>
 
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="card">
-                <div class="col-lg-12 col-md-12 col-sm-12 p-5">
-                    <form>
-                        <div class="row">
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <div class="form-group">
-                                    <label for="nombre"
-                                        ><span class="text-danger">(*)</span>
-                                        Descripción</label
-                                    >
-                                    <input
-                                        type="text"
-                                        :class="
-                                            errores.err_descripcion === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        id="cicloInicial"
-                                        placeholder="Descripción del modulo"
-                                        v-model="form.frm_descripcion"
-                                    />
-                                    <small
-                                        v-if="errores.err_descripcion !== ''"
-                                        id="correoHelp"
-                                        class="text-danger"
-                                        >{{ errores.err_descripcion[0] }}</small
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12">
-                                <div class="form-group">
-                                    <label for="abreviatura">Abreviatura</label>
-                                    <input
-                                        type="text"
-                                        id="abreviatura"
-                                        :class="
-                                            errores.err_abreviatura === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        placeholder="Abreviatura"
-                                        v-model="form.frm_abreviatura"
-                                    />
-                                </div>
-                                <small
-                                    v-if="errores.err_abreviatura !== ''"
-                                    id="correoHelp"
-                                    class="text-danger"
-                                    >{{ errores.err_abreviatura[0] }}</small
+                                <bs-tooltip
+                                    content="Guardar usuario"
+                                    placement="bottom"
                                 >
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12">
-                                <div class="form-group">
-                                    <label for="abreviatura">Imagen</label>
-                                    <input
-                                        type="text"
-                                        id="imagen"
-                                        :class="
-                                            errores.err_imagen === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        placeholder="Imagen"
-                                        v-model="form.frm_imagen"
-                                    />
-                                </div>
-                                <small
-                                    v-if="errores.err_imagen !== ''"
-                                    id="correoHelp"
-                                    class="text-danger"
-                                    >{{ errores.err_imagen[0] }}</small
-                                >
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12">
-                                <div class="form-group">
-                                    <label for="orden">Orden</label>
-                                    <input
-                                        type="number"
-                                        id="orden"
-                                        :class="
-                                            errores.err_orden === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        placeholder="Orden"
-                                        v-model="form.frm_orden"
-                                    />
-                                </div>
-                                <small
-                                    v-if="errores.err_orden !== ''"
-                                    id="correoHelp"
-                                    class="text-danger"
-                                    >{{ errores.err_orden[0] }}</small
-                                >
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div
-                                class="col-lg-12 col-md-12 col-sm-12 mt-4 pt-1"
-                            >
-                                <div class="form-inline">
-                                    <button
-                                        type="button"
-                                        class="btn btn-success btn-block"
-                                        @click="guardarActualizarModulo()"
+                                    <bs-button
+                                        mode="icon"
+                                        icon="save"
+                                        icon-size="sm"
+                                        color="success"
+                                        @click="guardarActualizarUsuario()"
                                     >
-                                        {{
-                                            moduloMod === null
-                                                ? "Guardar"
-                                                : "Modificar"
-                                        }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                                    </bs-button>
+                                </bs-tooltip>
+                            </bs-card-content>
+                        </bs-card-body>
+                    </bs-card>
+                    <bs-card shadow>
+                        <bs-card-header class="bg-indigo text-white"
+                            >Mantenimiento de usuario</bs-card-header
+                        >
+                        <bs-card-body>
+                            <bs-card-content>
+                                <form ref="myform" novalidate>
+                                    <div class="row">
+                                        <div
+                                            class="col-lg-6 col-md-6 col-sm-12"
+                                        >
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="usuarioForm.apellido"
+                                                :external-validator="
+                                                    apellidoValidator
+                                                "
+                                            >
+                                                <label>Apellido</label>
+                                            </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="usuarioForm.usuario"
+                                                :external-validator="
+                                                    usuarioValidator
+                                                "
+                                            >
+                                                <label>Usuario</label>
+                                            </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="
+                                                    usuarioForm.contrasenia
+                                                "
+                                                :external-validator="
+                                                    contraseniaValidator
+                                                "
+                                                type="password"
+                                            >
+                                                <label>Contraseña</label>
+                                            </bs-text-field>
+                                            <bs-combobox
+                                                prepend-icon-outer="user"
+                                                v-model="
+                                                    usuarioForm.profesion_id
+                                                "
+                                                :data-source="cmb.profesiones"
+                                                floating-label
+                                                outlined
+                                                :external-validator="
+                                                    profesionValidator
+                                                "
+                                                minimum-items-for-search="5"
+                                            >
+                                                <label>Profesión</label>
+                                            </bs-combobox>
+                                        </div>
+                                        <div
+                                            class="col-lg-6 col-md-6 col-sm-12"
+                                        >
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="usuarioForm.nombre"
+                                                :external-validator="
+                                                    nombreValidator
+                                                "
+                                            >
+                                                <label>Nombre</label>
+                                            </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="usuarioForm.email"
+                                                :external-validator="
+                                                    emailValidator
+                                                "
+                                            >
+                                                <label>Email</label>
+                                            </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="
+                                                    usuarioForm.contrasenia_confirmar
+                                                "
+                                                :external-validator="
+                                                    contraseniaConfirmarValidator
+                                                "
+                                                type="password"
+                                            >
+                                                <label>Confirmar</label>
+                                            </bs-text-field>
+                                            <bs-combobox
+                                                prepend-icon-outer="user"
+                                                v-model="usuarioForm.perfil_id"
+                                                :data-source="cmb.perfiles"
+                                                floating-label
+                                                outlined
+                                                :external-validator="
+                                                    perfilValidator
+                                                "
+                                            >
+                                                <label>Perfil</label>
+                                            </bs-combobox>
+                                        </div>
+                                    </div>
+                                </form>
+                            </bs-card-content>
+                        </bs-card-body>
+                    </bs-card>
                 </div>
             </div>
         </div>
+        <bs-mask-loader :show="showLoader"></bs-mask-loader>
     </div>
 </template>
+
 <script>
+import { prefix } from "../../../../variables";
+import { validationMixin } from "vuelidate";
+import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+
+const usuarioValidator = {
+    apellido: { required },
+    usuario: { required },
+    contrasenia: { required, minLength: minLength(8) },
+    profesion_id: { required },
+    nombre: { required },
+    email: { required, email },
+    contrasenia_confirmar: { required, minLength: minLength(8), sameAs: sameAs('contrasenia') },
+    perfil_id: { required }
+};
 export default {
-    props: {
-        moduloMod: {
-            type: Object
-        }
-    },
+    mixins: [validationMixin],
     data: function() {
         return {
-            errores: {
-                err_descripcion: "",
-                err_abreviatura: "",
-                err_orden: "",
-                err_imagen: ""
-            },
-            form: {
-                frm_codigo: "",
-                frm_descripcion: "",
-                frm_abreviatura: "",
-                frm_orden: "",
-                frm_imagen: ""
+            //variable que controla el progreso
+            showLoader: false,
+            //Variables para obtener el index
+            prefijo: "",
+            //Objeto donde tendrá todas las variables del formulario
+            usuarioForm: new BsModel(
+                {
+                    //Aqui es donde se declará las variables para los txt, cmb, etc
+                    schema: {
+                        usuario_id: 0,
+                        apellido: "",
+                        usuario: "",
+                        contrasenia: "",
+                        profesion_id: "",
+                        nombre: "",
+                        email: "",
+                        contrasenia_confirmar: "",
+                        perfil_id: "",
+                    },
+                    //Variables para realizar las peticiones al servidor, save, update, fetch, delete
+                    proxy: {
+                        save: {
+                            url:
+                                "/modulos/seguridad/usuario/guardar_usuario",
+                            method: "post"
+                        },
+                        update: {
+                            url:
+                                "/modulos/seguridad/usuario/modificar_usuario",
+                            method: "post"
+                        }
+                    }
+                },
+                null,
+                "uid"
+            ),
+            //Variables para la validaciones
+            requiredErrorMsg: "Este campo es obligatorio.",
+            minLengthErrorMsg: "Este campo debe tener al menos 8 caracteres.",
+            emailErrorMsg: "Por favor ingrese una dirección de correo electrónico válida.",
+            contraseniaConfirmarErrorMsg: "Las contraseñas deben ser idénticas.",
+
+            //Objeto para almacenar el arreglo de cada combobox
+            cmb: {
+                //Combo Grupo
+                profesiones: {
+                    proxy: new BsStore({
+                        idProperty: "codigo",
+                        dataProperty: "profesiones",
+                        remoteSort: false,
+                        restProxy: {
+                            browse:
+                                "/modulos/seguridad/profesion/cargar_profesion_combo_box"
+                        }
+                    }),
+                    schema: { displayField: "descripcion", valueField: "codigo" }
+                },
+                //Combo Laboratorio
+                perfiles: {
+                    proxy: new BsStore({
+                        idProperty: "codigo",
+                        dataProperty: "perfiles",
+                        remoteSort: false,
+                        restProxy: {
+                            browse:
+                                "/modulos/seguridad/perfil/cargar_perfil_combo_box"
+                        }
+                    }),
+                    schema: { displayField: "descripcion", valueField: "codigo" }
+                }
             }
         };
     },
+    validations: {
+        usuarioForm: usuarioValidator
+    },
+
     mounted: function() {
-        if (this.$props.moduloMod !== null) {
-            var modulo = this.$props.moduloMod;
-            this.form.frm_codigo = modulo.codigo;
-            this.form.frm_descripcion = modulo.descripcion;
-            this.form.frm_abreviatura = modulo.abreviatura;
-            this.form.frm_imagen = modulo.imagen;
-            this.form.frm_orden = modulo.orden;
+        this.prefijo = prefix;
+        if (this.$store.getters.getUsuario != null) {
+            var usuario = this.$store.getters.getUsuario;
+            this.usuarioForm.usuario_id = usuario.codigo;
+            this.usuarioForm.apellido = usuario.apellido;
+            this.usuarioForm.usuario = usuario.usuario;
+            this.usuarioForm.profesion_id = usuario.profesion;
+            this.usuarioForm.nombre = usuario.nombre;
+            this.usuarioForm.email = usuario.email;
+            this.usuarioForm.perfil_id = usuario.perfil;
         }
-        /* let nombreModulo = this.$nombresModulo.datos_generales;
-        let nombreFormulario = this.$nombresFormulario.datos_generales
-            .generalidades.organizacion_bspi.crear_organizacion_bspi
-            .nombre_formulario;
-        this.$funcionesGlobales.registrarLogForm(
-            nombreModulo,
-            nombreFormulario,
-            "Ingreso"
-        ); */
     },
     beforeDestroy: function() {
-        /* let nombreModulo = this.$nombresModulo.datos_generales;
-        let nombreFormulario = this.$nombresFormulario.datos_generales
-            .generalidades.organizacion_bspi.crear_organizacion_bspi
-            .nombre_formulario;
-        this.$funcionesGlobales.registrarLogForm(
-            nombreModulo,
-            nombreFormulario,
-            "Salida"
-        ); */
+        this.$store.state.usuario = null;
     },
-    methods: {
-        limpiarForm() {
-            this.errores = {
-                err_descripcion: "",
-                err_abreviatura: "",
-                err_orden: ""
-            };
-            this.form = {
-                frm_codigo: "",
-                frm_descripcion: "",
-                frm_abreviatura: "",
-                frm_orden: ""
+    computed: {
+        //Metodo para validar el campo nombre
+        apellidoValidator() {
+            return {
+                hasError: this.$v.usuarioForm.apellido.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                },
+                dirty: this.$v.usuarioForm.apellido.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.apellido.required,
+                }
             };
         },
-        guardarActualizarModulo: function() {
-            let that = this;
-            let url = "";
-            let mensaje = "";
-            //if()
-            if (this.$props.moduloMod !== null) {
-                url =
-                    "/modulos/parametrizacion/modulo/modificar_modulo";
-                mensaje = "Datos actualizados correctamente.";
-            } else {
-                url =
-                    "/modulos/parametrizacion/modulo/guardar_modulo";
-                mensaje = "Datos guardados correctamente.";
+        usuarioValidator() {
+            return {
+                hasError: this.$v.usuarioForm.usuario.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.usuarioForm.usuario.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.usuario.required
+                }
+            };
+        },
+        contraseniaValidator() {
+            return {
+                hasError: this.$v.usuarioForm.contrasenia.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                    minLength: this.minLengthErrorMsg
+                },
+                dirty: this.$v.usuarioForm.contrasenia.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.contrasenia.required,
+                    minLength: this.$v.usuarioForm.contrasenia.minLength
+                }
+            };
+        },
+        profesionValidator() {
+            return {
+                hasError: this.$v.usuarioForm.profesion_id.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.usuarioForm.profesion_id.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.profesion_id.required
+                }
+            };
+        },
+        nombreValidator() {
+            return {
+                hasError: this.$v.usuarioForm.nombre.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.usuarioForm.nombre.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.nombre.required
+                }
+            };
+        },
+        emailValidator() {
+            return {
+                hasError: this.$v.usuarioForm.email.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                    email: this.emailErrorMsg
+                },
+                dirty: this.$v.usuarioForm.email.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.email.required,
+                    email: this.$v.usuarioForm.email.email
+                }
+            };
+        },
+        contraseniaConfirmarValidator() {
+            return {
+                hasError: this.$v.usuarioForm.contrasenia_confirmar.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                    sameAsPassword: this.contraseniaConfirmarErrorMsg
+                },
+                dirty: this.$v.usuarioForm.contrasenia_confirmar.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.contrasenia_confirmar.required,
+                    minLength: this.$v.usuarioForm.contrasenia_confirmar.minLength,
+                    sameAsPassword: this.$v.usuarioForm.contrasenia_confirmar.sameAs,
+                }
+            };
+        },
+        perfilValidator() {
+            return {
+                hasError: this.$v.usuarioForm.perfil_id.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.usuarioForm.perfil_id.$dirty,
+                validators: {
+                    required: this.$v.usuarioForm.perfil_id.required
+                }
+            };
+        }
+    },
+
+    methods: {
+        guardarActualizarUsuario() {
+            var that = this;
+            this.$v.$touch();
+            if (!this.$v.$error) {
+                this.showLoader = true;
+                if (this.$store.getters.getUsuario != null) {
+                    this.usuarioForm
+                        .update()
+                        .then(function(response) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Exito al Procesar",
+                                "Usuario modificado correctamente.",
+                                "success"
+                            );
+                            that.lmpCampos();
+                        })
+                        .catch(function(error) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Error en guardarActualizarUsuario",
+                                "Por favor comuníquese con el administrador. " +
+                                    error,
+                                "error"
+                            );
+                        });
+                } else {
+                    this.usuarioForm
+                        .save()
+                        .then(function(response) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Exito al Procesar",
+                                "Usuario creado correctamente.",
+                                "success"
+                            );
+                            that.lmpCampos();
+                        })
+                        .catch(function(error) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Error en guardarActualizarUsuario",
+                                "Por favor comuníquese con el administrador. " +
+                                    error,
+                                "error"
+                            );
+                        });
+                }
             }
-            var loader = that.$loading.show();
-            axios
-                .post(url, this.form)
-                .then(function(response) {
-                    //Llamar metodo de parent para que actualice el grid.
-                    loader.hide();
-                    that.$emit("recargarModulo");
-                    that.$emit("cerrarModalCrearModulo");
-                    that.$swal({
-                        icon: "success",
-                        title: "Proceso realizado exitosamente",
-                        text: that.mensaje
-                    });
-                    that.limpiarForm();
-                })
-                .catch(error => {
-                    //Errores de validación
-                    if (error.response.status === 422) {
-                        if (error.response.data.errors.frm_descripcion != null) {
-                            that.errores.err_descripcion =
-                                error.response.data.errors.frm_descripcion;
-                        }
-                        if (error.response.data.errors.frm_abreviatura != null) {
-                            that.errores.err_abreviatura =
-                                error.response.data.errors.frm_abreviatura;
-                        }
-                        if (error.response.data.errors.frm_orden != null) {
-                            that.errores.err_orden =
-                                error.response.data.errors.frm_orden;
-                        }
-                        loader.hide();
-                    }
-                    loader.hide();
-                    that.$swal({
-                        icon: "error",
-                        title: "Existen errores",
-                        text: error
-                    });
-                });
+        },
+        showNotificationProgress(title, message, icon) {
+            let options = {
+                message: message,
+                progressBar: true,
+                progressBarValue: null,
+                timeout: 5000
+            };
+            this.$notification[icon](options, title);
+        },
+        lmpCampos() {
+            this.$refs.myform.reset();
+            this.usuarioForm.reset();
+            this.$v.$reset();
         }
     }
 };
 </script>
+
+<style lang="scss">
+.my-demo-wrapper {
+    padding: 24px;
+
+    .btn {
+        margin-bottom: 16px;
+        margin-right: 8px;
+    }
+}
+</style>
