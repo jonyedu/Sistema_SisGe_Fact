@@ -10,8 +10,16 @@
                                     '/modulos/administracion/producto/crear_modificar_producto'
                             "
                         >
-                            <bs-button mode="icon" icon="plus" icon-size="sm">
-                            </bs-button>
+                            <bs-tooltip
+                                content="Crear nuevos productos"
+                                placement="bottom"
+                            >
+                                <bs-button
+                                    mode="icon"
+                                    icon="plus"
+                                    icon-size="sm"
+                                ></bs-button>
+                            </bs-tooltip>
                         </router-link>
                     </bs-card-content>
                 </bs-card-body>
@@ -29,20 +37,8 @@
                     row-hover
                     sortable
                     :flip-on-small-screen="false"
-                    :filterable="{minlength: 2, operator: 'contains'}"
+                    :filterable="{ minlength: 2, operator: 'contains' }"
                 >
-                    <!-- <bs-grid-toolbar slot="toolbar">
-                        <div class="row justify-content-end">
-                            <div class="col-lg-6">
-                                <bs-grid-tool-search
-                                    autofocus
-                                    :placeholder="'Busqueda'"
-                                    field="text"
-                                    operator="contains"
-                                ></bs-grid-tool-search>
-                            </div>
-                        </div>
-                    </bs-grid-toolbar> -->
                     <bs-grid-column
                         label="#"
                         text-align="right"
@@ -131,29 +127,67 @@
                                         '/modulos/administracion/producto/crear_modificar_producto'
                                 "
                             >
-                                <bs-button
-                                    icon="pen"
-                                    mode="icon"
-                                    size="sm"
-                                    color="secondary"
-                                    flat
-                                    @click="btnClickModificar(item)"
-                                ></bs-button>
+                                <bs-tooltip
+                                    content="Modificar productos"
+                                    placement="bottom"
+                                >
+                                    <bs-button
+                                        icon="pen"
+                                        mode="icon"
+                                        size="sm"
+                                        color="secondary"
+                                        flat
+                                        @click="btnClickModificar(item)"
+                                    ></bs-button>
+                                </bs-tooltip>
                             </router-link>
 
-                            <bs-button
-                                icon="trash-alt"
-                                mode="icon"
-                                size="sm"
-                                color="danger"
-                                flat
-                                @click="btnClickEliminar(item, 'Delete Item')"
-                            ></bs-button>
+                            <bs-tooltip
+                                content="Eliminar productos"
+                                placement="bottom"
+                            >
+                                <bs-button
+                                    icon="trash-alt"
+                                    mode="icon"
+                                    size="sm"
+                                    color="danger"
+                                    flat
+                                    @click="
+                                        abriModal(item)
+                                    "
+                                ></bs-button>
+                            </bs-tooltip>
                         </bs-grid-cell>
                     </template>
                 </bs-grid>
             </bs-card>
         </div>
+        <bs-modal
+            :open.sync="trueModalVisible"
+            :overlay-close="false"
+            title="Confirmación al Eliminar"
+            max-width="85%"
+        >
+            <b>¿Desea eliminar el producto?</b><br />
+            Al eliminar el producto, no podrá usarlo en las transacciones. <br> Presiones Cancelar o presione ESC para salir.
+
+            <template v-slot:footer>
+                <bs-button
+                    outlined
+                    color="secondary"
+                    @click="trueModalVisible = false"
+                >
+                    Cancelar
+                </bs-button>
+                <bs-button
+                    active
+                    color="primary"
+                    @click="eliminarProducto()"
+                >
+                    OK
+                </bs-button>
+            </template>
+        </bs-modal>
     </div>
 </template>
 
@@ -163,6 +197,7 @@ export default {
     data: function() {
         return {
             prefijo: "",
+            trueModalVisible:false,
             productos: new BsStore({
                 idProperty: "id",
                 dataProperty: "productos",
@@ -174,38 +209,14 @@ export default {
                 sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
                     browse:
-                        "/modulos/administracion/producto/cargar_all_producto",
-                    /* delete: {
-                        url:
-                            "/modulos/administracion/producto/eliminar_producto",
-                        method: "delete"
-                    },
-                    save: {
-                        url:
-                            "/modulos/administracion/producto/guardar_producto",
-                        method: "post"
-                    },
-                    update: {
-                        url:
-                            "/modulos/administracion/producto/actualizar_producto",
-                        method: "put"
-                    } */
+                        "/modulos/administracion/producto/cargar_all_producto"
                 }
-            })
+            }),
+            item:{},
         };
     },
 
     mounted: function() {
-        //this.cargarModulo();
-        /* let nombreModulo = this.$nombresModulo.datos_generales;
-        let nombreFormulario = this.$nombresFormulario.datos_generales
-            .generalidades.organizacion_bspi.organizacion_bspi
-            .nombre_formulario;
-        this.$funcionesGlobales.registrarLogForm(
-            nombreModulo,
-            nombreFormulario,
-            "Ingreso"
-        ); */
         this.prefijo = prefix;
     },
     beforeDestroy() {},
@@ -213,10 +224,43 @@ export default {
         btnClickModificar(item) {
             this.$store.state.producto = item;
         },
-        btnClickEliminar(item) {
-            this.$notification.info("Current item: " + item.descripcion, title);
-            this.$store.state.producto = item;
-        }
+        abriModal(item) {
+            this.trueModalVisible=true;
+            this.item = item;
+        },
+        eliminarProducto() {
+            let that = this;
+            let url =
+                "/modulos/administracion/producto/eliminar_producto/" +
+                this.item.id;
+            axios
+                .delete(url)
+                .then(function() {
+                    that.trueModalVisible = false;
+                    that.showNotificationProgress(
+                        "Exito al procesar",
+                        "Usted ha eliminado correctamente el producto." + that.item.descripcion,
+                        "success"
+                    );
+                })
+                .catch(error => {
+                    that.trueModalVisible = false;
+                    that.showNotificationProgress(
+                        "Error en eliminarProducto",
+                        "Por favor comuníquese con el administrador." + error,
+                        "error"
+                    );
+                });
+        },
+        showNotificationProgress(title, message, icon) {
+            let options = {
+                message: message,
+                progressBar: true,
+                progressBarValue: null,
+                timeout: 5000
+            };
+            this.$notification[icon](options, title);
+        },
     }
 };
 </script>

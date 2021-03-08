@@ -12,21 +12,32 @@
                                             '/modulos/administracion/producto/mostrar_producto'
                                     "
                                 >
+                                    <bs-tooltip
+                                        content="Volver hacia atras"
+                                        placement="bottom"
+                                    >
+                                        <bs-button
+                                            mode="icon"
+                                            icon="reply"
+                                            icon-size="sm"
+                                        >
+                                        </bs-button>
+                                    </bs-tooltip>
+                                </router-link>
+
+                                <bs-tooltip
+                                    content="Guardar producto"
+                                    placement="bottom"
+                                >
                                     <bs-button
                                         mode="icon"
-                                        icon="reply"
+                                        icon="save"
                                         icon-size="sm"
+                                        color="success"
+                                        @click="guardarActualizarProducto()"
                                     >
                                     </bs-button>
-                                </router-link>
-                                <bs-button
-                                    mode="icon"
-                                    icon="save"
-                                    icon-size="sm"
-                                    color="success"
-                                    @click="guardarActualizarProducto()"
-                                >
-                                </bs-button>
+                                </bs-tooltip>
                             </bs-card-content>
                         </bs-card-body>
                     </bs-card>
@@ -57,7 +68,6 @@
                                             :external-validator="
                                                 descripcionValidator
                                             "
-
                                         >
                                             <label>Descripción</label>
                                         </bs-text-field>
@@ -69,7 +79,6 @@
                                             :external-validator="
                                                 codigoValidator
                                             "
-
                                         >
                                             <label>Codigo</label>
                                         </bs-text-field>
@@ -84,6 +93,7 @@
                                             :external-validator="
                                                 laboratorioValidator
                                             "
+                                            minimum-items-for-search="5"
                                         >
                                             <label>Laboratorio</label>
                                         </bs-combobox>
@@ -101,7 +111,9 @@
                                             <label>Nombre Corto</label>
                                         </bs-text-field>
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div
+                                                class="col-lg-6 col-md-6 col-sm-6"
+                                            >
                                                 <bs-text-field
                                                     prepend-icon-outer="user"
                                                     floating-label
@@ -116,7 +128,9 @@
                                                     <label>Mínimo</label>
                                                 </bs-text-field>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div
+                                                class="col-lg-6 col-md-6 col-sm-6"
+                                            >
                                                 <bs-text-field
                                                     prepend-icon-outer="user"
                                                     floating-label
@@ -131,7 +145,9 @@
                                                     <label>Máximo</label>
                                                 </bs-text-field>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div
+                                                class="col-lg-6 col-md-6 col-sm-6"
+                                            >
                                                 <bs-text-field
                                                     prepend-icon-outer="user"
                                                     floating-label
@@ -144,7 +160,9 @@
                                                     <label>PVC</label>
                                                 </bs-text-field>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div
+                                                class="col-lg-6 col-md-6 col-sm-6"
+                                            >
                                                 <bs-text-field
                                                     prepend-icon-outer="user"
                                                     floating-label
@@ -164,27 +182,10 @@
                                             :data-source="cmb.grupos"
                                             floating-label
                                             outlined
-                                            :external-validator="
-                                                grupoValidator
-                                            "
+                                            :external-validator="grupoValidator"
                                         >
                                             <label>Grupo</label>
                                         </bs-combobox>
-                                        <div class="form-group">
-      <bs-combobox v-model="employee0" :data-source="peopleSrc">
-        <label class="col-md-3 col-xl-2 col-form-label">Employee</label>
-      </bs-combobox>
-    </div>
-    <div class="form-group">
-      <bs-combobox :value="employee1" :data-source="peopleSrc" readonly>
-        <label class="col-md-3 col-xl-2 col-form-label">State Readonly</label>
-      </bs-combobox>
-    </div>
-    <div class="form-group">
-      <bs-combobox :value="employee2" :data-source="peopleSrc" disabled>
-        <label class="col-md-3 col-xl-2 col-form-label">State Disabled</label>
-      </bs-combobox>
-    </div>
                                     </div>
                                 </div>
                             </bs-card-content>
@@ -202,17 +203,17 @@ import { validationMixin } from "vuelidate";
 import { required, minLength } from "vuelidate/lib/validators";
 
 const productoValidator = {
-    producto_id: { required},
+    producto_id: { required },
     nombre: { required, minLength: minLength(5) },
-    nombre_corto: { required},
-    stock_maximo: { required},
-    stock_minimo: { required},
-    pvc: { required},
-    iva: { required},
-    descripcion: { required},
-    codigo: { required},
-    grupo_id: { required},
-    laboratorio_id: { required},
+    nombre_corto: { required },
+    stock_maximo: { required },
+    stock_minimo: { required },
+    pvc: { required },
+    iva: { required },
+    descripcion: { required },
+    codigo: { required },
+    grupo_id: { required },
+    laboratorio_id: { required }
 };
 export default {
     mixins: [validationMixin],
@@ -225,7 +226,7 @@ export default {
                 {
                     //Aqui es donde se declará las variables para los txt, cmb, etc
                     schema: {
-                        producto_id:0,
+                        producto_id: 0,
                         nombre: "",
                         nombre_corto: "",
                         stock_maximo: "",
@@ -241,12 +242,12 @@ export default {
                     proxy: {
                         save: {
                             url:
-                                "/modulos/administracion/producto/guardar_producto",
+                                "/modulos/administracion/producto/guardar_modificar_producto",
                             method: "post"
                         },
                         update: {
                             url:
-                                "/modulos/administracion/producto/actualizar_producto",
+                                "/modulos/administracion/producto/guardar_modificar_producto",
                             method: "post"
                         }
                     }
@@ -280,7 +281,17 @@ export default {
                         idProperty: "id",
                         dataProperty: "laboratorios",
                         totalProperty: "total",
-                        remoteSort: false,
+                        //remoteFilter: false, // default is TRUE
+                        //remotePaging: false, // default is TRUE
+                        remoteSort: false, // default is TRUE
+                        //pageSize: 10,
+                        filters: [
+                            {
+                                property: "nombre",
+                                value: "id",
+                                operator: "contains"
+                            }
+                        ],
                         restProxy: {
                             browse:
                                 "/modulos/administracion/laboratorio/cargar_laboratorio_combo"
@@ -335,11 +346,11 @@ export default {
             return {
                 hasError: this.$v.productoForm.nombre_corto.$error,
                 messages: {
-                    required: this.requiredErrorMsg,
+                    required: this.requiredErrorMsg
                 },
                 dirty: this.$v.productoForm.nombre_corto.$dirty,
                 validators: {
-                    required: this.$v.productoForm.nombre_corto.required,
+                    required: this.$v.productoForm.nombre_corto.required
                 }
             };
         },
@@ -347,11 +358,11 @@ export default {
             return {
                 hasError: this.$v.productoForm.descripcion.$error,
                 messages: {
-                    required: this.requiredErrorMsg,
+                    required: this.requiredErrorMsg
                 },
                 dirty: this.$v.productoForm.descripcion.$dirty,
                 validators: {
-                    required: this.$v.productoForm.descripcion.required,
+                    required: this.$v.productoForm.descripcion.required
                 }
             };
         },
@@ -359,11 +370,11 @@ export default {
             return {
                 hasError: this.$v.productoForm.codigo.$error,
                 messages: {
-                    required: this.requiredErrorMsg,
+                    required: this.requiredErrorMsg
                 },
                 dirty: this.$v.productoForm.codigo.$dirty,
                 validators: {
-                    required: this.$v.productoForm.codigo.required,
+                    required: this.$v.productoForm.codigo.required
                 }
             };
         },
@@ -371,11 +382,11 @@ export default {
             return {
                 hasError: this.$v.productoForm.stock_minimo.$error,
                 messages: {
-                    required: this.requiredErrorMsg,
+                    required: this.requiredErrorMsg
                 },
                 dirty: this.$v.productoForm.stock_minimo.$dirty,
                 validators: {
-                    required: this.$v.productoForm.stock_minimo.required,
+                    required: this.$v.productoForm.stock_minimo.required
                 }
             };
         },
@@ -383,11 +394,11 @@ export default {
             return {
                 hasError: this.$v.productoForm.stock_maximo.$error,
                 messages: {
-                    required: this.requiredErrorMsg,
+                    required: this.requiredErrorMsg
                 },
                 dirty: this.$v.productoForm.stock_maximo.$dirty,
                 validators: {
-                    required: this.$v.productoForm.stock_maximo.required,
+                    required: this.$v.productoForm.stock_maximo.required
                 }
             };
         },
@@ -395,11 +406,11 @@ export default {
             return {
                 hasError: this.$v.productoForm.pvc.$error,
                 messages: {
-                    required: this.requiredErrorMsg,
+                    required: this.requiredErrorMsg
                 },
                 dirty: this.$v.productoForm.pvc.$dirty,
                 validators: {
-                    required: this.$v.productoForm.pvc.required,
+                    required: this.$v.productoForm.pvc.required
                 }
             };
         },
@@ -407,11 +418,11 @@ export default {
             return {
                 hasError: this.$v.productoForm.iva.$error,
                 messages: {
-                    required: this.requiredErrorMsg,
+                    required: this.requiredErrorMsg
                 },
                 dirty: this.$v.productoForm.iva.$dirty,
                 validators: {
-                    required: this.$v.productoForm.iva.required,
+                    required: this.$v.productoForm.iva.required
                 }
             };
         },
@@ -419,11 +430,11 @@ export default {
             return {
                 hasError: this.$v.productoForm.laboratorio_id.$error,
                 messages: {
-                    required: this.requiredErrorMsg,
+                    required: this.requiredErrorMsg
                 },
                 dirty: this.$v.productoForm.laboratorio_id.$dirty,
                 validators: {
-                    required: this.$v.productoForm.laboratorio_id.required,
+                    required: this.$v.productoForm.laboratorio_id.required
                 }
             };
         },
@@ -431,14 +442,14 @@ export default {
             return {
                 hasError: this.$v.productoForm.grupo_id.$error,
                 messages: {
-                    required: this.requiredErrorMsg,
+                    required: this.requiredErrorMsg
                 },
                 dirty: this.$v.productoForm.grupo_id.$dirty,
                 validators: {
-                    required: this.$v.productoForm.grupo_id.required,
+                    required: this.$v.productoForm.grupo_id.required
                 }
             };
-        },
+        }
     },
 
     methods: {
@@ -450,24 +461,42 @@ export default {
                     this.productoForm
                         .update()
                         .then(function(response) {
-                            that.showNotificationProgress('Exito al Procesar', 'Producto modificado correctamente.', 'success');
+                            that.showNotificationProgress(
+                                "Exito al Procesar",
+                                "Producto modificado correctamente.",
+                                "success"
+                            );
                         })
                         .catch(function(error) {
-                            that.showNotificationProgress('Error en GuardarActualizarProducto', 'Por favor comuníquese con el administrador. ' + error, 'error');
+                            that.showNotificationProgress(
+                                "Error en GuardarActualizarProducto",
+                                "Por favor comuníquese con el administrador. " +
+                                    error,
+                                "error"
+                            );
                         });
                 } else {
                     this.productoForm
                         .save()
                         .then(function(response) {
-                            that.showNotificationProgress('Exito al Procesar', 'Producto creado correctamente.', 'success');
+                            that.showNotificationProgress(
+                                "Exito al Procesar",
+                                "Producto creado correctamente.",
+                                "success"
+                            );
                         })
                         .catch(function(error) {
-                            that.showNotificationProgress('Error en GuardarActualizarProducto', 'Por favor comuníquese con el administrador. ' + error, 'error');
+                            that.showNotificationProgress(
+                                "Error en GuardarActualizarProducto",
+                                "Por favor comuníquese con el administrador. " +
+                                    error,
+                                "error"
+                            );
                         });
                 }
             }
         },
-        showNotificationProgress(title,message, icon) {
+        showNotificationProgress(title, message, icon) {
             let options = {
                 message: message,
                 progressBar: true,

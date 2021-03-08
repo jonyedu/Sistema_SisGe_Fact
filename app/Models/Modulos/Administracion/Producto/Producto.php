@@ -17,7 +17,6 @@ class Producto extends Model
      */
     // protected $connection = 'admin_db_sql';
 
-    public $timestamps = false;
 
     protected $fillable = [
         'id',
@@ -35,7 +34,13 @@ class Producto extends Model
         'generico',
         'refrigeracion',
         'iva',
-        'imagen'
+        'imagen',
+        'usu_created_update',
+        'created_at',
+        'updated_at',
+        'pcip',
+        'status'
+
     ];
 
     public function laboratorio(){
