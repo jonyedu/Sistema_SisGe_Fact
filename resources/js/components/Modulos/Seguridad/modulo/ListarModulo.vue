@@ -26,7 +26,7 @@
             </bs-card>
             <bs-card >
                 <bs-grid
-                    ref="gridmodulo"
+                    ref="gridModulo"
                     :data-source="modulos"
                     :pageable="{
                         //Configure los mensajes de texto de paginación. Las propiedades del objeto son:
@@ -134,7 +134,7 @@
                 >
                     Cancelar
                 </bs-button>
-                <bs-button active color="primary" @click="eliminarmodulo()">
+                <bs-button active color="primary" @click="eliminarModulo()">
                     OK
                 </bs-button>
             </template>
@@ -176,7 +176,7 @@ export default {
             this.trueModalVisible = true;
             this.item = item;
         },
-        eliminarmodulo() {
+        eliminarModulo() {
             let that = this;
             let url =
                 "/modulos/seguridad/modulo/eliminar_modulo/" +
@@ -185,7 +185,7 @@ export default {
                 .delete(url)
                 .then(function() {
                     that.trueModalVisible = false;
-                    that.$refs.gridmodulo.reload();
+                    that.$refs.gridModulo.reload();
                     that.showNotificationProgress(
                         "Exito al procesar",
                         "Usted ha eliminado correctamente el modulo." +
@@ -196,7 +196,7 @@ export default {
                 .catch(error => {
                     that.trueModalVisible = false;
                     that.showNotificationProgress(
-                        "Error en eliminarmodulo",
+                        "Error en eliminarModulo",
                         "Por favor comuníquese con el administrador." + error,
                         "error"
                     );
