@@ -34,5 +34,10 @@ class s_par_fact_ventas_cabecera extends Model
         'cambio',
         'recibido',
         'status',
+        'usu_created', 
+        'usu_update', 
+        'created_at', 
+        'updated_at', 
+        'pcip'
     ];
 }
