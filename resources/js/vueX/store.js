@@ -13,6 +13,7 @@ export default new Vuex.Store({
         laboratorio: null,
         producto: null,
         usuario: null,
+        modulo: null,
 
     },
 
@@ -26,7 +27,10 @@ export default new Vuex.Store({
         },
         addUsuario(state ){
             state.usuario = state.usuario;
-        }
+        },
+        addModulo(state ){
+            state.modulo = state.modulo;
+        },
     },
     //eventos actions del store
     actions:{
@@ -39,6 +43,9 @@ export default new Vuex.Store({
         addUsuarioAction(context ){
             context.commit('addUsuario');
         },
+        addModuloAction(context ){
+            context.commit('addModulo');
+        },
     },
     getters:{
         getProducto(state){
@@ -49,7 +56,10 @@ export default new Vuex.Store({
         },
         getUsuario(state){
             return state.usuario;
-        }
+        },
+        getModulo(state){
+            return state.modulo;
+        },
 
     }
 });

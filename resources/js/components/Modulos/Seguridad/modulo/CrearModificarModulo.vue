@@ -9,7 +9,7 @@
                                 <router-link
                                     :to="
                                         prefijo +
-                                            '/modulos/seguridad/usuario/mostrar_usuario'
+                                            '/modulos/seguridad/modulo/mostrar_modulo'
                                     "
                                 >
                                     <bs-tooltip
@@ -26,7 +26,7 @@
                                 </router-link>
 
                                 <bs-tooltip
-                                    content="Guardar usuario"
+                                    content="Guardar modulo"
                                     placement="bottom"
                                 >
                                     <bs-button
@@ -34,7 +34,7 @@
                                         icon="save"
                                         icon-size="sm"
                                         color="success"
-                                        @click="guardarActualizarUsuario()"
+                                        @click="guardarActualizarModulo()"
                                     >
                                     </bs-button>
                                 </bs-tooltip>
@@ -43,7 +43,7 @@
                     </bs-card>
                     <bs-card shadow>
                         <bs-card-header class="bg-indigo text-white"
-                            >Mantenimiento de usuario</bs-card-header
+                            >Mantenimiento de modulo</bs-card-header
                         >
                         <bs-card-body>
                             <bs-card-content>
@@ -52,109 +52,56 @@
                                         <div
                                             class="col-lg-6 col-md-6 col-sm-12"
                                         >
-                                            <bs-text-field
-                                                prepend-icon-outer="user"
-                                                floating-label
-                                                outlined
-                                                v-model="usuarioForm.apellido"
-                                                :external-validator="
-                                                    apellidoValidator
-                                                "
-                                            >
-                                                <label>Apellido</label>
-                                            </bs-text-field>
-                                            <bs-text-field
-                                                prepend-icon-outer="user"
-                                                floating-label
-                                                outlined
-                                                v-model="usuarioForm.usuario"
-                                                :external-validator="
-                                                    usuarioValidator
-                                                "
-                                            >
-                                                <label>Usuario</label>
-                                            </bs-text-field>
-                                            <bs-text-field
-                                                prepend-icon-outer="user"
-                                                floating-label
-                                                outlined
-                                                v-model="
-                                                    usuarioForm.contrasenia
-                                                "
-                                                :external-validator="
-                                                    contraseniaValidator
-                                                "
-                                                type="password"
-                                            >
-                                                <label>Contraseña</label>
-                                            </bs-text-field>
                                             <bs-combobox
                                                 prepend-icon-outer="user"
-                                                v-model="
-                                                    usuarioForm.profesion_id
-                                                "
-                                                :data-source="cmb.profesiones"
+                                                v-model="moduloForm.empresa_id"
+                                                :data-source="cmb.empresas"
                                                 floating-label
                                                 outlined
                                                 :external-validator="
-                                                    profesionValidator
+                                                    empresaValidator
                                                 "
-                                                minimum-items-for-search="5"
                                             >
-                                                <label>Profesión</label>
+                                                <label>Empresa</label>
                                             </bs-combobox>
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="moduloForm.descripcion"
+                                                :external-validator="
+                                                    descripcionValidator
+                                                "
+                                            >
+                                                <label>Descripción</label>
+                                            </bs-text-field>
                                         </div>
                                         <div
                                             class="col-lg-6 col-md-6 col-sm-12"
                                         >
-                                            <bs-text-field
-                                                prepend-icon-outer="user"
-                                                floating-label
-                                                outlined
-                                                v-model="usuarioForm.nombre"
-                                                :external-validator="
-                                                    nombreValidator
-                                                "
-                                            >
-                                                <label>Nombre</label>
-                                            </bs-text-field>
-                                            <bs-text-field
-                                                prepend-icon-outer="user"
-                                                floating-label
-                                                outlined
-                                                v-model="usuarioForm.email"
-                                                :external-validator="
-                                                    emailValidator
-                                                "
-                                            >
-                                                <label>Email</label>
-                                            </bs-text-field>
-                                            <bs-text-field
-                                                prepend-icon-outer="user"
-                                                floating-label
-                                                outlined
-                                                v-model="
-                                                    usuarioForm.contrasenia_confirmar
-                                                "
-                                                :external-validator="
-                                                    contraseniaConfirmarValidator
-                                                "
-                                                type="password"
-                                            >
-                                                <label>Confirmar</label>
-                                            </bs-text-field>
                                             <bs-combobox
                                                 prepend-icon-outer="user"
-                                                v-model="usuarioForm.perfil_id"
-                                                :data-source="cmb.perfiles"
+                                                v-model="moduloForm.sucursal_id"
+                                                :data-source="cmb.sucursales"
                                                 floating-label
                                                 outlined
                                                 :external-validator="
-                                                    perfilValidator
+                                                    sucursalValidator
                                                 "
                                             >
-                                                <label>Perfil</label>
+                                                <label>Sucursal</label>
                                             </bs-combobox>
+                                            <bs-text-field
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="moduloForm.imagen"
+                                                :external-validator="
+                                                    imagenValidator
+                                                "
+                                            >
+                                                <label>Imagen</label>
+                                            </bs-text-field>
                                         </div>
                                     </div>
                                 </form>
@@ -171,17 +118,14 @@
 <script>
 import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required} from "vuelidate/lib/validators";
 
-const usuarioValidator = {
-    apellido: { required },
-    usuario: { required },
-    contrasenia: { required, minLength: minLength(8) },
-    profesion_id: { required },
-    nombre: { required },
-    email: { required, email },
-    contrasenia_confirmar: { required, minLength: minLength(8), sameAs: sameAs('contrasenia') },
-    perfil_id: { required }
+const moduloValidator = {
+    empresa_id: { required },
+    sucursal_id: { required },
+    descripcion: { required},
+    imagen: { required },
+
 };
 export default {
     mixins: [validationMixin],
@@ -192,30 +136,26 @@ export default {
             //Variables para obtener el index
             prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
-            usuarioForm: new BsModel(
+            moduloForm: new BsModel(
                 {
                     //Aqui es donde se declará las variables para los txt, cmb, etc
                     schema: {
-                        usuario_id: 0,
-                        apellido: "",
-                        usuario: "",
-                        contrasenia: "",
-                        profesion_id: "",
-                        nombre: "",
-                        email: "",
-                        contrasenia_confirmar: "",
-                        perfil_id: "",
+                        modulo_id: 0,
+                        empresa_id: "",
+                        sucursal_id: "",
+                        descripcion: "",
+                        imagen: "",
                     },
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
                             url:
-                                "/modulos/seguridad/usuario/guardar_usuario",
+                                "/modulos/seguridad/modulo/guardar_modulo",
                             method: "post"
                         },
                         update: {
                             url:
-                                "/modulos/seguridad/usuario/modificar_usuario",
+                                "/modulos/seguridad/modulo/modificar_modulo",
                             method: "post"
                         }
                     }
@@ -225,182 +165,123 @@ export default {
             ),
             //Variables para la validaciones
             requiredErrorMsg: "Este campo es obligatorio.",
-            minLengthErrorMsg: "Este campo debe tener al menos 8 caracteres.",
-            emailErrorMsg: "Por favor ingrese una dirección de correo electrónico válida.",
-            contraseniaConfirmarErrorMsg: "Las contraseñas deben ser idénticas.",
 
             //Objeto para almacenar el arreglo de cada combobox
             cmb: {
                 //Combo Grupo
-                profesiones: {
+                empresas: {
                     proxy: new BsStore({
-                        idProperty: "codigo",
-                        dataProperty: "profesiones",
+                        idProperty: "Empresa_Id",
+                        dataProperty: "empresas",
                         remoteSort: false,
                         restProxy: {
                             browse:
-                                "/modulos/seguridad/profesion/cargar_profesion_combo_box"
+                                "/modulos/seguridad/empresa/cargar_empresa_table"
                         }
                     }),
-                    schema: { displayField: "descripcion", valueField: "codigo" }
+                    schema: { displayField: "Empresa_Nombre", valueField: "Empresa_Id" }
                 },
                 //Combo Laboratorio
-                perfiles: {
+                sucursales: {
                     proxy: new BsStore({
-                        idProperty: "codigo",
-                        dataProperty: "perfiles",
+                        idProperty: "Sucursal_Id",
+                        dataProperty: "sucursales",
                         remoteSort: false,
                         restProxy: {
                             browse:
-                                "/modulos/seguridad/perfil/cargar_perfil_combo_box"
+                                "/modulos/seguridad/sucursal/cargar_sucursal_table"
                         }
                     }),
-                    schema: { displayField: "descripcion", valueField: "codigo" }
+                    schema: { displayField: "Sucursal_Nombre", valueField: "Sucursal_Id" }
                 }
             }
         };
     },
     validations: {
-        usuarioForm: usuarioValidator
+        moduloForm: moduloValidator
     },
 
     mounted: function() {
         this.prefijo = prefix;
-        if (this.$store.getters.getUsuario != null) {
-            var usuario = this.$store.getters.getUsuario;
-            this.usuarioForm.usuario_id = usuario.codigo;
-            this.usuarioForm.apellido = usuario.apellido;
-            this.usuarioForm.usuario = usuario.usuario;
-            this.usuarioForm.profesion_id = usuario.profesion;
-            this.usuarioForm.nombre = usuario.nombre;
-            this.usuarioForm.email = usuario.email;
-            this.usuarioForm.perfil_id = usuario.perfil;
+        if (this.$store.getters.getModulo != null) {
+            var modulo = this.$store.getters.getModulo;
+            this.moduloForm.modulo_id = modulo.codigo;
+            this.moduloForm.empresa_id = modulo.empresa_id;
+            this.moduloForm.sucursal_id = modulo.sucursal_id;
+            this.moduloForm.descripcion = modulo.descripcion;
+            this.moduloForm.imagen = modulo.imagen;
         }
     },
     beforeDestroy: function() {
-        this.$store.state.usuario = null;
+        this.$store.state.modulo = null;
     },
     computed: {
         //Metodo para validar el campo nombre
-        apellidoValidator() {
+        empresaValidator() {
             return {
-                hasError: this.$v.usuarioForm.apellido.$error,
+                hasError: this.$v.moduloForm.empresa_id.$error,
                 messages: {
                     required: this.requiredErrorMsg,
                 },
-                dirty: this.$v.usuarioForm.apellido.$dirty,
+                dirty: this.$v.moduloForm.empresa_id.$dirty,
                 validators: {
-                    required: this.$v.usuarioForm.apellido.required,
+                    required: this.$v.moduloForm.empresa_id.required,
                 }
             };
         },
-        usuarioValidator() {
+        sucursalValidator() {
             return {
-                hasError: this.$v.usuarioForm.usuario.$error,
+                hasError: this.$v.moduloForm.sucursal_id.$error,
                 messages: {
                     required: this.requiredErrorMsg
                 },
-                dirty: this.$v.usuarioForm.usuario.$dirty,
+                dirty: this.$v.moduloForm.sucursal_id.$dirty,
                 validators: {
-                    required: this.$v.usuarioForm.usuario.required
+                    required: this.$v.moduloForm.sucursal_id.required
                 }
             };
         },
-        contraseniaValidator() {
+        descripcionValidator() {
             return {
-                hasError: this.$v.usuarioForm.contrasenia.$error,
+                hasError: this.$v.moduloForm.descripcion.$error,
                 messages: {
                     required: this.requiredErrorMsg,
                     minLength: this.minLengthErrorMsg
                 },
-                dirty: this.$v.usuarioForm.contrasenia.$dirty,
+                dirty: this.$v.moduloForm.descripcion.$dirty,
                 validators: {
-                    required: this.$v.usuarioForm.contrasenia.required,
-                    minLength: this.$v.usuarioForm.contrasenia.minLength
+                    required: this.$v.moduloForm.descripcion.required,
                 }
             };
         },
-        profesionValidator() {
+        imagenValidator() {
             return {
-                hasError: this.$v.usuarioForm.profesion_id.$error,
+                hasError: this.$v.moduloForm.imagen.$error,
                 messages: {
                     required: this.requiredErrorMsg
                 },
-                dirty: this.$v.usuarioForm.profesion_id.$dirty,
+                dirty: this.$v.moduloForm.imagen.$dirty,
                 validators: {
-                    required: this.$v.usuarioForm.profesion_id.required
+                    required: this.$v.moduloForm.imagen.required
                 }
             };
         },
-        nombreValidator() {
-            return {
-                hasError: this.$v.usuarioForm.nombre.$error,
-                messages: {
-                    required: this.requiredErrorMsg
-                },
-                dirty: this.$v.usuarioForm.nombre.$dirty,
-                validators: {
-                    required: this.$v.usuarioForm.nombre.required
-                }
-            };
-        },
-        emailValidator() {
-            return {
-                hasError: this.$v.usuarioForm.email.$error,
-                messages: {
-                    required: this.requiredErrorMsg,
-                    email: this.emailErrorMsg
-                },
-                dirty: this.$v.usuarioForm.email.$dirty,
-                validators: {
-                    required: this.$v.usuarioForm.email.required,
-                    email: this.$v.usuarioForm.email.email
-                }
-            };
-        },
-        contraseniaConfirmarValidator() {
-            return {
-                hasError: this.$v.usuarioForm.contrasenia_confirmar.$error,
-                messages: {
-                    required: this.requiredErrorMsg,
-                    sameAsPassword: this.contraseniaConfirmarErrorMsg
-                },
-                dirty: this.$v.usuarioForm.contrasenia_confirmar.$dirty,
-                validators: {
-                    required: this.$v.usuarioForm.contrasenia_confirmar.required,
-                    minLength: this.$v.usuarioForm.contrasenia_confirmar.minLength,
-                    sameAsPassword: this.$v.usuarioForm.contrasenia_confirmar.sameAs,
-                }
-            };
-        },
-        perfilValidator() {
-            return {
-                hasError: this.$v.usuarioForm.perfil_id.$error,
-                messages: {
-                    required: this.requiredErrorMsg
-                },
-                dirty: this.$v.usuarioForm.perfil_id.$dirty,
-                validators: {
-                    required: this.$v.usuarioForm.perfil_id.required
-                }
-            };
-        }
     },
 
     methods: {
-        guardarActualizarUsuario() {
+        guardarActualizarModulo() {
             var that = this;
             this.$v.$touch();
             if (!this.$v.$error) {
                 this.showLoader = true;
-                if (this.$store.getters.getUsuario != null) {
-                    this.usuarioForm
+                if (this.$store.getters.getModulo != null) {
+                    this.moduloForm
                         .update()
                         .then(function(response) {
                             that.showLoader = false;
                             that.showNotificationProgress(
                                 "Exito al Procesar",
-                                "Usuario modificado correctamente.",
+                                "modulo modificado correctamente.",
                                 "success"
                             );
                             that.lmpCampos();
@@ -408,20 +289,20 @@ export default {
                         .catch(function(error) {
                             that.showLoader = false;
                             that.showNotificationProgress(
-                                "Error en guardarActualizarUsuario",
+                                "Error en guardarActualizarModulo",
                                 "Por favor comuníquese con el administrador. " +
                                     error,
                                 "error"
                             );
                         });
                 } else {
-                    this.usuarioForm
+                    this.moduloForm
                         .save()
                         .then(function(response) {
                             that.showLoader = false;
                             that.showNotificationProgress(
                                 "Exito al Procesar",
-                                "Usuario creado correctamente.",
+                                "modulo creado correctamente.",
                                 "success"
                             );
                             that.lmpCampos();
@@ -429,7 +310,7 @@ export default {
                         .catch(function(error) {
                             that.showLoader = false;
                             that.showNotificationProgress(
-                                "Error en guardarActualizarUsuario",
+                                "Error en guardarActualizarmodulo",
                                 "Por favor comuníquese con el administrador. " +
                                     error,
                                 "error"
@@ -449,7 +330,7 @@ export default {
         },
         lmpCampos() {
             this.$refs.myform.reset();
-            this.usuarioForm.reset();
+            this.moduloForm.reset();
             this.$v.$reset();
         }
     }

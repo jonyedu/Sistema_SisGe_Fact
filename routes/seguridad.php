@@ -70,4 +70,20 @@ Route::group(['prefix' => 'modulos/seguridad', 'middleware' => ['auth:web'], 've
         Route::get('cargar_menu/{idPerfil}', 'PerfilPorUsuarioController@cargarMenu');
         Route::post('actualizar_perfil_por_usuario', 'PerfilPorUsuarioController@actualizarPerfilPorUsuario');
     });
+
+    /* SubModulo Empresa */
+    Route::namespace('Modulos\Seguridad\Empresa')->prefix('empresa')->group(function () {
+        Route::get('cargar_empresa_table', 'EmpresaController@cargarEmpresaTabla');
+        Route::post('modificar_empresa', 'EmpresaController@modificarEmpresa');
+        Route::post('guardar_empresa', 'EmpresaController@guardarEmpresa');
+        Route::delete('eliminar_empresa/{id}', 'EmpresaController@eliminarEmpresa');
+    });
+
+    /* SubModulo Sucursal */
+    Route::namespace('Modulos\Seguridad\Sucursal')->prefix('sucursal')->group(function () {
+        Route::get('cargar_sucursal_table', 'SucursalController@cargarSucursalTabla');
+        Route::post('modificar_sucursal', 'SucursalController@modificarSucursal');
+        Route::post('guardar_sucursal', 'SucursalController@guardarSucursal');
+        Route::delete('eliminar_sucursal/{id}', 'SucursalController@eliminarSucursal');
+    });
 });
