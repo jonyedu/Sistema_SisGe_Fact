@@ -17,6 +17,10 @@ import Profesion from "./components/Modulos/Seguridad/Profesion/Profesion";
 //Administracion
 import Producto from "./components/Modulos/Administracion/Producto/ListarProducto";
 import ModificarCrearProducto from "./components/Modulos/Administracion/Producto/CrearModificarProducto";
+//Laboratorio
+import Laboratorio from "./components/Modulos/Administracion/Laboratorio/ListaLaboratorio";
+import ModificarCrearLaboratorio from "./components/Modulos/Administracion/Laboratorio/CrearModificarLaboratorio";
+
 
 
 Vue.use(VueRouter);
@@ -92,6 +96,18 @@ export default new VueRouter({
                 prefijo +
                 "/modulos/administracion/producto/crear_modificar_producto",
             component: ModificarCrearProducto
+        },
+        {
+            path:
+                prefijo +
+                "/modulos/administracion/laboratorio/mostrar_laboratorio",
+            component: Laboratorio
+        },
+        {
+            path:
+                prefijo +
+                "/modulos/administracion/laboratorio/crear_modificar_laboratorio",
+            component: ModificarCrearLaboratorio
         },
     ],
     mode: "history" //Evita que aparezca # en la ruta

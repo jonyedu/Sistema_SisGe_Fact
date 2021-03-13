@@ -29,6 +29,10 @@ Route::group(['prefix' => '/modulos/administracion', 'middleware' => ['auth:web'
     //Submenu de Laboratorio
     Route::namespace('Modulos\Administracion\Laboratorio')->prefix('laboratorio')->group(function () {
         Route::get('cargar_laboratorio_combo_box', 'LaboratorioController@cargarLaboratorioComboBox');
+        Route::get('cargar_laboratorio_combo', 'LaboratorioController@cargarLaboratorioCombo');
+        Route::get('cargar_laboratorio_all', 'LaboratorioController@cargarLaboratorioAll');
+        //guardarModificarLaboratorio
+        Route::post('guardar_modificar_laboratorio', 'LaboratorioController@guardarModificarLaboratorio');
     });
 
     //Submenu de Grupo
