@@ -176,7 +176,7 @@ export default {
                         remoteSort: false,
                         restProxy: {
                             browse:
-                                "/modulos/seguridad/empresa/cargar_empresa_table"
+                                "/modulos/seguridad/empresa/cargar_empresa_combo_box"
                         }
                     }),
                     schema: { displayField: "Empresa_Nombre", valueField: "Empresa_Id" }
@@ -189,7 +189,7 @@ export default {
                         remoteSort: false,
                         restProxy: {
                             browse:
-                                "/modulos/seguridad/sucursal/cargar_sucursal_table"
+                                "/modulos/seguridad/sucursal/cargar_sucursal_combo_box"
                         }
                     }),
                     schema: { displayField: "Sucursal_Nombre", valueField: "Sucursal_Id" }
@@ -206,8 +206,8 @@ export default {
         if (this.$store.getters.getModulo != null) {
             var modulo = this.$store.getters.getModulo;
             this.moduloForm.modulo_id = modulo.codigo;
-            this.moduloForm.empresa_id = modulo.empresa_id;
-            this.moduloForm.sucursal_id = modulo.sucursal_id;
+            this.moduloForm.empresa_id = modulo.empresa;
+            this.moduloForm.sucursal_id = modulo.sucursal;
             this.moduloForm.descripcion = modulo.descripcion;
             this.moduloForm.imagen = modulo.imagen;
         }
@@ -310,7 +310,7 @@ export default {
                         .catch(function(error) {
                             that.showLoader = false;
                             that.showNotificationProgress(
-                                "Error en guardarActualizarmodulo",
+                                "Error en guardarActualizarModulo",
                                 "Por favor comuníquese con el administrador. " +
                                     error,
                                 "error"

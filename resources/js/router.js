@@ -9,7 +9,8 @@ import ModificarCrearUsuario from "./components/Modulos/Seguridad/Usuario/CrearM
 import Modulo from "./components/Modulos/Seguridad/modulo/ListarModulo";
 import ModificarCrearModulo from "./components/Modulos/Seguridad/modulo/CrearModificarModulo";
 import Perfil from "./components/Modulos/Seguridad/Perfil/Perfil";
-import SubModulo from "./components/Modulos/Seguridad/sub_modulo/SubModulo";
+import SubModulo from "./components/Modulos/Seguridad/sub_modulo/ListarSubModulo";
+import ModificarCrearSubModulo from "./components/Modulos/Seguridad/sub_modulo/CrearModificarSubModulo";
 import PerfilPorUsuario from "./components/Modulos/Seguridad/PerfilPorUsuario/PerfilPorUsuario";
 import Profesion from "./components/Modulos/Seguridad/Profesion/Profesion";
 
@@ -59,6 +60,12 @@ export default new VueRouter({
                 prefijo +
                 "/modulos/seguridad/sub_modulo/mostrar_sub_modulo",
             component: SubModulo
+        },
+        {
+            path:
+                prefijo +
+                "/modulos/seguridad/sub_modulo/crear_modificar_sub_modulo",
+            component: ModificarCrearSubModulo
         },
         {
             path:

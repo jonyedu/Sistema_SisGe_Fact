@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class SubModuloApiController extends Controller
 {
-    public function cargarSubModuloPorModulo($id){
+    public function cargarSubModuloPorModulo($id)
+    {
         try {
             $subModulos = SgOpcionAplicacion::where('status', 1)
                 ->orderBy('descripcion', 'asc')
@@ -25,7 +26,7 @@ class SubModuloApiController extends Controller
     public function cargarSubModuloComboBox($id)
     {
         try {
-            $subModulo = DB::select("exec SPSEG_OPCION_APLICACION_POR_MODULO ".$id );
+            $subModulo = DB::select("exec SPSEG_OPCION_APLICACION_POR_MODULO " . $id);
             return  response()->json(['subModulo' => $subModulo], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
@@ -35,8 +36,10 @@ class SubModuloApiController extends Controller
     public function cargarSubModuloTabla()
     {
         try {
-            $subModulo = DB::select("exec SPSEG_OPCION_APLICACION_POR_MODULO_ALL ");
-            return  response()->json(['subModulo' => $subModulo], 200);
+            $subModulos = SgOpcionAplicacion::where('status', 1)
+                ->with('modulo:codigo,descripcion')
+                ->get();
+            return  response()->json(['subModulos' => $subModulos], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
@@ -55,7 +58,7 @@ class SubModuloApiController extends Controller
             $pcname = $_SERVER["REMOTE_ADDR"];
             $status = 1;
             $route = $request->input('frm_sub_ruta');
-            DB::insert("exec SPSEG_INSERT_OPCION_APLICACION '', " . "'$modulo'" . ",'$descripcion'" . ",'$imagen'" . ",'$tipo'" . ",'$ejecutable'" . ",'$usuario_ingreso'" . ",'$pcname'" . ",'$status'" . ",'$route'" );
+            DB::insert("exec SPSEG_INSERT_OPCION_APLICACION '', " . "'$modulo'" . ",'$descripcion'" . ",'$imagen'" . ",'$tipo'" . ",'$ejecutable'" . ",'$usuario_ingreso'" . ",'$pcname'" . ",'$status'" . ",'$route'");
             return  response()->json(['msj' => 'OK'], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
@@ -75,7 +78,7 @@ class SubModuloApiController extends Controller
             $pcname = $_SERVER["REMOTE_ADDR"];
             $status = 1;
             $route = $request->input('frm_sub_ruta');
-            DB::insert("exec SPSEG_UPDATE_OPCION_APLICACION " . "'$codigo'" . ",'$modulo'" . ",'$descripcion'" . ",'$imagen'" . ",'$tipo'" . ",'$ejecutable'" . ",'$usuario_modificacion'" . ",'$pcname'" . ",'$status'" . ",'$route'" );
+            DB::insert("exec SPSEG_UPDATE_OPCION_APLICACION " . "'$codigo'" . ",'$modulo'" . ",'$descripcion'" . ",'$imagen'" . ",'$tipo'" . ",'$ejecutable'" . ",'$usuario_modificacion'" . ",'$pcname'" . ",'$status'" . ",'$route'");
             return  response()->json(['msj' => 'OK'], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);

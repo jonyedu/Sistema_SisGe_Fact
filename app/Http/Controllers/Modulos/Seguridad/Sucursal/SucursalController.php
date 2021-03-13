@@ -21,6 +21,18 @@ class SucursalController extends Controller
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
+    public function cargarSucursalComboBox()
+    {
+        try {
+            $sucursales = Sucursal::select('Sucursal_Id', 'Sucursal_Nombre')
+                ->where('status', 1)
+                ->orderBy('Sucursal_Nombre', 'asc')
+                ->get();
+            return  response()->json(['sucursales' => $sucursales], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
+        }
+    }
 
     public function guardarSucursal(Request $request)
     {

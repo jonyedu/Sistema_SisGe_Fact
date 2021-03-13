@@ -13,7 +13,7 @@ export default new Vuex.Store({
         producto: null,
         usuario: null,
         modulo: null,
-
+        subModulo: null,
     },
 
     //una mutacion se va a realizar siempre y cuando sea llamada desde una acccion
@@ -27,6 +27,9 @@ export default new Vuex.Store({
         addModulo(state ){
             state.modulo = state.modulo;
         },
+        addSubModulo(state ){
+            state.subModulo = state.subModulo;
+        },
     },
     //eventos actions del store
     actions:{
@@ -39,6 +42,9 @@ export default new Vuex.Store({
         addModuloAction(context ){
             context.commit('addModulo');
         },
+        addSubModuloAction(context ){
+            context.commit('addSubModulo');
+        },
     },
     getters:{
         getProducto(state){
@@ -50,7 +56,9 @@ export default new Vuex.Store({
         getModulo(state){
             return state.modulo;
         },
-
+        getSubModulo(state){
+            return state.subModulo;
+        },
     }
 });
 

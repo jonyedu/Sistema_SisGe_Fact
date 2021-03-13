@@ -28,11 +28,11 @@ Route::group(['prefix' => '/modulos/administracion', 'middleware' => ['auth:web'
 
     //Submenu de Laboratorio
     Route::namespace('Modulos\Administracion\Laboratorio')->prefix('laboratorio')->group(function () {
-        Route::get('cargar_laboratorio_combo', 'LaboratorioController@cargarLaboratorioCombo');
+        Route::get('cargar_laboratorio_combo_box', 'LaboratorioController@cargarLaboratorioComboBox');
     });
 
     //Submenu de Grupo
     Route::namespace('Modulos\Administracion\Grupo')->prefix('grupo')->group(function () {
-        Route::get('cargar_grupo_combo', 'GrupoController@cargarGrupoCombo');
+        Route::get('cargar_grupo_combo_box', 'GrupoController@cargarGrupoComboBox');
     });
 });

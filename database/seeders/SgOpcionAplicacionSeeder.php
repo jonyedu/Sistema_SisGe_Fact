@@ -16,30 +16,37 @@ class SgOpcionAplicacionSeeder extends Seeder
     {
         //Modulo de Seguridad
         SgOpcionAplicacion::where('status', 1)->where('codigo', 1)->update([
+            'descripcion' => "Usuario",
             'imagen' => 'fas fa-address-book',
             'route' => '/modulos/seguridad/usuario/mostrar_usuario',
         ]);
         SgOpcionAplicacion::where('status', 1)->where('codigo', 2)->update([
+            'descripcion' => "Modulo",
             'imagen' => 'fas fa-project-diagram',
             'route' => '/modulos/seguridad/modulo/mostrar_modulo',
         ]);
         SgOpcionAplicacion::where('status', 1)->where('codigo', 3)->update([
+            'descripcion' => "Perfil",
             'imagen' => 'far fa-address-card',
             'route' => '/modulos/seguridad/perfil/mostrar_perfil',
         ]);
         SgOpcionAplicacion::where('status', 1)->where('codigo', 4)->update([
+            'descripcion' => "Sub Modulo",
             'imagen' => 'fas fa-bezier-curve',
             'route' => '/modulos/seguridad/sub_modulo/mostrar_sub_modulo',
         ]);
         SgOpcionAplicacion::where('status', 1)->where('codigo', 5)->update([
+            'descripcion' => "Perfil por Usuario",
             'imagen' => 'fas fa-puzzle-piece',
             'route' => '/modulos/seguridad/perfil_por_usuario/mostrar_perfil_por_usuario',
         ]);
         SgOpcionAplicacion::where('status', 1)->where('codigo', 6)->update([
+            'descripcion' => "Empresa",
             'imagen' => 'far fa-building',
             'route' => '/modulos/seguridad/perfil_por_usuario/mostrar_empresa',
         ]);
         SgOpcionAplicacion::where('status', 1)->where('codigo', 7)->update([
+            'descripcion' => "Sucursal",
             'imagen' => 'fas fa-city',
             'route' => '/modulos/seguridad/perfil_por_usuario/mostrar_sucursal',
         ]);
