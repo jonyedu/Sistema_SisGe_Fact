@@ -19,7 +19,10 @@ import ModificarCrearProducto from "./components/Modulos/Administracion/Producto
 //Laboratorio
 import Laboratorio from "./components/Modulos/Administracion/Laboratorio/ListaLaboratorio";
 import ModificarCrearLaboratorio from "./components/Modulos/Administracion/Laboratorio/CrearModificarLaboratorio";
-
+//FACTURACION
+import ListaFacturacionVenta from "./components/Modulos/Procesos/Facturacion/Ventas/ListaFacturacionV";
+import FacturacionVenta from "./components/Modulos/Procesos/Facturacion/Ventas/FacturaVenta";
+//
 
 
 Vue.use(VueRouter);
@@ -102,6 +105,21 @@ export default new VueRouter({
                 "/modulos/administracion/laboratorio/crear_modificar_laboratorio",
             component: ModificarCrearLaboratorio
         },
+        //FACTURACION
+        {
+            path:
+                prefijo +
+                "/modulos/administracion/facturacion/ventas_diarias",
+            component: ListaFacturacionVenta
+        },
+        {
+            path:
+                prefijo +
+                "/modulos/administracion/facturacion/facturacion_ventas",
+            component: FacturacionVenta
+        },
+
+        //FIN
     ],
     mode: "history" //Evita que aparezca # en la ruta
 });
