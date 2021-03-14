@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class GrupoController extends Controller
 {
-    public function cargarGrupoCombo()
+    public function cargarGrupoComboBox()
     {
         try {
             $grupos = Grupo::select('Id', 'Codigo', 'Estado')

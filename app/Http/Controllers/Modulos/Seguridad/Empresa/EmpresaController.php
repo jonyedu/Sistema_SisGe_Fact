@@ -21,6 +21,18 @@ class EmpresaController extends Controller
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
+    public function cargarEmpresaComboBox()
+    {
+        try {
+            $empresas = Empresa::select('Empresa_Id', 'Empresa_Nombre')
+            ->where('status', 1)
+                ->orderBy('Empresa_Nombre', 'asc')
+                ->get();
+            return  response()->json(['empresas' => $empresas], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
+        }
+    }
 
     public function guardarEmpresa(Request $request)
     {

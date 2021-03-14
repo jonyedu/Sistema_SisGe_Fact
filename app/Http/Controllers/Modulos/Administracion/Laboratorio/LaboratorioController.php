@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class LaboratorioController extends Controller
 {
-    public function cargarLaboratorioCombo()
+    public function cargarLaboratorioComboBox()
     {
         try {
             $laboratorios = Laboratorio::select('id', 'nombre', 'estado')

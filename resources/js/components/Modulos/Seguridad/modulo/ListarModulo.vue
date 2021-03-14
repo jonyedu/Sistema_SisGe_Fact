@@ -189,7 +189,7 @@ export default {
                     that.showNotificationProgress(
                         "Exito al procesar",
                         "Usted ha eliminado correctamente el modulo." +
-                            that.item.modulo,
+                            that.item.descripcion,
                         "success"
                     );
                 })

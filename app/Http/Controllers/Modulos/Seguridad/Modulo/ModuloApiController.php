@@ -31,9 +31,18 @@ class ModuloApiController extends Controller
     {
         try {
             $modulos = SgModulo::where('status', 1)
-                /* ->with(['subModulo' => function ($i) {
-                    $i->where('status', 1);
-                }]) */
+                ->get();
+            return  response()->json(['modulos' => $modulos], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
+        }
+    }
+
+    public function cargarModuloComboBox()
+    {
+        try {
+            $modulos = SgModulo::select('codigo','descripcion')
+                ->where('status', 1)
                 ->get();
             return  response()->json(['modulos' => $modulos], 200);
         } catch (Exception $e) {
@@ -47,18 +56,17 @@ class ModuloApiController extends Controller
             $user = Auth::user();
             SgModulo::Create(
                 [
-                    'empresa' => 1,
-                    'sucursal' => 1,
-                    'descripcion' => $request->input('frm_descripcion'),
-                    'abreviatura' => $request->input('frm_abreviatura'),
+                    'empresa' => $request->input('empresa_id'),
+                    'sucursal' => $request->input('sucursal_id'),
+                    'descripcion' => $request->input('descripcion'),
+                    'abreviatura' => ".",
                     'usuario_ingreso' => $user->codigo,
                     'fecha_ingreso' => date("Y-m-d H:i:s"),
                     'usuario_modificacion' => $user->codigo,
                     'fecha_modificacion' => date("Y-m-d H:i:s"),
                     'pcname' =>  $_SERVER["REMOTE_ADDR"],
                     'status' => 1,
-                    'orden' => $request->input('frm_orden'),
-                    'imagen' => $request->input('frm_imagen'),
+                    'imagen' => $request->input('imagen'),
                 ]
             );
 
@@ -71,30 +79,19 @@ class ModuloApiController extends Controller
     {
         try {
             $user = Auth::user();
-            /* $codigo = $request->input('frm_codigo');
-            $descripcion = $request->input('frm_descripcion');
-            $abreviatura = $request->input('frm_abreviatura');
-            $imagen = $request->input('frm_imagen');
-            $usuario_modificar = $user->codigo;
-            $pcname = $_SERVER["REMOTE_ADDR"];
-            $status = 1;
-            $orden = $request->input('frm_orden');
-            DB::update("exec SPSEG_UPDATE_MODULO " . "'$codigo'" . ",'$descripcion'" . ",'$abreviatura'" . ",'$imagen'" . ",'$usuario_modificar'" . ",'$pcname'" . ",'$status'" . ",'$orden'");
-            */
             SgModulo::where('status', 1)
-                ->where('codigo', $request->input('frm_codigo'))
+                ->where('codigo', $request->input('modulo_id'))
                 ->Update(
                     [
-                        'empresa' => 1,
-                        'sucursal' => 1,
-                        'descripcion' => $request->input('frm_descripcion'),
-                        'abreviatura' => $request->input('frm_abreviatura'),
+                        'empresa' => $request->input('empresa_id'),
+                        'sucursal' => $request->input('sucursal_id'),
+                        'descripcion' => $request->input('descripcion'),
+                        'abreviatura' => ".",
                         'usuario_modificacion' => $user->codigo,
                         'fecha_modificacion' => date("Y-m-d H:i:s"),
                         'pcname' =>  $_SERVER["REMOTE_ADDR"],
                         'status' => 1,
-                        'orden' => $request->input('frm_orden'),
-                        'imagen' => $request->input('frm_imagen'),
+                        'imagen' => $request->input('imagen'),
                     ]
                 );
             return  response()->json(['msj' => 'OK'], 200);
@@ -116,7 +113,6 @@ class ModuloApiController extends Controller
                         'status' => 0,
                     ]
                 );
-            //DB::update("exec SPSEG_ELIMINAR_MODULO " . "'$id'");
             return  response()->json(['msj' => 'OK'], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);

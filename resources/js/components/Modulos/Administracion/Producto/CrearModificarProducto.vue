@@ -271,7 +271,7 @@ export default {
                         remoteSort: false,
                         restProxy: {
                             browse:
-                                "/modulos/administracion/grupo/cargar_grupo_combo"
+                                "/modulos/administracion/grupo/cargar_grupo_combo_box"
                         }
                     }),
                     schema: { displayField: "Codigo", valueField: "Id" }
@@ -295,7 +295,7 @@ export default {
                         ],
                         restProxy: {
                             browse:
-                                "/modulos/administracion/laboratorio/cargar_laboratorio_combo"
+                                "/modulos/administracion/laboratorio/cargar_laboratorio_combo_box"
                         }
                     }),
                     schema: { displayField: "nombre", valueField: "id" }
