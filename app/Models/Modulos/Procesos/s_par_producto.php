@@ -37,4 +37,16 @@ class s_par_producto extends Model
         'iva',
         'imagen',
     ];
+    public function inventarioP()
+    {
+        return $this->hasOne('App\Models\Modulos\Procesos\s_par_producto_inventario', 'id_producto', 'id');
+    }
+    public function costoP()
+    {
+        return $this->hasOne('App\Models\Modulos\Procesos\s_par_producto_costo', 'idproducto', 'id');
+    }
+    public function LaboratorioP()
+    {
+        return $this->hasOne('App\Models\Modulos\Procesos\par_laboratorio', 'id', 'laboratorio_id');
+    }
 }

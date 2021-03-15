@@ -135,6 +135,13 @@ Vue.component(
     require("./components/Modulos/Seguridad/Usuario/CrearModificarUsuario.vue").default
 );
 
+// inventario
+Vue.component(
+    "inventario-producto",
+    require("./components/Modulos/Procesos/Facturacion/Ventas/ProductosInventario.vue").default
+);
+//
+
 /* Vue.component(
     "crear-modificar-producto",
     require("./components/Modulos/Administracion/Producto/CrearModificarProducto.vue").default

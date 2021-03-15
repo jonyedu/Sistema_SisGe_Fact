@@ -2,7 +2,6 @@ import Vue from "vue";
 import { prefix } from "./variables";
 import VueRouter from "vue-router";
 
-
 //Modulo Seguridad
 import Usuario from "./components/Modulos/Seguridad/Usuario/ListarUsuario";
 import ModificarCrearUsuario from "./components/Modulos/Seguridad/Usuario/CrearModificarUsuario";
@@ -28,54 +27,43 @@ import ModificarCrearLaboratorio from "./components/Modulos/Administracion/Labor
 import Grupo from "./components/Modulos/Administracion/Grupo/ListarGrupo";
 import ModificarCrearGrupo from "./components/Modulos/Administracion/Grupo/CrearModificarGrupo";
 
-
+//FACTURACION
+import ListaFacturacionVenta from "./components/Modulos/Procesos/Facturacion/Ventas/ListaFacturacionV";
+import FacturacionVenta from "./components/Modulos/Procesos/Facturacion/Ventas/FacturaVenta";
+//
 
 Vue.use(VueRouter);
 let prefijo = prefix;
 export default new VueRouter({
     routes: [
-
         //Seguridad
         {
-            path:
-                prefijo +
-                "/modulos/seguridad/usuario/mostrar_usuario",
+            path: prefijo + "/modulos/seguridad/usuario/mostrar_usuario",
             component: Usuario
         },
         {
             path:
-                prefijo +
-                "/modulos/seguridad/usuario/crear_modificar_usuario",
+                prefijo + "/modulos/seguridad/usuario/crear_modificar_usuario",
             component: ModificarCrearUsuario
         },
         {
-            path:
-                prefijo +
-                "/modulos/seguridad/modulo/mostrar_modulo",
+            path: prefijo + "/modulos/seguridad/modulo/mostrar_modulo",
             component: Modulo
         },
         {
-            path:
-                prefijo +
-                "/modulos/seguridad/modulo/crear_modificar_modulo",
+            path: prefijo + "/modulos/seguridad/modulo/crear_modificar_modulo",
             component: ModificarCrearModulo
         },
         {
-            path:
-                prefijo +
-                "/modulos/seguridad/perfil/mostrar_perfil",
+            path: prefijo + "/modulos/seguridad/perfil/mostrar_perfil",
             component: Perfil
         },
         {
-            path:
-                prefijo +
-                "/modulos/seguridad/perfil/crear_modificar_perfil",
+            path: prefijo + "/modulos/seguridad/perfil/crear_modificar_perfil",
             component: ModificarCrearPerfil
         },
         {
-            path:
-                prefijo +
-                "/modulos/seguridad/sub_modulo/mostrar_sub_modulo",
+            path: prefijo + "/modulos/seguridad/sub_modulo/mostrar_sub_modulo",
             component: SubModulo
         },
         {
@@ -91,9 +79,7 @@ export default new VueRouter({
             component: PerfilPorUsuario
         },
         {
-            path:
-                prefijo +
-                "/modulos/seguridad/profesion/mostrar_profesion",
+            path: prefijo + "/modulos/seguridad/profesion/mostrar_profesion",
             component: Profesion
         },
         {
@@ -103,21 +89,16 @@ export default new VueRouter({
             component: ModificarCrearProfesion
         },
         {
-            path:
-                prefijo +
-                "/modulos/seguridad/empresa/mostrar_empresa",
+            path: prefijo + "/modulos/seguridad/empresa/mostrar_empresa",
             component: Empresa
         },
         {
             path:
-                prefijo +
-                "/modulos/seguridad/empresa/crear_modificar_empresa",
+                prefijo + "/modulos/seguridad/empresa/crear_modificar_empresa",
             component: ModificarCrearEmpresa
         },
         {
-            path:
-                prefijo +
-                "/modulos/seguridad/sucursal/mostrar_sucursal",
+            path: prefijo + "/modulos/seguridad/sucursal/mostrar_sucursal",
             component: Sucursal
         },
         {
@@ -129,9 +110,7 @@ export default new VueRouter({
 
         //Administracion
         {
-            path:
-                prefijo +
-                "/modulos/administracion/producto/mostrar_producto",
+            path: prefijo + "/modulos/administracion/producto/mostrar_producto",
             component: Producto
         },
         {
@@ -153,17 +132,28 @@ export default new VueRouter({
             component: ModificarCrearLaboratorio
         },
         {
-            path:
-                prefijo +
-                "/modulos/administracion/grupo/mostrar_grupo",
+            path: prefijo + "/modulos/administracion/grupo/mostrar_grupo",
             component: Grupo
         },
         {
             path:
-                prefijo +
-                "/modulos/administracion/grupo/crear_modificar_grupo",
+                prefijo + "/modulos/administracion/grupo/crear_modificar_grupo",
             component: ModificarCrearGrupo
         },
+        //FACTURACION
+        {
+            path:
+                prefijo + "/modulos/administracion/facturacion/ventas_diarias",
+            component: ListaFacturacionVenta
+        },
+        {
+            path:
+                prefijo +
+                "/modulos/administracion/facturacion/facturacion_ventas",
+            component: FacturacionVenta
+        }
+
+        //FIN
     ],
     mode: "history" //Evita que aparezca # en la ruta
 });

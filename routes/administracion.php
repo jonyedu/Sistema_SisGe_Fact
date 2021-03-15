@@ -25,7 +25,7 @@ Route::group(['prefix' => '/modulos/administracion', 'middleware' => ['auth:web'
         Route::post('actualizar_producto', 'ProductoController@actualizarProducto'); */
         Route::delete('eliminar_producto/{id}', 'ProductoController@eliminarProducto');
     });
-
+//
     //Submenu de Laboratorio
     Route::namespace('Modulos\Administracion\Laboratorio')->prefix('laboratorio')->group(function () {
         Route::get('cargar_laboratorio_combo_box', 'LaboratorioController@cargarLaboratorioComboBox');
@@ -42,4 +42,12 @@ Route::group(['prefix' => '/modulos/administracion', 'middleware' => ['auth:web'
         Route::post('guardar_modificar_grupo', 'GrupoController@guardarModificarGrupo');
         Route::delete('eliminar_grupo/{id}', 'GrupoController@eliminarGrupo');
     });
+
+    //Submenu de Facturacion Venta
+    Route::namespace('Modulos\Procesos\Facturacion\Ventas')->prefix('facturacion')->group(function () {
+        Route::get('cargar_facturas_dia', 'fact_ventas_cabecera@cargarFacturasDelDia');
+        Route::get('productos_invo/{name}', 'fact_ventas_cabecera@cargarProductosInventario');
+      
+    });
+
 });
