@@ -16,6 +16,7 @@ class Producto extends Model
      * @var string
      */
     // protected $connection = 'admin_db_sql';
+    protected $primaryKey = 'id';
 
 
     protected $fillable = [

@@ -125,14 +125,11 @@ Vue.component(
     "crear-modificar-perfil",
     require("./components/Modulos/Seguridad/Perfil/CrearModificarPerfil.vue").default
 );
-Vue.component(
+/* Vue.component(
     "crear-modificar-profesion",
     require("./components/Modulos/Seguridad/profesion/CrearModificarProfesion.vue").default
-);
-Vue.component(
-    "crear-modificar-perfil-por-usuario",
-    require("./components/Modulos/Seguridad/PerfilPorUsuario/CrearModificarPerfilPorUsuario.vue").default
-);
+); */
+
 Vue.component(
     "crear-modificar-usuario",
     require("./components/Modulos/Seguridad/Usuario/CrearModificarUsuario.vue").default

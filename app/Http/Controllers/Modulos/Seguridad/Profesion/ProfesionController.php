@@ -8,6 +8,7 @@ use App\Http\Requests\Modulos\Seguridad\Profesion\ProfesionRequest;
 use App\Models\Modulos\Seguridad\Profesion\Profesion;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfesionController extends Controller
 {
@@ -23,13 +24,15 @@ class ProfesionController extends Controller
         }
     }
 
-    public function guardarProfesion(PerfilRequest $request)
+    public function guardarProfesion(Request $request)
     {
         try {
+            $user = Auth::user();
             Profesion::Create(
                 [
                     'descripcion' => $request->input('descripcion'),
-                    'abreviatura' => $request->input('abreviatura'),
+                    'abreviatura' => ".",
+                    'usu_created_update' => $user->codigo,
                     'status' => 1,
                 ]
             );
@@ -39,15 +42,17 @@ class ProfesionController extends Controller
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
-    public function modificarProfesion(ProfesionRequest $request)
+    public function modificarProfesion(Request $request)
     {
         try {
+            $user = Auth::user();
             Profesion::where('status', 1)
-                ->where('codigo', $request->input('codigo'))
+                ->where('codigo', $request->input('profesion_id'))
                 ->Update(
                     [
                         'descripcion' => $request->input('descripcion'),
-                        'abreviatura' => $request->input('abreviatura'),
+                        'abreviatura' => ".",
+                        'usu_created_update' => $user->codigo,
                         'status' => 1,
                     ]
                 );

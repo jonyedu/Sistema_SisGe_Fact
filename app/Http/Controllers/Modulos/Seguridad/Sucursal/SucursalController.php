@@ -16,7 +16,7 @@ class SucursalController extends Controller
             $sucursales = Sucursal::where('status', 1)
                 ->orderBy('Sucursal_Nombre', 'asc')
                 ->get();
-            return  response()->json(['sucursales' => $sucursales], 200);
+            return  response()->json(['sucursales' => $sucursales, 'total' => $sucursales->count()], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
@@ -55,8 +55,8 @@ class SucursalController extends Controller
                     'Sucursal_Parroquia' => $request->input('parroquia'),
                     'campo1' => ".",
                     'campo2' => ".",
-                    'campo3' => ".",
-                    'registro' => ".",
+                    'campo3' => "0.0",
+                    'registro' => date("Y-m-d H:i:s"),
                     'usuario_ingreso' => $user->codigo,
                     'fecha_ingreso' => date("Y-m-d H:i:s"),
                     'usuario_modificacion' => $user->codigo,
@@ -76,7 +76,7 @@ class SucursalController extends Controller
         try {
             $user = Auth::user();
             Sucursal::where('status', 1)
-                ->where('codigo', $request->input('codigo'))
+                ->where('Sucursal_Id', $request->input('sucursal_id'))
                 ->Update(
                     [
                         'Empresa_Id' => $request->input('empresa_id'),
@@ -94,8 +94,8 @@ class SucursalController extends Controller
                         'Sucursal_Parroquia' => $request->input('parroquia'),
                         'campo1' => ".",
                         'campo2' => ".",
-                        'campo3' => ".",
-                        'registro' => ".",
+                        'campo3' => "0.0",
+                        'registro' => date("Y-m-d H:i:s"),
                         'usuario_modificacion' => $user->codigo,
                         'fecha_modificacion' => date("Y-m-d H:i:s"),
                         'name_pc' =>  $_SERVER["REMOTE_ADDR"],

@@ -152,6 +152,7 @@ export default {
             modulos: new BsStore({
                 idProperty: "codigo",
                 dataProperty: "modulos",
+                totalProperty: "total",
                 pageSize: 10,
                 remoteFilter: false, // default is TRUE
                 remotePaging: false, // default is TRUE

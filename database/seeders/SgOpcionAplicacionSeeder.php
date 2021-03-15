@@ -43,20 +43,52 @@ class SgOpcionAplicacionSeeder extends Seeder
         SgOpcionAplicacion::where('status', 1)->where('codigo', 6)->update([
             'descripcion' => "Empresa",
             'imagen' => 'far fa-building',
-            'route' => '/modulos/seguridad/perfil_por_usuario/mostrar_empresa',
+            'route' => '/modulos/seguridad/empresa/mostrar_empresa',
         ]);
         SgOpcionAplicacion::where('status', 1)->where('codigo', 7)->update([
             'descripcion' => "Sucursal",
             'imagen' => 'fas fa-city',
-            'route' => '/modulos/seguridad/perfil_por_usuario/mostrar_sucursal',
+            'route' => '/modulos/seguridad/sucursal/mostrar_sucursal',
         ]);
+        $profesion = SgOpcionAplicacion::where('descripcion', 'Profesión')->first();
+        if ($profesion != null) {
+            SgOpcionAplicacion::where('status', 1)->where('codigo', $profesion->codigo)->update([
+                'descripcion' => "Profesión",
+                'imagen' => 'fas fa-users',
+                'route' => '/modulos/seguridad/profesion/mostrar_profesion',
+            ]);
+        } else {
+            SgOpcionAplicacion::create([
+                'empresa' => 1,
+                'sucursal' => 1,
+                'modulo' => 7,
+                'descripcion' => "Profesión",
+                'imagen' => 'fas fa-users',
+                'tipo' => "1",
+                'ejecutable' => ".",
+                'usuario_ingreso' => 1,
+                'fecha_ingreso' => date("Y-m-d H:i:s"),
+                'usuario_modificacion' => 1,
+                'fecha_modificacion' => date("Y-m-d H:i:s"),
+                'pcname' => "192.168.1.196",
+                'status' => 1,
+                'route' => '/modulos/seguridad/profesion/mostrar_profesion',
+            ]);
+        }
+        //Fin de Seguridad
 
         //Modulo de Administracion
+        SgOpcionAplicacion::where('modulo', 1)->where('codigo', 8)->update([
+            'imagen' => 'fas fa-laptop-medical',
+            'route' => '/modulos/administracion/laboratorio/mostrar_laboratorio',
+        ]);
         SgOpcionAplicacion::where('modulo', 1)->where('codigo', 9)->update([
             'imagen' => 'fas fa-dolly',
             'route' => '/modulos/administracion/producto/mostrar_producto',
         ]);
-
-
+        SgOpcionAplicacion::where('modulo', 1)->where('codigo', 18)->update([
+            'imagen' => 'fas fa-boxes',
+            'route' => '/modulos/administracion/grupo/mostrar_grupo',
+        ]);
     }
 }

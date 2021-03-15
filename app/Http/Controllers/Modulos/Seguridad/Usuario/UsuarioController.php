@@ -19,7 +19,7 @@ class UsuarioController extends Controller
                 ->with('perfil', 'profesion')
                 ->orderBy('nombre', 'asc')
                 ->get();
-            return  response()->json(['usuarios' => $usuarios], 200);
+            return  response()->json(['usuarios' => $usuarios, 'total' => $usuarios->count()], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }

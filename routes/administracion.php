@@ -38,5 +38,8 @@ Route::group(['prefix' => '/modulos/administracion', 'middleware' => ['auth:web'
     //Submenu de Grupo
     Route::namespace('Modulos\Administracion\Grupo')->prefix('grupo')->group(function () {
         Route::get('cargar_grupo_combo_box', 'GrupoController@cargarGrupoComboBox');
+        Route::get('cargar_grupo_table', 'GrupoController@cargarGrupoTabla');
+        Route::post('guardar_modificar_grupo', 'GrupoController@guardarModificarGrupo');
+        Route::delete('eliminar_grupo/{id}', 'GrupoController@eliminarGrupo');
     });
 });

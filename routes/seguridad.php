@@ -48,7 +48,7 @@ Route::group(['prefix' => 'modulos/seguridad', 'middleware' => ['auth:web'], 've
 
     /* SubModulo Perfil */
     Route::namespace('Modulos\Seguridad\Perfil')->prefix('perfil')->group(function () {
-        Route::get('cargar_perfil_combo_box', 'PerfilController@cargarPerfilTabla');
+        Route::get('cargar_perfil_combo_box', 'PerfilController@cargarPerfilComboBox');
         Route::get('cargar_perfil_table', 'PerfilController@cargarPerfilTabla');
         Route::post('modificar_perfil', 'PerfilController@modificarPerfil');
         Route::post('guardar_perfil', 'PerfilController@guardarPerfil');

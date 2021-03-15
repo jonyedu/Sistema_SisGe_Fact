@@ -12,18 +12,22 @@ class Grupo extends Model
      * @var string
      */
     protected $table = 'par_grupos';
+
     /**
      * @var string
      */
     // protected $connection = 'admin_db_sql';
-
-    public $timestamps = false;
+    protected $primaryKey = 'Id';
 
     protected $fillable = [
         'Id',
         'Codigo',
         'nombrecorto',
         'Descripcion',
-        'Estado'
+        'Estado',
+        'usu_created_update',
+        'created_at',
+        'updated_at',
+        'pcip',
     ];
 }

@@ -91,6 +91,7 @@
                                                 :data-source="cmb.laboratorios"
                                                 floating-label
                                                 outlined
+                                                clear-button
                                                 :external-validator="
                                                     laboratorioValidator
                                                 "
@@ -180,6 +181,7 @@
                                                 :data-source="cmb.grupos"
                                                 floating-label
                                                 outlined
+                                                clear-button
                                                 :external-validator="grupoValidator"
                                             >
                                                 <label>Grupo</label>

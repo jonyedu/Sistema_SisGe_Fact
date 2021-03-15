@@ -58,6 +58,7 @@
                                                 :data-source="cmb.empresas"
                                                 floating-label
                                                 outlined
+                                                clear-button
                                                 :external-validator="
                                                     empresaValidator
                                                 "
@@ -85,6 +86,7 @@
                                                 :data-source="cmb.sucursales"
                                                 floating-label
                                                 outlined
+                                                clear-button
                                                 :external-validator="
                                                     sucursalValidator
                                                 "

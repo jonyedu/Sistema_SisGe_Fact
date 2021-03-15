@@ -59,34 +59,7 @@ class ProductoController extends Controller
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
-    /* public function actualizarProducto(Request $request)
-    {
-        try {
-            Producto::where('id', $request->input('producto_id'))
-                ->Update(
-                    [
-                        'codigo' => $request->input('codigo'),
-                        'nombre' => $request->input('nombre'),
-                        'nombrecorto' => $request->input('nombrecorto'),
-                        'descripcion' => $request->input('descripcion'),
-                        'posologia' => $request->input('posologia'),
-                        'contraindicacion' => $request->input('contraindicacion'),
-                        'grupo_id' => $request->input('grupo_id'),
-                        'laboratorio_id' => $request->input('laboratorio_id'),
-                        'stock_maximo' => $request->input('stock_maximo'),
-                        'stock_minimo' => $request->input('stock_minimo'),
-                        'pvc' => $request->input('pvc'),
-                        'generico' => $request->input('generico'),
-                        'refrigeracion' => $request->input('refrigeracion'),
-                        'iva' => $request->input('iva'),
-                        'imagen' => $request->input('imagen'),
-                    ]
-                );
-            return  response()->json(['msj' => 'OK'], 200);
-        } catch (Exception $e) {
-            return response()->json(['mensaje' => $e->getMessage()], 500);
-        }
-    } */
+
     public function eliminarProducto($id)
     {
         try {

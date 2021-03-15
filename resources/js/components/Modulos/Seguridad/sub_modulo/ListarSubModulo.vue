@@ -24,7 +24,7 @@
                     </bs-card-content>
                 </bs-card-body>
             </bs-card>
-            <bs-card >
+            <bs-card shadow>
                 <bs-grid
                     ref="gridSubModulo"
                     :data-source="subModulos"
@@ -162,6 +162,7 @@ export default {
             subModulos: new BsStore({
                 idProperty: "codigo",
                 dataProperty: "subModulos",
+                totalProperty: "total",
                 pageSize: 10,
                 remoteFilter: false, // default is TRUE
                 remotePaging: false, // default is TRUE
