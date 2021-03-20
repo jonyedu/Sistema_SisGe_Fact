@@ -9,15 +9,15 @@
                                                 <div
                                                     class="col-lg-8 col-md-8 col-sm-8"
                                                 >
-                                    <bs-search-field 
-                                                            v-model="srchvalue0" 
+                                    <bs-search-field
+                                                            v-model="srchvalue0"
                                                             @search="onSearch">
                                                         </bs-search-field>
-                                                
-                                                    
+
+
                                                 </div>
-                   
-                         
+
+
                             <bs-tooltip
                                 content="Productos Agregados"
                                 placement="bottom"
@@ -28,26 +28,26 @@
                                     icon-size="sm"
                                 ></bs-button>
                             </bs-tooltip>
-                       
+
                          </div>
                     </bs-card-content>
                 </bs-card-body>
     <bs-card shadow>
-    
-      <bs-grid :data-source="inventario_p" 
-               :pageable="pagination" 
+
+      <bs-grid :data-source="inventario_p"
+               :pageable="pagination"
                row-hover>
-        <bs-grid-column field="producto_inventario.producto_inv.nombre" 
-                        label="Producto" 
+        <bs-grid-column field="producto_inventario.producto_inv.nombre"
+                        label="Producto"
                         min-width="175"></bs-grid-column>
-        <bs-grid-column field="calories" 
-                        label="Valor" 
+        <bs-grid-column field="calories"
+                        label="Valor"
                         width="120"></bs-grid-column>
-        <bs-grid-column field="fat" 
-                        label="Stock" 
+        <bs-grid-column field="fat"
+                        label="Stock"
                         width="100"></bs-grid-column>
-         <bs-grid-column label="Action" 
-                        width="100" 
+         <bs-grid-column label="Action"
+                        width="100"
                         text-align="center"></bs-grid-column>
                          <template v-slot:datarow="{ columns, item, index }">
                         <bs-grid-cell
@@ -65,14 +65,14 @@
                             :item="item"
                             :index="index"
                         ></bs-grid-cell>
-                        
-                        
+
+
                         <bs-grid-cell
                             :column="columns[3]"
                             :item="item"
                             :index="index"
                         >
-                             
+
                                 <bs-tooltip
                                     content="Modificar productos"
                                     placement="bottom"
@@ -86,12 +86,12 @@
                                         @click="btnClickModificar(item)"
                                     ></bs-button>
                                 </bs-tooltip>
-                            
 
-                           
+
+
                         </bs-grid-cell>
                     </template>
-         
+
       </bs-grid>
     </bs-card>
   </div>
@@ -103,7 +103,7 @@ export default {
   data: function() {
         return {
            srchvalue0: null,
-           
+
             prefijo: "",
             Lista:[],
             trueModalVisible:false,
@@ -144,11 +144,11 @@ export default {
                                 "Producto modificado correctamente.",
                                 "success"
                             );
-                           
+
                         })
                         .catch(function(error) {
                           console.log(error);
-                          
+
                             that.showLoader = false;
                             that.showNotificationProgress(
                                 "Error en GuardarActualizarProducto",
@@ -160,9 +160,9 @@ export default {
 
 
 
- 
+
        alert('este');
-      
+
       // do something here...
     },
   }
