@@ -40,10 +40,10 @@
         <bs-grid-column field="producto_inventario.producto_inv.nombre" 
                         label="Producto" 
                         min-width="175"></bs-grid-column>
-        <bs-grid-column field="calories" 
+        <bs-grid-column field="Stock" 
                         label="Valor" 
                         width="120"></bs-grid-column>
-        <bs-grid-column field="fat" 
+        <bs-grid-column field="Stock" 
                         label="Stock" 
                         width="100"></bs-grid-column>
          <bs-grid-column label="Action" 
@@ -51,7 +51,7 @@
                         text-align="center"></bs-grid-column>
                          <template v-slot:datarow="{ columns, item, index }">
                         <bs-grid-cell
-                            :column="columns["producto_inv"].nombre"
+                            :column="columns[0]"
                             :item="item"
                             :index="index"
                         ></bs-grid-cell>
@@ -126,7 +126,7 @@ export default {
                 restProxy: {
                     browse:
                    // "/modulos/administracion/producto/cargar_all_producto"
-                   "/modulos/administracion/facturacion/productos_invo/" + this.srchvalue0
+                   "/modulos/administracion/facturacion/productos_invo/gel"  
                 }
             }),
             item:{},
@@ -134,29 +134,8 @@ export default {
     },
   methods: {
     onSearch(term) {
-       this.srchvalue0 = term;
-        this.inventario_p
-        .browse()
-        .then(function(response) {
-                            that.showLoader = false;
-                            that.showNotificationProgress(
-                                "Exito al Procesar",
-                                "Producto modificado correctamente.",
-                                "success"
-                            );
-                           
-                        })
-                        .catch(function(error) {
-                          console.log(error);
-                          
-                            that.showLoader = false;
-                            that.showNotificationProgress(
-                                "Error en GuardarActualizarProducto",
-                                "Por favor comuníquese con el administrador. " +
-                                    error,
-                                "error"
-                            );
-                        });
+        
+      
 
 
 
