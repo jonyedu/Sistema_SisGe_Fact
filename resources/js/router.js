@@ -27,10 +27,15 @@ import ModificarCrearLaboratorio from "./components/Modulos/Administracion/Labor
 import Grupo from "./components/Modulos/Administracion/Grupo/ListarGrupo";
 import ModificarCrearGrupo from "./components/Modulos/Administracion/Grupo/CrearModificarGrupo";
 
+
+//Modulo Operativo
+import ListaFacturacionVenta from "./components/Modulos/Operativo/FacturaVenta/ListaFacturacionV";
+import FacturacionVenta from "./components/Modulos/Operativo/FacturaVenta/FacturaVenta";
+
 //FACTURACION
-import ListaFacturacionVenta from "./components/Modulos/Procesos/Facturacion/Ventas/ListaFacturacionV";
+/* import ListaFacturacionVenta from "./components/Modulos/Procesos/Facturacion/Ventas/ListaFacturacionV";
 import FacturacionVenta from "./components/Modulos/Procesos/Facturacion/Ventas/FacturaVenta";
-//
+ */
 
 Vue.use(VueRouter);
 let prefijo = prefix;
@@ -140,8 +145,9 @@ export default new VueRouter({
                 prefijo + "/modulos/administracion/grupo/crear_modificar_grupo",
             component: ModificarCrearGrupo
         },
+        //Modulo de Operativo
         //FACTURACION
-        {
+        /* {
             path:
                 prefijo + "/modulos/administracion/facturacion/ventas_diarias",
             component: ListaFacturacionVenta
@@ -150,6 +156,16 @@ export default new VueRouter({
             path:
                 prefijo +
                 "/modulos/administracion/facturacion/facturacion_ventas",
+            component: FacturacionVenta
+        } */
+        {
+            path:
+                prefijo + "/modulos/operativo/factura_venta/factura_ventas_diarias",
+            component: ListaFacturacionVenta
+        },
+        {
+            path:
+                prefijo + "/modulos/operativo/factura_venta/facturacion_ventas",
             component: FacturacionVenta
         }
 

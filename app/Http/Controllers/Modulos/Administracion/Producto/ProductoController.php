@@ -21,6 +21,18 @@ class ProductoController extends Controller
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
+    public function cargarProductoPorId($id)
+    {
+        return  response()->json(['id' => $id], 200);
+        try {
+            $productos = Producto::where('status', 1)
+                ->with('laboratorio:id,nombre', 'grupo:Id,codigo')
+                ->get();
+            return  response()->json(['productos' => $productos, 'total' => sizeOf($productos)], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
+        }
+    }
 
     public function guardarModificarProducto(Request $request)
     {

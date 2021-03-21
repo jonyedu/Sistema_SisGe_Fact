@@ -20,6 +20,7 @@ Route::group(['prefix' => '/modulos/administracion', 'middleware' => ['auth:web'
     //Submenu de Producto
     Route::namespace('Modulos\Administracion\Producto')->prefix('producto')->group(function () {
         Route::get('cargar_all_producto', 'ProductoController@cargarProductoTabla');
+        Route::get('producto_por_id/{id}', 'ProductoController@cargarProductoPorId');
         Route::post('guardar_modificar_producto', 'ProductoController@guardarModificarProducto');
         /* Route::post('guardar_producto', 'ProductoController@guardarProducto');
         Route::post('actualizar_producto', 'ProductoController@actualizarProducto'); */
@@ -47,7 +48,7 @@ Route::group(['prefix' => '/modulos/administracion', 'middleware' => ['auth:web'
     Route::namespace('Modulos\Procesos\Facturacion\Ventas')->prefix('facturacion')->group(function () {
         Route::get('cargar_facturas_dia', 'fact_ventas_cabecera@cargarFacturasDelDia');
         Route::get('productos_invo/{name}', 'fact_ventas_cabecera@cargarProductosInventario');
-      
+
     });
 
 });
