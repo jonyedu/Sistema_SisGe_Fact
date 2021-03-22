@@ -10,7 +10,7 @@ export default new Vuex.Store({
        // emergencia_store
     },
     state:{
-        laboratorio: null,
+        proveedor: null,
         producto: null,
         usuario: null,
         modulo: null,
@@ -27,8 +27,8 @@ export default new Vuex.Store({
         addProducto(state ){
             state.producto = state.producto;
         },
-        addLaboratorio(state ){
-            state.laboratorio = state.laboratorio;
+        addProveedor(state ){
+            state.proveedor = state.proveedor;
         },
         addUsuario(state ){
             state.usuario = state.usuario;
@@ -60,8 +60,8 @@ export default new Vuex.Store({
         addProductoAction(context ){
             context.commit('addProducto');
         },
-        addLaboratorioAction(context ){
-            context.commit('addLaboratorio');
+        addProveedorAction(context ){
+            context.commit('addProveedor');
         },
         addUsuarioAction(context ){
             context.commit('addUsuario');
@@ -92,8 +92,8 @@ export default new Vuex.Store({
         getProducto(state){
             return state.producto;
         },
-        getLaboratorio(state){
-            return state.laboratorio;
+        getProveedor(state){
+            return state.proveedor;
         },
         getUsuario(state){
             return state.usuario;

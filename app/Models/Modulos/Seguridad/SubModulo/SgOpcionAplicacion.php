@@ -12,6 +12,7 @@ class SgOpcionAplicacion extends Model
      * @var string
      */
     protected $table = 'SEG_OPCION_APLICACION';
+    protected $primaryKey = 'codigo';
     /**
      * @var string
      */

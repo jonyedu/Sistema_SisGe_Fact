@@ -2,6 +2,21 @@ import Vue from "vue";
 import { prefix } from "./variables";
 import VueRouter from "vue-router";
 
+//Modulo Banco
+
+
+//Modulo Inventario
+import Grupo from "./components/Modulos/Inventario/Grupo/ListarGrupo";
+import ModificarCrearGrupo from "./components/Modulos/Inventario/Grupo/CrearModificarGrupo";
+import Producto from "./components/Modulos/Inventario/Producto/ListarProducto";
+import ModificarCrearProducto from "./components/Modulos/Inventario/Producto/CrearModificarProducto";
+
+//Modulo Persona
+import Proveedor from "./components/Modulos/Persona/Proveedor/ListaProveedor";
+import ModificarCrearProveedor from "./components/Modulos/Persona/Proveedor/CrearModificarProveedor";
+
+//Modulo Reporte
+
 //Modulo Seguridad
 import Usuario from "./components/Modulos/Seguridad/Usuario/ListarUsuario";
 import ModificarCrearUsuario from "./components/Modulos/Seguridad/Usuario/CrearModificarUsuario";
@@ -19,28 +34,57 @@ import ModificarCrearEmpresa from "./components/Modulos/Seguridad/Empresa/CrearM
 import Sucursal from "./components/Modulos/Seguridad/Sucursal/ListarSucursal";
 import ModificarCrearSucursal from "./components/Modulos/Seguridad/Sucursal/CrearModificarSucursal";
 
-//Modulo Administracion
-import Producto from "./components/Modulos/Administracion/Producto/ListarProducto";
-import ModificarCrearProducto from "./components/Modulos/Administracion/Producto/CrearModificarProducto";
-import Laboratorio from "./components/Modulos/Administracion/Laboratorio/ListaLaboratorio";
-import ModificarCrearLaboratorio from "./components/Modulos/Administracion/Laboratorio/CrearModificarLaboratorio";
-import Grupo from "./components/Modulos/Administracion/Grupo/ListarGrupo";
-import ModificarCrearGrupo from "./components/Modulos/Administracion/Grupo/CrearModificarGrupo";
+
+//Modulo Transaccion
+import ListaFacturacionVenta from "./components/Modulos/Transaccion/FacturaVenta/ListaFacturacionV";
+import FacturacionVenta from "./components/Modulos/Transaccion/FacturaVenta/FacturaVenta";
 
 
-//Modulo Operativo
-import ListaFacturacionVenta from "./components/Modulos/Operativo/FacturaVenta/ListaFacturacionV";
-import FacturacionVenta from "./components/Modulos/Operativo/FacturaVenta/FacturaVenta";
-
-//FACTURACION
-/* import ListaFacturacionVenta from "./components/Modulos/Procesos/Facturacion/Ventas/ListaFacturacionV";
-import FacturacionVenta from "./components/Modulos/Procesos/Facturacion/Ventas/FacturaVenta";
- */
 
 Vue.use(VueRouter);
 let prefijo = prefix;
 export default new VueRouter({
     routes: [
+
+        //Banco
+
+        //Inventario
+        {
+            path: prefijo + "/modulos/inventario/grupo/mostrar_grupo",
+            component: Grupo
+        },
+        {
+            path:
+                prefijo + "/modulos/inventario/grupo/crear_modificar_grupo",
+            component: ModificarCrearGrupo
+        },
+        {
+            path: prefijo + "/modulos/inventario/producto/mostrar_producto",
+            component: Producto
+        },
+        {
+            path:
+                prefijo +
+                "/modulos/inventario/producto/crear_modificar_producto",
+            component: ModificarCrearProducto
+        },
+
+        //Persona
+        {
+            path:
+                prefijo +
+                "/modulos/persona/proveedor/mostrar_proveedor",
+            component: Proveedor
+        },
+        {
+            path:
+                prefijo +
+                "/modulos/persona/proveedor/crear_modificar_proveedor",
+            component: ModificarCrearProveedor
+        },
+
+        //Reporte
+
         //Seguridad
         {
             path: prefijo + "/modulos/seguridad/usuario/mostrar_usuario",
@@ -113,63 +157,17 @@ export default new VueRouter({
             component: ModificarCrearSucursal
         },
 
-        //Administracion
-        {
-            path: prefijo + "/modulos/administracion/producto/mostrar_producto",
-            component: Producto
-        },
+        //Transaccion
         {
             path:
-                prefijo +
-                "/modulos/administracion/producto/crear_modificar_producto",
-            component: ModificarCrearProducto
-        },
-        {
-            path:
-                prefijo +
-                "/modulos/administracion/laboratorio/mostrar_laboratorio",
-            component: Laboratorio
-        },
-        {
-            path:
-                prefijo +
-                "/modulos/administracion/laboratorio/crear_modificar_laboratorio",
-            component: ModificarCrearLaboratorio
-        },
-        {
-            path: prefijo + "/modulos/administracion/grupo/mostrar_grupo",
-            component: Grupo
-        },
-        {
-            path:
-                prefijo + "/modulos/administracion/grupo/crear_modificar_grupo",
-            component: ModificarCrearGrupo
-        },
-        //Modulo de Operativo
-        //FACTURACION
-        /* {
-            path:
-                prefijo + "/modulos/administracion/facturacion/ventas_diarias",
+                prefijo + "/modulos/transaccion/factura_venta/mostrar_factura_venta",
             component: ListaFacturacionVenta
         },
         {
             path:
-                prefijo +
-                "/modulos/administracion/facturacion/facturacion_ventas",
-            component: FacturacionVenta
-        } */
-        {
-            path:
-                prefijo + "/modulos/operativo/factura_venta/factura_ventas_diarias",
-            component: ListaFacturacionVenta
-        },
-        {
-            path:
-                prefijo + "/modulos/operativo/factura_venta/facturacion_ventas",
+                prefijo + "/modulos/transaccion/factura_venta/crear_modificar_factura_venta",
             component: FacturacionVenta
         }
-
-        //FIN
     ],
     mode: "history" //Evita que aparezca # en la ruta
 });
