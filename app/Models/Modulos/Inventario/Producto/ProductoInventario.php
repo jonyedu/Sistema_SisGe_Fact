@@ -28,11 +28,11 @@ class ProductoInventario extends Model
     ];
     public function ProductoInv()
     {
-        return $this->hasOne('App\Models\Modulos\Procesos\s_par_producto', 'id', 'id_producto');
+        return $this->hasOne('App\Models\Modulos\Inventario\Producto\Producto', 'id', 'id_producto');
     }
     public function costoInv()
     {
-        return $this->hasOne('App\Models\Modulos\Procesos\s_par_producto_costo','idproducto', 'id_producto');
+        return $this->hasOne('App\Models\Modulos\Inventario\Producto\Producto\ProductoCosto','idproducto', 'id_producto');
     }
 
 }
