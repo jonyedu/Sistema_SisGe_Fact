@@ -6,6 +6,7 @@ use App\Models\Modulos\Transaccion\FacturaVenta\VentasCabecera;
 use App\Models\Modulos\Inventario\Producto\ProductoInventario;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 class VentasCabeceraController extends Controller
@@ -39,7 +40,7 @@ class VentasCabeceraController extends Controller
             // ->with("costoP:id,precio")
 
 
-            return  response()->json(['producto_inventario' => $nombre, 'total' => sizeOf($producto_inventario)], 200);
+            return  response()->json(['producto_inventario' => $producto_inventario, 'total' => sizeOf($producto_inventario)], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
