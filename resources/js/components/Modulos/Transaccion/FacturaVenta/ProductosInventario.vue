@@ -131,10 +131,13 @@ export default {
             item:{},
         };
     },
+    mounted() {
+       this.inventario_p.fetch('deso');
+    },
   methods: {
     onSearch(term) {
        this.srchvalue0 = term;
-        this.inventario_p.fetch(term);
+        this.inventario_p.fetch('deso');
         
 
 
