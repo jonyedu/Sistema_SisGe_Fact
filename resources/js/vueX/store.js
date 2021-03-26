@@ -10,7 +10,7 @@ export default new Vuex.Store({
        // emergencia_store
     },
     state:{
-        laboratorio: null,
+        proveedor: null,
         producto: null,
         usuario: null,
         modulo: null,
@@ -20,6 +20,7 @@ export default new Vuex.Store({
         sucursal: null,
         profesion: null,
         grupo: null,
+        cliente: null,
     },
 
     //una mutacion se va a realizar siempre y cuando sea llamada desde una acccion
@@ -27,8 +28,8 @@ export default new Vuex.Store({
         addProducto(state ){
             state.producto = state.producto;
         },
-        addLaboratorio(state ){
-            state.laboratorio = state.laboratorio;
+        addProveedor(state ){
+            state.proveedor = state.proveedor;
         },
         addUsuario(state ){
             state.usuario = state.usuario;
@@ -54,14 +55,17 @@ export default new Vuex.Store({
         addGrupo(state ){
             state.grupo = state.grupo;
         },
+        addCliente(state ){
+            state.cliente = state.cliente;
+        },
     },
     //eventos actions del store
     actions:{
         addProductoAction(context ){
             context.commit('addProducto');
         },
-        addLaboratorioAction(context ){
-            context.commit('addLaboratorio');
+        addProveedorAction(context ){
+            context.commit('addProveedor');
         },
         addUsuarioAction(context ){
             context.commit('addUsuario');
@@ -87,13 +91,16 @@ export default new Vuex.Store({
         addGrupoAction(context ){
             context.commit('addGrupo');
         },
+        addClienteAction(context ){
+            context.commit('addCliente');
+        },
     },
     getters:{
         getProducto(state){
             return state.producto;
         },
-        getLaboratorio(state){
-            return state.laboratorio;
+        getProveedor(state){
+            return state.proveedor;
         },
         getUsuario(state){
             return state.usuario;
@@ -118,6 +125,9 @@ export default new Vuex.Store({
         },
         getGrupo(state){
             return state.grupo;
+        },
+        getCliente(state){
+            return state.cliente;
         },
     }
 });

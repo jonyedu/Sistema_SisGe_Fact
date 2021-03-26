@@ -17,15 +17,22 @@ class PerfilPorUsuario extends Model
      */
     protected $connection = 'mysql_comercial';
 
-    public $timestamps = false;
+    protected $primaryKey = 'id';
+
+    //public $timestamps = false;
 
     protected $fillable = [
+        'id',
         'empresa',
         'sucursal',
         'perfil',
         'modulo',
         'opcion_aplicacion',
-        'superior',
+        'usu_created',
+        'created_at',
+        'usu_update',
+        'updated_at',
+        'pcip',
         'status',
     ];
     public function modulo()

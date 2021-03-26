@@ -16,6 +16,7 @@ class Perfil extends Model
      * @var string
      */
     protected $connection = 'mysql_comercial';
+    protected $primaryKey = 'codigo';
 
     public $timestamps = false;
 

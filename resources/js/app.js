@@ -51,7 +51,7 @@ Vue.component(
 // inventario
 Vue.component(
     "inventario-producto",
-    require("./components/Modulos/Procesos/Facturacion/Ventas/ProductosInventario.vue").default
+    require("./components/Modulos/Transaccion/FacturaVenta/ProductosInventario.vue").default
 );
 //
 
