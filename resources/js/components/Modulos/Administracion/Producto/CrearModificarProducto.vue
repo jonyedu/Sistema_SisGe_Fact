@@ -91,6 +91,7 @@
                                                 :data-source="cmb.laboratorios"
                                                 floating-label
                                                 outlined
+                                                clear-button
                                                 :external-validator="
                                                     laboratorioValidator
                                                 "
@@ -180,6 +181,7 @@
                                                 :data-source="cmb.grupos"
                                                 floating-label
                                                 outlined
+                                                clear-button
                                                 :external-validator="grupoValidator"
                                             >
                                                 <label>Grupo</label>
@@ -218,6 +220,7 @@ export default {
     mixins: [validationMixin],
     data: function() {
         return {
+            id_producto: 10,
             //variable que controla el progreso
             showLoader: false,
             //Variables para obtener el index
@@ -250,7 +253,8 @@ export default {
                             url:
                                 "/modulos/administracion/producto/guardar_modificar_producto",
                             method: "post"
-                        }
+                        },
+                        fetch: '/modulos/administracion/producto/producto_por_id/{id}',
                     }
                 },
                 null,
@@ -309,6 +313,7 @@ export default {
 
     mounted: function() {
         this.prefijo = prefix;
+        this.productoForm.fetch(50);
         if (this.$store.getters.getProducto != null) {
             var producto = this.$store.getters.getProducto;
             this.productoForm.producto_id = producto.id;

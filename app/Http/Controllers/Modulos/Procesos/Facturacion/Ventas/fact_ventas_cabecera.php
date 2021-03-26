@@ -27,19 +27,20 @@ class fact_ventas_cabecera extends Controller
          }
      }
      //
-     public function cargarProductosInventario($nombre)
+     public function cargarProductosInventario($name)
      {
          try {
+           
 
             $producto_inventario = s_par_producto_inventario::select('id_producto','Stock')
             ->with('ProductoInv:id,nombre')
-            ->whereHas('ProductoInv', function ($query) use ($nombre){
+            ->whereHas('ProductoInv', function ($query) use ($name){
                 
-                return $query->where("nombre", 'LIKE', '%'.$nombre.'%');
+                return $query->where("nombre", 'LIKE', '%'.$name.'%');
             })
             ->with("costoInv:idproducto,precio")
             ->get();
-
+           // return  response()->json(['producto_inventario' => $name], 200);
             // ->with("inventarioP:id,stock")  ->where('loan_officers', 'like', '%' . $officerId . '%')
             // ->with("costoP:id,precio")
 

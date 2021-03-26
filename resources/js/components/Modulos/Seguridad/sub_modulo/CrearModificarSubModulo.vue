@@ -60,6 +60,7 @@
                                                 :data-source="cmb.empresas"
                                                 floating-label
                                                 outlined
+                                                clear-button
                                                 :external-validator="
                                                     empresaValidator
                                                 "
@@ -82,11 +83,12 @@
                                             <bs-combobox
                                                 prepend-icon-outer="user"
                                                 v-model="
-                                                    subModuloForm.sucursal_id
+                                                    subModuloForm.modulo_id
                                                 "
                                                 :data-source="cmb.modulos"
                                                 floating-label
                                                 outlined
+                                                clear-button
                                                 :external-validator="
                                                     moduloValidator
                                                 "
@@ -105,6 +107,7 @@
                                                 :data-source="cmb.sucursales"
                                                 floating-label
                                                 outlined
+                                                clear-button
                                                 :external-validator="
                                                     sucursalValidator
                                                 "
@@ -169,11 +172,13 @@ export default {
                 {
                     //Aqui es donde se declará las variables para los txt, cmb, etc
                     schema: {
-                        modulo_id: 0,
+                        sub_modulo_id: "",
+                        modulo_id: "",
                         empresa_id: "",
                         sucursal_id: "",
                         descripcion: "",
-                        imagen: ""
+                        imagen: "",
+                        ruta: ""
                     },
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
@@ -259,7 +264,7 @@ export default {
             this.subModuloForm.descripcion = modulo.descripcion;
             this.subModuloForm.imagen = modulo.imagen;
             this.subModuloForm.modulo_id = modulo.modulo;
-            this.subModuloForm.ruta = modulo.ruta;
+            this.subModuloForm.ruta = modulo.route;
         }
     },
     beforeDestroy: function() {
@@ -355,7 +360,7 @@ export default {
                             that.showLoader = false;
                             that.showNotificationProgress(
                                 "Exito al Procesar",
-                                "modulo modificado correctamente.",
+                                "Sub Modulo modificado correctamente.",
                                 "success"
                             );
                             that.lmpCampos();
@@ -376,7 +381,7 @@ export default {
                             that.showLoader = false;
                             that.showNotificationProgress(
                                 "Exito al Procesar",
-                                "modulo creado correctamente.",
+                                "Sub Modulo creado correctamente.",
                                 "success"
                             );
                             that.lmpCampos();

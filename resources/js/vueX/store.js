@@ -15,6 +15,11 @@ export default new Vuex.Store({
         usuario: null,
         modulo: null,
         subModulo: null,
+        perfil: null,
+        empresa: null,
+        sucursal: null,
+        profesion: null,
+        grupo: null,
     },
 
     //una mutacion se va a realizar siempre y cuando sea llamada desde una acccion
@@ -34,6 +39,21 @@ export default new Vuex.Store({
         addSubModulo(state ){
             state.subModulo = state.subModulo;
         },
+        addPerfil(state ){
+            state.perfil = state.perfil;
+        },
+        addEmpresa(state ){
+            state.empresa = state.empresa;
+        },
+        addSucursal(state ){
+            state.sucursal = state.sucursal;
+        },
+        addProfesion(state ){
+            state.profesion = state.profesion;
+        },
+        addGrupo(state ){
+            state.grupo = state.grupo;
+        },
     },
     //eventos actions del store
     actions:{
@@ -52,6 +72,21 @@ export default new Vuex.Store({
         addSubModuloAction(context ){
             context.commit('addSubModulo');
         },
+        addPerfilAction(context ){
+            context.commit('addPerfil');
+        },
+        addEmpresaAction(context ){
+            context.commit('addEmpresa');
+        },
+        addSucursalAction(context ){
+            context.commit('addSucursal');
+        },
+        addProfesionAction(context ){
+            context.commit('addProfesion');
+        },
+        addGrupoAction(context ){
+            context.commit('addGrupo');
+        },
     },
     getters:{
         getProducto(state){
@@ -68,6 +103,21 @@ export default new Vuex.Store({
         },
         getSubModulo(state){
             return state.subModulo;
+        },
+        getPerfil(state){
+            return state.perfil;
+        },
+        getEmpresa(state){
+            return state.empresa;
+        },
+        getSucursal(state){
+            return state.sucursal;
+        },
+        getProfesion(state){
+            return state.profesion;
+        },
+        getGrupo(state){
+            return state.grupo;
         },
     }
 });

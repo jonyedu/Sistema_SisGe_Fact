@@ -39,7 +39,7 @@ class SubModuloApiController extends Controller
             $subModulos = SgOpcionAplicacion::where('status', 1)
                 ->with('modulo:codigo,descripcion')
                 ->get();
-            return  response()->json(['subModulos' => $subModulos], 200);
+            return  response()->json(['subModulos' => $subModulos, 'total'=> $subModulos->count()], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
@@ -49,16 +49,24 @@ class SubModuloApiController extends Controller
     {
         try {
             $user = Auth::user();
-            $modulo = $request->input('frm_id_modulo');
-            $descripcion = $request->input('frm_sub_descripcion');
-            $imagen = $request->input('frm_sub_imagen');
-            $tipo = $request->input('frm_sub_tipo');
-            $ejecutable = $request->input('frm_sub_ejecutable');
-            $usuario_ingreso = $user->codigo;
-            $pcname = $_SERVER["REMOTE_ADDR"];
-            $status = 1;
-            $route = $request->input('frm_sub_ruta');
-            DB::insert("exec SPSEG_INSERT_OPCION_APLICACION '', " . "'$modulo'" . ",'$descripcion'" . ",'$imagen'" . ",'$tipo'" . ",'$ejecutable'" . ",'$usuario_ingreso'" . ",'$pcname'" . ",'$status'" . ",'$route'");
+            SgOpcionAplicacion::Create(
+                [
+                    'empresa' => $request->input('empresa_id'),
+                    'sucursal' => $request->input('sucursal_id'),
+                    'modulo' => $request->input('modulo_id'),
+                    'descripcion' => $request->input('descripcion'),
+                    'imagen' => $request->input('imagen'),
+                    'tipo' => 0,
+                    'ejecutable' => ".",
+                    'usuario_ingreso' => $user->codigo,
+                    'fecha_ingreso' => date("Y-m-d H:i:s"),
+                    'usuario_modificacion' => $user->codigo,
+                    'fecha_modificacion' => date("Y-m-d H:i:s"),
+                    'pcname' => $_SERVER["REMOTE_ADDR"],
+                    'status' => 1,
+                    'route' => $request->input('ruta'),
+                ]
+            );
             return  response()->json(['msj' => 'OK'], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
@@ -67,18 +75,24 @@ class SubModuloApiController extends Controller
     public function modificarSubModulo(Request $request)
     {
         try {
+            //return  response()->json(['msj' => $request->input()], 200);
             $user = Auth::user();
-            $codigo = $request->input('frm_id_sub_modulo');
-            $modulo = $request->input('frm_id_modulo');
-            $descripcion = $request->input('frm_sub_descripcion');
-            $imagen = $request->input('frm_sub_imagen');
-            $tipo = $request->input('frm_sub_tipo');
-            $ejecutable = $request->input('frm_sub_ejecutable');
-            $usuario_modificacion = $user->codigo;
-            $pcname = $_SERVER["REMOTE_ADDR"];
-            $status = 1;
-            $route = $request->input('frm_sub_ruta');
-            DB::insert("exec SPSEG_UPDATE_OPCION_APLICACION " . "'$codigo'" . ",'$modulo'" . ",'$descripcion'" . ",'$imagen'" . ",'$tipo'" . ",'$ejecutable'" . ",'$usuario_modificacion'" . ",'$pcname'" . ",'$status'" . ",'$route'");
+            SgOpcionAplicacion::where('codigo', $request->input('sub_modulo_id'))->update(
+                [
+                    'empresa' => $request->input('empresa_id'),
+                    'sucursal' => $request->input('sucursal_id'),
+                    'modulo' => $request->input('modulo_id'),
+                    'descripcion' => $request->input('descripcion'),
+                    'imagen' => $request->input('imagen'),
+                    'tipo' => 0,
+                    'ejecutable' => ".",
+                    'usuario_modificacion' => $user->codigo,
+                    'fecha_modificacion' => date("Y-m-d H:i:s"),
+                    'pcname' => $_SERVER["REMOTE_ADDR"],
+                    'status' => 1,
+                    'route' => $request->input('ruta'),
+                ]
+            );
             return  response()->json(['msj' => 'OK'], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
@@ -87,7 +101,17 @@ class SubModuloApiController extends Controller
     public function eliminarSubModulo($id)
     {
         try {
-            DB::update("exec SPSEG_ELIMINAR_OPCION_APLICACION " . "'$id'");
+            $user = Auth::user();
+            SgOpcionAplicacion::where('status', 1)
+                ->where('codigo', $id)
+                ->Update(
+                    [
+                        'usuario_modificacion' => $user->codigo,
+                        'fecha_modificacion' => date("Y-m-d H:i:s"),
+                        'pcname' =>  $_SERVER["REMOTE_ADDR"],
+                        'status' => 0,
+                    ]
+                );
             return  response()->json(['msj' => 'OK'], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);

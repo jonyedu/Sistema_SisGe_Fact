@@ -1,300 +1,204 @@
 <template>
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-12">
-                        <ol class="breadcrumb float-sm-left">
-                            <li>
-                                <router-link
-                                    :to="prefijo"
-                                    style="margin-top:-9px"
-                                    class="nav-link"
-                                    >Home</router-link
-                                >
-                            </li>
-                            <li><p>/</p></li>
-                            <li>
-                                <p style="margin-left:10px">
-                                    Mantenimiento de Perfil por Usuario
-                                </p>
-                            </li>
-                        </ol>
-                    </div>
-                    &nbsp;
-                    <!-- Seccion de los menu de botones: Historial clínico, Nueva, Guardar, etc y la Tabla Historial Clinico-->
-
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="tipo"
-                                                ><span class="text-danger"
-                                                    >(*)</span
-                                                >
-                                                Modulo</label
-                                            >
-                                            <v-select
-                                                v-model="selectedModulo"
-                                                :value="form.id_modulo"
-                                                :options="modulos"
-                                                label="display"
-                                                placeholder="Selecione el Modulo"
-                                                @input="setSelectedModulo"
-                                                :class="
-                                                    errores.id_modulo === ''
-                                                        ? ''
-                                                        : 'style-chooser'
-                                                "
-                                            >
-                                                <template slot="no-options"
-                                                    >No se ha encontrado ningun
-                                                    dato</template
-                                                >
-                                            </v-select>
-                                            <small
-                                                v-if="errores.id_modulo !== ''"
-                                                class="text-danger"
-                                                >{{
-                                                    errores.id_modulo[0]
-                                                }}</small
-                                            >
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="tipo"
-                                                ><span class="text-danger"
-                                                    >(*)</span
-                                                >
-                                                Perfil</label
-                                            >
-                                            <v-select
-                                                v-model="selectedPerfil"
-                                                :value="form.id_perfil"
-                                                :options="perfiles"
-                                                label="display"
-                                                placeholder="Selecione el Perfil"
-                                                @input="setSelectedPerfil"
-                                                :class="
-                                                    errores.id_perfil === ''
-                                                        ? ''
-                                                        : 'style-chooser'
-                                                "
-                                            >
-                                                <template slot="no-options"
-                                                    >No se ha encontrado ningun
-                                                    dato</template
-                                                >
-                                            </v-select>
-                                            <small
-                                                v-if="errores.id_perfil !== ''"
-                                                class="text-danger"
-                                                >{{
-                                                    errores.id_perfil[0]
-                                                }}</small
-                                            >
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="ex-lib">
-                                            <vue-select-sides
-                                                type="mirror"
-                                                order-by="asc"
-                                                v-model="
-                                                    form.selectedPerfilPorModulo
-                                                "
-                                                :list="form.subModulos"
-                                            ></vue-select-sides>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div
-                                        class="col-lg-12 col-md-12 col-sm-12 mt-4 pt-1"
+        <div class="my-demo-wrapper">
+            <bs-card shadow>
+                <bs-card-body>
+                    <bs-card-content class="text-right">
+                        <bs-tooltip content="Actualizar" placement="bottom">
+                            <bs-button
+                                mode="icon"
+                                icon="save"
+                                icon-size="sm"
+                                color="success"
+                                @click="actualizarPerfilPorUsuario()"
+                            >
+                            </bs-button>
+                        </bs-tooltip>
+                    </bs-card-content>
+                </bs-card-body>
+            </bs-card>
+            <bs-card shadow>
+                <bs-card-body>
+                    <bs-card-content>
+                        <form ref="myform" novalidate>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <bs-combobox
+                                        prepend-icon-outer="user"
+                                        v-model="
+                                            configurarPermisoForm.modulo_id
+                                        "
+                                        :data-source="cmb.modulos"
+                                        floating-label
+                                        outlined
+                                        clear-button
+                                        :external-validator="moduloValidator"
+                                        @change="cargarPerfilPorUsuario()"
                                     >
-                                        <div class="form-inline">
-                                            <button
-                                                type="button"
-                                                class="btn btn-success btn-block"
-                                                @click="
-                                                    actualizarPerfilPorUsuario()
-                                                "
-                                            >
-                                                Actualizar
-                                            </button>
-                                        </div>
+                                        <label>Modulo</label>
+                                    </bs-combobox>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <bs-combobox
+                                        prepend-icon-outer="user"
+                                        v-model="
+                                            configurarPermisoForm.perfil_id
+                                        "
+                                        :data-source="cmb.perfiles"
+                                        floating-label
+                                        outlined
+                                        clear-button
+                                        :external-validator="perfilValidator"
+                                        @change="cargarPerfilPorUsuario()"
+                                    >
+                                        <label>Perfil</label>
+                                    </bs-combobox>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mt-5">
+                                    <div class="ex-lib">
+                                        <vue-select-sides
+                                            type="mirror"
+                                            order-by="asc"
+                                            v-model="
+                                                configurarPermisoForm.selectedPerfilPorModulo
+                                            "
+                                            :list="
+                                                configurarPermisoForm.subModulos
+                                            "
+                                        ></vue-select-sides>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </form>
+                    </bs-card-content>
+                </bs-card-body>
+            </bs-card>
         </div>
-        <FlashMessage></FlashMessage>
+        <bs-mask-loader :show="showLoader"></bs-mask-loader>
     </div>
 </template>
 
 <script>
 import { prefix } from "../../../../variables";
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
+
+const configurarPermisoValidator = {
+    modulo_id: { required },
+    perfil_id: { required }
+};
 export default {
+    mixins: [validationMixin],
     data: function() {
         return {
-            selectedModulo: "",
-            modulos: [],
-
-            selectedPerfil: "",
-            perfiles: [],
-
-
-
-            errores: {
-                id_modulo: "",
-                id_perfil: ""
+            prefijo: "",
+            //variable que controla el progreso
+            showLoader: false,
+            //Objeto donde tendrá todas las variables del formulario
+            configurarPermisoForm: new BsModel(
+                {
+                    //Aqui es donde se declará las variables para los txt, cmb, etc
+                    schema: {
+                        modulo_id: "",
+                        perfil_id: "",
+                        selectedPerfilPorModulo: [],
+                        subModulos: []
+                    },
+                    //Variables para realizar las peticiones al servidor, save, update, fetch, delete
+                    proxy: {
+                        update: {
+                            url:
+                                "/modulos/seguridad/perfil_por_usuario/actualizar_perfil_por_usuario",
+                            method: "post"
+                        }
+                    }
+                },
+                null,
+                "uid"
+            ),
+            //Objeto para almacenar el arreglo de cada combobox
+            cmb: {
+                modulos: {
+                    proxy: new BsStore({
+                        idProperty: "codigo",
+                        dataProperty: "modulos",
+                        remoteSort: false,
+                        restProxy: {
+                            browse:
+                                "/modulos/seguridad/modulo/cargar_modulo_combo_box"
+                        }
+                    }),
+                    schema: {
+                        displayField: "descripcion",
+                        valueField: "codigo"
+                    }
+                },
+                perfiles: {
+                    proxy: new BsStore({
+                        idProperty: "codigo",
+                        dataProperty: "perfiles",
+                        remoteSort: false,
+                        restProxy: {
+                            browse:
+                                "/modulos/seguridad/perfil/cargar_perfil_combo_box"
+                        }
+                    }),
+                    schema: {
+                        displayField: "descripcion",
+                        valueField: "codigo"
+                    }
+                }
             },
-
-            form: {
-                id_modulo: "",
-                id_perfil: "",
-                id_sub_modulo: "",
-                selectedPerfilPorModulo: [],
-                subModulos: []
-            },
-
-            prefijo: ""
+            //Variables para la validaciones
+            requiredErrorMsg: "Este campo es obligatorio."
         };
     },
+    validations: {
+        configurarPermisoForm: configurarPermisoValidator
+    },
     mounted: function() {
-        this.setSelectedModulo();
-        /* let nombreModulo = this.$nombresModulo.datos_generales;
-        let nombreFormulario = this.$nombresFormulario.datos_generales
-            .generalidades.organizacion_bspi.organizacion_bspi
-            .nombre_formulario;
-        this.$funcionesGlobales.registrarLogForm(
-            nombreModulo,
-            nombreFormulario,
-            "Ingreso"
-        ); */
         this.prefijo = prefix;
     },
-    beforeDestroy: function() {
-        /* let nombreModulo = this.$nombresModulo.datos_generales;
-        let nombreFormulario = this.$nombresFormulario.datos_generales
-            .generalidades.organizacion_bspi.organizacion_bspi
-            .nombre_formulario;
-        this.$funcionesGlobales.registrarLogForm(
-            nombreModulo,
-            nombreFormulario,
-            "Salida"
-        ); */
+    computed: {
+        moduloValidator() {
+            return {
+                hasError: this.$v.configurarPermisoForm.modulo_id.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.configurarPermisoForm.modulo_id.$dirty,
+                validators: {
+                    required: this.$v.configurarPermisoForm.modulo_id.required
+                }
+            };
+        },
+        perfilValidator() {
+            return {
+                hasError: this.$v.configurarPermisoForm.perfil_id.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.configurarPermisoForm.perfil_id.$dirty,
+                validators: {
+                    required: this.$v.configurarPermisoForm.perfil_id.required
+                }
+            };
+        }
     },
+    beforeDestroy: function() {},
     methods: {
-        setSelectedModulo(value) {
-            this.errores = {
-                id_modulo: "",
-                id_perfil: ""
-            };
-            let that = this;
-            //var loader = that.$loading.show();
-            let url = "/modulos/seguridad/modulo/cargar_modulo_table";
-            if (value != null) {
-                this.form.id_modulo = value.id_modulo;
-                this.form.id_sub_modulo = value.id_sub_modulo;
-            }
-            axios
-                .get(url)
-                .then(function(response) {
-                    let modulos = [];
-                    response.data.modulos.forEach(modulo => {
-                        let objeto = {};
-                        objeto.display = that.$funcionesGlobales.toCapitalFirstAllWords(
-                            modulo.descripcion
-                        );
-                        objeto.id_modulo = modulo.codigo;
-                        objeto.id_sub_modulo = modulo.sub_modulo.codigo;
-                        modulos.push(objeto);
-                    });
-                    that.modulos = modulos;
-                    //that.cargarSubModuloPorModulo();
-                    that.setSelectedPerfil();
-                })
-                .catch(error => {
-                    that.flashMessage.show({
-                        status: "error",
-                        title: "Error al procesar setSelectedModulo",
-                        message:
-                            "Por favor comuníquese con el administrador. " +
-                            error,
-                        clickable: true,
-                        time: 0,
-                        icon: "/iconsflashMessage/error.svg",
-                        customStyle: {
-                            flashMessageStyle: {
-                                background: "linear-gradient(#e66465, #9198e5)"
-                            }
-                        }
-                    });
-                    //loader.hide();
-                });
-        },
-        setSelectedPerfil(value) {
-            this.errores = {
-                id_modulo: "",
-                id_perfil: ""
-            };
-            let that = this;
-            //var loader = that.$loading.show();
-            let url = "/modulos/seguridad/perfil/cargar_perfil_combo_box";
-            if (value != null) {
-                this.form.id_perfil = value.id_perfil;
-            }
-            axios
-                .get(url)
-                .then(function(response) {
-                    let perfiles = [];
-                    response.data.perfiles.forEach(perfil => {
-                        let objeto = {};
-                        objeto.display = that.$funcionesGlobales.toCapitalFirstAllWords(
-                            perfil.descripcion
-                        );
-                        objeto.id_perfil = perfil.codigo;
-                        perfiles.push(objeto);
-                    });
-                    that.perfiles = perfiles;
-                    that.cargarPerfilPorUsuario();
-                })
-                .catch(error => {
-                    that.flashMessage.show({
-                        status: "error",
-                        title: "Error al procesar setSelectedPerfil",
-                        message:
-                            "Por favor comuníquese con el administrador. " +
-                            error,
-                        clickable: true,
-                        time: 0,
-                        icon: "/iconsflashMessage/error.svg",
-                        customStyle: {
-                            flashMessageStyle: {
-                                background: "linear-gradient(#e66465, #9198e5)"
-                            }
-                        }
-                    });
-                    //loader.hide();
-                });
-        },
         cargarPerfilPorUsuario() {
-            if (this.form.id_modulo != "" && this.form.id_perfil != "") {
+            if (
+                this.configurarPermisoForm.modulo_id != "" &&
+                this.configurarPermisoForm.perfil_id != ""
+            ) {
                 let that = this;
                 let url =
                     "/modulos/seguridad/perfil_por_usuario/cargar_perfil_por_usuario/" +
-                    this.form.id_modulo +
+                    this.configurarPermisoForm.modulo_id +
                     "/" +
-                    this.form.id_perfil;
-                var loader = that.$loading.show();
+                    this.configurarPermisoForm.perfil_id;
+                this.showLoader = true;
                 axios
                     .get(url)
                     .then(function(response) {
@@ -313,7 +217,7 @@ export default {
                             };
                             subModulos.push(objeto);
                         }
-                        that.form.subModulos = subModulos;
+                        that.configurarPermisoForm.subModulos = subModulos;
 
                         //Solo me muestra los submenus que estan guardados en la tabla opcion por perfil
                         let perfilPorUsuarios = [];
@@ -327,109 +231,86 @@ export default {
                                     .codigo
                             );
                         }
-                        that.form.selectedPerfilPorModulo = perfilPorUsuarios;
-                        loader.hide();
+                        that.configurarPermisoForm.selectedPerfilPorModulo = perfilPorUsuarios;
+                        that.showLoader = false;
                     })
                     .catch(error => {
-                        loader.hide();
-                        that.flashMessage.show({
-                            status: "error",
-                            title: "Error al procesar cargarSubModuloPorModulo",
-                            message:
-                                "Por favor comuníquese con el administrador. " +
+                        that.showLoader = false;
+                        that.showNotificationProgress(
+                            "Error al procesar cargarPerfilPorUsuario",
+                            "Por favor comuníquese con el administrador. " +
                                 error,
-                            clickable: true,
-                            time: 0,
-                            icon: "/iconsflashMessage/error.svg",
-                            customStyle: {
-                                flashMessageStyle: {
-                                    background:
-                                        "linear-gradient(#e66465, #9198e5)"
-                                }
-                            }
-                        });
+                            "error"
+                        );
                     });
             }
         },
-        actualizarPerfilPorUsuario() {
+        actualizarPerfilPorUsuario1() {
             let that = this;
             let url =
                 "/modulos/seguridad/perfil_por_usuario/actualizar_perfil_por_usuario";
-            var loader = that.$loading.show();
+            this.showLoader = true;
             axios
-                .post(url, this.form)
+                .post(url, this.configurarPermisoForm)
                 .then(function(response) {
                     //Llamar metodo de parent para que actualice el grid.
-                    loader.hide();
-                    that.flashMessage.show({
-                        status: "success",
-                        title: "Exito al procesar",
-                        message:
-                            "Datos actualizados correctamente.",
-                        clickable: true,
-                        time: 5000,
-                        icon: "/iconsflashMessage/success.svg",
-                        customStyle: {
-                            flashMessageStyle: {
-                                background: "linear-gradient(#e66465, #9198e5)"
-                            }
-                        }
-                    });
+                    that.showLoader = false;
+                    that.showNotificationProgress(
+                        "Exito al procesar",
+                        "Datos actualizados correctamente.",
+                        "success"
+                    );
                 })
                 .catch(error => {
-                    //Errores de validación
-                    if (error.response.status === 422) {
-                        that.errores = {
-                            id_modulo: "",
-                            id_perfil: ""
-                        };
-                        if (error.response.data.errors.id_modulo != null) {
-                            that.errores.id_modulo =
-                                error.response.data.errors.id_modulo;
-                        }
-                        if (error.response.data.errors.id_perfil != null) {
-                            that.errores.id_perfil =
-                                error.response.data.errors.id_perfil;
-                        }
-                        loader.hide();
-                        that.flashMessage.show({
-                            status: "warning",
-                            title:
-                                "Advertencia al actualizar",
-                            message:
-                                "Necesita seleccionar el Modulo y el Perfil para actualiza.",
-                            clickable: true,
-                            time: 5000,
-                            icon: "/iconsflashMessage/warning.svg",
-                            customStyle: {
-                                flashMessageStyle: {
-                                    background:
-                                        "linear-gradient(#e66465, #9198e5)"
-                                }
-                            }
-                        });
-                    } else {
-                        that.flashMessage.show({
-                            status: "error",
-                            title:
-                                "Error al procesar actualizarPerfilPorUsuario",
-                            message:
-                                "Por favor comuníquese con el administrador. " +
-                                error,
-                            clickable: true,
-                            time: 0,
-                            icon: "/iconsflashMessage/error.svg",
-                            customStyle: {
-                                flashMessageStyle: {
-                                    background:
-                                        "linear-gradient(#e66465, #9198e5)"
-                                }
-                            }
-                        });
-                    }
-                    loader.hide();
+                    that.showLoader = false;
+                    that.showNotificationProgress(
+                        "Error al procesar actualizarPerfilPorUsuario",
+                        "Por favor comuníquese con el administrador. " + error,
+                        "error"
+                    );
                 });
+        },
+        actualizarPerfilPorUsuario() {
+            var that = this;
+            this.$v.$touch();
+            if (!this.$v.$error) {
+                this.showLoader = true;
+                this.configurarPermisoForm
+                    .update()
+                    .then(function(response) {
+                        that.showLoader = false;
+                        that.showNotificationProgress(
+                            "Exito al Procesar",
+                            "Sub Modulo modificado correctamente.",
+                            "success"
+                        );
+                    })
+                    .catch(function(error) {
+                        that.showLoader = false;
+                        that.showNotificationProgress(
+                            "Error en actualizarPerfilPorUsuario",
+                            "Por favor comuníquese con el administrador. " +
+                                error,
+                            "error"
+                        );
+                    });
+            }
+        },
+        showNotificationProgress(title, message, icon) {
+            let options = {
+                message: message,
+                progressBar: true,
+                progressBarValue: null,
+                timeout: 5000
+            };
+            this.$notification[icon](options, title);
         }
     }
 };
 </script>
+
+<style lang="scss">
+.my-demo-wrapper {
+    padding: 24px;
+}
+</style>

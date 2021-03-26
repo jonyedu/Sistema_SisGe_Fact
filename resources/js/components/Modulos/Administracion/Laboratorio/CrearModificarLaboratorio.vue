@@ -49,76 +49,80 @@
                             <bs-card-content>
                                 <form ref="myform" novalidate>
                                     <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div
+                                            class="col-lg-6 col-md-6 col-sm-12"
+                                        >
                                             <bs-text-field
                                                 prepend-icon-outer="user"
                                                 floating-label
                                                 outlined
-                                                v-model="LaboratorioForm.id"
-                                                 
+                                                v-model="laboratorioForm.id"
                                             >
                                                 <label>Codigo</label>
                                             </bs-text-field>
-                                             <bs-text-field
+                                            <bs-text-field
                                                 prepend-icon-outer="address-card"
                                                 floating-label
                                                 outlined
-                                                v-model="LaboratorioForm.nombre"
+                                                v-model="laboratorioForm.nombre"
                                                 :external-validator="
                                                     nombreValidator
                                                 "
                                             >
                                                 <label>Nombre</label>
-                                            </bs-text-field>  
+                                            </bs-text-field>
                                             <bs-text-field
                                                 prepend-icon-outer="address-card"
                                                 floating-label
                                                 outlined
-                                                v-model="LaboratorioForm.representante"
+                                                v-model="
+                                                    laboratorioForm.representante
+                                                "
                                                 :external-validator="
                                                     representanteValidator
                                                 "
                                             >
                                                 <label>Representante</label>
-                                            </bs-text-field>  
-                                             
-                                           
+                                            </bs-text-field>
                                         </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12">
-                                             
-                                                     <bs-text-field
+                                        <div
+                                            class="col-lg-6 col-md-6 col-sm-12"
+                                        >
+                                            <bs-text-field
                                                 prepend-icon-outer="address-card"
                                                 floating-label
                                                 outlined
-                                                v-model="LaboratorioForm.direccion"
+                                                v-model="
+                                                    laboratorioForm.direccion
+                                                "
                                                 :external-validator="
                                                     direccionValidator
                                                 "
                                             >
                                                 <label>Dirección</label>
-                                            </bs-text-field>  
+                                            </bs-text-field>
                                             <bs-text-field
                                                 prepend-icon-outer="phone-square-alt"
                                                 floating-label
                                                 outlined
-                                                v-model="LaboratorioForm.telefono"
+                                                v-model="
+                                                    laboratorioForm.telefono
+                                                "
                                                 :external-validator="
                                                     telefonoValidator
                                                 "
                                             >
                                                 <label>Teléfono</label>
-                                            </bs-text-field>  
-                                                    <bs-switch
-                                                        v-model="LaboratorioForm.estado"
-                                                        color="primary"
-                                                        label-position="left"
-                                                        label-class="col-md-4 ml-3"
-                                                    >
-                                                        ESTADO
-                                                    </bs-switch>
-                                                 
-                                          
-                                             
+                                            </bs-text-field>
+                                            <bs-switch
+                                                class="mt-3"
+                                                v-model="laboratorioForm.estado"
+                                                color="primary"
+                                                label-position="left"
+                                                label-class="col-md-4 ml-3"
+                                            >
+                                                Estado
+                                            </bs-switch>
                                         </div>
                                     </div>
                                 </form>
@@ -138,13 +142,13 @@ import { validationMixin } from "vuelidate";
 import { required, minLength } from "vuelidate/lib/validators";
 
 const laboratorioValidator = {
-    laboratorio_id: { required },
-    codigo: { required, minLength: minLength(3) },
+    //laboratorio_id: { required },
+    //codigo: { required, minLength: minLength(3) },
     nombre: { required, minLength: minLength(5) },
     representante: { required, minLength: minLength(5) },
     direccion: { required, minLength: minLength(5) },
     telefono: { required, minLength: minLength(5) },
-    estado: { required }
+    //estado: { required }
 };
 export default {
     mixins: [validationMixin],
@@ -155,7 +159,7 @@ export default {
             //Variables para obtener el index
             prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
-            LaboratorioForm: new BsModel(
+            laboratorioForm: new BsModel(
                 {
                     //Aqui es donde se declará las variables para los txt, cmb, etc
                     schema: {
@@ -165,8 +169,8 @@ export default {
                         representante: "",
                         direccion: "",
                         telefono: "",
-                        estado: false,
-                      },
+                        estado: false
+                    },
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
@@ -186,31 +190,27 @@ export default {
             ),
             //Variables para la validaciones
             requiredErrorMsg: "Este campo es obligatorio.",
-            minLengthErrorMsg: "Este campo debe tener al menos 5 caracteres.",
+            minLengthErrorMsg: "Este campo debe tener al menos 5 caracteres."
 
             //Objeto para almacenar el arreglo de cada combobox
-             
         };
     },
     validations: {
-        LaboratorioForm: laboratorioValidator
+        laboratorioForm: laboratorioValidator
     },
 
     mounted: function() {
-       
-        
         this.prefijo = prefix;
         if (this.$store.getters.getLaboratorio != null) {
             var producto = this.$store.getters.getLaboratorio;
-            this.LaboratorioForm.laboratorio_id = producto.id;
-            this.LaboratorioForm.codigo = producto.codigo;
-            this.LaboratorioForm.nombre = producto.nombre;
-            this.LaboratorioForm.representante = producto.representante;
-            this.LaboratorioForm.direccion = producto.direcion;
-            this.LaboratorioForm.telefono = producto.telefono;
-            this.LaboratorioForm.estado =Boolean(producto.estado);
+            this.laboratorioForm.laboratorio_id = producto.id;
+            this.laboratorioForm.codigo = producto.codigo;
+            this.laboratorioForm.nombre = producto.nombre;
+            this.laboratorioForm.representante = producto.representante;
+            this.laboratorioForm.direccion = producto.direcion;
+            this.laboratorioForm.telefono = producto.telefono;
+            this.laboratorioForm.estado = Boolean(producto.estado);
         }
-         
     },
     beforeDestroy: function() {
         this.$store.state.producto = null;
@@ -219,97 +219,85 @@ export default {
         //Metodo para validar el campo nombre
         // codigoValidator() {
         //     return {
-        //         hasError: this.$v.LaboratorioForm.codigo.$error,
+        //         hasError: this.$v.laboratorioForm.codigo.$error,
         //         messages: {
         //             required: this.requiredErrorMsg,
         //             minLength: this.minLengthErrorMsg
         //         },
-        //         dirty: this.$v.LaboratorioForm.codigo.$dirty,
+        //         dirty: this.$v.laboratorioForm.codigo.$dirty,
         //         validators: {
-        //             required: this.$v.LaboratorioForm.codigo.required,
-        //             minLength: this.$v.LaboratorioForm.codigo.minLength
+        //             required: this.$v.laboratorioForm.codigo.required,
+        //             minLength: this.$v.laboratorioForm.codigo.minLength
         //         }
         //     };
         // },
-          nombreValidator() {
+        nombreValidator() {
             return {
-                hasError: this.$v.LaboratorioForm.nombre.$error,
+                hasError: this.$v.laboratorioForm.nombre.$error,
                 messages: {
                     required: this.requiredErrorMsg,
                     minLength: this.minLengthErrorMsg
                 },
-                dirty: this.$v.LaboratorioForm.nombre.$dirty,
+                dirty: this.$v.laboratorioForm.nombre.$dirty,
                 validators: {
-                    required: this.$v.LaboratorioForm.nombre.required,
-                    minLength: this.$v.LaboratorioForm.nombre.minLength
+                    required: this.$v.laboratorioForm.nombre.required,
+                    minLength: this.$v.laboratorioForm.nombre.minLength
                 }
             };
         },
-          representanteValidator() {
+        representanteValidator() {
             return {
-                hasError: this.$v.LaboratorioForm.representante.$error,
+                hasError: this.$v.laboratorioForm.representante.$error,
                 messages: {
                     required: this.requiredErrorMsg,
                     minLength: this.minLengthErrorMsg
                 },
-                dirty: this.$v.LaboratorioForm.representante.$dirty,
+                dirty: this.$v.laboratorioForm.representante.$dirty,
                 validators: {
-                    required: this.$v.LaboratorioForm.representante.required,
-                    minLength: this.$v.LaboratorioForm.representante.minLength
+                    required: this.$v.laboratorioForm.representante.required,
+                    minLength: this.$v.laboratorioForm.representante.minLength
                 }
             };
         },
-          direccionValidator() {
+        direccionValidator() {
             return {
-                hasError: this.$v.LaboratorioForm.direccion.$error,
+                hasError: this.$v.laboratorioForm.direccion.$error,
                 messages: {
                     required: this.requiredErrorMsg,
                     minLength: this.minLengthErrorMsg
                 },
-                dirty: this.$v.LaboratorioForm.direccion.$dirty,
+                dirty: this.$v.laboratorioForm.direccion.$dirty,
                 validators: {
-                    required: this.$v.LaboratorioForm.direccion.required,
-                    minLength: this.$v.LaboratorioForm.direccion.minLength
+                    required: this.$v.laboratorioForm.direccion.required,
+                    minLength: this.$v.laboratorioForm.direccion.minLength
                 }
             };
         },
-         telefonoValidator() {
+        telefonoValidator() {
             return {
-                hasError: this.$v.LaboratorioForm.telefono.$error,
+                hasError: this.$v.laboratorioForm.telefono.$error,
                 messages: {
                     required: this.requiredErrorMsg,
                     minLength: this.minLengthErrorMsg
                 },
-                dirty: this.$v.LaboratorioForm.telefono.$dirty,
+                dirty: this.$v.laboratorioForm.telefono.$dirty,
                 validators: {
-                    required: this.$v.LaboratorioForm.telefono.required,
-                    minLength: this.$v.LaboratorioForm.telefono .minLength
+                    required: this.$v.laboratorioForm.telefono.required,
+                    minLength: this.$v.laboratorioForm.telefono.minLength
                 }
             };
-        },
-
-        
+        }
     },
 
     methods: {
         guardarActualizarProducto() {
-            
             var that = this;
             this.$v.$touch();
-           console.log(this.$v.$error);
-           
-            if (this.$v.$error) {
-                  
+            if (!this.$v.$error) {
                 this.showLoader = true;
                 if (this.$store.getters.getLaboratorio != null) {
-                   
-                    this.LaboratorioForm
-                  
-                    
-                        .update()
+                    this.laboratorioForm.update()
                         .then(function(response) {
-                            console.log(response.data);
-                            
                             that.showLoader = false;
                             that.showNotificationProgress(
                                 "Exito al Procesar",
@@ -328,8 +316,7 @@ export default {
                             );
                         });
                 } else {
-                    this.LaboratorioForm
-                        .save()
+                    this.laboratorioForm.save()
                         .then(function(response) {
                             that.showLoader = false;
                             that.showNotificationProgress(
@@ -362,7 +349,7 @@ export default {
         },
         lmpCampos() {
             this.$refs.myform.reset();
-            this.LaboratorioForm.reset();
+            this.laboratorioForm.reset();
             this.$v.$reset();
         }
     }

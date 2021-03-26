@@ -1,233 +1,236 @@
 <template>
-    <div class="row m-3">
-        <!-- <div class="col-lg-12 col-md-12 col-sm-12">
-            <center>
-                <h5 class="mt-4">Modulo</h5>
-            </center>
-        </div> -->
+    <div class="content-wrapper">
+        <div class="my-demo-wrapper">
+            <div class="row">
+                <div class="col-lg-12 offset-lg-12">
+                    <bs-card shadow>
+                        <bs-card-body>
+                            <bs-card-content class="text-right">
+                                <router-link
+                                    :to="
+                                        prefijo +
+                                            '/modulos/seguridad/perfil/mostrar_perfil'
+                                    "
+                                >
+                                    <bs-tooltip
+                                        content="Volver hacia atras"
+                                        placement="bottom"
+                                    >
+                                        <bs-button
+                                            mode="icon"
+                                            icon="reply"
+                                            icon-size="sm"
+                                        >
+                                        </bs-button>
+                                    </bs-tooltip>
+                                </router-link>
 
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="card">
-                <div class="col-lg-12 col-md-12 col-sm-12 p-5">
-                    <form>
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-12">
-                                <div class="form-group">
-                                    <label for="nombre"
-                                        ><span class="text-danger">(*)</span>
-                                        Descripción</label
+                                <bs-tooltip
+                                    content="Guardar perfi"
+                                    placement="bottom"
+                                >
+                                    <bs-button
+                                        mode="icon"
+                                        icon="save"
+                                        icon-size="sm"
+                                        color="success"
+                                        @click="guardarActualizar()"
                                     >
-                                    <input
-                                        type="text"
-                                        :class="
-                                            errores.descripcion === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        placeholder="Descripción del Perfil"
-                                        v-model="form.descripcion"
-                                    />
-                                    <small
-                                        v-if="errores.descripcion !== ''"
-                                        id="correoHelp"
-                                        class="text-danger"
-                                        >{{ errores.descripcion[0] }}</small
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12">
-                                <div class="form-group">
-                                    <label for="abreviatura"
-                                        ><span class="text-danger">(*) </span
-                                        >Abreviatura</label
-                                    >
-                                    <input
-                                        type="text"
-                                        id="abreviatura"
-                                        :class="
-                                            errores.abreviatura === ''
-                                                ? 'form-control'
-                                                : 'form-control is-invalid'
-                                        "
-                                        placeholder="Abreviatura"
-                                        v-model="form.abreviatura"
-                                    />
-                                    <small
-                                        v-if="errores.abreviatura !== ''"
-                                        id="correoHelp"
-                                        class="text-danger"
-                                        >{{ errores.abreviatura[0] }}</small
-                                    >
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div
-                                class="col-lg-12 col-md-12 col-sm-12 mt-4 pt-1"
-                            >
-                                <div class="form-inline">
-                                    <button
-                                        type="button"
-                                        class="btn btn-success btn-block"
-                                        @click="guardarActualizarPerfil()"
-                                    >
-                                        {{
-                                            perfilMod === null
-                                                ? "Guardar"
-                                                : "Modificar"
-                                        }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                                    </bs-button>
+                                </bs-tooltip>
+                            </bs-card-content>
+                        </bs-card-body>
+                    </bs-card>
+                    <bs-card shadow>
+                        <bs-card-header class="bg-indigo text-white"
+                            >Mantenimiento de Perfil</bs-card-header
+                        >
+                        <bs-card-body>
+                            <bs-card-content>
+                                <form ref="myform" novalidate>
+                                    <div class="row">
+                                        <div
+                                            class="col-lg-6 col-md-6 col-sm-12"
+                                        >
+                                            <bs-text-field
+                                                style="margin: auto"
+                                                prepend-icon-outer="user"
+                                                floating-label
+                                                outlined
+                                                v-model="perfilForm.descripcion"
+                                                :external-validator="
+                                                    descripcionValidator
+                                                "
+                                            >
+                                                <label>Descripción</label>
+                                            </bs-text-field>
+                                        </div>
+                                    </div>
+                                </form>
+                            </bs-card-content>
+                        </bs-card-body>
+                    </bs-card>
                 </div>
             </div>
         </div>
+        <bs-mask-loader :show="showLoader"></bs-mask-loader>
     </div>
 </template>
+
 <script>
+import { prefix } from "../../../../variables";
+import { validationMixin } from "vuelidate";
+import { required} from "vuelidate/lib/validators";
+
+const perfilValidator = {
+    descripcion: { required},
+
+};
 export default {
-    props: {
-        perfilMod: {
-            type: Object
-        }
-    },
+    mixins: [validationMixin],
     data: function() {
         return {
-            errores: {
-                descripcion: "",
-                abreviatura: ""
-            },
-            form: {
-                codigo: "",
-                descripcion: "",
-                abreviatura: ""
-            }
+            //variable que controla el progreso
+            showLoader: false,
+            //Variables para obtener el index
+            prefijo: "",
+            //Objeto donde tendrá todas las variables del formulario
+            perfilForm: new BsModel(
+                {
+                    //Aqui es donde se declará las variables para los txt, cmb, etc
+                    schema: {
+                        perfil_id: 0,
+                        descripcion: "",
+                    },
+                    //Variables para realizar las peticiones al servidor, save, update, fetch, delete
+                    proxy: {
+                        save: {
+                            url:
+                                "/modulos/seguridad/perfil/guardar_perfil",
+                            method: "post"
+                        },
+                        update: {
+                            url:
+                                "/modulos/seguridad/perfil/modificar_perfil",
+                            method: "post"
+                        }
+                    }
+                },
+                null,
+                "uid"
+            ),
+            //Variables para la validaciones
+            requiredErrorMsg: "Este campo es obligatorio.",
         };
     },
+    validations: {
+        perfilForm: perfilValidator
+    },
+
     mounted: function() {
-        if (this.$props.perfilMod !== null) {
-            var perfil = this.$props.perfilMod;
-            this.form.codigo = perfil.codigo;
-            this.form.descripcion = perfil.descripcion;
-            this.form.abreviatura = perfil.abreviatura;
+        this.prefijo = prefix;
+        if (this.$store.getters.getPerfil != null) {
+            var perfil = this.$store.getters.getPerfil;
+            this.perfilForm.perfil_id = perfil.codigo;
+            this.perfilForm.descripcion = perfil.descripcion;
         }
-        /* let nombreModulo = this.$nombresModulo.datos_generales;
-        let nombreFormulario = this.$nombresFormulario.datos_generales
-            .generalidades.organizacion_bspi.crear_organizacion_bspi
-            .nombre_formulario;
-        this.$funcionesGlobales.registrarLogForm(
-            nombreModulo,
-            nombreFormulario,
-            "Ingreso"
-        ); */
     },
     beforeDestroy: function() {
-        /* let nombreModulo = this.$nombresModulo.datos_generales;
-        let nombreFormulario = this.$nombresFormulario.datos_generales
-            .generalidades.organizacion_bspi.crear_organizacion_bspi
-            .nombre_formulario;
-        this.$funcionesGlobales.registrarLogForm(
-            nombreModulo,
-            nombreFormulario,
-            "Salida"
-        ); */
+        this.$store.state.perfil = null;
     },
-    methods: {
-        limpiarForm() {
-            this.errores = {
-                descripcion: "",
-                abreviatura: "",
-                orden: ""
-            };
-            this.form = {
-                codigo: "",
-                descripcion: "",
-                abreviatura: "",
-                orden: ""
+    computed: {
+        //Metodo para validar el campo nombre
+        descripcionValidator() {
+            return {
+                hasError: this.$v.perfilForm.descripcion.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                    minLength: this.minLengthErrorMsg
+                },
+                dirty: this.$v.perfilForm.descripcion.$dirty,
+                validators: {
+                    required: this.$v.perfilForm.descripcion.required,
+                }
             };
         },
-        guardarActualizarPerfil: function() {
-            let that = this;
-            let url = "";
-            let mensaje = "";
-            if (this.$props.perfilMod !== null) {
-                url = "/modulos/seguridad/perfil/modificar_perfil";
-                mensaje = "Datos actualizados correctamente.";
-            } else {
-                url = "/modulos/seguridad/perfil/guardar_perfil";
-                mensaje = "Datos guardados correctamente.";
-            }
-            var loader = that.$loading.show();
-            axios
-                .post(url, this.form)
-                .then(function(response) {
-                    //Llamar metodo de parent para que actualice el grid.
-                    loader.hide();
-                    that.$emit("recargarPerfil");
-                    that.$emit("cerrarModalCrearPerfil");
-                    that.flashMessage.show({
-                        status: "success",
-                        title: "Proceso realizado exitosamente",
-                        message: mensaje,
-                        clickable: true,
-                        time: 5000,
-                        icon: "/iconsflashMessage/success.svg",
-                        customStyle: {
-                            flashMessageStyle: {
-                                background: "linear-gradient(#e66465, #9198e5)"
-                            }
-                        }
-                    });
-                    that.limpiarForm();
-                })
-                .catch(error => {
-                    if (error.response.status === 422) {
-                        if (error.response.data.errors.descripcion != null) {
-                            that.errores.descripcion =
-                                error.response.data.errors.descripcion;
-                        }
-                        if (error.response.data.errors.abreviatura != null) {
-                            that.errores.abreviatura =
-                                error.response.data.errors.abreviatura;
-                        }
-                        that.flashMessage.show({
-                            status: "warning",
-                            title: "Se requiere de su atención",
-                            message: "Existen campos vacios.",
-                            clickable: true,
-                            time: 5000,
-                            icon: "/iconsflashMessage/warning.svg",
-                            customStyle: {
-                                flashMessageStyle: {
-                                    background:
-                                        "linear-gradient(#e66465, #9198e5)"
-                                }
-                            }
-                        });
-                    } else {
-                        that.flashMessage.show({
-                            status: "error",
-                            title:
-                                "Error al procesar guardarActualizarPerfil",
-                            message:
+    },
+
+    methods: {
+        guardarActualizar() {
+            var that = this;
+            this.$v.$touch();
+            if (!this.$v.$error) {
+                this.showLoader = true;
+                if (this.$store.getters.getPerfil != null) {
+                    this.perfilForm
+                        .update()
+                        .then(function(response) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Exito al Procesar",
+                                "Perfil modificado correctamente.",
+                                "success"
+                            );
+                            that.lmpCampos();
+                        })
+                        .catch(function(error) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Error en guardarActualizar",
                                 "Por favor comuníquese con el administrador. " +
-                                error,
-                            clickable: true,
-                            time: 0,
-                            icon: "/iconsflashMessage/error.svg",
-                            customStyle: {
-                                flashMessageStyle: {
-                                    background:
-                                        "linear-gradient(#e66465, #9198e5)"
-                                }
-                            }
+                                    error,
+                                "error"
+                            );
                         });
-                    }
-                    loader.hide();
-                });
+                } else {
+                    this.perfilForm
+                        .save()
+                        .then(function(response) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Exito al Procesar",
+                                "Perfil creado correctamente.",
+                                "success"
+                            );
+                            that.lmpCampos();
+                        })
+                        .catch(function(error) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Error en guardarActualizar",
+                                "Por favor comuníquese con el administrador. " +
+                                    error,
+                                "error"
+                            );
+                        });
+                }
+            }
+        },
+        showNotificationProgress(title, message, icon) {
+            let options = {
+                message: message,
+                progressBar: true,
+                progressBarValue: null,
+                timeout: 5000
+            };
+            this.$notification[icon](options, title);
+        },
+        lmpCampos() {
+            this.$refs.myform.reset();
+            this.perfilForm.reset();
+            this.$v.$reset();
         }
     }
 };
 </script>
+
+<style lang="scss">
+.my-demo-wrapper {
+    padding: 24px;
+
+    .btn {
+        margin-bottom: 16px;
+        margin-right: 8px;
+    }
+}
+</style>

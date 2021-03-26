@@ -89,6 +89,7 @@
                                                 <label>Contraseña</label>
                                             </bs-text-field>
                                             <bs-combobox
+                                                clear-button
                                                 prepend-icon-outer="user"
                                                 v-model="
                                                     usuarioForm.profesion_id
@@ -144,6 +145,7 @@
                                                 <label>Confirmar</label>
                                             </bs-text-field>
                                             <bs-combobox
+                                                clear-button
                                                 prepend-icon-outer="user"
                                                 v-model="usuarioForm.perfil_id"
                                                 :data-source="cmb.perfiles"

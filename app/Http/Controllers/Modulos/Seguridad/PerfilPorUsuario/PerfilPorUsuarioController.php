@@ -45,67 +45,6 @@ class PerfilPorUsuarioController extends Controller
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
-    public function cargarMenu1($idPerfil)
-    {
-        try {
-            /* $modulos = SgModulo::where('status', '1');
-            $subModulos = SgOpcionAplicacion::where('status', '1')
-                ->union($modulos);
-            $perfilPorUsuarios = PerfilPorUsuario::where('status', 1)
-                ->where('perfil', $idPerfil)
-                ->union($subModulos)
-                ->orderBy('descripcion', 'asc')
-                ->get(); */
-
-
-
-            /* $menus = [];
-            $modulos = SgModulo::where('status', 1)
-                //->with('subModulo.perfilPorUsuario')
-                ->with(['subModulo.perfilPorUsuario' => function ($i)  use ($idPerfil) {
-                    $i->where('perfil', $idPerfil);
-                }])
-                ->get();
-
-            if (sizeOf($modulos) > 0) {
-                foreach ($modulos as $subModulos) {
-                    if (sizeOf($subModulos->subModulo) > 0) {
-                        foreach ($subModulos->subModulo as $subMenu) {
-                            if ($subMenu->perfilPorusuario != null) {
-                                //echo $subMenu->perfilPorusuario;
-                                array_push($menus, $subMenu);
-                            }
-                        }
-                    }
-                }
-            } */
-            $menus = [];
-            $modulos = SgModulo::where('status', 1)
-                ->with(['subModulo.perfilPorUsuario' => function ($i)  use ($idPerfil) {
-                    $i->where('perfil', $idPerfil);
-                }])
-                ->get();
-
-
-
-            /* if (sizeOf($modulos) > 0) {
-                foreach ($modulos as $subModulos) {
-                    if (sizeOf($subModulos->subModulo) > 0) {
-                        foreach ($subModulos->subModulo as $subMenu) {
-                            if ($subMenu->perfilPorusuario != null) {
-                                //echo $subMenu->perfilPorusuario;
-                                array_push($menus, $subMenu);
-                            }
-                        }
-                    }
-                }
-            } */
-
-            return  response()->json(['modulos' =>  $modulos], 200);
-        } catch (Exception $e) {
-            return response()->json(['mensaje' => $e->getMessage()], 500);
-        }
-    }
 
     public function cargarPerfilPorUsuario($idModulo, $idPerfil)
     {
@@ -125,12 +64,12 @@ class PerfilPorUsuarioController extends Controller
         }
     }
 
-    public function actualizarPerfilPorUsuario(PerfilPorUsuarioRequest $request)
+    public function actualizarPerfilPorUsuario(Request $request)
     {
         try {
             PerfilPorUsuario::where('status', 1)
-                ->where('perfil', $request->input('id_perfil'))
-                ->where('modulo', $request->input('id_modulo'))
+                ->where('perfil', $request->input('perfil_id'))
+                ->where('modulo', $request->input('modulo_id'))
                 ->delete();
             $arraySubModulos = $request->input('selectedPerfilPorModulo');
             if (sizeOf($arraySubModulos) > 0) {
@@ -139,8 +78,8 @@ class PerfilPorUsuarioController extends Controller
                         [
                             'empresa' => 1,
                             'sucursal' => 1,
-                            'perfil' => $request->input('id_perfil'),
-                            'modulo' => $request->input('id_modulo'),
+                            'perfil' => $request->input('perfil_id'),
+                            'modulo' => $request->input('modulo_id'),
                             'opcion_aplicacion' => $subModulo,
                             'superior' => 1,
                             'status' => 1,

@@ -32,7 +32,7 @@ class ModuloApiController extends Controller
         try {
             $modulos = SgModulo::where('status', 1)
                 ->get();
-            return  response()->json(['modulos' => $modulos], 200);
+            return  response()->json(['modulos' => $modulos, 'total' => $modulos->count()], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
