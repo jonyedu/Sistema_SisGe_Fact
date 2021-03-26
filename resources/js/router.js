@@ -14,6 +14,8 @@ import ModificarCrearProducto from "./components/Modulos/Inventario/Producto/Cre
 //Modulo Persona
 import Proveedor from "./components/Modulos/Persona/Proveedor/ListaProveedor";
 import ModificarCrearProveedor from "./components/Modulos/Persona/Proveedor/CrearModificarProveedor";
+import Cliente from "./components/Modulos/Persona/Cliente/ListaCliente";
+import ModificarCrearCliente from "./components/Modulos/Persona/Cliente/CrearModificarCliente";
 
 //Modulo Reporte
 
@@ -81,6 +83,18 @@ export default new VueRouter({
                 prefijo +
                 "/modulos/persona/proveedor/crear_modificar_proveedor",
             component: ModificarCrearProveedor
+        },
+        {
+            path:
+                prefijo +
+                "/modulos/persona/cliente/mostrar_cliente",
+            component: Cliente
+        },
+        {
+            path:
+                prefijo +
+                "/modulos/persona/cliente/crear_modificar_cliente",
+            component: ModificarCrearCliente
         },
 
         //Reporte

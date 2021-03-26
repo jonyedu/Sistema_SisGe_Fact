@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'BSPI') }}</title>
+    <title>{{ config('app.name', 'SisGe_Fact') }}</title>
 
     <!-- Icono de la Pestaña -->
     <link rel="shortcut icon" href="{{ asset('icons/logo/SisGeFact.jpg') }}">
@@ -65,7 +65,7 @@
     </div>
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2020-20121 <a href="https://www.bspi.org/inicio.html">BSPI</a>.</strong>
+        <strong>Copyright &copy; 2020-20121 <a href="https://www.SisGe_Fact.org/inicio.html">SisGe_Fact</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
             <b>Version</b> 0.0.1

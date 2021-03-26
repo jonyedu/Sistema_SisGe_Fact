@@ -20,6 +20,7 @@ export default new Vuex.Store({
         sucursal: null,
         profesion: null,
         grupo: null,
+        cliente: null,
     },
 
     //una mutacion se va a realizar siempre y cuando sea llamada desde una acccion
@@ -54,6 +55,9 @@ export default new Vuex.Store({
         addGrupo(state ){
             state.grupo = state.grupo;
         },
+        addCliente(state ){
+            state.cliente = state.cliente;
+        },
     },
     //eventos actions del store
     actions:{
@@ -87,6 +91,9 @@ export default new Vuex.Store({
         addGrupoAction(context ){
             context.commit('addGrupo');
         },
+        addClienteAction(context ){
+            context.commit('addCliente');
+        },
     },
     getters:{
         getProducto(state){
@@ -118,6 +125,9 @@ export default new Vuex.Store({
         },
         getGrupo(state){
             return state.grupo;
+        },
+        getCliente(state){
+            return state.cliente;
         },
     }
 });

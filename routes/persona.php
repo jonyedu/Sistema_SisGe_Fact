@@ -17,6 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => '/modulos/persona', 'middleware' => ['auth:web'], 'verified'], function () {
 
+    //Submenu de Cliente
+    Route::namespace('Modulos\Persona\Cliente')->prefix('cliente')->group(function () {
+        Route::get('cargar_cliente_combo_box', 'ClienteController@cargarClienteComboBox');
+        Route::get('cargar_cliente_all', 'ClienteController@cargarClienteAll');
+        Route::post('guardar_modificar_cliente', 'ClienteController@guardarModificarCliente');
+        Route::delete('eliminar_cliente/{id}', 'ClienteController@eliminarCliente');
+    });
     //Submenu de Proveedor
     Route::namespace('Modulos\Persona\Proveedor')->prefix('proveedor')->group(function () {
         Route::get('cargar_proveedor_combo_box', 'ProveedorController@cargarProveedorComboBox');
@@ -24,5 +31,4 @@ Route::group(['prefix' => '/modulos/persona', 'middleware' => ['auth:web'], 'ver
         Route::get('cargar_proveedor_all', 'ProveedorController@cargarProveedorAll');
         Route::post('guardar_modificar_proveedor', 'ProveedorController@guardarModificarProveedor');
     });
-
 });

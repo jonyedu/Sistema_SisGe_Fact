@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'BSPI') }}</title>
+    <title>{{ config('app.name', 'SisGe_Fact') }}</title>
 
     <!-- Icono de la Pestaña -->
     <link rel="shortcut icon" href="{{ asset('icons/logo/SisGeFact.jpg') }}">
