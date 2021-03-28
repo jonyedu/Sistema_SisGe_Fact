@@ -35,6 +35,20 @@ class ClienteController extends Controller
         }
     }
 
+    public function cargarClienteCedula($cedula)
+    {
+        try {
+            $clientes = Cliente::select('id', 'nombres', 'apellidos',  'cedula', 'telefono', 'direccion', 'correo' )
+               // ->where('status', 1)
+                ->where('cedula',$cedula)
+                ->get();
+            return  response()->json(['clientes' => $clientes, 'total' => sizeOf($clientes)], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
+        }
+    }
+
+
 
     public function guardarModificarCliente(Request $request)
     {

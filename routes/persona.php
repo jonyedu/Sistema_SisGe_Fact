@@ -23,6 +23,7 @@ Route::group(['prefix' => '/modulos/persona', 'middleware' => ['auth:web'], 'ver
         Route::get('cargar_cliente_all', 'ClienteController@cargarClienteAll');
         Route::post('guardar_modificar_cliente', 'ClienteController@guardarModificarCliente');
         Route::delete('eliminar_cliente/{id}', 'ClienteController@eliminarCliente');
+        Route::get('cargar_cliente_cedula/{cedula}', 'ClienteController@cargarClienteCedula');
     });
     //Submenu de Proveedor
     Route::namespace('Modulos\Persona\Proveedor')->prefix('proveedor')->group(function () {

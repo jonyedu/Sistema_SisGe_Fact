@@ -32,7 +32,7 @@ class ProductoInventario extends Model
     }
     public function costoInv()
     {
-        return $this->hasOne('App\Models\Modulos\Inventario\Producto\Producto\ProductoCosto','idproducto', 'id_producto');
+        return $this->hasOne('App\Models\Modulos\Inventario\Producto\ProductoCosto','idproducto', 'id_producto');
     }
 
 }
