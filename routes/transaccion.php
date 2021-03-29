@@ -21,6 +21,10 @@ Route::group(['prefix' => '/modulos/transaccion', 'middleware' => ['auth:web'], 
     Route::namespace('Modulos\Transaccion\FacturaVenta')->prefix('factura_venta')->group(function () {
         Route::get('cargar_facturas_dia', 'VentasCabeceraController@cargarFacturasDelDia');
         Route::get('productos_invo/{este}', 'VentasCabeceraController@cargarProductosInventario');
+        //configuraciones
+        Route::get('config_tipo', 'VentasCabeceraController@cargar_tipo');
     });
+
+     
 
 });

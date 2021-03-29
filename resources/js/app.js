@@ -48,10 +48,20 @@ Vue.component(
 );
 
 
-// inventario
+// Factura
 Vue.component(
     "inventario-producto",
     require("./components/Modulos/Transaccion/FacturaVenta/ProductosInventario.vue").default
+);
+
+Vue.component(
+    "cliente-factura",
+    require("./components/Modulos/Transaccion/FacturaVenta/ClienteFactura.vue").default
+);
+
+Vue.component(
+    "forma-de-pago-factura",
+    require("./components/Modulos/Transaccion/FacturaVenta/FormadePagoFactura.vue").default
 );
 //
 

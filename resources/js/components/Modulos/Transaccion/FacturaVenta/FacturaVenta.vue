@@ -12,65 +12,13 @@
                         <inventario-producto> </inventario-producto>
                     </bs-tab>
                     <bs-tab label="Datos de Facturación" icon="money-bill-alt">
-                        <div class="form-group">
-                            <bs-text-field
-                                prepend-icon="address-book"
-                                floating-label
-                                autofocus
-                                required
-                            >
-                                <label>Cédula de Identidad </label>
-                            </bs-text-field>
-                            <bs-switch
-                                color="primary"
-                                label-position="left"
-                                label-class="col-md-4 ml-3"
-                            >
-                                S/c
-                            </bs-switch>
-                            <bs-text-field
-                                prepend-icon="address-book"
-                                floating-label
-                                autofocus
-                                required
-                            >
-                                <label>Nombres </label>
-                            </bs-text-field>
-                            <bs-text-field
-                                prepend-icon="address-book"
-                                floating-label
-                                autofocus
-                                required
-                            >
-                                <label>Apellidos</label>
-                            </bs-text-field>
-                            <bs-text-field
-                                prepend-icon="phone-alt"
-                                floating-label
-                                autofocus
-                                required
-                            >
-                                <label>Teléfono</label>
-                            </bs-text-field>
-                            <bs-text-field
-                                prepend-icon="map-marker-alt"
-                                floating-label
-                                autofocus
-                                required
-                            >
-                                <label>Dirección</label>
-                            </bs-text-field>
-                            <bs-text-field
-                                prepend-icon="mail-bulk"
-                                floating-label
-                                autofocus
-                                required
-                            >
-                                <label>Correo Electronico</label>
-                            </bs-text-field>
-                        </div>
+                       <cliente-factura>
+                       </cliente-factura>
                     </bs-tab>
-                    <bs-tab label="Formas de Pago" icon="credit-card"> </bs-tab>
+                    <bs-tab label="Formas de Pago" icon="credit-card"> 
+                    <forma-de-pago-factura>
+                    </forma-de-pago-factura>
+                    </bs-tab>
                 </bs-tabs>
             </bs-card>
         </div>
