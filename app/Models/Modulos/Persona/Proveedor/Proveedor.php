@@ -23,9 +23,25 @@ class Proveedor extends Model
         'id',
         'codigo',
         'nombre',
+        'apellido',
+        'cedula',
         'representante',
-        'direcion',
+        'direccion',
         'telefono',
-        'estado'
+        'usu_created',
+        'usu_update',
+        'created_at',
+        'updated_at',
+        'pcip',
+        'status'
     ];
+
+    protected $appends = [
+        'FULLNAME'
+    ];
+
+    public function getFULLNAMEattribute()
+    {
+        return $this->apellido . " " . $this->nombre;
+    }
 }

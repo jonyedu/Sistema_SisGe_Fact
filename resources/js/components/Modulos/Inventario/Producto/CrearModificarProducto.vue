@@ -99,7 +99,7 @@
                                                 :external-validator="
                                                     proveedorValidator
                                                 "
-                                                minimum-items-for-search="5"
+                                                :minimum-items-for-search="3"
                                             >
                                                 <label>Proveedor</label>
                                             </bs-combobox>
@@ -220,21 +220,21 @@
                                                 Cargar Imagen
                                             </bs-button>
                                         </div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                                                <bs-avatar
-                                                    class="md-link"
-                                                    :img-src="
-                                                        productoForm.fotoURL
-                                                    "
-                                                    size="100%"
-                                                    rounded
-                                                    @click="
-                                                        showSingleItem = true
-                                                    "
-                                                >
-                                                </bs-avatar>
-                                            </div>
-
+                                        <div
+                                            class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                            <bs-avatar
+                                                class="md-link"
+                                                :img-src="
+                                                    productoForm.fotoURL
+                                                "
+                                                size="100%"
+                                                rounded
+                                                @click="
+                                                    showSingleItem = true
+                                                "
+                                            >
+                                            </bs-avatar>
+                                        </div>
                                     </div>
                                 </form>
                             </bs-card-content>
@@ -310,7 +310,8 @@ export default {
                         grupo_id: "",
                         proveedor_id: "",
                         logo: "",
-                        fotoURL: ""
+                        fotoURL: "",
+                        file_base_64: "",
                     },
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
@@ -324,8 +325,6 @@ export default {
                                 "/modulos/inventario/producto/guardar_modificar_producto",
                             method: "post"
                         },
-                        fetch:
-                            "/modulos/inventario/producto/producto_por_id/{id}"
                     }
                 },
                 null,
@@ -357,20 +356,16 @@ export default {
                         idProperty: "id",
                         dataProperty: "proveedores",
                         totalProperty: "total",
-                        //remoteFilter: false, // default is TRUE
-                        //remotePaging: false, // default is TRUE
-                        remoteSort: false, // default is TRUE
-                        //pageSize: 10,
-                        filters: [
+                        /* filters: [
                             {
                                 property: "nombre",
                                 value: "id",
                                 operator: "contains"
                             }
-                        ],
+                        ], */
+                        pageSize: 15,
                         restProxy: {
-                            browse:
-                                "/modulos/persona/proveedor/cargar_proveedor_combo_box"
+                            browse:"/modulos/persona/proveedor/cargar_proveedor_all",
                         }
                     }),
                     schema: { displayField: "nombre", valueField: "id" }
@@ -384,7 +379,6 @@ export default {
 
     mounted: function() {
         this.prefijo = prefix;
-        this.productoForm.fetch(50);
         if (this.$store.getters.getProducto != null) {
             var producto = this.$store.getters.getProducto;
             this.productoForm.producto_id = producto.id;
@@ -397,7 +391,9 @@ export default {
             this.productoForm.descripcion = producto.descripcion;
             this.productoForm.codigo = producto.codigo;
             this.productoForm.grupo_id = producto.grupo_id;
-            this.productoForm.proveedor_id = producto.proveedor_id;
+            this.productoForm.proveedor_id = producto.laboratorio_id;
+            this.productoForm.fotoURL = producto.imagen;
+            this.singleItem[0].imageSrc = producto.imagen;
         }
     },
     beforeDestroy: function() {
@@ -518,7 +514,15 @@ export default {
     },
 
     methods: {
-        onFileSelected(event) {
+        createBase64Image(fileObject) {
+            const reader = new FileReader();
+            reader.readAsDataURL(fileObject);
+                reader.onload = (e) => {
+                this.productoForm.file_base_64  = e.target.result;
+            };
+
+        },
+        async onFileSelected(event) {
             if (event.target.files.length > 0) {
                 if (
                     event.target.files[0]["type"] === "image/jpeg" ||
@@ -529,6 +533,8 @@ export default {
                     this.productoForm.fotoURL = URL.createObjectURL(
                         this.productoForm.logo
                     );
+                    //var resultado = null;
+                    this.createBase64Image(this.productoForm.logo);
                     this.singleItem[0].title = event.target.files[0].name;
                     this.singleItem[0].imageSrc = this.productoForm.fotoURL;
                 } else {

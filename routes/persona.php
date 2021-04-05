@@ -29,6 +29,7 @@ Route::group(['prefix' => '/modulos/persona', 'middleware' => ['auth:web'], 'ver
     Route::namespace('Modulos\Persona\Proveedor')->prefix('proveedor')->group(function () {
         Route::get('cargar_proveedor_combo_box', 'ProveedorController@cargarProveedorComboBox');
         Route::get('cargar_proveedor_combo', 'ProveedorController@cargarProveedorCombo');
+        Route::get('cargar_proveedor_cedula/{cedula}', 'ProveedorController@cargarProveedorCedula');
         Route::get('cargar_proveedor_all', 'ProveedorController@cargarProveedorAll');
         Route::post('guardar_modificar_proveedor', 'ProveedorController@guardarModificarProveedor');
     });

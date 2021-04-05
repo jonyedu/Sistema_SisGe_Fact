@@ -63,6 +63,15 @@ Vue.component(
     "forma-de-pago-factura",
     require("./components/Modulos/Transaccion/FacturaVenta/FormadePagoFactura.vue").default
 );
+
+Vue.component(
+    "datos-factura-compra",
+    require("./components/Modulos/Transaccion/FacturaCompra/Components/DatosFacturaCompra").default
+);
+Vue.component(
+    "seleccionar-producto",
+    require("./components/Modulos/Transaccion/FacturaCompra/Components/ListarProductos").default
+);
 //
 
 /* Vue.component(

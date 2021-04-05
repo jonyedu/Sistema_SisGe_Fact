@@ -17,6 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => '/modulos/transaccion', 'middleware' => ['auth:web'], 'verified'], function () {
 
+    //Submenu de Facturacion Compra
+    Route::namespace('Modulos\Transaccion\FacturaCompra')->prefix('factura_compra')->group(function () {
+        Route::get('cargar_all_factura_compra_cabecera', 'CompraCabeceraController@cargarCompraCabeceraTabla');
+
+    });
+
     //Submenu de Facturacion Venta
     Route::namespace('Modulos\Transaccion\FacturaVenta')->prefix('factura_venta')->group(function () {
         Route::get('cargar_facturas_dia', 'VentasCabeceraController@cargarFacturasDelDia');
@@ -25,6 +31,6 @@ Route::group(['prefix' => '/modulos/transaccion', 'middleware' => ['auth:web'], 
         Route::get('config_tipo', 'VentasCabeceraController@cargar_tipo');
     });
 
-     
+
 
 });

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Modulos\Transaccion\FacturaVenta;
 
 use App\Models\Modulos\Transaccion\FacturaVenta\VentasCabecera;
 use App\Models\Modulos\Inventario\Producto\ProductoInventario;
-use App\Models\Modulos\Transaccion\Tarjetas\config_tipopago;
 
 use App\Http\Controllers\Controller;
+use App\Models\Modulos\Banco\TipoPago\TipoPago;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -29,7 +29,7 @@ class VentasCabeceraController extends Controller
         try {
 
             $producto_inventario = ProductoInventario::select('id_producto', 'Stock')
-                ->with('ProductoInv:id,nombre')
+                ->with('ProductoInv:id,nombre,imagen')
                 ->whereHas('ProductoInv', function ($query) use ($nombre) {
 
                     return $query->where("nombre", 'LIKE', '%' . $nombre . '%');
@@ -50,12 +50,12 @@ class VentasCabeceraController extends Controller
     public function cargar_tipo(){
         try {
             //code...
-            $tipo = config_tipopago::All();
+            $tipo = TipoPago::All();
             return  response()->json(['tipo' => $tipo, 'total' => sizeOf($tipo)], 200);
 
         } catch (Exception $th) {
             //throw $th;
         }
     }
-     
+
 }

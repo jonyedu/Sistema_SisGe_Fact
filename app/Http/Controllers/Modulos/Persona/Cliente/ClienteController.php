@@ -38,7 +38,7 @@ class ClienteController extends Controller
     public function cargarClienteCedula($cedula)
     {
         try {
-            $clientes = Cliente::select('id', 'nombres', 'apellidos',  'cedula', 'telefono', 'direccion', 'correo' )
+            $clientes = Cliente::select('cliente_id', 'nombres', 'apellidos',  'cedula', 'telefono', 'direccion', 'correo' )
                // ->where('status', 1)
                 ->where('cedula',$cedula)
                 ->get();
