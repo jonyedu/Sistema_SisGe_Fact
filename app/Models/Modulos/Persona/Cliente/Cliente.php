@@ -34,7 +34,5 @@ class Cliente extends Model
         'updated_at',
         'pcip',
         'status'
-
-
     ];
 }

@@ -4,13 +4,25 @@
             <bs-card-content class="text-left">
                 <form ref="myform" novalidate>
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-12 mt-3">
-                            <bs-search-field
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <!-- <bs-search-field
                                 v-model="srchvalue0"
                                 autofocus
                                 @search="onSearch"
                             >
-                            </bs-search-field>
+                            </bs-search-field> -->
+                            <bs-combobox
+                                v-model="productoForm.proveedor_id"
+                                :data-source="cmb.proveedores"
+                                floating-label
+                                outlined
+                                clear-button
+                                :external-validator="proveedorValidator"
+                                :minimum-items-for-search="3"
+                                @change="getProductoPorProveedor()"
+                            >
+                                <label>Proveedor</label>
+                            </bs-combobox>
                         </div>
                         <div class="col-lg-5 col-md-5 col-sm-10">
                             <bs-tooltip
@@ -37,12 +49,16 @@
                                     >
                                         <bs-list-tile-title>
                                             <span>{{
-                                                item.producto_inv.nombre
+                                                item.producto_inv != null
+                                                    ? item.producto_inv.nombre
+                                                    : ""
                                             }}</span>
                                             <span
                                                 class="float-right font-weight-light small"
                                                 >${{
-                                                    item.costo_inv.precio
+                                                    item.costo_inv != null
+                                                        ? item.costo_inv.precio
+                                                        : ""
                                                 }}</span
                                             >
                                         </bs-list-tile-title>
@@ -184,6 +200,16 @@
                                 </template>
                             </bs-grid>
                         </div>
+                        <div class="col-lg-8 col-md-8 col-sm-12 mt-3 card-left">
+                            <bs-card shadow style="height:90%">
+                                <bs-text-area
+                                    floating-label
+                                    outlined
+                                >
+                                    <label>Descripción</label>
+                                </bs-text-area>
+                            </bs-card>
+                        </div>
                         <div
                             class="col-lg-4 col-md-4 col-sm-12 mt-3 card-right"
                         >
@@ -200,7 +226,7 @@
                                             <bs-list-tile-title
                                                 >SubTotal 0%:
                                                 <span class="float-right">{{
-                                                    sub_total_12
+                                                    sub_total_0
                                                 }}</span>
                                             </bs-list-tile-title>
                                         </bs-list-tile-content>
@@ -212,6 +238,9 @@
                                         <bs-list-tile-content>
                                             <bs-list-tile-title
                                                 >Total:
+                                                <span class="float-right">{{
+                                                    sub_total_12 + sub_total_0
+                                                }}</span>
                                             </bs-list-tile-title>
                                         </bs-list-tile-content>
                                     </bs-list-tile>
@@ -231,6 +260,7 @@ import { validationMixin } from "vuelidate";
 import { required, minLength, numeric } from "vuelidate/lib/validators";
 
 const productoValidator = {
+    proveedor_id: { required },
     producto_id: { required },
     cantidad: { required, numeric }
 };
@@ -239,6 +269,7 @@ export default {
     data: function() {
         return {
             sub_total_12: "",
+            sub_total_0: "",
             pagination: {
                 messages: {
                     display: "Displaying: {0}-{1} of {2} items"
@@ -254,6 +285,7 @@ export default {
                 {
                     //Aqui es donde se declará las variables para los txt, cmb, etc
                     schema: {
+                        proveedor_id: "",
                         producto_id: "",
                         cantidad: ""
                     },
@@ -276,6 +308,19 @@ export default {
             ),
             //Objeto para almacenar el arreglo de cada combobox
             cmb: {
+                proveedores: {
+                    proxy: new BsStore({
+                        idProperty: "id",
+                        dataProperty: "proveedores",
+                        totalProperty: "total",
+                        pageSize: 15,
+                        restProxy: {
+                            browse:
+                                "/modulos/persona/proveedor/cargar_proveedor_all"
+                        }
+                    }),
+                    schema: { displayField: "nombre", valueField: "id" }
+                },
                 productos: {
                     proxy: new BsStore({
                         idProperty: "id_producto",
@@ -284,7 +329,7 @@ export default {
                         remoteSort: false,
                         restProxy: {
                             fetch:
-                                "/modulos/transaccion/factura_venta/productos_invo/{id}"
+                                "/modulos/transaccion/factura_compra/cargar_producto_por_proveedor/{id}"
                         }
                     }),
                     schema: {
@@ -310,6 +355,18 @@ export default {
     },
     mounted: function() {},
     computed: {
+        proveedorValidator() {
+            return {
+                hasError: this.$v.productoForm.proveedor_id.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.productoForm.proveedor_id.$dirty,
+                validators: {
+                    required: this.$v.productoForm.proveedor_id.required
+                }
+            };
+        },
         productoValidator() {
             return {
                 hasError: this.$v.productoForm.producto_id.$error,
@@ -359,6 +416,7 @@ export default {
             let producto_imagen = "";
             let stock = "";
             let precio = "";
+            let iva = "";
             this.$v.$touch();
             if (!this.$v.$error) {
                 this.showLoader = true;
@@ -370,10 +428,7 @@ export default {
                         i++
                     ) {
                         let producto = this.productosCarrito._items[i];
-                        if (
-                            producto.id_producto ==
-                            this.productoForm.producto_id
-                        ) {
+                        if (producto.id == this.productoForm.producto_id) {
                             encontrado = true;
                             break;
                         }
@@ -393,47 +448,87 @@ export default {
                             this.productoForm.producto_id
                         ) {
                             producto_id = +producto.id_producto;
-                            producto_nombre = producto.producto_inv.nombre;
-                            producto_imagen = producto.producto_inv.imagen;
+                            producto_nombre =
+                                producto.producto_inv != null
+                                    ? producto.producto_inv.nombre
+                                    : 0;
+                            producto_imagen =
+                                producto.producto_inv != null
+                                    ? producto.producto_inv.imagen
+                                    : "";
                             stock = +producto.Stock;
-                            precio = producto.costo_inv.precio;
+                            iva =
+                                producto.producto_inv != null
+                                    ? producto.producto_inv.iva
+                                    : "";
+                            precio =
+                                producto.costo_inv != null
+                                    ? producto.costo_inv.precio
+                                    : 0;
                             break;
                         }
                     }
-                    this.productosCarrito._items.push({
-                        id: producto_id,
-                        nombre: producto_nombre,
-                        imagen: producto_imagen,
-                        stock: stock,
-                        precio: precio,
-                        cantidad: this.productoForm.cantidad,
-                        total: this.productoForm.cantidad * precio
-                    });
-                    this.lmpCampos();
-                    this.showLoader = false;
-                    this.sub_total_12 = this.productosCarrito.aggregateSum(
-                        "total"
-                    );
-                    this.showNotificationProgress(
-                        "Exito al Procesar",
-                        "Producto agregado correctamente.",
-                        "success"
-                    );
+                    //Si el stock es mayor 0, se agrega al carrito
+                    if (stock > 0) {
+                        this.productosCarrito._items.push({
+                            id: producto_id,
+                            nombre: producto_nombre,
+                            imagen: producto_imagen,
+                            stock: stock,
+                            precio: precio,
+                            cantidad: this.productoForm.cantidad,
+                            iva: iva,
+                            total: this.productoForm.cantidad * precio
+                        });
+                        this.lmpCampos();
+                        this.showLoader = false;
+                        this.calcular12y0();
+                        this.showNotificationProgress(
+                            "Exito al Procesar",
+                            "Producto agregado correctamente.",
+                            "success"
+                        );
+                    } else {
+                        this.showNotificationProgress(
+                            "Existe un error",
+                            "El producto que intenta vender, no tiene stock disponible.",
+                            "error"
+                        );
+                        this.showLoader = false;
+                    }
                 } else {
                     this.showNotificationProgress(
                         "Existe un error",
-                        "El producto que intenta añadir, ya se encuentra en la tabla.",
+                        "El producto que intenta vender, ya se encuentra en la tabla.",
                         "error"
                     );
+                    this.showLoader = false;
                 }
             }
         },
-        calcular() {
-            this.totalPagar = this.cantidad * this.Lista.costo_inv.precio;
+        calcular12y0() {
+            var sub_total_12 = 0;
+            var sub_total_0 = 0;
+            this.productosCarrito._items.forEach(function(data) {
+                //tiene iva
+                if (data.iva) {
+                    sub_total_12 += data.total;
+                    //no tiene iva
+                } else {
+                    sub_total_0 += data.total;
+                }
+            });
+            this.sub_total_12 = sub_total_12;
+            this.sub_total_0 = sub_total_0;
         },
+
         onSearch(term) {
             this.srchvalue0 = term;
             this.cmb.productos.proxy.fetch(term);
+            this.$refs.msjProducto.active = true;
+        },
+        getProductoPorProveedor() {
+            this.cmb.productos.proxy.fetch(this.productoForm.proveedor_id);
             this.$refs.msjProducto.active = true;
         },
         btnClickModificar(item) {
@@ -457,6 +552,7 @@ export default {
             this.$refs.myform.reset();
             this.productoForm.reset();
             this.$v.$reset();
+            this.cmb.productos.proxy._items = [];
         }
     }
 };

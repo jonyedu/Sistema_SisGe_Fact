@@ -2,78 +2,131 @@
     <div class="row">
         <div class="col-lg-12 offset-lg-12">
             <form ref="myform" novalidate>
-                <bs-switch
-                    color="primary"
-                    label-position="left"
-                    label-class="col-md-4 ml-3"
-                    v-model="proveedor.band"
-                    @change="consumidorfinal()"
-                    clear-button
-                >
-                    S/c
-                </bs-switch>
-                <bs-text-field
-                    prepend-icon="address-book"
-                    floating-label
-                    autofocus
-                    required
-                    :disabled="proveedor.band"
-                    v-model="proveedor.cedula"
-                    @input="consultarcedula()"
-                    clear-button
-                >
-                    <label>Cédula de Identidad </label>
-                </bs-text-field>
-                <bs-text-field
-                    prepend-icon="address-book"
-                    floating-label
-                    required
-                    :disabled="proveedor.band"
-                    v-model="proveedor.nombre"
-                    clear-button
-                >
-                    <label>Nombre</label>
-                </bs-text-field>
-                <bs-text-field
-                    prepend-icon="address-book"
-                    floating-label
-                    required
-                    :disabled="proveedor.band"
-                    v-model="proveedor.apellido"
-                    clear-button
-                >
-                    <label>Apellido</label>
-                </bs-text-field>
-                <bs-text-field
-                    prepend-icon="address-book"
-                    floating-label
-                    required
-                    :disabled="proveedor.band"
-                    v-model="proveedor.representante"
-                    clear-button
-                >
-                    <label>Representante</label>
-                </bs-text-field>
-                <bs-text-field
-                    prepend-icon="phone-alt"
-                    floating-label
-                    required
-                    :disabled="proveedor.band"
-                    v-model="proveedor.telefono"
-                    clear-button
-                >
-                    <label>Teléfono</label>
-                </bs-text-field>
-                <bs-text-field
-                    prepend-icon="map-marker-alt"
-                    floating-label
-                    required
-                    :disabled="proveedor.band"
-                    v-model="proveedor.direccion"
-                    clear-button
-                >
-                    <label>Dirección</label>
-                </bs-text-field>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <bs-date-time-field
+                            prepend-icon="address-book"
+                            v-model="proveedor.fmt_registro"
+                            value-format="YYYY-MM-DD"
+                            display-format="DD MMMM YYYY"
+                            clear-button
+                            floating-label
+                            autofocus
+                        >
+                            <label class="col-md-3 col-xl-2 col-form-label">
+                                Fecha Registro
+                            </label>
+                        </bs-date-time-field>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <bs-switch
+                            class="ml-5"
+                            color="primary"
+                            label-position="left"
+                            v-model="proveedor.band"
+                            @change="consumidorfinal()"
+                            clear-button
+                        >
+                            S/c
+                        </bs-switch>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <bs-text-field
+                            prepend-icon="address-book"
+                            floating-label
+                            required
+                            :disabled="proveedor.band"
+                            v-model="proveedor.no_documento"
+                            @input="consultarcedula()"
+                            clear-button
+                        >
+                            <label># Documento</label>
+                        </bs-text-field>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                        <bs-combobox
+                            v-model="proveedor.tipo_documento_id"
+                            :data-source="cmb.tipos_documentos"
+                            floating-label
+                            clear-button
+                        >
+                            <label>Tipo Doc.</label>
+                        </bs-combobox>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <bs-text-field
+                            prepend-icon="address-book"
+                            floating-label
+                            required
+                            :disabled="proveedor.band"
+                            v-model="proveedor.cedula"
+                            @input="consultarcedula()"
+                            clear-button
+                        >
+                            <label>Cédula de Identidad</label>
+                        </bs-text-field>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <bs-text-field
+                            prepend-icon="address-book"
+                            floating-label
+                            required
+                            :disabled="true"
+                            v-model="proveedor.nombre"
+                            clear-button
+                        >
+                            <label>Nombre</label>
+                        </bs-text-field>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <bs-text-field
+                            prepend-icon="address-book"
+                            floating-label
+                            required
+                            :disabled="true"
+                            v-model="proveedor.apellido"
+                            clear-button
+                        >
+                            <label>Apellido</label>
+                        </bs-text-field>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <bs-text-field
+                            prepend-icon="address-book"
+                            floating-label
+                            required
+                            :disabled="true"
+                            v-model="proveedor.representante"
+                            clear-button
+                        >
+                            <label>Representante</label>
+                        </bs-text-field>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <bs-text-field
+                            prepend-icon="phone-alt"
+                            floating-label
+                            required
+                            :disabled="true"
+                            v-model="proveedor.telefono"
+                            clear-button
+                        >
+                            <label>Teléfono</label>
+                        </bs-text-field>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <bs-text-field
+                            prepend-icon="map-marker-alt"
+                            floating-label
+                            required
+                            :disabled="true"
+                            v-model="proveedor.direccion"
+                            clear-button
+                        >
+                            <label>Dirección</label>
+                        </bs-text-field>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -97,10 +150,15 @@ export default {
                     schema: {
                         band: false,
                         proveedor_id: 0,
+                        fmt_registro: null,
+                        tipo_documento_id: "",
+                        no_documento: "",
+                        cedula: "",
                         nombre: "",
+                        apellido: "",
                         representante: "",
                         direccion: "",
-                        telefono: "",
+                        telefono: ""
                     },
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
@@ -119,6 +177,20 @@ export default {
                 null,
                 "uid"
             ),
+            cmb: {
+                tipos_documentos: {
+                    proxy: new BsStore({
+                        idProperty: "id",
+                        dataProperty: "tiposDocumentos",
+                        totalProperty: "total",
+                        pageSize: 15,
+                        restProxy: {
+                            browse:"/modulos/parametrizacion/tipo_documento/cargar_tipo_documento_combo_box",
+                        }
+                    }),
+                    schema: { displayField: "descripcion", valueField: "id" }
+                },
+            },
             trueModalVisible: false
         };
     },
@@ -149,12 +221,18 @@ export default {
                             that.proveedor.email = ""; */
                         } else {
                             that.proveedor.id = response.data.proveedor.id;
-                            that.proveedor.cedula = response.data.proveedor.cedula;
-                            that.proveedor.nombre =response.data.proveedor.nombre;
-                            that.proveedor.apellido =response.data.proveedor.apellido;
-                            that.proveedor.direccion = response.data.proveedor.direccion;
-                            that.proveedor.telefono = response.data.proveedor.telefono;
-                            that.proveedor.representante = response.data.proveedor.representante;
+                            that.proveedor.cedula =
+                                response.data.proveedor.cedula;
+                            that.proveedor.nombre =
+                                response.data.proveedor.nombre;
+                            that.proveedor.apellido =
+                                response.data.proveedor.apellido;
+                            that.proveedor.direccion =
+                                response.data.proveedor.direccion;
+                            that.proveedor.telefono =
+                                response.data.proveedor.telefono;
+                            that.proveedor.representante =
+                                response.data.proveedor.representante;
                         }
                     })
                     .catch(error => {});
@@ -209,7 +287,7 @@ export default {
         },
         lmpCampos() {
             this.$refs.myform.reset();
-            this.proveedorForm.reset();
+            this.proveedor.reset();
             //this.$v.$reset();
         }
     }

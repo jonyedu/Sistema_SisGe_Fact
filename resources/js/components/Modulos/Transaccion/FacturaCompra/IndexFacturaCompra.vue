@@ -7,7 +7,7 @@
                         <router-link
                             :to="
                                 prefijo +
-                                    '/modulos/persona/cliente/mostrar_cliente'
+                                    '/modulos/transaccion/factura_compra/mostrar_factura_compra'
                             "
                         >
                             <bs-tooltip
@@ -46,7 +46,6 @@
                         class="text-white"
                     >
                     </bs-appbar-title>
-                    <!-- <bs-spacer></bs-spacer> -->
                 </bs-appbar>
                 <bs-tabs v-model="activeTab" variant="modern" color="indigo">
                     <bs-tab label="Datos de la Factura" icon="money-bill-alt">
