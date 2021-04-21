@@ -57,5 +57,15 @@ class VentasCabeceraController extends Controller
             //throw $th;
         }
     }
+
+
+    public function guardarFacturaVenta()
+    {
+        try {
+            //code...
+        } catch (Exception $th) {
+            //throw $th;
+        }
+    }
      
 }

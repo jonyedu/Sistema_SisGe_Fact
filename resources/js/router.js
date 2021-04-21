@@ -185,3 +185,5 @@ export default new VueRouter({
     ],
     mode: "history" //Evita que aparezca # en la ruta
 });
+
+

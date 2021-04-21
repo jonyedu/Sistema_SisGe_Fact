@@ -43,7 +43,33 @@
           <bs-card-body>
             <bs-card-content
             >
-                <label>Total a Pagar $</label>
+                
+                <bs-text-field
+                                prepend-icon="money-bill-wave-alt"
+                                floating-label
+                                autofocus
+                                required 
+                            >
+                             <label>Numero de Tarjeta</label>
+                            </bs-text-field>
+                            <bs-text-field
+                                prepend-icon="money-bill-wave-alt"
+                                floating-label
+                                autofocus
+                                required 
+                              
+                            >
+                             <label>Fecha de Caducidad</label>
+                            </bs-text-field>
+                            <bs-text-field
+                                prepend-icon="money-bill-wave-alt"
+                                floating-label
+                                autofocus
+                                required 
+                              
+                            >
+                             <label>Nombre del Cliente</label>
+                            </bs-text-field>
             </bs-card-content>
             
           </bs-card-body>
@@ -106,6 +132,10 @@ export default {
     },
   methods: {
       tipodepago(){
+         if(this.product8==1){
+            this.pagotarjeta=false;
+            this.pagocheque=false;
+          }
           if(this.product8==2){
             this.pagotarjeta=true;
             this.pagocheque=false;
@@ -176,11 +206,11 @@ export default {
     onSearch(term) {
        this.srchvalue0 = term;
         this.inventario_p.fetch(term);
-         this.showNotificationProgress(
-                        "Facturacion",
-                        "Producto Agregado" ,
-                        "success"
-                    );
+        //  this.showNotificationProgress(
+        //                 "Facturacion",
+        //                 "Producto Agregado" ,
+        //                 "success"
+        //             );
     },
      btnClickModificar(item) {
        this.autoCloseModalVisible=true;

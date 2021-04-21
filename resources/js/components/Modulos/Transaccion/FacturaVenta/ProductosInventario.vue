@@ -2,7 +2,7 @@
   <div class="my-demo-wrapper">
    <bs-card-body>
    <bs-alert color="success">
-                           Total a Pagar :  $ {{ totalPagar }}
+                           Total a Pagar :  $ {{ sumatoria }}
                         </bs-alert>
                     <bs-card-content class="text-right">
                     <div class="row">
@@ -228,6 +228,18 @@ export default {
         };
     },
     computed: {
+      sumatoria(){
+        let total_for=[];
+         var element=0;
+        for (let index = 0; index < this.ListaCompra.length; index++) {
+       // console.log(this.ListaCompra[index]['tot']);
+        
+          element += this.ListaCompra[index].['tot'];
+          
+        }
+        console.log(element);
+     return this.total_for = element;
+      }
       
       
     },
@@ -235,7 +247,12 @@ export default {
     agregarProducto(){
 
         if (this.adjuntar.length==0){
-          this.adjuntar.push({ url: "https://vue-mdbootstrap.fajarconsultant.com/img/crunchy-croissants.jpg",id:this.Lista.producto_inv.id,precio:this.Lista.costo_inv.precio,cant:this.cantidad,tot:this.totalPagar,name:this.Lista.producto_inv.nombre});
+          this.adjuntar.push({ url: "https://vue-mdbootstrap.fajarconsultant.com/img/crunchy-croissants.jpg",
+          id:this.Lista.producto_inv.id,
+          precio:this.Lista.costo_inv.precio,
+          cant:this.cantidad,
+          tot:this.cantidad*this.Lista.costo_inv.precio,
+          name:this.Lista.producto_inv.nombre});
       //        this.adjuntar.id_pro_f = this.Lista.producto_inv.id;
       // this.adjuntar.precio_f = this.Lista.costo_inv.precio;
       // this.adjuntar.cantidad_f = this.cantidad;
@@ -254,14 +271,19 @@ export default {
                   }
             }
              
-                     this.adjuntar.push({ url: "https://vue-mdbootstrap.fajarconsultant.com/img/crunchy-croissants.jpg",id:this.Lista.producto_inv.id,precio:this.Lista.costo_inv.precio,cant:this.cantidad,tot:this.totalPagar,name:this.Lista.producto_inv.nombre});
+                     this.adjuntar.push({ url: "https://vue-mdbootstrap.fajarconsultant.com/img/crunchy-croissants.jpg",
+                     id:this.Lista.producto_inv.id,
+                     precio:this.Lista.costo_inv.precio,
+                     cant:this.cantidad,
+                     tot:this.cantidad*this.Lista.costo_inv.precio,
+                     name:this.Lista.producto_inv.nombre});
                      this.ListaCompra= this.adjuntar;
                
            
          }
 
       
-        console.log(this.adjuntar);
+       // console.log(this.adjuntar);
       this.autoCloseModalVisible = false;
       // if(!this.adjuntar.includes(this.Lista.producto_inv.id)){
       //       //Si no está un, entonces lo insertamos
@@ -285,16 +307,16 @@ export default {
 
     },
     calcular(){
-        this.totalPagar = this.cantidad * this.Lista.costo_inv.precio;
+      // this.totalPagar = this.cantidad * this.Lista.costo_inv.precio;
     },
     onSearch(term) {
        this.srchvalue0 = term;
         this.inventario_p.fetch(term);
-         this.showNotificationProgress(
-                        "Facturacion",
-                        "Producto Agregado" ,
-                        "success"
-                    );
+        //  this.showNotificationProgress(
+        //                 "Facturacion",
+        //                 "Producto Agregado" ,
+        //                 "success"
+        //             );
     },
      btnClickModificar(item) {
        this.autoCloseModalVisible=true;
