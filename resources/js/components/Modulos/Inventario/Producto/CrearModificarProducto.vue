@@ -522,7 +522,7 @@ export default {
             };
 
         },
-        async onFileSelected(event) {
+        onFileSelected(event) {
             if (event.target.files.length > 0) {
                 if (
                     event.target.files[0]["type"] === "image/jpeg" ||

@@ -5,13 +5,14 @@ namespace App\Models\Modulos\Transaccion\FacturaCompra;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class s_par_fact_compra_detalle extends Model
+class CompraDetalle extends Model
 {
     use HasFactory;
     /**
      * @var string
      */
     protected $table = 's_par_fact_compra_detalle';
+    protected $primaryKey = 'id';
     /**
      * @var string
      */
@@ -30,4 +31,17 @@ class s_par_fact_compra_detalle extends Model
         'fecha_caducidad',
         'pagado',
     ];
+    public function productoInventario()
+    {
+        return $this->hasMany('App\Models\Modulos\Inventario\Producto\ProductoInventario', 'id_factura', 'id_facturac');
+    }
+    public function producto()
+    {
+        return $this->hasOne('App\Models\Modulos\Inventario\Producto\Producto', 'id', 'id_prod');
+    }
+    public function productoCosto()
+    {
+        return $this->hasOne('App\Models\Modulos\Inventario\Producto\ProductoCosto', 'id', 'id_prod');
+    }
+
 }

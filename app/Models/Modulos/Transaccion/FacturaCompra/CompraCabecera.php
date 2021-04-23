@@ -12,6 +12,7 @@ class CompraCabecera extends Model
      * @var string
      */
     protected $table = 's_par_fact_compra_cabecera';
+    protected $primaryKey = 'id';
     /**
      * @var string
      */
@@ -28,7 +29,14 @@ class CompraCabecera extends Model
         'totalapagar',
         'id_pago',
         'id_plazo',
-        'p_inicial'
+        'p_inicial',
+        'observacion',
+        'usu_created',
+        'usu_update',
+        'created_at',
+        'updated_at',
+        'pcip',
+        'status'
     ];
 
     public function proveedor()
@@ -38,5 +46,9 @@ class CompraCabecera extends Model
     public function tipoPago()
     {
         return $this->hasOne('App\Models\Modulos\Banco\TipoPago\TipoPago', 'tipo_pago', 'id_pago');
+    }
+    public function compraDetalle()
+    {
+        return $this->hasMany('App\Models\Modulos\Transaccion\FacturaCompra\CompraDetalle', 'id_facturac', 'id');
     }
 }

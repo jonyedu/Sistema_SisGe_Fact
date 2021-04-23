@@ -15,7 +15,8 @@ class CompraCabeceraController extends Controller
     {
         try {
             $comprasCabecera = CompraCabecera::where('status', 1)
-                ->with('proveedor:id,nombre', 'tipoPago:tipo_pago,descripcion')
+                ->with('proveedor', 'tipoPago:tipo_pago,descripcion')
+                ->with('compraDetalle.producto','compraDetalle.productoInventario')
                 ->get();
             return  response()->json(['comprasCabecera' => $comprasCabecera, 'total' => sizeOf($comprasCabecera)], 200);
         } catch (Exception $e) {
@@ -26,21 +27,11 @@ class CompraCabeceraController extends Controller
     public function cargarProductoPorProveedor($proveedor_id)
     {
         try {
-
-            /* $producto_inventario = Producto::where("laboratorio_id", $proveedor_id)
-            ->where('status', 1)
-            ->get(); */
-            $producto_inventario = ProductoInventario::select('id_producto', 'Stock')
-                ->with('ProductoInv:id,nombre,laboratorio_id,iva,imagen')
-                ->whereHas('ProductoInv', function ($query) use ($proveedor_id) {
-
-                    return $query->where("laboratorio_id", $proveedor_id);
-                })
-                ->with("costoInv:idproducto,precio")
+            $producto_inventario = Producto::select('id','nombre', 'pvc', 'iva','imagen')
+                ->with('productoCosto:idproducto,costo,costoi,precio', 'productoInventario:id,id_factura,id_producto,stock')
+                ->where("laboratorio_id", $proveedor_id)
+                ->where('status', 1)
                 ->get();
-
-            // ->with("inventarioP:id,stock")  ->where('loan_officers', 'like', '%' . $officerId . '%')
-            // ->with("costoP:id,precio")
 
 
             return  response()->json(['producto_inventario' => $producto_inventario, 'total' => sizeOf($producto_inventario)], 200);

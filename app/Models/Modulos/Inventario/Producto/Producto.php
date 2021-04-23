@@ -50,4 +50,10 @@ class Producto extends Model
     public function grupo(){
         return $this->hasOne('App\Models\Modulos\Inventario\Grupo\Grupo', 'Id', 'grupo_id');
     }
+    public function productoCosto(){
+        return $this->hasOne('App\Models\Modulos\Inventario\Producto\ProductoCosto','idproducto', 'id');
+    }
+    public function productoInventario(){
+        return $this->hasOne('App\Models\Modulos\Inventario\Producto\ProductoInventario','id_producto', 'id');
+    }
 }

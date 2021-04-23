@@ -6,7 +6,7 @@
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <bs-date-time-field
                             prepend-icon="address-book"
-                            v-model="proveedor.fmt_registro"
+                            v-model="dataFacturaCompra.fmt_registro"
                             value-format="YYYY-MM-DD"
                             display-format="DD MMMM YYYY"
                             clear-button
@@ -23,7 +23,7 @@
                             class="ml-5"
                             color="primary"
                             label-position="left"
-                            v-model="proveedor.band"
+                            v-model="band"
                             @change="consumidorfinal()"
                             clear-button
                         >
@@ -35,17 +35,17 @@
                             prepend-icon="address-book"
                             floating-label
                             required
-                            :disabled="proveedor.band"
-                            v-model="proveedor.no_documento"
-                            @input="consultarcedula()"
+                            :disabled="band"
+                            v-model="dataFacturaCompra.no_documento"
                             clear-button
+                            @input="consultarNoFactura()"
                         >
                             <label># Documento</label>
                         </bs-text-field>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
                         <bs-combobox
-                            v-model="proveedor.tipo_documento_id"
+                            v-model="dataFacturaCompra.tipo_documento_id"
                             :data-source="cmb.tipos_documentos"
                             floating-label
                             clear-button
@@ -58,8 +58,8 @@
                             prepend-icon="address-book"
                             floating-label
                             required
-                            :disabled="proveedor.band"
-                            v-model="proveedor.cedula"
+                            :disabled="band"
+                            v-model="dataFacturaCompra.cedula"
                             @input="consultarcedula()"
                             clear-button
                         >
@@ -72,7 +72,7 @@
                             floating-label
                             required
                             :disabled="true"
-                            v-model="proveedor.nombre"
+                            v-model="dataFacturaCompra.nombre"
                             clear-button
                         >
                             <label>Nombre</label>
@@ -84,7 +84,7 @@
                             floating-label
                             required
                             :disabled="true"
-                            v-model="proveedor.apellido"
+                            v-model="dataFacturaCompra.apellido"
                             clear-button
                         >
                             <label>Apellido</label>
@@ -96,7 +96,7 @@
                             floating-label
                             required
                             :disabled="true"
-                            v-model="proveedor.representante"
+                            v-model="dataFacturaCompra.representante"
                             clear-button
                         >
                             <label>Representante</label>
@@ -108,7 +108,7 @@
                             floating-label
                             required
                             :disabled="true"
-                            v-model="proveedor.telefono"
+                            v-model="dataFacturaCompra.telefono"
                             clear-button
                         >
                             <label>Teléfono</label>
@@ -120,7 +120,7 @@
                             floating-label
                             required
                             :disabled="true"
-                            v-model="proveedor.direccion"
+                            v-model="dataFacturaCompra.direccion"
                             clear-button
                         >
                             <label>Dirección</label>
@@ -134,49 +134,46 @@
 <script>
 import { prefix } from "../../../../../variables";
 export default {
+    props: {
+        dataFacturaCompra: {
+            type: Object
+        },
+    },
+    watch: {
+        "dataFacturaCompra.proveedor_id"(value) {
+            this.$emit("actualizarData", "proveedor_id", value);
+        },
+        "dataFacturaCompra.fmt_registro"(value) {
+            this.$emit("actualizarData", "fmt_registro", value);
+        },
+        "dataFacturaCompra.tipo_documento_id"(value) {
+            this.$emit("actualizarData", "tipo_documento_id", value);
+        },
+        "dataFacturaCompra.no_documento"(value) {
+            this.$emit("actualizarData", "no_documento", value);
+        },
+        "dataFacturaCompra.cedula"(value) {
+            this.$emit("actualizarData", "cedula", value);
+        },
+        "dataFacturaCompra.nombre"(value) {
+            this.$emit("actualizarData", "nombre", value);
+        },
+        "dataFacturaCompra.apellido"(value) {
+            this.$emit("actualizarData", "apellido", value);
+        },
+        "dataFacturaCompra.representante"(value) {
+            this.$emit("actualizarData", "representante", value);
+        },
+        "dataFacturaCompra.direccion"(value) {
+            this.$emit("actualizarData", "direccion", value);
+        },
+        "dataFacturaCompra.telefono"(value) {
+            this.$emit("actualizarData", "telefono", value);
+        },
+    },
     data: function() {
         return {
-            totalPagar: 0,
-            srchvalue0: null,
-            cantidad: 0,
-            autoCloseModalVisible: false,
-            prefijo: "",
-            Lista: [],
-            mensaje: "",
-            //Objeto donde tendrá todas las variables del formulario
-            proveedor: new BsModel(
-                {
-                    //Aqui es donde se declará las variables para los txt, cmb, etc
-                    schema: {
-                        band: false,
-                        proveedor_id: 0,
-                        fmt_registro: null,
-                        tipo_documento_id: "",
-                        no_documento: "",
-                        cedula: "",
-                        nombre: "",
-                        apellido: "",
-                        representante: "",
-                        direccion: "",
-                        telefono: ""
-                    },
-                    //Variables para realizar las peticiones al servidor, save, update, fetch, delete
-                    proxy: {
-                        save: {
-                            url:
-                                "/modulos/persona/proveedor/guardar_modificar_proveedor",
-                            method: "post"
-                        },
-                        update: {
-                            url:
-                                "/modulos/persona/proveedor/guardar_modificar_proveedor",
-                            method: "post"
-                        }
-                    }
-                },
-                null,
-                "uid"
-            ),
+            band: false,
             cmb: {
                 tipos_documentos: {
                     proxy: new BsStore({
@@ -196,42 +193,71 @@ export default {
     },
     computed: {},
     methods: {
-        consultarcedula() {
-            if (this.proveedor.cedula.length == 10) {
+        consultarNoFactura() {
+            //alert(this.dataFacturaCompra.no_documento.length);
+            if (this.dataFacturaCompra.no_documento.length == 17) {
                 let that = this;
                 let url =
-                    this.prefijo +
+                    "/modulos/transaccion/factura_compra/consultar_no_factura/" +
+                    this.dataFacturaCompra.no_documento;
+                axios
+                    .get(url)
+                    .then(function(response) {
+                        if (response.data.existe != null) {
+                            that.showNotificationProgress(
+                                "Facturación",
+                                "El N° factura, ya existe en el sistema.",
+                                "error"
+                            );
+                            that.lmpCampos();
+                        } else {
+                            that.dataFacturaCompra.proveedor_id = response.data.proveedor.id;
+                            that.dataFacturaCompra.cedula =
+                                response.data.proveedor.cedula;
+                            that.dataFacturaCompra.nombre =
+                                response.data.proveedor.nombre;
+                            that.dataFacturaCompra.apellido =
+                                response.data.proveedor.apellido;
+                            that.dataFacturaCompra.direccion =
+                                response.data.proveedor.direccion;
+                            that.dataFacturaCompra.telefono =
+                                response.data.proveedor.telefono;
+                            that.dataFacturaCompra.representante =
+                                response.data.proveedor.representante;
+                        }
+                    })
+                    .catch(error => {});
+            }
+        },
+        consultarcedula() {
+            if (this.dataFacturaCompra.cedula.length == 10) {
+                let that = this;
+                let url =
                     "/modulos/persona/proveedor/cargar_proveedor_cedula/" +
-                    this.proveedor.cedula;
+                    this.dataFacturaCompra.cedula;
                 axios
                     .get(url)
                     .then(function(response) {
                         if (response.data.proveedor == null) {
                             that.showNotificationProgress(
-                                "Facturacion",
-                                "proveedor no registrado",
+                                "Facturación",
+                                "El Proveedor no existe en el sistema.",
                                 "error"
                             );
                             that.lmpCampos();
-                            /* that.proveedor.cedula = "";
-                            that.proveedor.nombre = " ";
-                            that.proveedor.apellido = "";
-                            that.proveedor.direccion = "";
-                            that.proveedor.telefono = "";
-                            that.proveedor.email = ""; */
                         } else {
-                            that.proveedor.id = response.data.proveedor.id;
-                            that.proveedor.cedula =
+                            that.dataFacturaCompra.proveedor_id = response.data.proveedor.id;
+                            that.dataFacturaCompra.cedula =
                                 response.data.proveedor.cedula;
-                            that.proveedor.nombre =
+                            that.dataFacturaCompra.nombre =
                                 response.data.proveedor.nombre;
-                            that.proveedor.apellido =
+                            that.dataFacturaCompra.apellido =
                                 response.data.proveedor.apellido;
-                            that.proveedor.direccion =
+                            that.dataFacturaCompra.direccion =
                                 response.data.proveedor.direccion;
-                            that.proveedor.telefono =
+                            that.dataFacturaCompra.telefono =
                                 response.data.proveedor.telefono;
-                            that.proveedor.representante =
+                            that.dataFacturaCompra.representante =
                                 response.data.proveedor.representante;
                         }
                     })
@@ -239,42 +265,15 @@ export default {
             }
         },
         consumidorfinal() {
-            if (this.proveedor.band) {
-                this.proveedor.cedula = "9999999999";
-                this.proveedor.nombre = "CONSUMIDOR FINAL";
-                this.proveedor.apellido = ".";
-                this.proveedor.direccion = ".";
-                this.proveedor.telefono = "0";
+            if (this.band) {
+                this.dataFacturaCompra.cedula = "9999999999";
+                this.dataFacturaCompra.nombre = "CONSUMIDOR FINAL";
+                this.dataFacturaCompra.apellido = ".";
+                this.dataFacturaCompra.direccion = ".";
+                this.dataFacturaCompra.telefono = "0";
             } else {
-                /* this.proveedor.cedula = "";
-                this.proveedor.nombre = " ";
-                this.proveedor.apellido = "";
-                this.proveedor.direccion = "";
-                this.proveedor.telefono = "";
-                this.proveedor.email = ""; */
                 this.lmpCampos();
             }
-        },
-        calcular() {
-            this.totalPagar = this.cantidad * this.Lista.costo_inv.precio;
-        },
-        onSearch(term) {
-            this.srchvalue0 = term;
-            this.inventario_p.fetch(term);
-            this.showNotificationProgress(
-                "Facturacion",
-                "Producto Agregado",
-                "success"
-            );
-        },
-        btnClickModificar(item) {
-            this.autoCloseModalVisible = true;
-            this.Lista = item;
-            this.mensaje =
-                item.producto_inv.nombre + " Valor: " + item.costo_inv.precio;
-            console.log(this.Lista);
-
-            //this.$store.state.producto = item;
         },
         showNotificationProgress(title, message, icon) {
             let options = {
@@ -287,8 +286,12 @@ export default {
         },
         lmpCampos() {
             this.$refs.myform.reset();
-            this.proveedor.reset();
-            //this.$v.$reset();
+            this.dataFacturaCompra.cedula = "";
+            this.dataFacturaCompra.nombre = "";
+            this.dataFacturaCompra.apellido = "";
+            this.dataFacturaCompra.representante = "";
+            this.dataFacturaCompra.telefono = "";
+            this.dataFacturaCompra.direccion = "";
         }
     }
 };

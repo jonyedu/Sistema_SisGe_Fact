@@ -19,7 +19,9 @@ Route::group(['prefix' => '/modulos/transaccion', 'middleware' => ['auth:web'], 
 
     //Submenu de Facturacion Compra
     Route::namespace('Modulos\Transaccion\FacturaCompra')->prefix('factura_compra')->group(function () {
+        Route::post('guardar_modificar_factura_compra', 'FacturaCompraController@guardarModificarFacturaCompra');
         Route::get('cargar_all_factura_compra_cabecera', 'CompraCabeceraController@cargarCompraCabeceraTabla');
+        Route::get('consultar_no_factura/{no_factura}', 'FacturaCompraController@consultarNoFactura');
         Route::get('cargar_producto_por_proveedor/{proveedor_id}', 'CompraCabeceraController@cargarProductoPorProveedor');
     });
 

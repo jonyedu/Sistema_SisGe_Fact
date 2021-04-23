@@ -1,7 +1,7 @@
 <template>
     <div class="form-group">
         <bs-combobox
-            v-model="product8"
+            v-model="dataFormaPago.forma_pago_id"
             :data-source="products"
             prepend-icon="cash-register"
             floating-label
@@ -74,8 +74,21 @@
 <script>
 import { prefix } from "../../../../../variables";
 export default {
+    props: {
+        dataFormaPago: {
+            type: Object
+        },
+    },
+    watch: {
+        "dataFormaPago.forma_pago_id"(value) {
+            this.$emit("actualizarData", "forma_pago_id", value);
+        },
+    },
     data: function() {
         return {
+
+
+
             totalPagar: 0,
             srchvalue0: null,
             product8: 0,

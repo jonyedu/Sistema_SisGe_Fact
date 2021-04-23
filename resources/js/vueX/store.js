@@ -21,6 +21,7 @@ export default new Vuex.Store({
         profesion: null,
         grupo: null,
         cliente: null,
+        factura_compra: null,
     },
 
     //una mutacion se va a realizar siempre y cuando sea llamada desde una acccion
@@ -58,6 +59,9 @@ export default new Vuex.Store({
         addCliente(state ){
             state.cliente = state.cliente;
         },
+        addFacturaCompra(state ){
+            state.factura_compra = state.factura_compra;
+        },
     },
     //eventos actions del store
     actions:{
@@ -94,6 +98,9 @@ export default new Vuex.Store({
         addClienteAction(context ){
             context.commit('addCliente');
         },
+        addFacturaCompraAction(context ){
+            context.commit('addFacturaCompra');
+        },
     },
     getters:{
         getProducto(state){
@@ -128,6 +135,9 @@ export default new Vuex.Store({
         },
         getCliente(state){
             return state.cliente;
+        },
+        getFacturaCompra(state){
+            return state.factura_compra;
         },
     }
 });
