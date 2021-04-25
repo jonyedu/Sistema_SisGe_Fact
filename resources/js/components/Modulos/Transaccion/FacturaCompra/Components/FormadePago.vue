@@ -6,6 +6,7 @@
             prepend-icon="cash-register"
             floating-label
             @change="tipodepago()"
+            :external-validator="formaPagoValidator"
         >
             <label>-- Forma de pago --</label>
         </bs-combobox>
@@ -73,6 +74,12 @@
 </template>
 <script>
 import { prefix } from "../../../../../variables";
+import { validationMixin } from "vuelidate";
+import { required} from "vuelidate/lib/validators";
+
+const productoValidator = {
+    forma_pago_id: { required },
+};
 export default {
     props: {
         dataFormaPago: {
@@ -84,6 +91,7 @@ export default {
             this.$emit("actualizarData", "forma_pago_id", value);
         },
     },
+    mixins: [validationMixin],
     data: function() {
         return {
 
@@ -111,10 +119,29 @@ export default {
                 }),
                 schema: { displayField: "descripcion", valueField: "tipo_pago" }
             },
-            trueModalVisible: false
+            trueModalVisible: false,
+
+            //Variables para la validaciones
+            requiredErrorMsg: "Este campo es obligatorio.",
         };
     },
-    computed: {},
+    validations: {
+        dataFormaPago: productoValidator
+    },
+    computed: {
+        formaPagoValidator() {
+            return {
+                hasError: this.$v.dataFormaPago.forma_pago_id.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.dataFormaPago.forma_pago_id.$dirty,
+                validators: {
+                    required: this.$v.dataFormaPago.forma_pago_id.required
+                }
+            };
+        },
+    },
     methods: {
         tipodepago() {
             if (this.product8 == 2) {

@@ -161,9 +161,10 @@
                                         :index="index"
                                     >
                                         <bs-combobox
-                                            v-model="item.id"
+                                            v-model="item.producto_id"
                                             :data-source="cmb.productos"
                                             clear-button
+                                            @change="setDataProductoComboBox(index)"
                                         >
                                         </bs-combobox>
                                     </bs-grid-cell>
@@ -172,7 +173,9 @@
                                         :item="item"
                                         :index="index"
                                     >
-                                        <bs-text-field v-model="item.precio">
+                                        <bs-text-field
+                                        @change="calcular12y0()"
+                                        v-model="item.precio">
                                         </bs-text-field>
                                     </bs-grid-cell>
                                     <bs-grid-cell
@@ -181,6 +184,7 @@
                                         :index="index"
                                     >
                                         <span
+                                            @change="calcular12y0()"
                                             v-text="item.cantidad * item.precio"
                                         >
                                         </span>
@@ -200,7 +204,7 @@
                                                 size="sm"
                                                 color="danger"
                                                 flat
-                                                @click="quitarProducto(item)"
+                                                @click="quitarProducto(index)"
                                             ></bs-button>
                                         </bs-tooltip>
                                     </bs-grid-cell>
@@ -214,29 +218,11 @@
                                         class="btn"
                                         icon-size="sm"
                                         icon="shopping-cart"
-                                        @click="prueba()"
+                                        @click="agregarDetalle()"
                                         color="primary"
                                         pill
                                         >Agregar detalle</bs-button
                                     >
-                                    <!-- <bs-button
-                                        class="btn"
-                                        icon-size="sm"
-                                        icon="shopping-cart"
-                                        @click="updateArrayCarrito()"
-                                        color="primary"
-                                        pill
-                                        >1</bs-button
-                                    >
-                                    <bs-button
-                                        class="btn"
-                                        icon-size="sm"
-                                        icon="shopping-cart"
-                                        @click="prueba2()"
-                                        color="primary"
-                                        pill
-                                        >2</bs-button
-                                    > -->
                                 </div>
                             </div>
                         </div>
@@ -418,12 +404,10 @@
 <script>
 import { prefix } from "../../../../../variables";
 import { validationMixin } from "vuelidate";
-import { required, numeric } from "vuelidate/lib/validators";
+import { required} from "vuelidate/lib/validators";
 
 const productoValidator = {
     proveedor_id: { required },
-    producto_id: { required },
-    cantidad: { required, numeric },
     descripcion: { required }
 };
 export default {
@@ -506,7 +490,6 @@ export default {
 
             //Variables para la validaciones
             requiredErrorMsg: "Este campo es obligatorio.",
-            numericErrorMsg: "Este campo debe ser numerico."
         };
     },
     validations: {
@@ -514,6 +497,7 @@ export default {
     },
     mounted: function() {
         this.prefijo = prefix;
+        this.agregarDetalle();
     },
     computed: {
         proveedorValidator() {
@@ -525,32 +509,6 @@ export default {
                 dirty: this.$v.dataListarProducto.proveedor_id.$dirty,
                 validators: {
                     required: this.$v.dataListarProducto.proveedor_id.required
-                }
-            };
-        },
-        productoValidator() {
-            return {
-                hasError: this.$v.dataListarProducto.producto_id.$error,
-                messages: {
-                    required: this.requiredErrorMsg
-                },
-                dirty: this.$v.dataListarProducto.producto_id.$dirty,
-                validators: {
-                    required: this.$v.dataListarProducto.producto_id.required
-                }
-            };
-        },
-        cantidadValidator() {
-            return {
-                hasError: this.$v.dataListarProducto.cantidad.$error,
-                messages: {
-                    required: this.requiredErrorMsg,
-                    numeric: this.numericErrorMsg
-                },
-                dirty: this.$v.dataListarProducto.cantidad.$dirty,
-                validators: {
-                    required: this.$v.dataListarProducto.cantidad.required,
-                    numeric: this.$v.dataListarProducto.cantidad.numeric
                 }
             };
         },
@@ -568,15 +526,16 @@ export default {
         }
     },
     methods: {
-        prueba2(){
+        setDataProductoComboBox(index){
+            var producto_id = this.dataListarProducto.productosCarrito._items[index].producto_id;
+            var dataProductoSelect =  this.cmb.productos.proxy._items.find(producto => producto.id == producto_id);
+            this.dataListarProducto.productosCarrito._items[index].iva = dataProductoSelect.iva;
+            this.dataListarProducto.productosCarrito._items[index].precio = dataProductoSelect.pvc;
+            //this.dataListarProducto.productosCarrito._items[index].iva = data.iva;
+        },
+        setProductosCarrito(){
             this.showLoader = true;
-            this.dataListarProducto.producto_id = 181;
-            //alert(this.dataListarProducto.producto_id);
             if (this.$store.getters.getFacturaCompra != null) {
-                //var factura_compra = this.$store.getters.getFacturaCompra.factura_compra.compra_detalle;
-                console.log(this.$store.getters.getFacturaCompra);
-                console.log(this.dataListarProducto);
-                console.log(this.$store.getters.getFacturaCompra.compra_detalle);
                 var factura_compra = this.$store.getters.getFacturaCompra;
                 var compra_detalle = factura_compra.compra_detalle;
 
@@ -593,10 +552,10 @@ export default {
                             break;
                         }
                     }
-                    //this.factura_compra.listar_producto.producto_id = 180;
                     object = {
+                        index:0,
                         factura_compra_cuerpo_id: compra_detalle[i].producto_inventario[i_pro_inv].id,
-                        id: compra_detalle[i].producto.id,
+                        producto_id: compra_detalle[i].producto.id,
                         nombre: compra_detalle[i].producto.nombre,
                         imagen: compra_detalle[i].producto.imagen,
                         stock: compra_detalle[i].producto_inventario[i_pro_inv].stock,
@@ -607,17 +566,14 @@ export default {
                     };
                     this.dataListarProducto.productosCarrito._items.push(object);
                 }
-                //this.factura_compra.forma_pago.forma_pago_id = factura_compra.id_pago;
-                //this.factura_compra.listar_producto.total = factura_compra.totalapagar;
-                //this.factura_compra.listar_producto.descripcion = factura_compra.observacion;
-                //this.$refs.refSeleccionaProducto.prueba2();
             }
             this.showLoader = false;
         },
-        prueba() {
+        agregarDetalle() {
             this.dataListarProducto.productosCarrito._items.push({
+                index:0,
                 factura_compra_cuerpo_id: 0,
-                id: 0,
+                producto_id: 0,
                 nombre: "",
                 imagen: "",
                 stock: 0,
@@ -627,20 +583,11 @@ export default {
                 total: 0
             });
         },
-        quitarProducto(item) {
-            let index = null;
-            for (let i = 0; i < this.cmb.productos.proxy._items.length; i++) {
-                if (
-                    this.cmb.productos.proxy._items.id_producto ==
-                    item.producto_id
-                ) {
-                    index = i;
-                    break;
-                }
-            }
+        quitarProducto(index) {
             this.dataListarProducto.productosCarrito._items.splice(index, 1);
+            this.calcular12y0();
         },
-        agregarProducto() {
+        /* agregarProducto() {
             var that = this;
             let encontrado = false;
             let producto_id = "";
@@ -728,7 +675,7 @@ export default {
                     this.showLoader = false;
                 }
             }
-        },
+        }, */
         calcular12y0() {
             var sub_total_12 = 0;
             var sub_total_0 = 0;
@@ -736,6 +683,9 @@ export default {
             this.dataListarProducto.productosCarrito._items.forEach(function(
                 data
             ) {
+                data.total = data.cantidad * data.precio;
+                console.log(data.iva);
+                console.log(data.total);
                 //tiene iva
                 if (data.iva) {
                     sub_total_12 += data.total;
@@ -753,7 +703,7 @@ export default {
             this.cmb.productos.proxy.fetch(
                 this.dataListarProducto.proveedor_id
             );
-            this.$refs.msjProducto.active = true;
+            //this.$refs.msjProducto.active = true;
         },
         btnClickModificar(item) {
             this.autoCloseModalVisible = true;

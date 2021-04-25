@@ -54,6 +54,7 @@
                 >
                     <bs-tab label="Datos de la Factura" icon="money-bill-alt">
                         <datos-factura-compra
+                            ref="refDatosFacturaCompra"
                             :data-factura-compra="
                                 factura_compra.datos_factura_compra
                             "
@@ -72,6 +73,7 @@
                     </bs-tab>
                     <bs-tab label="Formas de Pago" icon="credit-card">
                         <forma-pago
+                            ref="refFormaPago"
                             :data-forma-pago="factura_compra.forma_pago"
                             @actualizarData="actualizarFormaPago"
                         >
@@ -96,7 +98,7 @@ export default {
     watch: {
         "activeTab"(value) {
             if(value){
-                this.$refs.refSeleccionaProducto.prueba2();
+                this.$refs.refSeleccionaProducto.setProductosCarrito();
             }
 
         },
@@ -142,7 +144,7 @@ export default {
                             total: "",
                             //variable para la tabla de carrito
                             productosCarrito: new BsArrayStore([], {
-                                idProperty: "id"
+                                idProperty: "index"
                             })
                         },
                         forma_pago: {
@@ -174,7 +176,7 @@ export default {
         this.setFacturaCompra();
     },
     beforeDestroy: function() {
-        this.$store.state.producto = null;
+        this.$store.state.factura_compra = null;
     },
     computed: {
         //Metodo para validar el campo nombre
@@ -276,52 +278,61 @@ export default {
         },
         guardarActualizar() {
             var that = this;
-            //if (!this.$refs.refSeleccionaProducto.$v.$error) {
-            this.showLoader = true;
-            if (this.$store.getters.getFacturaCompra != null) {
-                this.factura_compra
-                    .update()
-                    .then(function(response) {
-                        that.showLoader = false;
-                        that.showNotificationProgress(
-                            "Exito al Procesar",
-                            "Producto modificado correctamente.",
-                            "success"
-                        );
-                        that.lmpCampos();
-                    })
-                    .catch(function(error) {
-                        that.showLoader = false;
-                        that.showNotificationProgress(
-                            "Error en GuardarActualizarProducto",
-                            "Por favor comuníquese con el administrador. " +
-                                error,
-                            "error"
-                        );
-                    });
-            } else {
-                this.factura_compra
-                    .save()
-                    .then(function(response) {
-                        that.showLoader = false;
-                        that.showNotificationProgress(
-                            "Exito al Procesar",
-                            "Producto creado correctamente.",
-                            "success"
-                        );
-                        that.lmpCampos();
-                    })
-                    .catch(function(error) {
-                        that.showLoader = false;
-                        that.showNotificationProgress(
-                            "Error en GuardarActualizarProducto",
-                            "Por favor comuníquese con el administrador. " +
-                                error,
-                            "error"
-                        );
-                    });
+            this.$refs.refDatosFacturaCompra.$v.$touch();
+            this.$refs.refSeleccionaProducto.$v.$touch();
+            this.$refs.refFormaPago.$v.$touch();
+            if (!this.$refs.refDatosFacturaCompra.$v.$error && !this.$refs.refSeleccionaProducto.$v.$error && !this.$refs.refFormaPago.$v.$error) {
+                this.showLoader = true;
+                if (this.$store.getters.getFacturaCompra != null) {
+                    this.factura_compra
+                        .update()
+                        .then(function(response) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Exito al Procesar",
+                                "Producto modificado correctamente.",
+                                "success"
+                            );
+                            that.lmpCampos();
+                        })
+                        .catch(function(error) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Error en GuardarActualizarProducto",
+                                "Por favor comuníquese con el administrador. " +
+                                    error,
+                                "error"
+                            );
+                        });
+                } else {
+                    this.factura_compra
+                        .save()
+                        .then(function(response) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Exito al Procesar",
+                                "Producto creado correctamente.",
+                                "success"
+                            );
+                            that.lmpCampos();
+                        })
+                        .catch(function(error) {
+                            that.showLoader = false;
+                            that.showNotificationProgress(
+                                "Error en GuardarActualizarProducto",
+                                "Por favor comuníquese con el administrador. " +
+                                    error,
+                                "error"
+                            );
+                        });
+                }
+            }else{
+                that.showNotificationProgress(
+                "Erro de validación",
+                "Existen campos requerido, por favor revise antes de guardar.",
+                "warning"
+            );
             }
-            //}
         },
         showNotificationProgress(title, message, icon) {
             let options = {

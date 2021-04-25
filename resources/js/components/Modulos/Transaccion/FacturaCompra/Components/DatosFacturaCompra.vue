@@ -12,6 +12,7 @@
                             clear-button
                             floating-label
                             autofocus
+                            :external-validator="fechaRegistroValidator"
                         >
                             <label class="col-md-3 col-xl-2 col-form-label">
                                 Fecha Registro
@@ -39,6 +40,7 @@
                             v-model="dataFacturaCompra.no_documento"
                             clear-button
                             @input="consultarNoFactura()"
+                            :external-validator="noDocumentoValidator"
                         >
                             <label># Documento</label>
                         </bs-text-field>
@@ -49,6 +51,7 @@
                             :data-source="cmb.tipos_documentos"
                             floating-label
                             clear-button
+                            :external-validator="tipoDocumentoValidator"
                         >
                             <label>Tipo Doc.</label>
                         </bs-combobox>
@@ -62,6 +65,7 @@
                             v-model="dataFacturaCompra.cedula"
                             @input="consultarcedula()"
                             clear-button
+                            :external-validator="cedulaValidator"
                         >
                             <label>Cédula de Identidad</label>
                         </bs-text-field>
@@ -133,6 +137,15 @@
 </template>
 <script>
 import { prefix } from "../../../../../variables";
+import { validationMixin } from "vuelidate";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
+
+const datosFacturaValidator = {
+    fmt_registro: { required },
+    no_documento: { required },
+    tipo_documento_id: { required},
+    cedula: { required, minLength: minLength(10), maxLength: maxLength(10)  },
+};
 export default {
     props: {
         dataFacturaCompra: {
@@ -171,6 +184,7 @@ export default {
             this.$emit("actualizarData", "telefono", value);
         },
     },
+    mixins: [validationMixin],
     data: function() {
         return {
             band: false,
@@ -188,10 +202,70 @@ export default {
                     schema: { displayField: "descripcion", valueField: "id" }
                 },
             },
-            trueModalVisible: false
+            trueModalVisible: false,
+            //Variables para la validaciones
+            requiredErrorMsg: "Este campo es obligatorio.",
+            minLengthErrorMsg: "Este campo debe tener al menos 10 caracteres.",
+            maxLengthErrorMsg: "Este campo debe tener al menos 10 caracteres."
         };
     },
-    computed: {},
+    validations: {
+        dataFacturaCompra: datosFacturaValidator
+    },
+    computed: {
+        fechaRegistroValidator() {
+            return {
+                hasError: this.$v.dataFacturaCompra.fmt_registro.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.dataFacturaCompra.fmt_registro.$dirty,
+                validators: {
+                    required: this.$v.dataFacturaCompra.fmt_registro.required
+                }
+            };
+        },
+        noDocumentoValidator() {
+            return {
+                hasError: this.$v.dataFacturaCompra.no_documento.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                },
+                dirty: this.$v.dataFacturaCompra.no_documento.$dirty,
+                validators: {
+                    required: this.$v.dataFacturaCompra.no_documento.required
+                }
+            };
+        },
+        tipoDocumentoValidator() {
+            return {
+                hasError: this.$v.dataFacturaCompra.tipo_documento_id.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.dataFacturaCompra.tipo_documento_id.$dirty,
+                validators: {
+                    required: this.$v.dataFacturaCompra.tipo_documento_id.required
+                }
+            };
+        },
+        cedulaValidator() {
+            return {
+                hasError: this.$v.dataFacturaCompra.cedula.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                    minLength: this.minLengthErrorMsg,
+                    maxLength: this.maxLengthErrorMsg,
+                },
+                dirty: this.$v.dataFacturaCompra.cedula.$dirty,
+                validators: {
+                    required: this.$v.dataFacturaCompra.cedula.required,
+                    minLength: this.$v.dataFacturaCompra.cedula.minLength,
+                    maxLength: this.$v.dataFacturaCompra.cedula.maxLength,
+                }
+            };
+        },
+    },
     methods: {
         consultarNoFactura() {
             //alert(this.dataFacturaCompra.no_documento.length);
