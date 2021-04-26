@@ -17,6 +17,9 @@ class CompraCabeceraController extends Controller
             $comprasCabecera = CompraCabecera::where('status', 1)
                 ->with('proveedor', 'tipoPago:tipo_pago,descripcion')
                 ->with('compraDetalle.producto','compraDetalle.productoInventario')
+                ->with(['compraDetalle' => function ($i) {
+                    $i->where('status', 1);
+                }])
                 ->get();
             return  response()->json(['comprasCabecera' => $comprasCabecera, 'total' => sizeOf($comprasCabecera)], 200);
         } catch (Exception $e) {

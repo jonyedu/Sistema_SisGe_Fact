@@ -497,7 +497,10 @@ export default {
     },
     mounted: function() {
         this.prefijo = prefix;
-        this.agregarDetalle();
+        if (this.$store.getters.getFacturaCompra == null) {
+            this.agregarDetalle();
+        }
+
     },
     computed: {
         proveedorValidator() {
@@ -531,7 +534,7 @@ export default {
             var dataProductoSelect =  this.cmb.productos.proxy._items.find(producto => producto.id == producto_id);
             this.dataListarProducto.productosCarrito._items[index].iva = dataProductoSelect.iva;
             this.dataListarProducto.productosCarrito._items[index].precio = dataProductoSelect.pvc;
-            //this.dataListarProducto.productosCarrito._items[index].iva = data.iva;
+            this.calcular12y0();
         },
         setProductosCarrito(){
             this.showLoader = true;
@@ -554,7 +557,8 @@ export default {
                     }
                     object = {
                         index:0,
-                        factura_compra_cuerpo_id: compra_detalle[i].producto_inventario[i_pro_inv].id,
+                        factura_compra_cuerpo_id: compra_detalle[i].id,
+                        producto_inventario_id: compra_detalle[i].producto_inventario[i_pro_inv].id,
                         producto_id: compra_detalle[i].producto.id,
                         nombre: compra_detalle[i].producto.nombre,
                         imagen: compra_detalle[i].producto.imagen,
@@ -573,6 +577,7 @@ export default {
             this.dataListarProducto.productosCarrito._items.push({
                 index:0,
                 factura_compra_cuerpo_id: 0,
+                producto_inventario_id: 0,
                 producto_id: 0,
                 nombre: "",
                 imagen: "",
@@ -684,8 +689,6 @@ export default {
                 data
             ) {
                 data.total = data.cantidad * data.precio;
-                console.log(data.iva);
-                console.log(data.total);
                 //tiene iva
                 if (data.iva) {
                     sub_total_12 += data.total;

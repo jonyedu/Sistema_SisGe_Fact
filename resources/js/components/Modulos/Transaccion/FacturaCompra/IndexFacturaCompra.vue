@@ -36,6 +36,19 @@
                             >
                             </bs-button>
                         </bs-tooltip>
+                        <!-- <bs-tooltip
+                            content="Guardar cliente"
+                            placement="bottom"
+                        >
+                            <bs-button
+                                mode="icon"
+                                icon="save"
+                                icon-size="sm"
+                                color="success"
+                                @click="lmpCampos()"
+                            >
+                            </bs-button>
+                        </bs-tooltip> -->
                     </bs-card-content>
                 </bs-card-body>
             </bs-card>
@@ -47,11 +60,7 @@
                     >
                     </bs-appbar-title>
                 </bs-appbar>
-                <bs-tabs
-                    v-model="activeTab"
-                    variant="modern"
-                    color="indigo"
-                >
+                <bs-tabs v-model="activeTab" variant="modern" color="indigo">
                     <bs-tab label="Datos de la Factura" icon="money-bill-alt">
                         <datos-factura-compra
                             ref="refDatosFacturaCompra"
@@ -96,16 +105,17 @@ export default {
     components: { ListarCompraCabecera, ListarProducto },
     mixins: [validationMixin],
     watch: {
-        "activeTab"(value) {
-            if(value){
+        activeTab(value) {
+            if (value && this.activeTabSetCarrito == false) {
+                this.activeTabSetCarrito = true;
                 this.$refs.refSeleccionaProducto.setProductosCarrito();
             }
-
-        },
+        }
     },
     data: function() {
         return {
             activeTab: 0,
+            activeTabSetCarrito: false,
             //variable que controla el progreso
             showLoader: false,
             //Variables para obtener el index
@@ -183,7 +193,7 @@ export default {
     },
 
     methods: {
-        async setFacturaCompra(){
+        async setFacturaCompra() {
             if (this.$store.getters.getFacturaCompra != null) {
                 this.showLoader = true;
                 var factura_compra = this.$store.getters.getFacturaCompra;
@@ -215,9 +225,19 @@ export default {
                 //Listar Producto
                 this.factura_compra.listar_producto.proveedor_id =
                     factura_compra.proveedor.id;
+                this.factura_compra.listar_producto.total =
+                    factura_compra.totalapagar;
+                this.factura_compra.listar_producto.descripcion =
+                    factura_compra.observacion;
+                //forma de pago
+                this.factura_compra.forma_pago.forma_pago_id =
+                    factura_compra.id_pago;
 
-                await this.$refs.refSeleccionaProducto.cmb.productos.proxy.fetch(factura_compra.proveedor.id);
-                this.factura_compra.listar_producto.producto_id = 180;
+
+                await this.$refs.refSeleccionaProducto.cmb.productos.proxy.fetch(
+                    factura_compra.proveedor.id
+                );
+
                 /* var compra_detalle = factura_compra.compra_detalle;
 
                 var object = {};
@@ -257,18 +277,15 @@ export default {
                         object
                     );
                 }
-                this.factura_compra.forma_pago.forma_pago_id =
-                    factura_compra.id_pago;
-                this.factura_compra.listar_producto.total =
-                    factura_compra.totalapagar;
-                this.factura_compra.listar_producto.descripcion =
-                    factura_compra.observacion;
                 //this.$refs.refSeleccionaProducto.prueba2(); */
                 this.showLoader = false;
             }
         },
         actualizarDataFacturaCompra(field, value) {
             this.factura_compra.datos_factura_compra[field] = value;
+            if(field == 'proveedor_id'){
+                this.actualizarListarProductos(field, value);
+            }
         },
         actualizarListarProductos(field, value) {
             this.factura_compra.listar_producto[field] = value;
@@ -281,7 +298,11 @@ export default {
             this.$refs.refDatosFacturaCompra.$v.$touch();
             this.$refs.refSeleccionaProducto.$v.$touch();
             this.$refs.refFormaPago.$v.$touch();
-            if (!this.$refs.refDatosFacturaCompra.$v.$error && !this.$refs.refSeleccionaProducto.$v.$error && !this.$refs.refFormaPago.$v.$error) {
+            if (
+                !this.$refs.refDatosFacturaCompra.$v.$error &&
+                !this.$refs.refSeleccionaProducto.$v.$error &&
+                !this.$refs.refFormaPago.$v.$error
+            ) {
                 this.showLoader = true;
                 if (this.$store.getters.getFacturaCompra != null) {
                     this.factura_compra
@@ -326,12 +347,12 @@ export default {
                             );
                         });
                 }
-            }else{
+            } else {
                 that.showNotificationProgress(
-                "Erro de validación",
-                "Existen campos requerido, por favor revise antes de guardar.",
-                "warning"
-            );
+                    "Erro de validación",
+                    "Existen campos requerido, por favor revise antes de guardar.",
+                    "warning"
+                );
             }
         },
         showNotificationProgress(title, message, icon) {
@@ -342,6 +363,52 @@ export default {
                 timeout: 5000
             };
             this.$notification[icon](options, title);
+        },
+        lmpCampos() {
+            this.activeTab = 0;
+            this.$refs.refDatosFacturaCompra.$refs.myform.reset();
+            this.$refs.refSeleccionaProducto.$refs.myform.reset();
+            this.$refs.refFormaPago.$refs.myform.reset();
+            this.factura_compra.datos_factura_compra = {
+                factura_compra_cabecera_id: "",
+                proveedor_id: 0,
+                fmt_registro: null,
+                tipo_documento_id: "",
+                no_documento: "",
+                cedula: "",
+                nombre: "",
+                apellido: "",
+                representante: "",
+                direccion: "",
+                telefono: ""
+            };
+            this.factura_compra.listar_producto = {
+                proveedor_id: "",
+                producto_id: "",
+                cantidad: "",
+                descripcion: "",
+                sub_total_12: "",
+                sub_total_0: "",
+                total: "",
+                productosCarrito: new BsArrayStore([], {
+                    idProperty: "index"
+                })
+            };
+            this.factura_compra.forma_pago = {
+                forma_pago_id: ""
+            };
+            this.$refs.refDatosFacturaCompra.$v.$reset();
+            this.$refs.refSeleccionaProducto.$v.$reset();
+            this.$refs.refFormaPago.$v.$reset();
+        },
+        lmpCampos1() {
+            this.$refs.refDatosFacturaCompra.$refs.myform.reset();
+            this.$refs.refSeleccionaProducto.$refs.myform.reset();
+            this.$refs.refFormaPago.$refs.myform.reset();
+            this.factura_compra.reset();
+            this.$refs.refDatosFacturaCompra.$v.$reset();
+            this.$refs.refSeleccionaProducto.$v.$reset();
+            this.$refs.refFormaPago.$v.$reset();
         }
     }
 };

@@ -59,7 +59,7 @@
                     <bs-grid-column
                         field="secuencia"
                         label="Secuencia"
-                        width="100"
+                        width="150"
                     ></bs-grid-column>
                     <bs-grid-column
                         field="totalapagar"

@@ -1,75 +1,77 @@
 <template>
     <div class="form-group">
-        <bs-combobox
-            v-model="dataFormaPago.forma_pago_id"
-            :data-source="products"
-            prepend-icon="cash-register"
-            floating-label
-            @change="tipodepago()"
-            :external-validator="formaPagoValidator"
-        >
-            <label>-- Forma de pago --</label>
-        </bs-combobox>
-        <br />
-        <bs-card shadow>
-            <bs-card-header class="bg-primary text-white"
-                >Detalle de la Compra</bs-card-header
+        <form ref="myform" novalidate>
+            <bs-combobox
+                v-model="dataFormaPago.forma_pago_id"
+                :data-source="products"
+                prepend-icon="cash-register"
+                floating-label
+                @change="tipodepago()"
+                :external-validator="formaPagoValidator"
             >
-            <bs-card-body>
-                <bs-card-content>
-                    <label>Total a Pagar $</label>
-                    <bs-text-field
-                        prepend-icon="money-bill-wave-alt"
-                        floating-label
-                        autofocus
-                        required
-                    >
-                        <label>Total Recibido</label>
-                    </bs-text-field>
-                    <bs-text-field
-                        prepend-icon="wallet"
-                        floating-label
-                        autofocus
-                        required
-                    >
-                        <label>Cambio</label>
-                    </bs-text-field>
-                </bs-card-content>
-            </bs-card-body>
-            <bs-card-footer class="bg-primary text-white"
-                >Detalle de la Compra</bs-card-footer
-            >
-        </bs-card>
-        <div v-show="pagotarjeta">
+                <label>-- Forma de pago --</label>
+            </bs-combobox>
+            <br />
             <bs-card shadow>
-                <bs-card-header class="bg-unique text-white"
-                    >Pago Con Tarjeta</bs-card-header
+                <bs-card-header class="bg-primary text-white"
+                    >Detalle de la Compra</bs-card-header
                 >
                 <bs-card-body>
                     <bs-card-content>
                         <label>Total a Pagar $</label>
+                        <bs-text-field
+                            prepend-icon="money-bill-wave-alt"
+                            floating-label
+                            autofocus
+                            required
+                        >
+                            <label>Total Recibido</label>
+                        </bs-text-field>
+                        <bs-text-field
+                            prepend-icon="wallet"
+                            floating-label
+                            autofocus
+                            required
+                        >
+                            <label>Cambio</label>
+                        </bs-text-field>
                     </bs-card-content>
                 </bs-card-body>
-                <bs-card-footer class="bg-unique text-white"
-                    >Pago Con Tarjeta</bs-card-footer
+                <bs-card-footer class="bg-primary text-white"
+                    >Detalle de la Compra</bs-card-footer
                 >
             </bs-card>
-        </div>
-        <div v-show="pagocheque">
-            <bs-card shadow>
-                <bs-card-header class="bg-indigo text-white"
-                    >Pago Con Cheque</bs-card-header
-                >
-                <bs-card-body>
-                    <bs-card-content>
-                        <label>Total a Pagar $</label>
-                    </bs-card-content>
-                </bs-card-body>
-                <bs-card-footer class="bg-indigo text-white"
-                    >Pago Con Cheque</bs-card-footer
-                >
-            </bs-card>
-        </div>
+            <div v-show="pagotarjeta">
+                <bs-card shadow>
+                    <bs-card-header class="bg-unique text-white"
+                        >Pago Con Tarjeta</bs-card-header
+                    >
+                    <bs-card-body>
+                        <bs-card-content>
+                            <label>Total a Pagar $</label>
+                        </bs-card-content>
+                    </bs-card-body>
+                    <bs-card-footer class="bg-unique text-white"
+                        >Pago Con Tarjeta</bs-card-footer
+                    >
+                </bs-card>
+            </div>
+            <div v-show="pagocheque">
+                <bs-card shadow>
+                    <bs-card-header class="bg-indigo text-white"
+                        >Pago Con Cheque</bs-card-header
+                    >
+                    <bs-card-body>
+                        <bs-card-content>
+                            <label>Total a Pagar $</label>
+                        </bs-card-content>
+                    </bs-card-body>
+                    <bs-card-footer class="bg-indigo text-white"
+                        >Pago Con Cheque</bs-card-footer
+                    >
+                </bs-card>
+            </div>
+        </form>
     </div>
 </template>
 <script>

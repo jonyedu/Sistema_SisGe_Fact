@@ -18,7 +18,7 @@ class CompraDetalle extends Model
      */
     // protected $connection = 'admin_db_sql';
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
         'id',
@@ -28,8 +28,13 @@ class CompraDetalle extends Model
         'costimp',
         'cantidad',
         'total',
-        'fecha_caducidad',
         'pagado',
+        'usu_created',
+        'usu_update',
+        'created_at',
+        'updated_at',
+        'pcip',
+        'status'
     ];
     public function productoInventario()
     {
