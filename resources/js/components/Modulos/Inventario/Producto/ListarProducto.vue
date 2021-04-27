@@ -209,8 +209,8 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
-                    //browse: "/modulos/inventario/producto/cargar_all_producto",
-                    fetch: "/modulos/inventario/producto/producto_por_id",
+                    browse: "/modulos/inventario/producto/cargar_all_producto",
+                    //fetch: "/modulos/inventario/producto/producto_por_id",
                 }
             }),
             item:{},
@@ -218,7 +218,6 @@ export default {
     },
 
     mounted: function() {
-        this.productos.find(452);
         this.prefijo = prefix;
     },
     beforeDestroy() {},

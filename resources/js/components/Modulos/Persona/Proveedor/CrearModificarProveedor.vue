@@ -53,14 +53,6 @@
                                             class="col-lg-6 col-md-6 col-sm-12"
                                         >
                                             <bs-text-field
-                                                prepend-icon-outer="user"
-                                                floating-label
-                                                outlined
-                                                v-model="proveedorForm.id"
-                                            >
-                                                <label>Codigo</label>
-                                            </bs-text-field>
-                                            <bs-text-field
                                                 prepend-icon-outer="address-card"
                                                 floating-label
                                                 outlined
@@ -70,6 +62,17 @@
                                                 "
                                             >
                                                 <label>Nombre</label>
+                                            </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="address-card"
+                                                floating-label
+                                                outlined
+                                                v-model="proveedorForm.apellido"
+                                                :external-validator="
+                                                    nombreValidator
+                                                "
+                                            >
+                                                <label>Apellido</label>
                                             </bs-text-field>
                                             <bs-text-field
                                                 prepend-icon-outer="address-card"
@@ -114,15 +117,19 @@
                                             >
                                                 <label>Teléfono</label>
                                             </bs-text-field>
-                                            <bs-switch
-                                                class="mt-3"
-                                                v-model="proveedorForm.estado"
-                                                color="primary"
-                                                label-position="left"
-                                                label-class="col-md-4 ml-3"
+                                            <bs-text-field
+                                                prepend-icon-outer="phone-square-alt"
+                                                floating-label
+                                                outlined
+                                                v-model="
+                                                    proveedorForm.cedula
+                                                "
+                                                :external-validator="
+                                                    cedulaValidator
+                                                "
                                             >
-                                                Estado
-                                            </bs-switch>
+                                                <label>Cédula</label>
+                                            </bs-text-field>
                                         </div>
                                     </div>
                                 </form>
@@ -139,16 +146,14 @@
 <script>
 import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
-import { required, minLength } from "vuelidate/lib/validators";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 
 const proveedorValidator = {
-    //proveedor_id: { required },
-    //codigo: { required, minLength: minLength(3) },
     nombre: { required, minLength: minLength(5) },
     representante: { required, minLength: minLength(5) },
     direccion: { required, minLength: minLength(5) },
     telefono: { required, minLength: minLength(5) },
-    //estado: { required }
+    cedula: { required, minLength: minLength(10), maxLength: maxLength(10) },
 };
 export default {
     mixins: [validationMixin],
@@ -166,10 +171,12 @@ export default {
                         proveedor_id: 0,
                         codigo: "",
                         nombre: "",
+                        apellido: "",
                         representante: "",
                         direccion: "",
                         telefono: "",
-                        estado: false
+                        cedula: "",
+                        estado: false,
                     },
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
@@ -190,7 +197,8 @@ export default {
             ),
             //Variables para la validaciones
             requiredErrorMsg: "Este campo es obligatorio.",
-            minLengthErrorMsg: "Este campo debe tener al menos 5 caracteres."
+            minLengthErrorMsg: "Este campo debe tener al menos 10 caracteres.",
+            maxLengthErrorMsg: "Este campo debe tener al menos 10 caracteres."
 
             //Objeto para almacenar el arreglo de cada combobox
         };
@@ -206,9 +214,11 @@ export default {
             this.proveedorForm.proveedor_id = producto.id;
             this.proveedorForm.codigo = producto.codigo;
             this.proveedorForm.nombre = producto.nombre;
+            this.proveedorForm.apellido = producto.apellido;
             this.proveedorForm.representante = producto.representante;
             this.proveedorForm.direccion = producto.direcion;
             this.proveedorForm.telefono = producto.telefono;
+            this.proveedorForm.cedula = producto.cedula;
             this.proveedorForm.estado = Boolean(producto.estado);
         }
     },
@@ -216,21 +226,6 @@ export default {
         this.$store.state.producto = null;
     },
     computed: {
-        //Metodo para validar el campo nombre
-        // codigoValidator() {
-        //     return {
-        //         hasError: this.$v.proveedorForm.codigo.$error,
-        //         messages: {
-        //             required: this.requiredErrorMsg,
-        //             minLength: this.minLengthErrorMsg
-        //         },
-        //         dirty: this.$v.proveedorForm.codigo.$dirty,
-        //         validators: {
-        //             required: this.$v.proveedorForm.codigo.required,
-        //             minLength: this.$v.proveedorForm.codigo.minLength
-        //         }
-        //     };
-        // },
         nombreValidator() {
             return {
                 hasError: this.$v.proveedorForm.nombre.$error,
@@ -286,7 +281,23 @@ export default {
                     minLength: this.$v.proveedorForm.telefono.minLength
                 }
             };
-        }
+        },
+        cedulaValidator() {
+            return {
+                hasError: this.$v.proveedorForm.cedula.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                    minLength: this.minLengthErrorMsg,
+                    maxLength: this.maxLengthErrorMsg,
+                },
+                dirty: this.$v.proveedorForm.cedula.$dirty,
+                validators: {
+                    required: this.$v.proveedorForm.cedula.required,
+                    minLength: this.$v.proveedorForm.cedula.minLength,
+                    maxLength: this.$v.proveedorForm.cedula.maxLength,
+                }
+            };
+        },
     },
 
     methods: {

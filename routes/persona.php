@@ -24,11 +24,14 @@ Route::group(['prefix' => '/modulos/persona', 'middleware' => ['auth:web'], 'ver
         Route::post('guardar_modificar_cliente', 'ClienteController@guardarModificarCliente');
         Route::delete('eliminar_cliente/{id}', 'ClienteController@eliminarCliente');
         Route::get('cargar_cliente_cedula/{cedula}', 'ClienteController@cargarClienteCedula');
+        Route::post('guardar_cliente', 'ClienteController@guardarCliente');
+        //guardarCliente
     });
     //Submenu de Proveedor
     Route::namespace('Modulos\Persona\Proveedor')->prefix('proveedor')->group(function () {
         Route::get('cargar_proveedor_combo_box', 'ProveedorController@cargarProveedorComboBox');
         Route::get('cargar_proveedor_combo', 'ProveedorController@cargarProveedorCombo');
+        Route::get('cargar_proveedor_cedula/{cedula}', 'ProveedorController@cargarProveedorCedula');
         Route::get('cargar_proveedor_all', 'ProveedorController@cargarProveedorAll');
         Route::post('guardar_modificar_proveedor', 'ProveedorController@guardarModificarProveedor');
     });

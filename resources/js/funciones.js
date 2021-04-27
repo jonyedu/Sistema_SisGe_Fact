@@ -1,5 +1,6 @@
 export const funcionesGlobales = {
 
+
     //Metodo para Obtener la fecha de actualización de contraseña del usuario
     validarCambioClavePorFecha: (
         usCod,
@@ -137,7 +138,7 @@ export const funcionesGlobales = {
         }
     },
     //Metodo para obtener la fecha actual
-    getDate(){
+    getDate() {
         var date = new Date();
         var d = this.addCeroToTime(date.getDate());
         var me = this.addCeroToTime(date.getMonth() + 1);
@@ -145,7 +146,7 @@ export const funcionesGlobales = {
         return y + "-" + me + "-" + d;
     },
     //Metodo para obtener el hora actual
-    getTime(){
+    getTime() {
         var time = new Date();
         var h = time.getHours();
         var mi = time.getMinutes();
@@ -153,9 +154,9 @@ export const funcionesGlobales = {
         return h + ":" + mi + ":" + s;
     },
     //Metodo para obtener la fecha y hora actual
-    getDateTime(){
+    getDateTime() {
         var date = this.getDate();
         var time = this.getTime();
         return date + " " + time;
-    },
+    }
 };

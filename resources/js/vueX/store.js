@@ -21,13 +21,14 @@ export default new Vuex.Store({
         profesion: null,
         grupo: null,
         cliente: null,
+        inventariofactura:null,
+        clientefactura:null,
+        formapagofactura:null,
     },
 
     //una mutacion se va a realizar siempre y cuando sea llamada desde una acccion
     mutations:{
-        addProducto(state ){
-            state.producto = state.producto;
-        },
+       
         addProveedor(state ){
             state.proveedor = state.proveedor;
         },
@@ -58,9 +59,29 @@ export default new Vuex.Store({
         addCliente(state ){
             state.cliente = state.cliente;
         },
+        addFormapagofactura(state ){
+            state.formapagofactura = state.formapagofactura;
+        },
+        addClientefactura(state ){
+            state.clientefactura = state.clientefactura;
+        },
+        addInventariofactura(state ){
+            state.inventariofactura = state.inventariofactura;
+        },
     },
     //eventos actions del store
     actions:{
+        addInventariofacturaAction(context ){
+            context.commit('addInventariofactura');
+        },
+        addClientefacturaAction(context ){
+            context.commit('addClientefactura');
+        },
+        addFormapagofacturaAction(context ){
+            context.commit('addFormapagofactura');
+        },
+
+
         addProductoAction(context ){
             context.commit('addProducto');
         },
@@ -96,6 +117,19 @@ export default new Vuex.Store({
         },
     },
     getters:{
+       
+        getFormapagofactura(state){
+            return state.formapagofactura;
+        },
+
+        getClientefactura(state){
+            return state.clientefactura;
+        },
+
+        getInventariofactura(state){
+                return state.inventariofactura;
+        },
+
         getProducto(state){
             return state.producto;
         },

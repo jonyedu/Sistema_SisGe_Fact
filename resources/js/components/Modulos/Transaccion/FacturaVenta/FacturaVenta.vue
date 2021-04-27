@@ -9,17 +9,31 @@
                 </bs-appbar>
                 <bs-tabs v-model="activeTab" variant="modern" color="indigo">
                     <bs-tab label="Selección de Productos" icon="cart-plus">
-                        <inventario-producto> </inventario-producto>
+                        <inventario-producto ref="inventariofact"> </inventario-producto>
                     </bs-tab>
                     <bs-tab label="Datos de Facturación" icon="money-bill-alt">
-                       <cliente-factura>
+                       <cliente-factura ref="clientefac">
                        </cliente-factura>
                     </bs-tab>
                     <bs-tab label="Formas de Pago" icon="credit-card"> 
-                    <forma-de-pago-factura>
+                    <forma-de-pago-factura ref="formaspagofactura">
                     </forma-de-pago-factura>
                     </bs-tab>
                 </bs-tabs>
+                <div class="col-md text-center">
+                    <bs-tooltip content="Tooltip on bottom side" placement="bottom">
+                   <bs-button 
+                    color="success" 
+                    class="text-nowrap" 
+                    raised 
+                    outlined 
+                    pill
+                    @click  ="GrabarFactura">
+                    Facturación
+                    </bs-button>
+                    </bs-tooltip>
+                </div>
+                
             </bs-card>
         </div>
     </div>
@@ -51,6 +65,8 @@ export default {
 
     mounted: function() {
         this.prefijo = prefix;
+      
+        
     },
     beforeDestroy: function() {
         this.$store.state.producto = null;
@@ -68,7 +84,80 @@ export default {
                 timeout: 5000
             };
             this.$notification[icon](options, title);
-        }
+        },
+        GrabarFactura(){
+                 let that = this;
+            let url = "";
+            let ListaProductos=[];
+            let ListaCliente=[];
+            let ListaMetodosPago=[];
+
+            ListaProductos = this.$store.getters.getInventariofactura;
+            ListaCliente = this.$store.getters.getClientefactura;
+            ListaMetodosPago = this.$store.getters.getFormapagofactura;
+
+            //aqui valido si todo esta correcto nuevamente
+
+            if (ListaProductos.length==0) 
+            {
+                 this.showNotificationProgress(
+                                "Facturación",
+                                "Debe tener Agregado un producto al carrito" ,
+                                "error"
+                            );
+                            return;
+            }
+            if (ListaCliente.id==0) 
+            {
+                 this.showNotificationProgress(
+                                "Facturación",
+                                "Debe Seleccionar un cliente, Registrarlo o elegir la opcion de consumidor final" ,
+                                "error"
+                            );
+                            return;
+            }
+             if (ListaMetodosPago.tipo_pagof==0) 
+            {
+                 this.showNotificationProgress(
+                                "Facturación",
+                                "Debe Seleccionar un un metodo de pago" ,
+                                "error"
+                            );
+                            return;
+            }
+            //fin
+            this.errors = [];
+            url =  "/modulos/transaccion/factura_venta/guardar_factura/";
+
+         
+            axios
+                .post(url,{inventario:ListaProductos,
+                            cliente:ListaCliente,
+                            metodosp:ListaMetodosPago})
+                .then(function(response) { 
+                    console.log(response.data);
+                    
+                    
+                    
+                })
+                .catch(error => {
+                    //Errores de validación
+                  
+
+                    if (error.response.data.hasOwnProperty("errors")) {
+                        const errors = error.response.data.errors;
+                       // console.log(error.response.data.errors);
+                        for (let error in errors) {
+                            if (errors.hasOwnProperty(error)) {
+                               // console.log(errors[error][0]);                              
+                                
+ 
+                            }
+                        }
+                    }
+                    
+                });
+        },
     }
 };
 </script>

@@ -17,14 +17,27 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => '/modulos/transaccion', 'middleware' => ['auth:web'], 'verified'], function () {
 
+    //Submenu de Facturacion Compra
+    Route::namespace('Modulos\Transaccion\FacturaCompra')->prefix('factura_compra')->group(function () {
+        Route::get('cargar_all_factura_compra_cabecera', 'CompraCabeceraController@cargarCompraCabeceraTabla');
+        Route::get('cargar_producto_por_proveedor/{proveedor_id}', 'CompraCabeceraController@cargarProductoPorProveedor');
+    });
+
     //Submenu de Facturacion Venta
     Route::namespace('Modulos\Transaccion\FacturaVenta')->prefix('factura_venta')->group(function () {
         Route::get('cargar_facturas_dia', 'VentasCabeceraController@cargarFacturasDelDia');
         Route::get('productos_invo/{este}', 'VentasCabeceraController@cargarProductosInventario');
         //configuraciones
         Route::get('config_tipo', 'VentasCabeceraController@cargar_tipo');
+        //cargar_tarjetas
+        Route::get('cargar_tarjeta', 'VentasCabeceraController@cargar_tarjetas');
+         //cargar_tarjetas
+         Route::get('cargar_banco', 'VentasCabeceraController@cargar_bancos');
+         //grabar guardarFacturaVenta
+         Route::post('guardar_factura', 'VentasCabeceraController@guardarFacturaVenta');
+
     });
 
-     
+
 
 });
