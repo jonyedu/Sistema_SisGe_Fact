@@ -37,60 +37,6 @@ date_default_timezone_set("America/Guayaquil");
     return $ano_diferencia;
 } */
 
-function calculaEdad($idPaciente)
-{
-    if ($idPaciente > 0) {
-        //Vamos a la tabla Paciente, para capturar la fecha de nacimiento, con la fecha de ingreso
-        $paciente = Paciente::select('fecha_nacimiento', 'fecha_ingreso')
-            ->where('id', $idPaciente)
-            ->first();
-        if ($paciente != null) {
-            //Se transforma la fecha de nacimiento
-            $fecha_naci = new DateTime($paciente->fecha_nacimiento);
-            $dateFormatNac = $fecha_naci->format("d/m/Y");
-            list($diaNac, $mesNac, $anoNac) = explode("/", $dateFormatNac);
-
-            //Se transforma la fecha de registro
-            $fecha_ingre = new DateTime($paciente->fecha_ingreso);
-            $dateFormatIng = $fecha_ingre->format("d/m/Y");
-            list($diaIng, $mesIng, $anoIng) = explode("/", $dateFormatIng);
-
-            //Se obtiene la resta de la fecha de registro vs fecha de nacimiento
-            /* $ano_diferencia = $anoIng - $anoNac;
-            $mes_diferencia = $mesIng - $mesNac;
-            $dia_diferencia = $diaIng - $diaNac; */
-            //return $ano_diferencia . " años, " . $mes_diferencia . " meses y " . $dia_diferencia . " días";
-
-            /* $ano_diferencia--;
-            $mes_diferencia--;
-            $dia_diferencia--;
- */
-            //return $ano_diferencia . " años, " . $mes_diferencia . " meses y " . $dia_diferencia . " días";
-
-            $ano = 0;
-
-            //si el mes es el mismo pero el día inferior aun no ha cumplido años, le quitaremos un año al actual
-            if (($mesNac == $mesIng) && ($diaNac > $diaIng)) {
-                $ano = ($anoIng - 1);
-            }
-
-            //si el mes es superior al actual tampoco habrá cumplido años, por eso le quitamos un año al actual
-            if ($mesNac > $mesIng) {
-                $ano = ($anoIng - 1);
-            }
-
-            //ya no habría mas condiciones, ahora simplemente restamos los años y mostramos el resultado como su edad
-
-            $edad = ($ano - $anoNac);
-            return $edad;
-
-        } else {
-            return 0;
-        }
-    } else {
-        return 0;
-    }
-}
 
 function convertBase64ToBinary($data)
 {
@@ -149,7 +95,12 @@ function addNumberToLeft($number, $length)
     return substr(str_repeat(0, $length) . $number, -$length);
 }
 
-function prueba()
+function getNamePdf($persona, $no_documento)
 {
-    return "hola";
+    $persona = $persona;
+    $no_documento = $no_documento;
+    $fechaImpresion = date("Y-m-d H:i:s");
+    $extension = '.pdf';
+    $nombreArchivo = $persona . '-' . $no_documento . '-' . $fechaImpresion . $extension;
+    return $nombreArchivo;
 }

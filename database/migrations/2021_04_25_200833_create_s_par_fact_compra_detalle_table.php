@@ -22,7 +22,6 @@ class CreateSParFactCompraDetalleTable extends Migration
                 $table->decimal('costimp', 18, 4);
                 $table->unsignedInteger('cantidad');
                 $table->decimal('total', 18, 2);
-                $table->unsignedInteger('pagado');
                 /* Datos para auditoria */
                 $table->string('usu_created');
                 $table->string('usu_update');

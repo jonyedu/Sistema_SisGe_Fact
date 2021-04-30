@@ -10,8 +10,9 @@ class Empresa extends Model
     use HasFactory;
     protected $table = 'config_empresa';
     protected $connection = 'mysql_comercial';
+    protected $primaryKey = 'Empresa_Id';
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
         'Empresa_Id',
@@ -36,6 +37,7 @@ class Empresa extends Model
         'Empresa_Contador_Ruc',
         'Empresa_Actividad',
         'Empresa_Razon_Social',
+        'Empresa_Obligado_Contabilidad',
         'Empresa_Representante_Id',
         'Empresa_Representante_Id_Tipo',
         'Empresa_Inicio_Actividades',
@@ -44,19 +46,15 @@ class Empresa extends Model
         'Empresa_Actualizacion',
         'Empresa_Parroquia',
         'Empresa_Provincia',
-        'campo1',
-        'campo2',
-        'campo3',
-        'registro',
-        'usuario_ingreso',
-        'fecha_ingreso',
-        'usuario_modificacion',
-        'fecha_modificacion',
-        'name_pc',
-        'status'
+        'usu_created',
+        'usu_update',
+        'created_at',
+        'updated_at',
+        'pcip',
+        'status',
     ];
 
-    protected $hidden = [
+    /* protected $hidden = [
         'Empresa_Ubicacion_Logo',
     ];
 
@@ -67,5 +65,5 @@ class Empresa extends Model
     public function getLOGOattribute()
     {
         return base64_encode($this->Empresa_Ubicacion_Logo);
-    }
+    } */
 }

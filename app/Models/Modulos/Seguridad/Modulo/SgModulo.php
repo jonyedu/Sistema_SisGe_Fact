@@ -18,26 +18,28 @@ class SgModulo extends Model
     protected $connection = 'mysql_comercial';
     protected $primaryKey = 'codigo';
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
+        'codigo',
         'empresa',
         'sucursal',
-        'codigo',
         'descripcion',
-        'abreviatura',
-        'usuario_ingreso',
-        'fecha_ingreso',
-        'usuario_modificacion',
-        'fecha_modificacion',
-        'pcname',
-        'status',
         'imagen',
-
-
+        'usu_created',
+        'usu_update',
+        'created_at',
+        'updated_at',
+        'pcip',
+        'status',
     ];
+
     public function subModulo()
     {
         return $this->hasMany('App\Models\Modulos\Seguridad\SubModulo\SgOpcionAplicacion', 'modulo', 'codigo');
+    }
+    public function sucursalOne()
+    {
+        return $this->hasOne('App\Models\Modulos\Seguridad\Sucursal\Sucursal', 'Sucursal_Id', 'sucursal');
     }
 }

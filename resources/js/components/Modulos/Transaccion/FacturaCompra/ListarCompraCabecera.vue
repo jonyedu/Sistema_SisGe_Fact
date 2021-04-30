@@ -66,16 +66,16 @@
                         label="Total"
                         width="75"
                     ></bs-grid-column>
-                    <bs-grid-column
+                    <!-- <bs-grid-column
                         field="tipo_pago.descripcion"
                         label="Tp. Pago"
                         width="85"
-                    ></bs-grid-column>
-                    <bs-grid-column
+                    ></bs-grid-column> -->
+                    <!-- <bs-grid-column
                         field="id_documento"
                         label="Tp. Doc."
                         width="85"
-                    ></bs-grid-column>
+                    ></bs-grid-column> -->
                     <bs-grid-column
                         field=""
                         label="Acciones"
@@ -107,18 +107,18 @@
                             :item="item"
                             :index="index"
                         ></bs-grid-cell>
-                        <bs-grid-cell
+                        <!-- <bs-grid-cell
                             :column="columns[5]"
                             :item="item"
                             :index="index"
-                        ></bs-grid-cell>
-                        <bs-grid-cell
+                        ></bs-grid-cell> -->
+                        <!-- <bs-grid-cell
                             :column="columns[6]"
                             :item="item"
                             :index="index"
-                        ></bs-grid-cell>
+                        ></bs-grid-cell> -->
                         <bs-grid-cell
-                            :column="columns[7]"
+                            :column="columns[5]"
                             :item="item"
                             :index="index"
                         >

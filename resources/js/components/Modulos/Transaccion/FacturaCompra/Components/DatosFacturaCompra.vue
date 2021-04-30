@@ -20,18 +20,6 @@
                         </bs-date-time-field>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12">
-                        <bs-switch
-                            class="ml-5"
-                            color="primary"
-                            label-position="left"
-                            v-model="band"
-                            @change="consumidorfinal()"
-                            clear-button
-                        >
-                            S/c
-                        </bs-switch>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
                         <bs-text-field
                             prepend-icon="address-book"
                             floating-label
@@ -55,6 +43,19 @@
                         >
                             <label>Tipo Doc.</label>
                         </bs-combobox>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <bs-text-field
+                            prepend-icon="address-book"
+                            floating-label
+                            required
+                            :disabled="band"
+                            v-model="dataFacturaCompra.no_autorizacion"
+                            clear-button
+                            :external-validator="noAutorizacionValidator"
+                        >
+                            <label># Aurorización</label>
+                        </bs-text-field>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <bs-text-field
@@ -100,7 +101,7 @@
                             floating-label
                             required
                             :disabled="true"
-                            v-model="dataFacturaCompra.representante"
+                            v-model="dataFacturaCompra.razon_social"
                             clear-button
                         >
                             <label>Representante</label>
@@ -142,15 +143,24 @@ import { required, minLength, maxLength } from "vuelidate/lib/validators";
 
 const datosFacturaValidator = {
     fmt_registro: { required },
-    no_documento: { required },
-    tipo_documento_id: { required},
-    cedula: { required, minLength: minLength(10), maxLength: maxLength(10)  },
+    no_documento: {
+        required,
+        minLength: minLength(3),
+        maxLength: maxLength(17)
+    },
+    no_autorizacion: {
+        required,
+        minLength: minLength(10),
+        maxLength: maxLength(49)
+    },
+    tipo_documento_id: { required },
+    cedula: { required, minLength: minLength(10), maxLength: maxLength(10) }
 };
 export default {
     props: {
         dataFacturaCompra: {
             type: Object
-        },
+        }
     },
     watch: {
         "dataFacturaCompra.proveedor_id"(value) {
@@ -165,6 +175,9 @@ export default {
         "dataFacturaCompra.no_documento"(value) {
             this.$emit("actualizarData", "no_documento", value);
         },
+        "dataFacturaCompra.no_autorizacion"(value) {
+            this.$emit("actualizarData", "no_autorizacion", value);
+        },
         "dataFacturaCompra.cedula"(value) {
             this.$emit("actualizarData", "cedula", value);
         },
@@ -174,15 +187,15 @@ export default {
         "dataFacturaCompra.apellido"(value) {
             this.$emit("actualizarData", "apellido", value);
         },
-        "dataFacturaCompra.representante"(value) {
-            this.$emit("actualizarData", "representante", value);
+        "dataFacturaCompra.razon_social"(value) {
+            this.$emit("actualizarData", "razon_social", value);
         },
         "dataFacturaCompra.direccion"(value) {
             this.$emit("actualizarData", "direccion", value);
         },
         "dataFacturaCompra.telefono"(value) {
             this.$emit("actualizarData", "telefono", value);
-        },
+        }
     },
     mixins: [validationMixin],
     data: function() {
@@ -196,11 +209,12 @@ export default {
                         totalProperty: "total",
                         pageSize: 15,
                         restProxy: {
-                            browse:"/modulos/parametrizacion/tipo_documento/cargar_tipo_documento_combo_box",
+                            browse:
+                                "/modulos/parametrizacion/tipo_documento/cargar_tipo_documento_combo_box"
                         }
                     }),
                     schema: { displayField: "descripcion", valueField: "id" }
-                },
+                }
             },
             trueModalVisible: false,
             //Variables para la validaciones
@@ -230,10 +244,14 @@ export default {
                 hasError: this.$v.dataFacturaCompra.no_documento.$error,
                 messages: {
                     required: this.requiredErrorMsg,
+                    minLength: this.getMensajeValidator(1,this.$v.dataFacturaCompra.no_documento.$params.minLength.min),
+                    maxLength: this.getMensajeValidator(2,this.$v.dataFacturaCompra.no_documento.$params.maxLength.max),
                 },
                 dirty: this.$v.dataFacturaCompra.no_documento.$dirty,
                 validators: {
-                    required: this.$v.dataFacturaCompra.no_documento.required
+                    required: this.$v.dataFacturaCompra.no_documento.required,
+                    minLength: this.$v.dataFacturaCompra.no_documento.minLength,
+                    maxLength: this.$v.dataFacturaCompra.no_documento.maxLength
                 }
             };
         },
@@ -245,7 +263,8 @@ export default {
                 },
                 dirty: this.$v.dataFacturaCompra.tipo_documento_id.$dirty,
                 validators: {
-                    required: this.$v.dataFacturaCompra.tipo_documento_id.required
+                    required: this.$v.dataFacturaCompra.tipo_documento_id
+                        .required
                 }
             };
         },
@@ -254,14 +273,30 @@ export default {
                 hasError: this.$v.dataFacturaCompra.cedula.$error,
                 messages: {
                     required: this.requiredErrorMsg,
-                    minLength: this.minLengthErrorMsg,
-                    maxLength: this.maxLengthErrorMsg,
+                    minLength: this.getMensajeValidator(1,this.$v.dataFacturaCompra.cedula.$params.minLength.min),
+                    maxLength: this.getMensajeValidator(2,this.$v.dataFacturaCompra.cedula.$params.maxLength.max),
                 },
                 dirty: this.$v.dataFacturaCompra.cedula.$dirty,
                 validators: {
                     required: this.$v.dataFacturaCompra.cedula.required,
                     minLength: this.$v.dataFacturaCompra.cedula.minLength,
-                    maxLength: this.$v.dataFacturaCompra.cedula.maxLength,
+                    maxLength: this.$v.dataFacturaCompra.cedula.maxLength
+                }
+            };
+        },
+        noAutorizacionValidator() {
+            return {
+                hasError: this.$v.dataFacturaCompra.no_autorizacion.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                    minLength: this.getMensajeValidator(1,this.$v.dataFacturaCompra.no_autorizacion.$params.minLength.min),
+                    maxLength: this.getMensajeValidator(2,this.$v.dataFacturaCompra.no_autorizacion.$params.maxLength.max),
+                },
+                dirty: this.$v.dataFacturaCompra.no_autorizacion.$dirty,
+                validators: {
+                    required: this.$v.dataFacturaCompra.no_autorizacion.required,
+                    minLength: this.$v.dataFacturaCompra.no_autorizacion.minLength,
+                    maxLength: this.$v.dataFacturaCompra.no_autorizacion.maxLength
                 }
             };
         },
@@ -285,7 +320,8 @@ export default {
                             );
                             that.lmpCampos();
                         } else {
-                            that.dataFacturaCompra.proveedor_id = response.data.proveedor.id;
+                            that.dataFacturaCompra.proveedor_id =
+                                response.data.proveedor.id;
                             that.dataFacturaCompra.cedula =
                                 response.data.proveedor.cedula;
                             that.dataFacturaCompra.nombre =
@@ -296,8 +332,8 @@ export default {
                                 response.data.proveedor.direccion;
                             that.dataFacturaCompra.telefono =
                                 response.data.proveedor.telefono;
-                            that.dataFacturaCompra.representante =
-                                response.data.proveedor.representante;
+                            that.dataFacturaCompra.razon_social =
+                                response.data.proveedor.razon_social;
                         }
                     })
                     .catch(error => {});
@@ -320,7 +356,8 @@ export default {
                             );
                             that.lmpCampos();
                         } else {
-                            that.dataFacturaCompra.proveedor_id = response.data.proveedor.id;
+                            that.dataFacturaCompra.proveedor_id =
+                                response.data.proveedor.id;
                             that.dataFacturaCompra.cedula =
                                 response.data.proveedor.cedula;
                             that.dataFacturaCompra.nombre =
@@ -331,22 +368,11 @@ export default {
                                 response.data.proveedor.direccion;
                             that.dataFacturaCompra.telefono =
                                 response.data.proveedor.telefono;
-                            that.dataFacturaCompra.representante =
-                                response.data.proveedor.representante;
+                            that.dataFacturaCompra.razon_social =
+                                response.data.proveedor.razon_social;
                         }
                     })
                     .catch(error => {});
-            }
-        },
-        consumidorfinal() {
-            if (this.band) {
-                this.dataFacturaCompra.cedula = "9999999999";
-                this.dataFacturaCompra.nombre = "CONSUMIDOR FINAL";
-                this.dataFacturaCompra.apellido = ".";
-                this.dataFacturaCompra.direccion = ".";
-                this.dataFacturaCompra.telefono = "0";
-            } else {
-                this.lmpCampos();
             }
         },
         showNotificationProgress(title, message, icon) {
@@ -363,9 +389,19 @@ export default {
             this.dataFacturaCompra.cedula = "";
             this.dataFacturaCompra.nombre = "";
             this.dataFacturaCompra.apellido = "";
-            this.dataFacturaCompra.representante = "";
+            this.dataFacturaCompra.razon_social = "";
             this.dataFacturaCompra.telefono = "";
             this.dataFacturaCompra.direccion = "";
+        },
+        getMensajeValidator(opc, value) {
+            switch (opc) {
+                case 1:
+                    return this.minLengthErrorMsg = "Este campo debe tener al menos" + value + " caracteres.";
+                case 2:
+                    return this.maxLengthErrorMsg = "Este campo debe tener al menos" + value + " caracteres.";
+                default:
+                    break;
+            }
         }
     }
 };

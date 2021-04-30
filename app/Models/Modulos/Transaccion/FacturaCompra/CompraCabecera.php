@@ -18,17 +18,19 @@ class CompraCabecera extends Model
      */
     // protected $connection = 'admin_db_sql';
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
         'id',
         'id_documento',
         'secuencia',
+        'no_autorizacion',
         'id_proveedor',
         'fecha_compra',
+        'sub_total_0',
+        'sub_total_12',
         'totalapagar',
         'id_pago',
-        'id_plazo',
         'p_inicial',
         'observacion',
         'usu_created',
@@ -50,5 +52,9 @@ class CompraCabecera extends Model
     public function compraDetalle()
     {
         return $this->hasMany('App\Models\Modulos\Transaccion\FacturaCompra\CompraDetalle', 'id_facturac', 'id');
+    }
+    public function usuario()
+    {
+        return $this->hasOne('App\Models\Modulos\Seguridad\Usuario\SegUsuario', 'codigo', 'usu_update');
     }
 }

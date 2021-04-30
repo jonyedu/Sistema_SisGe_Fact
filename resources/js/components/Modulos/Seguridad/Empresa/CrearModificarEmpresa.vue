@@ -78,7 +78,9 @@
                                                 prepend-icon-outer="user"
                                                 floating-label
                                                 outlined
-                                                v-model="empresaForm.representante"
+                                                v-model="
+                                                    empresaForm.representante
+                                                "
                                                 :external-validator="
                                                     representanteValidator
                                                 "
@@ -105,25 +107,45 @@
                                                 <label>Contador</label>
                                             </bs-text-field>
                                             <bs-date-time-field
-                                                v-model="empresaForm.inicio_actividades"
+                                                v-model="
+                                                    empresaForm.inicio_actividades
+                                                "
                                                 prepend-icon-outer="user"
                                                 clear-button
                                                 floating-label
-                                                value-format="YYYY-MM-DD HH:mm:ss" 
-                                                display-format="dddd, DD MMM YYYY HH:mm:ss" 
-                                                outlined>
-                                                <label>Inicio de Actividades</label>
+                                                value-format="YYYY-MM-DD HH:mm:ss"
+                                                display-format="dddd, DD MMM YYYY HH:mm:ss"
+                                                outlined
+                                            >
+                                                <label
+                                                    >Inicio de
+                                                    Actividades</label
+                                                >
                                             </bs-date-time-field>
                                             <bs-date-time-field
-                                                v-model="empresaForm.inscripcion"
+                                                v-model="
+                                                    empresaForm.inscripcion
+                                                "
                                                 prepend-icon-outer="user"
                                                 clear-button
                                                 floating-label
-                                                value-format="YYYY-MM-DD HH:mm:ss" 
-                                                display-format="dddd, DD MMM YYYY HH:mm:ss" 
-                                                outlined>
+                                                value-format="YYYY-MM-DD HH:mm:ss"
+                                                display-format="dddd, DD MMM YYYY HH:mm:ss"
+                                                outlined
+                                            >
                                                 <label>Inscripción</label>
                                             </bs-date-time-field>
+                                            <bs-switch
+                                                class="ml-5"
+                                                v-model="
+                                                    empresaForm.obligado_contabilidad
+                                                "
+                                                color="primary"
+                                                label-position="left"
+                                                label-class="col-md-8"
+                                            >
+                                                Obligado a Contabilidad
+                                            </bs-switch>
                                         </div>
                                         <div
                                             class="col-lg-6 col-md-6 col-sm-12"
@@ -132,7 +154,9 @@
                                                 prepend-icon-outer="user"
                                                 floating-label
                                                 outlined
-                                                v-model="empresaForm.razon_social"
+                                                v-model="
+                                                    empresaForm.razon_social
+                                                "
                                                 :external-validator="
                                                     razonSocialValidator
                                                 "
@@ -143,7 +167,9 @@
                                                 prepend-icon-outer="user"
                                                 floating-label
                                                 outlined
-                                                v-model="empresaForm.codigo_postal"
+                                                v-model="
+                                                    empresaForm.codigo_postal
+                                                "
                                                 :external-validator="
                                                     codigoPostalValidator
                                                 "
@@ -176,30 +202,72 @@
                                                 prepend-icon-outer="user"
                                                 floating-label
                                                 outlined
-                                                v-model="empresaForm.contador_ruc"
+                                                v-model="
+                                                    empresaForm.contador_ruc
+                                                "
                                             >
                                                 <label>Contador Ruc</label>
                                             </bs-text-field>
                                             <bs-date-time-field
-                                                v-model="empresaForm.constitucion"
+                                                v-model="
+                                                    empresaForm.constitucion
+                                                "
                                                 prepend-icon-outer="user"
                                                 clear-button
                                                 floating-label
-                                                value-format="YYYY-MM-DD HH:mm:ss" 
-                                                display-format="dddd, DD MMM YYYY HH:mm:ss" 
-                                                outlined>
+                                                value-format="YYYY-MM-DD HH:mm:ss"
+                                                display-format="dddd, DD MMM YYYY HH:mm:ss"
+                                                outlined
+                                            >
                                                 <label>Constitución</label>
                                             </bs-date-time-field>
                                             <bs-date-time-field
-                                                v-model="empresaForm.actualizacion"
+                                                v-model="
+                                                    empresaForm.actualizacion
+                                                "
                                                 prepend-icon-outer="user"
                                                 clear-button
                                                 floating-label
-                                                value-format="YYYY-MM-DD HH:mm:ss" 
-                                                display-format="dddd, DD MMM YYYY HH:mm:ss" 
-                                                outlined>
+                                                value-format="YYYY-MM-DD HH:mm:ss"
+                                                display-format="dddd, DD MMM YYYY HH:mm:ss"
+                                                outlined
+                                            >
                                                 <label>Actualización</label>
                                             </bs-date-time-field>
+                                        </div>
+                                        <div
+                                            class="col-lg-12 col-md-12 col-sm-12 mt-3 text-center"
+                                        >
+                                            <input
+                                                type="file"
+                                                ref="file"
+                                                accept=".jpg, .png, .jpeg"
+                                                @change="onFileSelected"
+                                                style="display: none"
+                                            />
+                                            <bs-button
+                                                @click="$refs.file.click()"
+                                                color="primary"
+                                                icon="cloud-upload-alt"
+                                                icon-position="left"
+                                            >
+                                                Cargar Imagen
+                                            </bs-button>
+                                        </div>
+                                        <div
+                                            class="col-lg-12 col-md-12 col-sm-12 text-center"
+                                        >
+                                            <bs-avatar
+                                                class="md-link"
+                                                :img-src="empresaForm.fotoURL"
+                                                size="100%"
+                                                rounded
+                                                @click="showSingleItem = true"
+                                                :external-validator="
+                                                    direccionValidator
+                                                "
+                                            >
+                                            </bs-avatar>
                                         </div>
                                     </div>
                                 </form>
@@ -209,6 +277,16 @@
                 </div>
             </div>
         </div>
+        <bs-lightbox
+            :items="singleItem"
+            :open.sync="showSingleItem"
+            :show-counter="false"
+            :show-nav-control="false"
+            :show-thumbnail="false"
+            :show-toolbar="true"
+            :toolbar="buttons"
+        >
+        </bs-lightbox>
         <bs-mask-loader :show="showLoader"></bs-mask-loader>
     </div>
 </template>
@@ -216,22 +294,32 @@
 <script>
 import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
-import { required, email} from "vuelidate/lib/validators";
+import { required, email } from "vuelidate/lib/validators";
 
 const empresaValidator = {
     nombre: { required },
     ruc: { required },
-    representante: { required},
+    representante: { required },
     telefono: { required },
     razon_social: { required },
     codigo_postal: { required },
     email: { required, email },
-    direccion: { required },
+    direccion: { required }
 };
 export default {
     mixins: [validationMixin],
     data: function() {
         return {
+            //Variable para abrir la imagen en modal
+            buttons: { close: true },
+            showSingleItem: false,
+            singleItem: [
+                {
+                    //thumbnail: this.empresaForm!=undefined?this.empresaForm.fotoURL:"",
+                    imageSrc: "",
+                    title: ""
+                }
+            ],
             //variable que controla el progreso
             showLoader: false,
             //Variables para obtener el index
@@ -256,17 +344,18 @@ export default {
                         contador_ruc: "",
                         constitucion: "",
                         actualizacion: "",
+                        file_base_64: null,
+                        fotoURL: null,
+                        obligado_contabilidad: false
                     },
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
-                            url:
-                                "/modulos/seguridad/empresa/guardar_empresa",
+                            url: "/modulos/seguridad/empresa/guardar_empresa",
                             method: "post"
                         },
                         update: {
-                            url:
-                                "/modulos/seguridad/empresa/modificar_empresa",
+                            url: "/modulos/seguridad/empresa/modificar_empresa",
                             method: "post"
                         }
                     }
@@ -276,7 +365,8 @@ export default {
             ),
             //Variables para la validaciones
             requiredErrorMsg: "Este campo es obligatorio.",
-            emailErrorMsg: "Por favor ingrese una dirección de correo electrónico válida.",
+            emailErrorMsg:
+                "Por favor ingrese una dirección de correo electrónico válida."
         };
     },
     validations: {
@@ -293,7 +383,8 @@ export default {
             this.empresaForm.representante = empresa.Empresa_Representante;
             this.empresaForm.telefono = empresa.Empresa_Telefonos;
             this.empresaForm.contador = empresa.Empresa_Contador;
-            this.empresaForm.inicio_actividades = empresa.Empresa_Inicio_Actividades;
+            this.empresaForm.inicio_actividades =
+                empresa.Empresa_Inicio_Actividades;
             this.empresaForm.inscripcion = empresa.Empresa_Inscripcion;
             this.empresaForm.razon_social = empresa.Empresa_Razon_Social;
             this.empresaForm.codigo_postal = empresa.Empresa_Codigo_Postal;
@@ -302,6 +393,10 @@ export default {
             this.empresaForm.contador_ruc = empresa.Empresa_Contador_Ruc;
             this.empresaForm.constitucion = empresa.Empresa_Constitucion;
             this.empresaForm.actualizacion = empresa.Empresa_Actualizacion;
+            this.empresaForm.fotoURL = empresa.Empresa_Ubicacion_Logo;
+            this.empresaForm.file_base_64 = empresa.Empresa_Ubicacion_Logo;
+            this.singleItem[0].imageSrc = empresa.Empresa_Ubicacion_Logo;
+            this.empresaForm.obligado_contabilidad = empresa.Empresa_Obligado_Contabilidad?true:false;
         }
     },
     beforeDestroy: function() {
@@ -313,11 +408,11 @@ export default {
             return {
                 hasError: this.$v.empresaForm.nombre.$error,
                 messages: {
-                    required: this.requiredErrorMsg,
+                    required: this.requiredErrorMsg
                 },
                 dirty: this.$v.empresaForm.nombre.$dirty,
                 validators: {
-                    required: this.$v.empresaForm.nombre.required,
+                    required: this.$v.empresaForm.nombre.required
                 }
             };
         },
@@ -342,7 +437,7 @@ export default {
                 },
                 dirty: this.$v.empresaForm.representante.$dirty,
                 validators: {
-                    required: this.$v.empresaForm.representante.required,
+                    required: this.$v.empresaForm.representante.required
                 }
             };
         },
@@ -407,10 +502,40 @@ export default {
                     required: this.$v.empresaForm.direccion.required
                 }
             };
-        },
+        }
     },
 
     methods: {
+        createBase64Image(fileObject) {
+            const reader = new FileReader();
+            reader.readAsDataURL(fileObject);
+            reader.onload = e => {
+                this.empresaForm.file_base_64 = e.target.result;
+            };
+        },
+        onFileSelected(event) {
+            if (event.target.files.length > 0) {
+                if (
+                    event.target.files[0]["type"] === "image/jpeg" ||
+                    event.target.files[0]["type"] === "image/png" ||
+                    event.target.files[0]["type"] === "image/jpg"
+                ) {
+                    this.empresaForm.logo = event.target.files[0];
+                    this.empresaForm.fotoURL = URL.createObjectURL(
+                        this.empresaForm.logo
+                    );
+                    this.createBase64Image(this.empresaForm.logo);
+                    this.singleItem[0].title = event.target.files[0].name;
+                    this.singleItem[0].imageSrc = this.empresaForm.fotoURL;
+                } else {
+                    this.showNotificationProgress(
+                        "Advertencia al cargar la imagen",
+                        "Solo imagenes de formato: .jpeg, .jpg, .png son permitidos!",
+                        "warning"
+                    );
+                }
+            }
+        },
         guardarActualizar() {
             var that = this;
             this.$v.$touch();

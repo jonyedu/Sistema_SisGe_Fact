@@ -18,8 +18,9 @@ class CreateParLaboratorioTable extends Migration
                 $table->bigIncrements('id');
                 $table->string('nombre');
                 $table->string('apellido');
+                $table->string('ruc');
                 $table->string('cedula');
-                $table->string('representante');
+                $table->string('razon_social');
                 $table->string('direccion');
                 $table->string('telefono');
                 /* Datos para auditoria */

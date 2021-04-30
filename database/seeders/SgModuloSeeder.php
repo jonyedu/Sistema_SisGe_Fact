@@ -22,14 +22,14 @@ class SgModuloSeeder extends Seeder
                 'empresa' => 1,
                 'sucursal' => 1,
                 'descripcion' => 'Banco',
-                'abreviatura' => '.',
-                'usuario_ingreso' => 1,
-                'fecha_ingreso' => date("Y-m-d H:i:s"),
-                'usuario_modificacion' => 1,
-                'fecha_modificacion' => date("Y-m-d H:i:s"),
-                'pcname' => '192.168.1.196',
-                'status' => 1,
                 'imagen' => 'fas fa-landmark',
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+
             ]
 
         );
@@ -42,14 +42,14 @@ class SgModuloSeeder extends Seeder
                 'empresa' => 1,
                 'sucursal' => 1,
                 'descripcion' => 'Inventario',
-                'abreviatura' => '.',
-                'usuario_ingreso' => 1,
-                'fecha_ingreso' => date("Y-m-d H:i:s"),
-                'usuario_modificacion' => 1,
-                'fecha_modificacion' => date("Y-m-d H:i:s"),
-                'pcname' => '192.168.1.196',
-                'status' => 1,
                 'imagen' => 'fas fa-dolly-flatbed',
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+
             ]
         );
         SgModulo::updateOrCreate(
@@ -60,14 +60,14 @@ class SgModuloSeeder extends Seeder
                 'empresa' => 1,
                 'sucursal' => 1,
                 'descripcion' => 'Persona',
-                'abreviatura' => '.',
-                'usuario_ingreso' => 1,
-                'fecha_ingreso' => date("Y-m-d H:i:s"),
-                'usuario_modificacion' => 1,
-                'fecha_modificacion' => date("Y-m-d H:i:s"),
-                'pcname' => '192.168.1.196',
-                'status' => 1,
                 'imagen' => 'fas fa-users',
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+
             ]
         );
         SgModulo::updateOrCreate(
@@ -78,14 +78,14 @@ class SgModuloSeeder extends Seeder
                 'empresa' => 1,
                 'sucursal' => 1,
                 'descripcion' => 'Reporte',
-                'abreviatura' => '.',
-                'usuario_ingreso' => 1,
-                'fecha_ingreso' => date("Y-m-d H:i:s"),
-                'usuario_modificacion' => 1,
-                'fecha_modificacion' => date("Y-m-d H:i:s"),
-                'pcname' => '192.168.1.196',
-                'status' => 1,
                 'imagen' => 'fas fa-print',
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+
             ]
         );
         SgModulo::updateOrCreate(
@@ -96,14 +96,14 @@ class SgModuloSeeder extends Seeder
                 'empresa' => 1,
                 'sucursal' => 1,
                 'descripcion' => 'Seguridad',
-                'abreviatura' => '.',
-                'usuario_ingreso' => 1,
-                'fecha_ingreso' => date("Y-m-d H:i:s"),
-                'usuario_modificacion' => 1,
-                'fecha_modificacion' => date("Y-m-d H:i:s"),
-                'pcname' => '192.168.1.196',
-                'status' => 1,
                 'imagen' => 'fas fa-key',
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+
             ]
         );
         SgModulo::updateOrCreate(
@@ -114,14 +114,13 @@ class SgModuloSeeder extends Seeder
                 'empresa' => 1,
                 'sucursal' => 1,
                 'descripcion' => 'Transaccion',
-                'abreviatura' => '.',
-                'usuario_ingreso' => 1,
-                'fecha_ingreso' => date("Y-m-d H:i:s"),
-                'usuario_modificacion' => 1,
-                'fecha_modificacion' => date("Y-m-d H:i:s"),
-                'pcname' => '192.168.1.196',
-                'status' => 1,
                 'imagen' => 'fas fa-shopping-cart',
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
             ]
         );
     }

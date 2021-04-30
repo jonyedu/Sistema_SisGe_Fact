@@ -36,19 +36,19 @@
                             >
                             </bs-button>
                         </bs-tooltip>
-                        <!-- <bs-tooltip
+                        <bs-tooltip
                             content="Guardar cliente"
                             placement="bottom"
                         >
                             <bs-button
                                 mode="icon"
-                                icon="save"
+                                icon="file-pdf"
                                 icon-size="sm"
-                                color="success"
-                                @click="lmpCampos()"
+                                color="red"
+                                @click="imprimirPdf()"
                             >
                             </bs-button>
-                        </bs-tooltip> -->
+                        </bs-tooltip>
                     </bs-card-content>
                 </bs-card-body>
             </bs-card>
@@ -137,10 +137,11 @@ export default {
                             fmt_registro: null,
                             tipo_documento_id: "",
                             no_documento: "",
+                            no_autorizacion: "",
                             cedula: "",
                             nombre: "",
                             apellido: "",
-                            representante: "",
+                            razon_social: "",
                             direccion: "",
                             telefono: ""
                         },
@@ -216,8 +217,8 @@ export default {
                     factura_compra.proveedor.nombre;
                 this.factura_compra.datos_factura_compra.apellido =
                     factura_compra.proveedor.apellido;
-                this.factura_compra.datos_factura_compra.representante =
-                    factura_compra.proveedor.representante;
+                this.factura_compra.datos_factura_compra.razon_social =
+                    factura_compra.proveedor.razon_social;
                 this.factura_compra.datos_factura_compra.direccion =
                     factura_compra.proveedor.direccion;
                 this.factura_compra.datos_factura_compra.telefono =
@@ -230,9 +231,7 @@ export default {
                 this.factura_compra.listar_producto.descripcion =
                     factura_compra.observacion;
                 //forma de pago
-                this.factura_compra.forma_pago.forma_pago_id =
-                    factura_compra.id_pago;
-
+                this.factura_compra.forma_pago.forma_pago_id = factura_compra.id_pago;
 
                 await this.$refs.refSeleccionaProducto.cmb.productos.proxy.fetch(
                     factura_compra.proveedor.id
@@ -283,7 +282,7 @@ export default {
         },
         actualizarDataFacturaCompra(field, value) {
             this.factura_compra.datos_factura_compra[field] = value;
-            if(field == 'proveedor_id'){
+            if (field == "proveedor_id") {
                 this.actualizarListarProductos(field, value);
             }
         },
@@ -378,7 +377,7 @@ export default {
                 cedula: "",
                 nombre: "",
                 apellido: "",
-                representante: "",
+                razon_social: "",
                 direccion: "",
                 telefono: ""
             };
@@ -401,14 +400,23 @@ export default {
             this.$refs.refSeleccionaProducto.$v.$reset();
             this.$refs.refFormaPago.$v.$reset();
         },
-        lmpCampos1() {
-            this.$refs.refDatosFacturaCompra.$refs.myform.reset();
-            this.$refs.refSeleccionaProducto.$refs.myform.reset();
-            this.$refs.refFormaPago.$refs.myform.reset();
-            this.factura_compra.reset();
-            this.$refs.refDatosFacturaCompra.$v.$reset();
-            this.$refs.refSeleccionaProducto.$v.$reset();
-            this.$refs.refFormaPago.$v.$reset();
+        imprimirPdf() {
+            if (
+                this.factura_compra.datos_factura_compra
+                    .factura_compra_cabecera_id != ""
+            ) {
+                window.open(
+                    "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
+                        this.factura_compra.datos_factura_compra
+                            .factura_compra_cabecera_id
+                );
+            } else {
+                this.showNotificationProgress(
+                    "Advertencia",
+                    "No existe factura de compra, para imprimir.",
+                    "warning"
+                );
+            }
         }
     }
 };

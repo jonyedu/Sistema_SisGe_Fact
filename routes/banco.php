@@ -17,9 +17,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => '/modulos/banco', 'middleware' => ['auth:web'], 'verified'], function () {
 
-    //Submenu de
-    Route::namespace('Modulos\Administracion\Producto')->prefix('producto')->group(function () {
-        Route::get('cargar_all_producto', 'ProductoController@cargarProductoTabla');
-    });
 
 });

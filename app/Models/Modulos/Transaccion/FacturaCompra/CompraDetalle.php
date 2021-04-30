@@ -28,7 +28,6 @@ class CompraDetalle extends Model
         'costimp',
         'cantidad',
         'total',
-        'pagado',
         'usu_created',
         'usu_update',
         'created_at',

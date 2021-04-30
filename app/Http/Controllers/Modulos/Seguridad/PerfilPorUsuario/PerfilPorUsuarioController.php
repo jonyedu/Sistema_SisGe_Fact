@@ -22,10 +22,13 @@ class PerfilPorUsuarioController extends Controller
             $menus = [];
             $arrayModulos = PerfilPorUsuario::where('status', 1)
                 ->where('perfil', $idPerfil)
+                ->orderBy('modulo', 'asc')
                 ->get();
 
+            //return  response()->json(['arrayModulos' =>  $arrayModulos], 200);
             foreach ($arrayModulos as $modulo) {
-                if (!array_key_exists($modulo->modulo, $idModulo)) {
+                $existe = array_key_exists($modulo->modulo, $idModulo);
+                if ($existe == false) {
                     array_push($idModulo, $modulo->modulo);
                 }
                 /* if (!array_key_exists($modulo->opcion_aplicacion, $idOpcionAplicacion)) {
@@ -33,6 +36,7 @@ class PerfilPorUsuarioController extends Controller
                 } */
                 array_push($idOpcionAplicacion, $modulo->opcion_aplicacion);
             }
+            //return  response()->json(['idModulo' =>  $idModulo], 200);
 
             $menus = SgModulo::where('status', 1)
                 ->whereIn('codigo', $idModulo)
@@ -45,6 +49,40 @@ class PerfilPorUsuarioController extends Controller
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
+    public function cargarMenu1($idPerfil)
+    {
+        try {
+            $idModulo = [];
+            $idOpcionAplicacion = [];
+            $menus = [];
+            $arrayModulos = PerfilPorUsuario::where('status', 1)
+                ->where('perfil', $idPerfil)
+                ->get();
+
+
+            foreach ($arrayModulos as $modulo) {
+                if (!array_key_exists($modulo->modulo, $idModulo)) {
+                    array_push($idModulo, $modulo->modulo);
+                }
+                /* if (!array_key_exists($modulo->opcion_aplicacion, $idOpcionAplicacion)) {
+                    array_push($idOpcionAplicacion, $modulo->opcion_aplicacion);
+                } */
+                array_push($idOpcionAplicacion, $modulo->opcion_aplicacion);
+            }
+            return  response()->json(['idModulo' =>  $idModulo], 200);
+
+            $menus = SgModulo::where('status', 1)
+                ->whereIn('codigo', $idModulo)
+                ->with(['subModulo' => function ($i)  use ($idOpcionAplicacion) {
+                    $i->whereIn('codigo', $idOpcionAplicacion);
+                }])
+                ->get();
+            return  response()->json(['menus' =>  $menus], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
+        }
+    }
+
 
     public function cargarPerfilPorUsuario($idModulo, $idPerfil)
     {
@@ -67,6 +105,7 @@ class PerfilPorUsuarioController extends Controller
     public function actualizarPerfilPorUsuario(Request $request)
     {
         try {
+            $user = Auth::user();
             PerfilPorUsuario::where('status', 1)
                 ->where('perfil', $request->input('perfil_id'))
                 ->where('modulo', $request->input('modulo_id'))
@@ -81,7 +120,9 @@ class PerfilPorUsuarioController extends Controller
                             'perfil' => $request->input('perfil_id'),
                             'modulo' => $request->input('modulo_id'),
                             'opcion_aplicacion' => $subModulo,
-                            'superior' => 1,
+                            'usu_created' => $user->codigo,
+                            'usu_update' => $user->codigo,
+                            'pcip' =>  $_SERVER["REMOTE_ADDR"],
                             'status' => 1,
                         ]
                     );

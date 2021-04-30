@@ -393,6 +393,7 @@ export default {
             this.productoForm.grupo_id = producto.grupo_id;
             this.productoForm.proveedor_id = producto.laboratorio_id;
             this.productoForm.fotoURL = producto.imagen;
+            this.productoForm.file_base_64 = producto.imagen;
             this.singleItem[0].imageSrc = producto.imagen;
         }
     },

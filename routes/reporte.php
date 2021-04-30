@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => '/modulos/reporte', 'middleware' => ['auth:web'], 'verified'], function () {
 
     //Submenu de
-    Route::namespace('Modulos\Reporte\Producto')->prefix('producto')->group(function () {
-        Route::get('cargar_all_producto', 'ProductoController@cargarProductoTabla');
+    Route::namespace('Modulos\Reporte\FacturaCompra')->prefix('factura_compra')->group(function () {
+        Route::get('cargar_pdf_factura_compra/{factura_compra_cabecera_id}', 'FacturaCompraReporteController@cargarPdfFacturaCompra');
     });
 });

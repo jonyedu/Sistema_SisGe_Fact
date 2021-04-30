@@ -18,11 +18,13 @@ class CreateSParFactCompraCabeceraTable extends Migration
                 $table->bigIncrements('id');
                 $table->unsignedInteger('id_documento');
                 $table->string('secuencia');
+                $table->string('no_autorizacion');
                 $table->unsignedInteger('id_proveedor');
                 $table->date('fecha_compra');
+                $table->decimal('sub_total_0', 18, 2);
+                $table->decimal('sub_total_12', 18, 2);
                 $table->decimal('totalapagar', 18, 2);
                 $table->unsignedInteger('id_pago');
-                $table->unsignedInteger('id_plazo');
                 $table->decimal('p_inicial', 18, 2);
                 $table->string('observacion');
                 /* Datos para auditoria */

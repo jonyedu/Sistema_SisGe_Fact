@@ -31,4 +31,8 @@ class Perfil extends Model
         'pcname',
         'status',
     ];
+    public function proveedor()
+    {
+        return $this->hasOne('App\Models\Modulos\Seguridad\PerfilPorUsuario\PerfilPorUsuario', 'id', 'id');
+    }
 }
