@@ -16,15 +16,21 @@ class ProductoInventario extends Model
      * @var string
      */
     // protected $connection = 'admin_db_sql';
+    protected $primaryKey = 'id';
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
         'id',
         'id_factura',
         'id_producto',
         'stock',
-        'status',
+        'usu_created',
+        'usu_update',
+        'created_at',
+        'updated_at',
+        'pcip',
+        'status'
     ];
     public function ProductoInv()
     {

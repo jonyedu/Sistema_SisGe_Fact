@@ -17,7 +17,7 @@ class CreateSParFactCompraCabeceraTable extends Migration
             Schema::create('s_par_fact_compra_cabecera', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->unsignedInteger('id_documento');
-                $table->unsignedInteger('secuencia');
+                $table->string('secuencia');
                 $table->unsignedInteger('id_proveedor');
                 $table->date('fecha_compra');
                 $table->decimal('totalapagar', 18, 2);

@@ -1,81 +1,104 @@
 <template>
     <div class="form-group">
-        <bs-combobox
-            v-model="product8"
-            :data-source="products"
-            prepend-icon="cash-register"
-            floating-label
-            @change="tipodepago()"
-        >
-            <label>-- Forma de pago --</label>
-        </bs-combobox>
-        <br />
-        <bs-card shadow>
-            <bs-card-header class="bg-primary text-white"
-                >Detalle de la Compra</bs-card-header
+        <form ref="myform" novalidate>
+            <bs-combobox
+                v-model="dataFormaPago.forma_pago_id"
+                :data-source="products"
+                prepend-icon="cash-register"
+                floating-label
+                @change="tipodepago()"
+                :external-validator="formaPagoValidator"
             >
-            <bs-card-body>
-                <bs-card-content>
-                    <label>Total a Pagar $</label>
-                    <bs-text-field
-                        prepend-icon="money-bill-wave-alt"
-                        floating-label
-                        autofocus
-                        required
-                    >
-                        <label>Total Recibido</label>
-                    </bs-text-field>
-                    <bs-text-field
-                        prepend-icon="wallet"
-                        floating-label
-                        autofocus
-                        required
-                    >
-                        <label>Cambio</label>
-                    </bs-text-field>
-                </bs-card-content>
-            </bs-card-body>
-            <bs-card-footer class="bg-primary text-white"
-                >Detalle de la Compra</bs-card-footer
-            >
-        </bs-card>
-        <div v-show="pagotarjeta">
+                <label>-- Forma de pago --</label>
+            </bs-combobox>
+            <br />
             <bs-card shadow>
-                <bs-card-header class="bg-unique text-white"
-                    >Pago Con Tarjeta</bs-card-header
+                <bs-card-header class="bg-primary text-white"
+                    >Detalle de la Compra</bs-card-header
                 >
                 <bs-card-body>
                     <bs-card-content>
                         <label>Total a Pagar $</label>
+                        <bs-text-field
+                            prepend-icon="money-bill-wave-alt"
+                            floating-label
+                            autofocus
+                            required
+                        >
+                            <label>Total Recibido</label>
+                        </bs-text-field>
+                        <bs-text-field
+                            prepend-icon="wallet"
+                            floating-label
+                            autofocus
+                            required
+                        >
+                            <label>Cambio</label>
+                        </bs-text-field>
                     </bs-card-content>
                 </bs-card-body>
-                <bs-card-footer class="bg-unique text-white"
-                    >Pago Con Tarjeta</bs-card-footer
+                <bs-card-footer class="bg-primary text-white"
+                    >Detalle de la Compra</bs-card-footer
                 >
             </bs-card>
-        </div>
-        <div v-show="pagocheque">
-            <bs-card shadow>
-                <bs-card-header class="bg-indigo text-white"
-                    >Pago Con Cheque</bs-card-header
-                >
-                <bs-card-body>
-                    <bs-card-content>
-                        <label>Total a Pagar $</label>
-                    </bs-card-content>
-                </bs-card-body>
-                <bs-card-footer class="bg-indigo text-white"
-                    >Pago Con Cheque</bs-card-footer
-                >
-            </bs-card>
-        </div>
+            <div v-show="pagotarjeta">
+                <bs-card shadow>
+                    <bs-card-header class="bg-unique text-white"
+                        >Pago Con Tarjeta</bs-card-header
+                    >
+                    <bs-card-body>
+                        <bs-card-content>
+                            <label>Total a Pagar $</label>
+                        </bs-card-content>
+                    </bs-card-body>
+                    <bs-card-footer class="bg-unique text-white"
+                        >Pago Con Tarjeta</bs-card-footer
+                    >
+                </bs-card>
+            </div>
+            <div v-show="pagocheque">
+                <bs-card shadow>
+                    <bs-card-header class="bg-indigo text-white"
+                        >Pago Con Cheque</bs-card-header
+                    >
+                    <bs-card-body>
+                        <bs-card-content>
+                            <label>Total a Pagar $</label>
+                        </bs-card-content>
+                    </bs-card-body>
+                    <bs-card-footer class="bg-indigo text-white"
+                        >Pago Con Cheque</bs-card-footer
+                    >
+                </bs-card>
+            </div>
+        </form>
     </div>
 </template>
 <script>
 import { prefix } from "../../../../../variables";
+import { validationMixin } from "vuelidate";
+import { required} from "vuelidate/lib/validators";
+
+const productoValidator = {
+    forma_pago_id: { required },
+};
 export default {
+    props: {
+        dataFormaPago: {
+            type: Object
+        },
+    },
+    watch: {
+        "dataFormaPago.forma_pago_id"(value) {
+            this.$emit("actualizarData", "forma_pago_id", value);
+        },
+    },
+    mixins: [validationMixin],
     data: function() {
         return {
+
+
+
             totalPagar: 0,
             srchvalue0: null,
             product8: 0,
@@ -98,10 +121,29 @@ export default {
                 }),
                 schema: { displayField: "descripcion", valueField: "tipo_pago" }
             },
-            trueModalVisible: false
+            trueModalVisible: false,
+
+            //Variables para la validaciones
+            requiredErrorMsg: "Este campo es obligatorio.",
         };
     },
-    computed: {},
+    validations: {
+        dataFormaPago: productoValidator
+    },
+    computed: {
+        formaPagoValidator() {
+            return {
+                hasError: this.$v.dataFormaPago.forma_pago_id.$error,
+                messages: {
+                    required: this.requiredErrorMsg
+                },
+                dirty: this.$v.dataFormaPago.forma_pago_id.$dirty,
+                validators: {
+                    required: this.$v.dataFormaPago.forma_pago_id.required
+                }
+            };
+        },
+    },
     methods: {
         tipodepago() {
             if (this.product8 == 2) {

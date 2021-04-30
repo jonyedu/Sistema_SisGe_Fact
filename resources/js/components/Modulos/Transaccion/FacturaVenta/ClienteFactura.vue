@@ -12,7 +12,8 @@
                 :disabled="cliente.band"
                 v-model="cliente.cedula"
                 @input="consultarcedula()"
-                clear-button
+                
+                required
             >
                 <label>Cédula de Identidad </label>
             </bs-text-field>
@@ -22,7 +23,7 @@
                 label-class="col-md-4 ml-3"
                 v-model="cliente.band"
                 @change="consumidorfinal()"
-                clear-button
+                
             >
                 S/c
             </bs-switch>
@@ -33,7 +34,8 @@
                 required
                 :disabled="cliente.band"
                 v-model="cliente.nombres"
-                clear-button
+              required
+                
             >
                 <label>Nombres </label>
             </bs-text-field>
@@ -44,7 +46,7 @@
                 required
                 :disabled="cliente.band"
                 v-model="cliente.apellidos"
-                clear-button
+           required
             >
                 <label>Apellidos</label>
             </bs-text-field>
@@ -55,7 +57,7 @@
                 required
                 :disabled="cliente.band"
                 v-model="cliente.telefono"
-                clear-button
+                
             >
                 <label>Teléfono</label>
             </bs-text-field>
@@ -66,7 +68,7 @@
                 required
                 :disabled="cliente.band"
                 v-model="cliente.direccion"
-                clear-button
+                
             >
                 <label>Dirección</label>
             </bs-text-field>
@@ -77,7 +79,7 @@
                 required
                 :disabled="cliente.band"
                 v-model="cliente.email"
-                clear-button
+                
             >
                 <label>Correo Electronico</label>
             </bs-text-field>
@@ -100,6 +102,8 @@
 </template>
 <script>
 import { prefix } from "../../../../variables";
+ 
+ 
 export default {
     data: function() {
         return {
@@ -123,8 +127,11 @@ export default {
             },
             trueModalVisible: false
         };
+        
     },
+    
     computed: {
+         
         validarCliente(){
             if (this.cliente.band = true) {
                // this.active_btn = false;
@@ -143,6 +150,9 @@ export default {
     },
     methods: {
         guardarCliente(){
+
+
+            
               let that = this;
             let url = "";
             this.errors = [];

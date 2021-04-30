@@ -31,7 +31,7 @@
                      floating-label
                      autofocus
                      required 
-                     v-model="forma.total_pagarf"
+                     v-model="forma.total_recibido"
                      >
                      <label>Total Recibido</label>
                   </bs-text-field>
@@ -74,15 +74,18 @@
                      >
                      <label>Numero de Tarjeta</label>
                   </bs-text-field>
-                  <bs-text-field
-                     prepend-icon="money-bill-wave-alt"
-                     floating-label
-                     autofocus
-                     required 
-                     v-model="forma.caduca"
-                     >
-                     <label>Fecha de Caducidad</label>
-                  </bs-text-field>
+                   <bs-date-time-field
+                            prepend-icon="address-book"
+                             v-model="forma.caduca"
+                            value-format="YYYY-MM-DD"
+                            display-format="DD MMMM YYYY"
+                            clear-button
+                            floating-label
+                            autofocus
+                             
+                        >
+                             <label>Fecha de Caducidad</label>
+                   </bs-date-time-field>
                   <bs-text-field
                      prepend-icon="money-bill-wave-alt"
                      floating-label
@@ -104,15 +107,19 @@
             <bs-card-body>
                <bs-card-content
                   >
-                  <bs-text-field
-                     prepend-icon="money-bill-wave-alt"
-                     floating-label
-                     autofocus
-                     required 
-                     v-model="forma.fecha_emision"
-                     >
-                     <label>fecha de Emisión  </label>
-                  </bs-text-field>
+                   <bs-date-time-field
+                            prepend-icon="address-book"
+                              v-model="forma.fecha_emision"
+                            value-format="YYYY-MM-DD"
+                            display-format="DD MMMM YYYY"
+                            clear-button
+                            floating-label
+                            autofocus
+                            
+                        >
+                                  <label>fecha de Emisión  </label>
+                   </bs-date-time-field>
+                  
                   <bs-text-field
                      prepend-icon="money-bill-wave-alt"
                      floating-label
@@ -163,6 +170,51 @@
             <bs-card-footer class="bg-indigo text-white">Pago Con Cheque</bs-card-footer>
          </bs-card>
       </div>
+
+      <!-- FORMA DR PAGO -->
+          <div v-show="pagocredito"  >
+         <bs-card  shadow>
+            <bs-card-header class="bg-indigo text-white" >Pago Con Cheque</bs-card-header>
+            <bs-card-body>
+               <bs-card-content
+                  >
+                   
+                  
+                   
+                  <bs-combobox 
+                     v-model="forma.formacreditof"
+                     :data-source="formapagocredito" 
+                     prepend-icon="cash-register" 
+                     floating-label
+                     @change="calcularCredito">
+                     <label>-- Meses --</label>
+                  </bs-combobox>
+                   <bs-list-view v-for="(item, index) in forma.creditofacturaventa" :key="index">
+                         <bs-list-tile>
+                           <bs-list-tile-leading 
+                              class="text-info" 
+                              icon="calendar-minus">
+                           </bs-list-tile-leading>
+                           <bs-list-tile-content>
+                              <bs-list-tile-title class="font-weight-bold">
+                               {{  item.fecha }} | Interes :  {{  item.interes }}
+                              </bs-list-tile-title>
+                              <bs-list-tile-subtitle class="text-muted">
+                              Fecha Pago {{  item.fecha }} | Total:  {{  item.total }}
+                              </bs-list-tile-subtitle>
+                           </bs-list-tile-content>
+                        </bs-list-tile>
+                                    
+                  
+                  
+                  </bs-list-view>
+ 
+               </bs-card-content>
+            </bs-card-body>
+            <bs-card-footer class="bg-indigo text-white">Pago Con Cheque</bs-card-footer>
+         </bs-card>
+      </div>
+      <!-- FIN DE FORMA DE PAGO -->
    </div>
 </div>
 </div>
@@ -183,27 +235,30 @@ export default {
             pagoefectivo:false,
             pagotarjeta:false,
             pagocheque:false,
+            pagocredito:false,
             autoCloseModalVisible: false,
             prefijo: "",
             forma:{
-              
+              formacreditof:0,
               tipo_pagof:0,
-              tarjetasf:0,
-              factura:0,
-              numero:0,
+              //tarjetas  
+              tarjetasf:0,              
               numero_tarjeta:0,
               caduca:"",
-              cliente:0,
+              cliente:"",
+              //total a pagar
               total_pagarf:0,
+              total_recibido:0,
               cambio_pagarf:0,
-              id_facturav:0,
+              //cheque
               fecha_emision:"",
               cantidad_pagarf:0,
               nombref:'',
               banco:0,
               numero_cuenta:'',
               beneficiario:'',
-
+              //credito
+              creditofacturaventa:[],
 
             },
             Lista:[],
@@ -244,6 +299,18 @@ export default {
                 }),
                 schema: { displayField: 'descripcion', valueField: 'id' }
             },
+             formapagocredito: {
+                proxy: new BsStore({
+                idProperty: 'id',
+                dataProperty: 'tipo',
+                totalProperty: 'dias',
+                remoteSort: false,
+                restProxy: {
+                    browse: '/modulos/transaccion/factura_venta/cargar_forma'
+                }
+                }),
+                schema: { displayField: 'descripcion', valueField: 'id' }
+            },
             trueModalVisible:false,
             
             
@@ -276,6 +343,7 @@ export default {
         // } 
         //return this.total_pagarf.length;
          return this.total_for = element_sum;
+         //element_sum;
         //  }
         //  else{
         //    return 0;
@@ -291,22 +359,123 @@ export default {
     //this.totalPagarf =  this.$refs.inventariofact.totalPagar;
     },
   methods: {
+         redondear(numero, digitos){
+         let base = Math.pow(10, digitos);
+         let entero = Math.round(numero * base);
+         return entero / base;
+      },
+      formatoFecha(fecha, formato) {
+            const map = {
+               dd: fecha.getDate(),
+               mm: fecha.getMonth() + 1,
+               yy: fecha.getFullYear().toString(),
+               yyyy: fecha.getFullYear()
+            }
+
+            return formato.replace(/dd|mm|yy|yyy/gi, matched => map[matched])
+         },
+       
+     calcularCredito(){
+          var fecha = new Date();
+            var fecha2 = new Date();
+          //fecha.setMonth(fecha.getMonth() +1);
+          // console.log('fechita.'+fecha);
+          let arregloFecha=[];
+            
+            let that = this;
+            var meses = 0;
+            var interes = 0;
+            var interesb = 0;
+            that.forma.creditofacturaventa = [];
+            let url = this.prefijo +
+                '/modulos/transaccion/factura_venta/cargar_forma_id/' + this.forma.formacreditof;
+            axios
+                .get(url)
+                .then(function(response) {
+                   meses = response.data.tipo[0]["dias"];
+                        interesb = response.data.tipo[0]["interes"];
+                        interes = that.total_for * interesb /100
+                     for (let index = 1; index < meses +1 ; index++) {
+                         
+                       
+                         let objeto = {};
+                          
+                        //  console.log('numero'+ index);
+                        //  console.log('numero i '+ i);
+
+                        //  console.log('mes inicio'+fecha.getMonth());
+                         fecha2 = new Date();
+                           fecha = new Date();
+                           var mes = fecha.getMonth();
+                           var inde = index;
+                           var total = Number(mes)+Number(inde);
+                         fecha2.setMonth(total);
+                        //   console.log('valor mes   - '+mes);
+                        //    console.log('valor ind   - '+inde);
+                        //     console.log('valor total   - '+total);
+                        
+                        //   console.log('mes  - '+fecha2.getMonth());
+                        //    console.log('fecha -'+ that.formatoFecha(fecha2,'dd/mm/yy'));
+                        // console.log(fecha2.getFullYear() +"-"+ (fecha2.getMonth()) +"-"+ fecha2.getDate());
+                        //objeto.fecha =  fecha.getFullYear() +"-"+ (fecha.getMonth()) +"-"+ fecha.getDate();
+                         objeto.fecha =  that.formatoFecha(fecha2,'dd/mm/yy');
+                         objeto.valor = parseFloat(that.total_for/meses).toFixed(2);
+                         objeto.interes = interes;
+                         objeto.total = Number(parseFloat(that.total_for/meses).toFixed(2)) + Number(interes);
+                          //console.log(objeto);
+                         that.forma.creditofacturaventa.push(objeto);
+                          
+                        //    that.creditofacturaventa.push(objeto);
+                         //  console.log(objeto);
+                        //   console.log( that.redondear(that.total_for/meses,3 ));
+                           
+                          //  console.log(that.forma.creditofacturaventa);
+                          // console.log("fecha: "+fecha.getFullYear() +"-"+ (fecha.getMonth()+1) +"-"+ fecha.getDate() +"- valor" + that.roundToTwo(that.total_for/meses));
+                                         
+                           
+                        }    
+                  // console.log(meses);
+                   
+                    
+                })
+                .catch(error => {
+                    console.log(error);
+                    
+                });
+              
+          
+
+       // alert(this.forma.formacreditof);
+        //console.log(this.formapagocredito.proxy);
+        
+     },
       tipodepago(){
          if(this.forma.tipo_pagof==1){
             this.pagotarjeta=false;
             this.pagocheque=false;
+             this.pagocredito=false;
             this.pagoefectivo=true;
             
           }
           if(this.forma.tipo_pagof==2){
             this.pagotarjeta=true;
             this.pagocheque=false;
+             this.pagocredito=false;
              this.pagoefectivo=false;
             
           }
           if(this.forma.tipo_pagof==3){
              this.pagotarjeta=false;
             this.pagocheque=true;
+             this.pagocredito=false;
+              this.pagoefectivo=false;
+            
+          }
+          //pagocredito
+           if(this.forma.tipo_pagof==4){
+             this.pagotarjeta=false;
+            this.pagocheque=false;
+             this.pagocredito=true;
               this.pagoefectivo=false;
             
           }
@@ -382,7 +551,7 @@ export default {
        this.autoCloseModalVisible=true;
        this.Lista= item;
        this.mensaje = item.producto_inv.nombre + " Valor: " + item.costo_inv.precio;
-       console.log(this.Lista);
+      // console.log(this.Lista);
        
             //this.$store.state.producto = item;
         },

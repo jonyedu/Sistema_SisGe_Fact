@@ -115,6 +115,9 @@ export default new Vuex.Store({
         addClienteAction(context ){
             context.commit('addCliente');
         },
+        addFacturaCompraAction(context ){
+            context.commit('addFacturaCompra');
+        },
     },
     getters:{
        
@@ -162,6 +165,9 @@ export default new Vuex.Store({
         },
         getCliente(state){
             return state.cliente;
+        },
+        getFacturaCompra(state){
+            return state.factura_compra;
         },
     }
 });

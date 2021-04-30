@@ -73,7 +73,7 @@ Vue.component(
     require("./components/Modulos/Transaccion/FacturaCompra/Components/ListarProductos").default
 );
 Vue.component(
-    "forma-producto",
+    "forma-pago",
     require("./components/Modulos/Transaccion/FacturaCompra/Components/FormadePago").default
 );
 //

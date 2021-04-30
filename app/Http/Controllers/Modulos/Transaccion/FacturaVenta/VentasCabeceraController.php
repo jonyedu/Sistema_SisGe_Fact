@@ -6,6 +6,7 @@ use App\Models\Modulos\Transaccion\FacturaVenta\VentasCabecera;
 use App\Models\Modulos\Inventario\Producto\ProductoInventario;
 use App\Models\Modulos\Banco\TarjetaCredito\TarjetaCredito;
 use App\Models\Modulos\Banco\Banco\Banco;
+use App\Models\Modulos\Parametrizacion\FormaPago\FormaPago;
 
 
 
@@ -35,7 +36,7 @@ class VentasCabeceraController extends Controller
         try {
 
             $producto_inventario = ProductoInventario::select('id_producto', 'Stock')
-                ->with('ProductoInv:id,nombre,imagen')
+                ->with('ProductoInv:id,nombre,imagen,iva')
                 ->whereHas('ProductoInv', function ($query) use ($nombre) {
 
                     return $query->where("nombre", 'LIKE', '%' . $nombre . '%');
@@ -91,7 +92,45 @@ class VentasCabeceraController extends Controller
     {
         try {
             //code...
-            return  response()->json(['tipo' => $request, 'total' =>0 ], 200);
+            $datos_inventario = $request->input('inventario');
+            $datos_cliente = $request->input('cliente');
+            $datos_metodosp = $request->input('metodosp');
+            
+
+            $total= 0;
+            $subtotal12 = 0;
+            $subtotal0 = 0;
+
+            // for ($i=0; $i < sizeof($datos_inventario) ; $i++) { 
+            //     # code...
+            //     if 
+            // }
+
+             
+
+
+            return  response()->json(['tipo' => $datos_inventario, 'total' =>0 ], 200);
+
+        } catch (Exception $th) {
+            //throw $th;
+        }
+    }
+
+    public function cargar_forma_pago(){
+        try {
+            //code...
+            $tipo = FormaPago::All();
+            return  response()->json(['tipo' => $tipo, 'total' => sizeOf($tipo)], 200);
+
+        } catch (Exception $th) {
+            //throw $th;
+        }
+    }
+    public function cargar_forma_pago_id($id){
+        try {
+            //code...
+            $tipo = FormaPago::where('id',$id)->get();
+            return  response()->json(['tipo' => $tipo, 'total' => sizeOf($tipo)], 200);
 
         } catch (Exception $th) {
             //throw $th;

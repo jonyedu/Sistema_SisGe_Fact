@@ -369,7 +369,8 @@ export default {
           precio:this.Lista.costo_inv.precio,
           cant:this.cantidad,
           tot:this.cantidad*this.Lista.costo_inv.precio,
-          name:this.Lista.producto_inv.nombre});
+          name:this.Lista.producto_inv.nombre,
+          iva:this.Lista.producto_inv.iva});
       //        this.adjuntar.id_pro_f = this.Lista.producto_inv.id;
       // this.adjuntar.precio_f = this.Lista.costo_inv.precio;
       // this.adjuntar.cantidad_f = this.cantidad;
@@ -393,7 +394,8 @@ export default {
                      precio:this.Lista.costo_inv.precio,
                      cant:this.cantidad,
                      tot:this.cantidad*this.Lista.costo_inv.precio,
-                     name:this.Lista.producto_inv.nombre});
+                     name:this.Lista.producto_inv.nombre,
+                      iva:this.Lista.producto_inv.iva});
                      this.ListaCompra= this.adjuntar;
                
            

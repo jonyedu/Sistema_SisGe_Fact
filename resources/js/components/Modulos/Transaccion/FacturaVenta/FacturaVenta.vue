@@ -3,9 +3,21 @@
         <div class="my-demo-wrapper">
             <bs-card shadow>
                 <bs-appbar class="bg-indigo rounded-top">
-                    <bs-appbar-title title="Facturación" class="text-white">
+                    <bs-appbar-title :title="mensaje" class="text-white">
                     </bs-appbar-title>
-                    <bs-spacer></bs-spacer>
+                     <bs-switch
+                                                        v-model="
+                                                            activo
+                                                        "
+                                                        @change="validar()"
+                                                        color="primary"
+                                                        label-position="left"
+                                                        label-class="col-md-4 ml-3"
+                                                    >
+                                                        
+                                                    </bs-switch>
+                    <bs-spacer>
+                    </bs-spacer>
                 </bs-appbar>
                 <bs-tabs v-model="activeTab" variant="modern" color="indigo">
                     <bs-tab label="Selección de Productos" icon="cart-plus">
@@ -29,7 +41,7 @@
                     outlined 
                     pill
                     @click  ="GrabarFactura">
-                    Facturación
+                    {{ mensaje}}
                     </bs-button>
                     </bs-tooltip>
                 </div>
@@ -49,6 +61,9 @@ export default {
     data: function() {
         return {
             activeTab: 0,
+            mensaje:"Facturación",
+            activo:true,
+
             //variable que controla el progreso
             showLoader: false,
             //Variables para obtener el index
@@ -76,6 +91,14 @@ export default {
     },
 
     methods: {
+        validar(){
+            if (this.activo) {
+                this.mensaje = "Facturación";
+            }else{
+                this.mensaje = "Cotización";
+            }
+
+        },
         showNotificationProgress(title, message, icon) {
             let options = {
                 message: message,
@@ -124,6 +147,139 @@ export default {
                                 "error"
                             );
                             return;
+
+            }
+            else{
+
+            
+
+                            if (ListaMetodosPago.tipo_pagof ==1) {
+                                if (ListaMetodosPago.total_recibido == 0) {
+
+                                   this.showNotificationProgress(
+                                    "Facturación",
+                                    "Debe Seleccionar el total Recibido" ,
+                                    "error"
+                                    );
+                                    return;  
+                                }
+                                
+                                
+                            }
+                             if (ListaMetodosPago.tipo_pagof ==2) {
+                                if (ListaMetodosPago.tarjetasf == 0) {
+
+                                   this.showNotificationProgress(
+                                    "Facturación",
+                                    "Debe Seleccionar el total Recibido" ,
+                                    "error"
+                                    );
+                                    return;  
+                                }
+                                if (ListaMetodosPago.numero_tarjeta == 0) {
+
+                                   this.showNotificationProgress(
+                                    "Facturación",
+                                    "Debe Seleccionar el total Recibido" ,
+                                    "error"
+                                    );
+                                    return;  
+                                }
+                                if (ListaMetodosPago.caduca == 0) {
+
+                                   this.showNotificationProgress(
+                                    "Facturación",
+                                    "Debe Seleccionar el total Recibido" ,
+                                    "error"
+                                    );
+                                    return;  
+                                }
+                                if (ListaMetodosPago.cliente == 0) {
+
+                                   this.showNotificationProgress(
+                                    "Facturación",
+                                    "Debe Seleccionar el total Recibido" ,
+                                    "error"
+                                    );
+                                    return;  
+                                }
+                                
+                                
+                            }
+
+                            if (ListaMetodosPago.tipo_pagof ==3) {
+                                if (ListaMetodosPago.fecha_emision == 0) {
+
+                                   this.showNotificationProgress(
+                                    "Facturación",
+                                    "Debe Seleccionar la Fecha de emisión" ,
+                                    "error"
+                                    );
+                                    return;  
+                                }
+                                if (ListaMetodosPago.cantidad_pagarf == 0) {
+
+                                   this.showNotificationProgress(
+                                    "Facturación",
+                                    "Debe Seleccionar la cantidad" ,
+                                    "error"
+                                    );
+                                    return;  
+                                }
+                                if (ListaMetodosPago.nombref == 0) {
+
+                                   this.showNotificationProgress(
+                                    "Facturación",
+                                    "Debe Seleccionar el nombre" ,
+                                    "error"
+                                    );
+                                    return;  
+                                }
+                                if (ListaMetodosPago.banco == 0) {
+
+                                   this.showNotificationProgress(
+                                    "Facturación",
+                                    "Debe Seleccionar el banco" ,
+                                    "error"
+                                    );
+                                    return;  
+                                }
+
+                                 if (ListaMetodosPago.numero_cuenta == 0) {
+
+                                   this.showNotificationProgress(
+                                    "Facturación",
+                                    "Debe Seleccionar el Número" ,
+                                    "error"
+                                    );
+                                    return;  
+                                }
+
+                                 if (ListaMetodosPago.beneficiario == 0) {
+
+                                   this.showNotificationProgress(
+                                    "Facturación",
+                                    "Debe Seleccionar el beneficiario" ,
+                                    "error"
+                                    );
+                                    return;  
+                                }
+                                
+                                
+                            }
+
+                            if (ListaMetodosPago.tipo_pagof == 4) {
+                                 if (ListaMetodosPago.creditofacturaventa.length == 0) {
+                                this.showNotificationProgress(
+                                    "Facturación",
+                                    "Debe Elegir los meses al cual se va dar crédito" ,
+                                    "error"
+                                    );
+                                    return; 
+                                
+                            }
+                            }
+                           
             }
             //fin
             this.errors = [];

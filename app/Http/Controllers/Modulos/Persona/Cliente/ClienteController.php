@@ -108,10 +108,10 @@ class ClienteController extends Controller
             $validator = Validator::make($request->all(), [
                 'nombres' => 'required',
                 'apellidos' => 'required',
-                'cedula' => 'required',
+                'cedula' => 'required|max:10',
                 'telefono' => 'required',
                 'direccion' => 'required',
-                'email' => 'required',
+                'email' => 'required|email',
                              // id_tarifaria
             ]);
 
