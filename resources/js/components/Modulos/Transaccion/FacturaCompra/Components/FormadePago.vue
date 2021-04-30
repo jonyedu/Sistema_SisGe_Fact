@@ -11,7 +11,7 @@
             >
                 <label>-- Forma de pago --</label>
             </bs-combobox>
-            <br />
+            <!-- <br />
             <bs-card shadow>
                 <bs-card-header class="bg-primary text-white"
                     >Detalle de la Compra</bs-card-header
@@ -70,7 +70,7 @@
                         >Pago Con Cheque</bs-card-footer
                     >
                 </bs-card>
-            </div>
+            </div> -->
         </form>
     </div>
 </template>

@@ -59,6 +59,10 @@ class SegUsuario extends Authenticatable
     {
         return $this->hasMany('App\Models\Modulos\Seguridad\PerfilPorUsuario\PerfilPorUsuario', 'perfil', 'perfil');
     }
+    public function opcionPorAplicacionPerfilOne()
+    {
+        return $this->hasOne('App\Models\Modulos\Seguridad\PerfilPorUsuario\PerfilPorUsuario', 'perfil', 'perfil');
+    }
 
     public function profesion()
     {

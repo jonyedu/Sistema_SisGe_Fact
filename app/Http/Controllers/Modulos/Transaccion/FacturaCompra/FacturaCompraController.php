@@ -43,11 +43,13 @@ class FacturaCompraController extends Controller
                 [
                     'id_documento' => $datos_factura_compra['tipo_documento_id'],
                     'secuencia' => $datos_factura_compra['no_documento'],
+                    'no_autorizacion' => $datos_factura_compra['no_autorizacion'],
                     'id_proveedor' => $datos_factura_compra['proveedor_id'],
                     'fecha_compra' => $datos_factura_compra['fmt_registro'],
+                    'sub_total_0' => $listar_producto['sub_total_0'],
+                    'sub_total_12' => $listar_producto['sub_total_12'],
                     'totalapagar' => $listar_producto['total'],
                     'id_pago' => $forma_pago['forma_pago_id'],
-                    'id_plazo' => 1,
                     'p_inicial' => $datos_factura_compra['tipo_documento_id'],
                     'observacion' => $listar_producto['descripcion'],
                     'usu_created' => $user->codigo,
@@ -110,8 +112,6 @@ class FacturaCompraController extends Controller
             //1) Fin Factura que se guarda y despues se modifica quitando productos
             //return  response()->json(['productos_quitados' => $productos_quitados]);
 
-
-
             foreach ($datos_productos_carritos as $producto) {
                 //2) Factura que se guarda y despues se modifica cambiando las cantidades
                 $compra_detalle = CompraDetalle::where('id', $producto['factura_compra_cuerpo_id'])
@@ -125,8 +125,8 @@ class FacturaCompraController extends Controller
                         $diferencia_stock = 0;
                         //Obtengo el stock actual del producto
                         $producto_stock_actual = ProductoInventario::where('id', $producto['producto_inventario_id'])
-                        ->where('status', 1)
-                        ->first();
+                            ->where('status', 1)
+                            ->first();
                         //2.1.1 La cantidad es mayor, entonces se suma
                         if ($producto['cantidad'] > $compra_detalle->cantidad) {
                             $diferencia_stock = $producto['cantidad'] - $compra_detalle->cantidad;
@@ -191,33 +191,57 @@ class FacturaCompraController extends Controller
                         'cantidad' => $producto['cantidad'],
                         'total' => $producto['total'],
                         'fecha_caducidad' => date("Y-m-d"),
-                        'pagado' => 0,
                         'usu_created' => $user->codigo,
                         'usu_update' => $user->codigo,
                         'pcip' => $_SERVER["REMOTE_ADDR"],
                         'status' => 1,
                     ]
                 );
-
-                /* ProductoInventario::updateOrCreate(
-                    [
-                        'id' => $producto['producto_inventario_id'],
-                        'status' => 1,
-                    ],
-                    [
-                        'id_factura' => $compra_cabecera->id,
-                        'id_producto' => $producto['producto_id'],
-                        'stock' => $producto['cantidad'],
-                        'usu_created' => $user->codigo,
-                        'usu_update' => $user->codigo,
-                        'pcip' => $_SERVER["REMOTE_ADDR"],
-                        'status' => 1,
-                    ]
-                ); */
             }
 
 
 
+            return  response()->json(['msj' => 'OK'], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
+        }
+    }
+
+    public function eliminarFacturaCompra($id)
+    {
+        try {
+            $user = Auth::user();
+            CompraCabecera::where('status', 1)
+                ->where('id', $id)
+                ->Update(
+                    [
+                        'usu_update' => $user->codigo,
+                        'updated_at' => date("Y-m-d H:i:s"),
+                        'pcip' =>  $_SERVER["REMOTE_ADDR"],
+                        'status' => 0,
+                    ]
+                );
+            CompraDetalle::where('status', 1)
+                ->where('id_facturac', $id)
+                ->Update(
+                    [
+                        'usu_update' => $user->codigo,
+                        'updated_at' => date("Y-m-d H:i:s"),
+                        'pcip' =>  $_SERVER["REMOTE_ADDR"],
+                        'status' => 0,
+                    ]
+                );
+
+            ProductoInventario::where('status', 1)
+                ->where('id_factura', $id)
+                ->Update(
+                    [
+                        'usu_update' => $user->codigo,
+                        'updated_at' => date("Y-m-d H:i:s"),
+                        'pcip' =>  $_SERVER["REMOTE_ADDR"],
+                        'status' => 0,
+                    ]
+                );
             return  response()->json(['msj' => 'OK'], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);

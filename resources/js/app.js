@@ -42,9 +42,14 @@ Vue.use(VueSelectSides, {
 Vue.component("vue-select-sides", VueSelectSides);
 
 //*********COMPONENTES GENERALES*********\\
+
 Vue.component(
     "menuComponente",
     require("./components/componentesGenerales/MenuComponent.vue").default
+);
+Vue.component(
+    "index",
+    require("./components/Publico/Catalogo/Index").default
 );
 
 

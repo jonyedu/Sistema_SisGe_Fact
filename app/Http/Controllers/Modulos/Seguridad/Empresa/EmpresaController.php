@@ -25,7 +25,7 @@ class EmpresaController extends Controller
     {
         try {
             $empresas = Empresa::select('Empresa_Id', 'Empresa_Nombre')
-            ->where('status', 1)
+                ->where('status', 1)
                 ->orderBy('Empresa_Nombre', 'asc')
                 ->get();
             return  response()->json(['empresas' => $empresas], 200);
@@ -50,7 +50,8 @@ class EmpresaController extends Controller
                     'Empresa_Notas' => ".",
                     'Empresa_Ruc' => $request->input('ruc'),
                     'Empresa_Telefonos' => $request->input('telefono'),
-                    'Empresa_Ubicacion_Logo' => ".",
+                    'Empresa_Ubicacion_Logo' => $request->input('file_base_64'),
+                    'Empresa_Obligado_Contabilidad' => $request->input('obligado_contabilidad'),
                     'Empresa_Ruta_Base' => ".",
                     'Empresa_Direccion' => $request->input('direccion'),
                     'Empresa_Tipo' => ".",
@@ -69,16 +70,10 @@ class EmpresaController extends Controller
                     'Empresa_Actualizacion' => $request->input('actualizacion'),
                     'Empresa_Parroquia' => ".",
                     'Empresa_Provincia' => ".",
-                    'campo1' => ".",
-                    'campo2' => ".",
-                    'campo3' => "0.0",
-                    'registro' => date("Y-m-d H:i:s"),
-                    'usuario_ingreso' => $user->codigo,
-                    'fecha_ingreso' => date("Y-m-d H:i:s"),
-                    'usuario_modificacion' => $user->codigo,
-                    'fecha_modificacion' => date("Y-m-d H:i:s"),
-                    'name_pc' =>  $_SERVER["REMOTE_ADDR"],
-                    'status' => 1,
+                    'usu_created' => $user->codigo,
+                    'usu_update' => $user->codigo,
+                    'pcip' => $_SERVER["REMOTE_ADDR"],
+                    'status' => 1
                 ]
             );
             return  response()->json(['msj' => 'OK'], 200);
@@ -89,48 +84,45 @@ class EmpresaController extends Controller
     public function modificarEmpresa(Request $request)
     {
         try {
+            //return response()->json(['mensaje' => $request->input('file_base_64')], 500);
             $user = Auth::user();
             Empresa::where('status', 1)
                 ->where('Empresa_Id', $request->input('empresa_id'))
                 ->Update(
                     [
                         'Empresa_Nombre' => $request->input('nombre'),
-                    'Empresa_Ciudad' => ".",
-                    'Empresa_Codigo_Postal' => $request->input('codigo_postal'),
-                    'Empresa_Correo_Electronico' => $request->input('email'),
-                    'Empresa_Fax' => ".",
-                    'Empresa_Contribuyente_Especial' => "1",
-                    'Empresa_Representante' => $request->input('representante'),
-                    'Empresa_Notas' => ".",
-                    'Empresa_Ruc' => $request->input('ruc'),
-                    'Empresa_Telefonos' => $request->input('telefono'),
-                    'Empresa_Ubicacion_Logo' => ".",
-                    'Empresa_Ruta_Base' => ".",
-                    'Empresa_Direccion' => $request->input('direccion'),
-                    'Empresa_Tipo' => ".",
-                    'Empresa_Dsn_Bases' => ".",
-                    'Empresa_Pais' => ".",
-                    'Empresa_Moneda' => ".",
-                    'Empresa_Contador' => $request->input('contador'),
-                    'Empresa_Contador_Ruc' => $request->input('contador_ruc'),
-                    'Empresa_Actividad' => ".",
-                    'Empresa_Razon_Social' => $request->input('razon_social'),
-                    'Empresa_Representante_Id' => ".",
-                    'Empresa_Representante_Id_Tipo' => ".",
-                    'Empresa_Inicio_Actividades' => $request->input('inicio_actividades'),
-                    'Empresa_Constitucion' => $request->input('constitucion'),
-                    'Empresa_Inscripcion' => $request->input('inscripcion'),
-                    'Empresa_Actualizacion' => $request->input('actualizacion'),
-                    'Empresa_Parroquia' => ".",
-                    'Empresa_Provincia' => ".",
-                    'campo1' => ".",
-                    'campo2' => ".",
-                    'campo3' => "0.0",
-                    'registro' => date("Y-m-d H:i:s"),
-                    'usuario_modificacion' => $user->codigo,
-                    'fecha_modificacion' => date("Y-m-d H:i:s"),
-                    'name_pc' =>  $_SERVER["REMOTE_ADDR"],
-                    'status' => 1,
+                        'Empresa_Ciudad' => ".",
+                        'Empresa_Codigo_Postal' => $request->input('codigo_postal'),
+                        'Empresa_Correo_Electronico' => $request->input('email'),
+                        'Empresa_Fax' => ".",
+                        'Empresa_Contribuyente_Especial' => "1",
+                        'Empresa_Representante' => $request->input('representante'),
+                        'Empresa_Notas' => ".",
+                        'Empresa_Ruc' => $request->input('ruc'),
+                        'Empresa_Telefonos' => $request->input('telefono'),
+                        'Empresa_Ubicacion_Logo' => $request->input('file_base_64'),
+                        'Empresa_Obligado_Contabilidad' => $request->input('obligado_contabilidad'),
+                        'Empresa_Ruta_Base' => ".",
+                        'Empresa_Direccion' => $request->input('direccion'),
+                        'Empresa_Tipo' => ".",
+                        'Empresa_Dsn_Bases' => ".",
+                        'Empresa_Pais' => ".",
+                        'Empresa_Moneda' => ".",
+                        'Empresa_Contador' => $request->input('contador'),
+                        'Empresa_Contador_Ruc' => $request->input('contador_ruc'),
+                        'Empresa_Actividad' => ".",
+                        'Empresa_Razon_Social' => $request->input('razon_social'),
+                        'Empresa_Representante_Id' => ".",
+                        'Empresa_Representante_Id_Tipo' => ".",
+                        'Empresa_Inicio_Actividades' => $request->input('inicio_actividades'),
+                        'Empresa_Constitucion' => $request->input('constitucion'),
+                        'Empresa_Inscripcion' => $request->input('inscripcion'),
+                        'Empresa_Actualizacion' => $request->input('actualizacion'),
+                        'Empresa_Parroquia' => ".",
+                        'Empresa_Provincia' => ".",
+                        'usu_update' => $user->codigo,
+                        'pcip' => $_SERVER["REMOTE_ADDR"],
+                        'status' => 1
                     ]
                 );
             return  response()->json(['msj' => 'OK'], 200);

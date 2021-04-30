@@ -23,15 +23,6 @@ class SubModuloApiController extends Controller
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
-    public function cargarSubModuloComboBox($id)
-    {
-        try {
-            $subModulo = DB::select("exec SPSEG_OPCION_APLICACION_POR_MODULO " . $id);
-            return  response()->json(['subModulo' => $subModulo], 200);
-        } catch (Exception $e) {
-            return response()->json(['mensaje' => $e->getMessage()], 500);
-        }
-    }
 
     public function cargarSubModuloTabla()
     {
@@ -51,20 +42,15 @@ class SubModuloApiController extends Controller
             $user = Auth::user();
             SgOpcionAplicacion::Create(
                 [
-                    'empresa' => $request->input('empresa_id'),
-                    'sucursal' => $request->input('sucursal_id'),
                     'modulo' => $request->input('modulo_id'),
                     'descripcion' => $request->input('descripcion'),
                     'imagen' => $request->input('imagen'),
-                    'tipo' => 0,
-                    'ejecutable' => ".",
-                    'usuario_ingreso' => $user->codigo,
-                    'fecha_ingreso' => date("Y-m-d H:i:s"),
-                    'usuario_modificacion' => $user->codigo,
-                    'fecha_modificacion' => date("Y-m-d H:i:s"),
-                    'pcname' => $_SERVER["REMOTE_ADDR"],
-                    'status' => 1,
                     'route' => $request->input('ruta'),
+                    'usu_created' => $user->codigo,
+                    'usu_update' => $user->codigo,
+                    'pcip' => $_SERVER["REMOTE_ADDR"],
+                    'status' => 1,
+
                 ]
             );
             return  response()->json(['msj' => 'OK'], 200);
@@ -79,18 +65,13 @@ class SubModuloApiController extends Controller
             $user = Auth::user();
             SgOpcionAplicacion::where('codigo', $request->input('sub_modulo_id'))->update(
                 [
-                    'empresa' => $request->input('empresa_id'),
-                    'sucursal' => $request->input('sucursal_id'),
                     'modulo' => $request->input('modulo_id'),
                     'descripcion' => $request->input('descripcion'),
                     'imagen' => $request->input('imagen'),
-                    'tipo' => 0,
-                    'ejecutable' => ".",
-                    'usuario_modificacion' => $user->codigo,
-                    'fecha_modificacion' => date("Y-m-d H:i:s"),
-                    'pcname' => $_SERVER["REMOTE_ADDR"],
-                    'status' => 1,
                     'route' => $request->input('ruta'),
+                    'usu_update' => $user->codigo,
+                    'pcip' => $_SERVER["REMOTE_ADDR"],
+                    'status' => 1,
                 ]
             );
             return  response()->json(['msj' => 'OK'], 200);
@@ -106,9 +87,8 @@ class SubModuloApiController extends Controller
                 ->where('codigo', $id)
                 ->Update(
                     [
-                        'usuario_modificacion' => $user->codigo,
-                        'fecha_modificacion' => date("Y-m-d H:i:s"),
-                        'pcname' =>  $_SERVER["REMOTE_ADDR"],
+                        'usu_update' => $user->codigo,
+                        'pcip' =>  $_SERVER["REMOTE_ADDR"],
                         'status' => 0,
                     ]
                 );

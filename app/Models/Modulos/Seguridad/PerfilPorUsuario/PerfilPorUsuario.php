@@ -39,6 +39,10 @@ class PerfilPorUsuario extends Model
     {
         return $this->hasMany('App\Models\Modulos\Seguridad\Modulo\SgModulo', 'codigo', 'modulo');
     }
+    public function moduloOne()
+    {
+        return $this->hasOne('App\Models\Modulos\Seguridad\Modulo\SgModulo', 'codigo', 'modulo');
+    }
     public function subModulo()
     {
         return $this->hasOne('App\Models\Modulos\Seguridad\SubModulo\SgOpcionAplicacion', 'codigo', 'opcion_aplicacion');

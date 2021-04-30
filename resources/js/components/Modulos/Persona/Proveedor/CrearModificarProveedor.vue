@@ -79,13 +79,24 @@
                                                 floating-label
                                                 outlined
                                                 v-model="
-                                                    proveedorForm.representante
+                                                    proveedorForm.razon_social
                                                 "
                                                 :external-validator="
                                                     representanteValidator
                                                 "
                                             >
-                                                <label>Representante</label>
+                                                <label>Razón Social</label>
+                                            </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="address-card"
+                                                floating-label
+                                                outlined
+                                                v-model="proveedorForm.ruc"
+                                                :external-validator="
+                                                    rucValidator
+                                                "
+                                            >
+                                                <label>Ruc</label>
                                             </bs-text-field>
                                         </div>
                                         <div
@@ -108,9 +119,7 @@
                                                 prepend-icon-outer="phone-square-alt"
                                                 floating-label
                                                 outlined
-                                                v-model="
-                                                    proveedorForm.telefono
-                                                "
+                                                v-model="proveedorForm.telefono"
                                                 :external-validator="
                                                     telefonoValidator
                                                 "
@@ -121,9 +130,7 @@
                                                 prepend-icon-outer="phone-square-alt"
                                                 floating-label
                                                 outlined
-                                                v-model="
-                                                    proveedorForm.cedula
-                                                "
+                                                v-model="proveedorForm.cedula"
                                                 :external-validator="
                                                     cedulaValidator
                                                 "
@@ -150,10 +157,11 @@ import { required, minLength, maxLength } from "vuelidate/lib/validators";
 
 const proveedorValidator = {
     nombre: { required, minLength: minLength(5) },
-    representante: { required, minLength: minLength(5) },
+    razon_social: { required, minLength: minLength(5) },
     direccion: { required, minLength: minLength(5) },
     telefono: { required, minLength: minLength(5) },
     cedula: { required, minLength: minLength(10), maxLength: maxLength(10) },
+    ruc: { required, minLength: minLength(13), maxLength: maxLength(13) }
 };
 export default {
     mixins: [validationMixin],
@@ -172,11 +180,12 @@ export default {
                         codigo: "",
                         nombre: "",
                         apellido: "",
-                        representante: "",
+                        razon_social: "",
                         direccion: "",
                         telefono: "",
                         cedula: "",
-                        estado: false,
+                        ruc: "",
+                        estado: false
                     },
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
@@ -215,10 +224,11 @@ export default {
             this.proveedorForm.codigo = producto.codigo;
             this.proveedorForm.nombre = producto.nombre;
             this.proveedorForm.apellido = producto.apellido;
-            this.proveedorForm.representante = producto.representante;
+            this.proveedorForm.razon_social = producto.razon_social;
             this.proveedorForm.direccion = producto.direcion;
             this.proveedorForm.telefono = producto.telefono;
             this.proveedorForm.cedula = producto.cedula;
+            this.proveedorForm.ruc = producto.ruc;
             this.proveedorForm.estado = Boolean(producto.estado);
         }
     },
@@ -242,15 +252,15 @@ export default {
         },
         representanteValidator() {
             return {
-                hasError: this.$v.proveedorForm.representante.$error,
+                hasError: this.$v.proveedorForm.razon_social.$error,
                 messages: {
                     required: this.requiredErrorMsg,
                     minLength: this.minLengthErrorMsg
                 },
-                dirty: this.$v.proveedorForm.representante.$dirty,
+                dirty: this.$v.proveedorForm.razon_social.$dirty,
                 validators: {
-                    required: this.$v.proveedorForm.representante.required,
-                    minLength: this.$v.proveedorForm.representante.minLength
+                    required: this.$v.proveedorForm.razon_social.required,
+                    minLength: this.$v.proveedorForm.razon_social.minLength
                 }
             };
         },
@@ -288,16 +298,32 @@ export default {
                 messages: {
                     required: this.requiredErrorMsg,
                     minLength: this.minLengthErrorMsg,
-                    maxLength: this.maxLengthErrorMsg,
+                    maxLength: this.maxLengthErrorMsg
                 },
                 dirty: this.$v.proveedorForm.cedula.$dirty,
                 validators: {
                     required: this.$v.proveedorForm.cedula.required,
                     minLength: this.$v.proveedorForm.cedula.minLength,
-                    maxLength: this.$v.proveedorForm.cedula.maxLength,
+                    maxLength: this.$v.proveedorForm.cedula.maxLength
                 }
             };
         },
+        rucValidator() {
+            return {
+                hasError: this.$v.proveedorForm.ruc.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                    minLength: this.minLengthErrorMsg,
+                    maxLength: this.maxLengthErrorMsg
+                },
+                dirty: this.$v.proveedorForm.ruc.$dirty,
+                validators: {
+                    required: this.$v.proveedorForm.ruc.required,
+                    minLength: this.$v.proveedorForm.ruc.minLength,
+                    maxLength: this.$v.proveedorForm.ruc.maxLength
+                }
+            };
+        }
     },
 
     methods: {
@@ -307,7 +333,8 @@ export default {
             if (!this.$v.$error) {
                 this.showLoader = true;
                 if (this.$store.getters.getProveedor != null) {
-                    this.proveedorForm.update()
+                    this.proveedorForm
+                        .update()
                         .then(function(response) {
                             that.showLoader = false;
                             that.showNotificationProgress(
@@ -327,7 +354,8 @@ export default {
                             );
                         });
                 } else {
-                    this.proveedorForm.save()
+                    this.proveedorForm
+                        .save()
                         .then(function(response) {
                             that.showLoader = false;
                             that.showNotificationProgress(

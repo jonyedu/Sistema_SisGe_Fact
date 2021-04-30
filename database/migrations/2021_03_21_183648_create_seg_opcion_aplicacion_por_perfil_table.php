@@ -16,8 +16,6 @@ class CreateSegOpcionAplicacionPorPerfilTable extends Migration
         if (!Schema::hasTable('seg_opcion_aplicacion_por_perfil')) {
             Schema::create('seg_opcion_aplicacion_por_perfil', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->unsignedInteger('empresa');
-                $table->unsignedInteger('sucursal');
                 $table->unsignedInteger('perfil');
                 $table->unsignedInteger('modulo');
                 $table->unsignedInteger('opcion_aplicacion');

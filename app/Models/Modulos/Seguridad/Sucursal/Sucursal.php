@@ -11,7 +11,7 @@ class Sucursal extends Model
     protected $table = 'config_sucursales';
     protected $connection = 'mysql_comercial';
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
         'Sucursal_Id',
@@ -28,15 +28,15 @@ class Sucursal extends Model
         'Sucursal_Provincia',
         'Sucursal_Canton',
         'Sucursal_Parroquia',
-        'campo1',
-        'campo2',
-        'campo3',
-        'registro',
-        'usuario_ingreso',
-        'fecha_ingreso',
-        'usuario_modificacion',
-        'fecha_modificacion',
-        'name_pc',
-        'status'
+        'usu_created',
+        'usu_update',
+        'created_at',
+        'updated_at',
+        'pcip',
+        'status',
     ];
+    public function empresaOne()
+    {
+        return $this->hasOne('App\Models\Modulos\Seguridad\Empresa\Empresa', 'Empresa_Id', 'Empresa_Id');
+    }
 }

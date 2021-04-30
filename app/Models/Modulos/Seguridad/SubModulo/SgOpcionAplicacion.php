@@ -16,26 +16,22 @@ class SgOpcionAplicacion extends Model
     /**
      * @var string
      */
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $connection = 'mysql_comercial';
 
     protected $fillable = [
-        'empresa',
-        'sucursal',
-        'modulo',
         'codigo',
+        'modulo',
         'descripcion',
         'imagen',
-        'tipo',
-        'ejecutable',
-        'usuario_ingreso',
-        'fecha_ingreso',
-        'usuario_modificacion',
-        'fecha_modificacion',
-        'pcname',
-        'status',
         'route',
+        'usu_created',
+        'usu_update',
+        'created_at',
+        'updated_at',
+        'pcip',
+        'status',
     ];
 
     public function modulo()

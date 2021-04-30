@@ -31,7 +31,8 @@ class ProveedorController extends Controller
                 'nombre',
                 'apellido',
                 'cedula',
-                'representante',
+                'ruc',
+                'razon_social',
                 'direccion',
                 'telefono',
                 'status'
@@ -69,8 +70,9 @@ class ProveedorController extends Controller
                 [
                     'nombre' => $request->input('nombre'),
                     'apellido' => $request->input('apellido'),
+                    'ruc' => $request->input('ruc'),
                     'cedula' => $request->input('cedula'),
-                    'representante' => $request->input('representante'),
+                    'razon_social' => $request->input('razon_social'),
                     'direccion' => $request->input('direccion'),
                     'telefono' => $request->input('telefono'),
                     'usu_created' => $user->codigo,

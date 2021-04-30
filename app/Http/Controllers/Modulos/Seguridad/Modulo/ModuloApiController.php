@@ -11,21 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class ModuloApiController extends Controller
 {
-    public function cargarMenu()
-    {
-        try {
-            $menus = SgModulo::where('status', 1)
-                ->with('subModulo')
-                ->with(['subModulo' => function ($i) {
-                    $i->where('status', 1);
-                }])
-                ->orderBy('orden', 'asc')
-                ->get();
-            return  response()->json(['menus' => $menus], 200);
-        } catch (Exception $e) {
-            return response()->json(['mensaje' => $e->getMessage()], 500);
-        }
-    }
 
     public function cargarModuloTabla()
     {
@@ -41,7 +26,7 @@ class ModuloApiController extends Controller
     public function cargarModuloComboBox()
     {
         try {
-            $modulos = SgModulo::select('codigo','descripcion')
+            $modulos = SgModulo::select('codigo', 'descripcion')
                 ->where('status', 1)
                 ->get();
             return  response()->json(['modulos' => $modulos], 200);
@@ -59,14 +44,12 @@ class ModuloApiController extends Controller
                     'empresa' => $request->input('empresa_id'),
                     'sucursal' => $request->input('sucursal_id'),
                     'descripcion' => $request->input('descripcion'),
-                    'abreviatura' => ".",
-                    'usuario_ingreso' => $user->codigo,
-                    'fecha_ingreso' => date("Y-m-d H:i:s"),
-                    'usuario_modificacion' => $user->codigo,
-                    'fecha_modificacion' => date("Y-m-d H:i:s"),
-                    'pcname' =>  $_SERVER["REMOTE_ADDR"],
-                    'status' => 1,
                     'imagen' => $request->input('imagen'),
+                    'usu_created' => $user->codigo,
+                    'usu_update' => $user->codigo,
+                    'pcip' =>  $_SERVER["REMOTE_ADDR"],
+                    'status' => 1,
+
                 ]
             );
 
@@ -86,12 +69,10 @@ class ModuloApiController extends Controller
                         'empresa' => $request->input('empresa_id'),
                         'sucursal' => $request->input('sucursal_id'),
                         'descripcion' => $request->input('descripcion'),
-                        'abreviatura' => ".",
-                        'usuario_modificacion' => $user->codigo,
-                        'fecha_modificacion' => date("Y-m-d H:i:s"),
-                        'pcname' =>  $_SERVER["REMOTE_ADDR"],
-                        'status' => 1,
                         'imagen' => $request->input('imagen'),
+                        'usu_update' => $user->codigo,
+                        'pcip' =>  $_SERVER["REMOTE_ADDR"],
+                        'status' => 1,
                     ]
                 );
             return  response()->json(['msj' => 'OK'], 200);
@@ -107,9 +88,8 @@ class ModuloApiController extends Controller
                 ->where('codigo', $id)
                 ->Update(
                     [
-                        'usuario_modificacion' => $user->codigo,
-                        'fecha_modificacion' => date("Y-m-d H:i:s"),
-                        'pcname' =>  $_SERVER["REMOTE_ADDR"],
+                        'usu_update' => $user->codigo,
+                        'pcip' =>  $_SERVER["REMOTE_ADDR"],
                         'status' => 0,
                     ]
                 );

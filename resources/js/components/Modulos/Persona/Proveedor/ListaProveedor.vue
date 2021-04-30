@@ -58,8 +58,8 @@
                     ></bs-grid-column>
 
                      <bs-grid-column
-                        field="representante"
-                        label="Representante"
+                        field="razon_social"
+                        label="Razón Social"
                         width="300"
                     ></bs-grid-column>
                      <bs-grid-column
