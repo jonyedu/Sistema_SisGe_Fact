@@ -359,13 +359,3 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-
-    .btn {
-        margin-bottom: 16px;
-        margin-right: 8px;
-    }
-}
-</style>

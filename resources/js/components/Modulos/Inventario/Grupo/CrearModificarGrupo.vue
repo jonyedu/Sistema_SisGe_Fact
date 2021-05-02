@@ -149,9 +149,9 @@ export default {
         this.prefijo = prefix;
         if (this.$store.getters.getGrupo != null) {
             var grupo = this.$store.getters.getGrupo;
-            this.grupoForm.grupo_id = grupo.Id;
-            this.grupoForm.codigo = grupo.Codigo;
-            this.grupoForm.descripcion = grupo.Descripcion;
+            this.grupoForm.grupo_id = grupo.id;
+            this.grupoForm.codigo = grupo.codigo;
+            this.grupoForm.descripcion = grupo.descripcion;
         }
     },
     beforeDestroy: function() {
@@ -256,13 +256,3 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-
-    .btn {
-        margin-bottom: 16px;
-        margin-right: 8px;
-    }
-}
-</style>

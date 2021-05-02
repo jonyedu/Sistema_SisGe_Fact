@@ -12,8 +12,9 @@ class ProductoApiController extends Controller
     public function cargarProductoAll()
     {
         try {
-            $productos = Producto::select('codigo', 'nombre as title', 'descripcion', 'pvc', 'imagen as imageSrc')
+            $productos = Producto::select('id','codigo', 'nombre', 'nombrecorto', 'pvc', 'imagen')
                 ->where('status', 1)
+                ->with('productoInventarioMany')
                 ->get();
             return  response()->json(['productos' => $productos, 'total' => sizeOf($productos)], 200);
         } catch (Exception $e) {

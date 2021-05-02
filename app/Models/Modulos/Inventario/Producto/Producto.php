@@ -48,12 +48,15 @@ class Producto extends Model
         return $this->hasOne('App\Models\Modulos\Persona\Proveedor\Proveedor', 'id', 'laboratorio_id');
     }
     public function grupo(){
-        return $this->hasOne('App\Models\Modulos\Inventario\Grupo\Grupo', 'Id', 'grupo_id');
+        return $this->hasOne('App\Models\Modulos\Inventario\Grupo\Grupo', 'id', 'grupo_id');
     }
     public function productoCosto(){
         return $this->hasOne('App\Models\Modulos\Inventario\Producto\ProductoCosto','idproducto', 'id');
     }
     public function productoInventario(){
         return $this->hasOne('App\Models\Modulos\Inventario\Producto\ProductoInventario','id_producto', 'id');
+    }
+    public function productoInventarioMany(){
+        return $this->hasMany('App\Models\Modulos\Inventario\Producto\ProductoInventario','id_producto', 'id');
     }
 }

@@ -43,7 +43,7 @@
                     <bs-grid-column
                         label="#"
                         text-align="right"
-                        width="50"
+                        width="25"
                         row-numbering
                     ></bs-grid-column>
                      <bs-grid-column
@@ -86,7 +86,8 @@
                             :column="columns[0]"
                             :item="item"
                             :index="index"
-                        ></bs-grid-cell>
+                            ><span> {{ index + 1 }} </span>
+                        </bs-grid-cell>
                         <bs-grid-cell
                             :column="columns[1]"
                             :item="item"
@@ -270,9 +271,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-}
-</style>

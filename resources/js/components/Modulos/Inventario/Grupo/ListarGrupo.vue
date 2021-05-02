@@ -24,7 +24,7 @@
                     </bs-card-content>
                 </bs-card-body>
             </bs-card>
-            <bs-card >
+            <bs-card>
                 <bs-grid
                     ref="gridGrupo"
                     :data-source="grupos"
@@ -48,16 +48,16 @@
                     <bs-grid-column
                         label="#"
                         text-align="right"
-                        width="50"
+                        width="25"
                         row-numbering
                     ></bs-grid-column>
                     <bs-grid-column
-                        field="Codigo"
+                        field="codigo"
                         label="Codigo"
                         min-width="400"
                     ></bs-grid-column>
                     <bs-grid-column
-                        field="Descripcion"
+                        field="descripcion"
                         label="Descripcion"
                         min-width="400"
                     ></bs-grid-column>
@@ -71,7 +71,8 @@
                             :column="columns[0]"
                             :item="item"
                             :index="index"
-                        ></bs-grid-cell>
+                            ><span> {{ index + 1 }} </span>
+                        </bs-grid-cell>
                         <bs-grid-cell
                             :column="columns[1]"
                             :item="item"
@@ -167,7 +168,7 @@ export default {
                 remoteFilter: false, // default is TRUE
                 remotePaging: false, // default is TRUE
                 remoteSort: false, // default is TRUE
-                sorts: [{ property: "Descripcion", direction: "asc" }],
+                sorts: [{ property: "descripcion", direction: "asc" }],
                 restProxy: {
                     browse: "/modulos/inventario/grupo/cargar_grupo_table"
                 }
@@ -190,8 +191,7 @@ export default {
         eliminar() {
             let that = this;
             let url =
-                "/modulos/inventario/grupo/eliminar_grupo/" +
-                this.item.Id;
+                "/modulos/inventario/grupo/eliminar_grupo/" + this.item.id;
             axios
                 .delete(url)
                 .then(function() {
@@ -225,10 +225,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-.my-demo-wrapper {
-  padding: 24px;
-}
-</style>
-

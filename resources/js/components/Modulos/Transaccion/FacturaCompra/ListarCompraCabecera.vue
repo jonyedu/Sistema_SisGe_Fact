@@ -265,9 +265,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-}
-</style>

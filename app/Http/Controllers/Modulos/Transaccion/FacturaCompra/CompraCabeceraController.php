@@ -20,6 +20,9 @@ class CompraCabeceraController extends Controller
                 ->with(['compraDetalle' => function ($i) {
                     $i->where('status', 1);
                 }])
+                ->with(['compraDetalle' => function ($i) {
+                    $i->where('status', 1);
+                }])
                 ->get();
             return  response()->json(['comprasCabecera' => $comprasCabecera, 'total' => sizeOf($comprasCabecera)], 200);
         } catch (Exception $e) {

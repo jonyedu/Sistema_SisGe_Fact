@@ -407,12 +407,3 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-
-    .small-box {
-        max-width: 480px;
-    }
-}
-</style>

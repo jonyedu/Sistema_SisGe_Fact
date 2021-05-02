@@ -6,24 +6,19 @@
                 v-for="(producto, index) of galleryProductos"
                 :key="index"
             >
-                <bs-card class="bg-stylish-color text-white" shadow>
-                    <bs-card-body>
+                <bs-card class="bg-light-grey text-white" shadow>
+                    <bs-card-body class="bg-stylish-color">
                         <bs-card-content type="title">
-                            <strong>{{ producto.title }}</strong>
+                            <strong>{{ producto.nombrecorto }}</strong>
                         </bs-card-content>
                         <bs-card-content>
-                            {{
-                                $funcionesGlobales.toCapitalFirstWords(
-                                    producto.descripcion
-                                )
-                            }}
-                            <br />
-                            ${{ producto.pvc }}
+                            {{ producto.codigo }}
+                            <br />${{ producto.pvc }}
                         </bs-card-content>
                     </bs-card-body>
                     <bs-card-media
-                        title="Image Title"
-                        subtitle="Image SubTitle"
+                        :title="producto.stock>0?'Con stock':'Sin stock'"
+                        :subtitle="producto.stock"
                     >
                         <bs-avatar
                             class="md-link"
@@ -36,25 +31,6 @@
                     </bs-card-media>
                 </bs-card>
             </div>
-        </div>
-        <div class="col">
-            <bs-card class="bg-stylish-color text-white" shadow>
-                <bs-card-body>
-                    <bs-card-content type="title">
-                        Content Title
-                    </bs-card-content>
-                    <bs-card-content>
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                    </bs-card-content>
-                </bs-card-body>
-                <bs-card-media title="Image Title" subtitle="Image SubTitle">
-                    <img
-                        src="https://picsum.photos/id/225/600/300.jpg"
-                        alt="image"
-                    />
-                </bs-card-media>
-            </bs-card>
         </div>
         <bs-lightbox
             ref="lightbox1"
@@ -92,7 +68,26 @@ export default {
             this.$http
                 .get("api/catalogo/producto/cargar_productos_all")
                 .then(function(response) {
-                    that.galleryProductos = response.data.productos;
+                    var productos = response.data.productos;
+                    if (productos.length > 0) {
+                        productos.forEach(producto => {
+                            let objeto = {};
+                            var suma = 0;
+                            objeto.codigo = producto.codigo;
+                            objeto.title = producto.nombre;
+                            objeto.nombrecorto = producto.nombrecorto;
+                            objeto.pvc = producto.pvc;
+                            objeto.imageSrc = producto.imagen;
+                            objeto.thumbnail = producto.imagen;
+                            if (producto.producto_inventario_many.length > 0) {
+                                producto.producto_inventario_many.forEach(function(numero) {
+                                    suma += numero.stock;
+                                });
+                            }
+                            objeto.stock = suma.toString();
+                            that.galleryProductos.push(objeto);
+                        });
+                    }
                 })
                 .catch(function(error) {});
         }

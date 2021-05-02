@@ -44,6 +44,57 @@
                 </ul>
             </li>
         </ul>
+        <bs-modal
+            :open.sync="trueModalVisible"
+            title="Productos sin Stock"
+            max-width="85%"
+        >
+            <b>Existen productos que estan por acabar o no tienen stock.</b>
+            <br />
+            *Vaya al modulo de Inventario/Producto para revisar los productos o
+            <br />
+            *Vaya al modulo de Transaccion/Factura de Compra para aumentar el
+            stock.
+
+            <div v-for="(item, index) in sin_stock_array" :key="index">
+                <small>
+                    Nombre: {{
+                        $funcionesGlobales.toCapitalFirstAllWords(item.nombre)
+                    }}
+                    - Stock: {{ item.stock!=null?item.stock:0 }}
+                </small>
+            </div>
+            <template v-slot:footer>
+                <bs-button
+                    outlined
+                    color="secondary"
+                    @click="trueModalVisible = false"
+                >
+                    <router-link
+                        :to="
+                            prefijo +
+                                '/modulos/inventario/producto/mostrar_producto'
+                        "
+                    >
+                        Ir Producto
+                    </router-link>
+                </bs-button>
+                <bs-button
+                    outlined
+                    color="secondary"
+                    @click="trueModalVisible = false"
+                >
+                    <router-link
+                        :to="
+                            prefijo +
+                                '/modulos/transaccion/factura_compra/crear_modificar_factura_compra'
+                        "
+                    >
+                        Ir Fact. Compra
+                    </router-link>
+                </bs-button>
+            </template>
+        </bs-modal>
     </nav>
 </template>
 <script>
@@ -57,35 +108,84 @@ export default {
     data: function() {
         return {
             prefijo: "",
+            trueModalVisible: false,
             menus: [],
+            sin_stock_array: []
         };
     },
     mounted: function() {
-        this.cargarMenu();
         this.prefijo = prefix;
+        this.cargarMenu();
+        this.verificarStockProductoAll();
     },
     methods: {
-        changeMenu(){
-            $('[data-widget="pushmenu"]').PushMenu('collapse')
-            $(document).on('shown.lte.pushmenu')
+        changeMenu() {
+            $('[data-widget="pushmenu"]').PushMenu("collapse");
+            $(document).on("shown.lte.pushmenu");
             //$('ul').Treeview('accordion')
         },
         cargarMenu() {
             let that = this;
-            let url = "/modulos/seguridad/perfil_por_usuario/cargar_menu/" + this.$props.user.perfil;
+            let url =
+                "/modulos/seguridad/perfil_por_usuario/cargar_menu/" +
+                this.$props.user.perfil;
             axios
                 .get(url)
                 .then(function(response) {
                     that.menus = response.data.menus;
                 })
                 .catch(error => {
-                    that.$swal({
-                        icon: "error",
-                        title: "Existe un error",
-                        text: error
-                    });
+                    that.showNotificationProgress(
+                        "Error en cargarMenu",
+                        "Por favor comuníquese con el administrador. " + error,
+                        "error"
+                    );
                 });
         },
+        verificarStockProductoAll() {
+            let that = this;
+            let url =
+                "/modulos/inventario/producto/verificar_stock_producto_all";
+            axios
+                .get(url)
+                .then(function(response) {
+                    var productos = response.data.productos;
+                    var sin_stock = false;
+                    productos.forEach(producto => {
+                        let object = {};
+                        if (producto.stock <= producto.stock_minimo) {
+                            sin_stock = true;
+                            object.nombre = producto.nombre;
+                            object.stock = producto.stock;
+                            that.sin_stock_array.push(object);
+                        }
+                    });
+                    if (sin_stock) {
+                        that.trueModalVisible = true;
+                        /* that.showNotificationProgress(
+                            "Productos sin Stock",
+                            "Existen productos que estan por acabar o no tienen stock, por favor verifique en el modulo de Inventario/Producto.",
+                            "warning"
+                        ); */
+                    }
+                })
+                .catch(error => {
+                    that.showNotificationProgress(
+                        "Error en verificarStockProductoAll",
+                        "Por favor comuníquese con el administrador. " + error,
+                        "error"
+                    );
+                });
+        },
+        showNotificationProgress(title, message, icon) {
+            let options = {
+                message: message,
+                progressBar: true,
+                progressBarValue: null,
+                timeout: 5000
+            };
+            this.$notification[icon](options, title);
+        }
     }
 };
 </script>
