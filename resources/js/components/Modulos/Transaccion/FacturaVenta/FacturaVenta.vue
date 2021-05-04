@@ -288,7 +288,7 @@ export default {
             //fin
             this.errors = [];
             url =  "/modulos/transaccion/factura_venta/guardar_factura/";
-
+           
          
             axios
                 .post(url,{cotizacion:that.activo,
@@ -296,13 +296,14 @@ export default {
                             cliente:ListaCliente,
                             metodosp:ListaMetodosPago})
                 .then(function(response) { 
-                   // console.log(response.data);
+                    console.log(response.data.tipo);
                    if (that.activo==false) {
                         that.showNotificationProgress(
                                         "Facturación",
                                         "Cotización realizada con éxito" ,
                                         "success"
                                         );
+                                        that.generarPdf(response.data.tipo);
                        
                    } else {
                        that.showNotificationProgress(
@@ -310,6 +311,7 @@ export default {
                                         "Compra realizada con éxito" ,
                                         "success"
                                         );
+                                         that.generarPdf(response.data.tipo);
                        
                        
                    }
@@ -342,6 +344,18 @@ export default {
                     }
                     
                 });
+        },
+           generarPdf(value){
+              // alert(value);
+                 let that = this;
+            let url = "";
+             var i = this.activo ? 1 : 0;
+            this.errors = [];
+            url =  "/modulos/reporte/factura_venta/cargar_pdf_factura_venta/"+value+'/'+ i;
+            window.open(url, '_blank');
+            //window.location.href =  url;
+         
+            location.reload();
         },
     }
 };

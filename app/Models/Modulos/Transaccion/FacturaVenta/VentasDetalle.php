@@ -29,5 +29,9 @@ class VentasDetalle extends Model
         'cantidad',
         'total',
     ];
+    public function producto()
+    {
+        return $this->hasOne('App\Models\Modulos\Inventario\Producto\Producto', 'id', 'id_producto');
+    }
 
 }

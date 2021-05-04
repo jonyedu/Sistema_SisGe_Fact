@@ -35,7 +35,7 @@
                     <th class="sizeFontPiePagina">Total</th>
                 </tr>
                 <tr>
-                    <td class="sizeFontPiePaginaValor">{{$factura_compra->tipoPago->descripcion}} </td>
+                    <td class="sizeFontPiePaginaValor">{{$factura_compra->formapagoFactura!=null?$factura_compra->formapagoFactura->descripcion:""   }} </td>
                     <th class="sizeFontPiePaginaValor">{{$factura_compra->totalapagar}}</th>
                 </tr>
             </table>
@@ -45,11 +45,11 @@
             <table class="border" style="width: 100%;border-collapse: collapse;">
                 <tr>
                     <th style="font-size: 10px;text-align: left;" class="sizeFontPiePaginaValor" style="align-items: left;">SUBTOTAL 0%</th>
-                    <th style="font-size: 10px;text-align: right;" class="sizeFontPiePaginaValor">${{$factura_compra->sub_total_0}}</th>
+                    <th style="font-size: 10px;text-align: right;" class="sizeFontPiePaginaValor">${{$factura_compra->subtotaliva2}}</th>
                 </tr>
                 <tr>
                     <th style="font-size: 10px;text-align: left;" class="sizeFontPiePaginaValor">SUBTOTAL 12%</th>
-                    <th style="font-size: 10px;text-align: right;" class="sizeFontPiePaginaValor">${{$factura_compra->sub_total_12}}</th>
+                    <th style="font-size: 10px;text-align: right;" class="sizeFontPiePaginaValor">${{$factura_compra->subtotaliva1}}</th>
                 </tr>
                 <tr>
                     <th style="font-size: 10px;text-align: left;" class="sizeFontPiePaginaValor">TOTAL</th>
@@ -65,7 +65,7 @@
                     <th class="sizeFontPiePagina">Información Adicional</th>
                 </tr>
                 <tr>
-                    <td class="sizeFontPiePaginaValor">Dirección: <span class="fontNormal" style="margin-left:76px;" >{{$factura_compra->proveedor->direccion}}</span></td>
+                    <td class="sizeFontPiePaginaValor">Dirección: <span class="fontNormal" style="margin-left:76px;" >{{$factura_compra->clienteFact->direccion}}</span></td>
                 </tr>
             </table>
         </th>

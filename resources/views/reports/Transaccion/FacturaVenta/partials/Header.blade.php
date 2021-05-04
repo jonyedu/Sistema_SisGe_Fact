@@ -66,10 +66,10 @@
                     <th class="textLeft">R.U.C.: <span style="margin-left:100px;">{{$factura_compra!=null?$factura_compra->usuario!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne->empresaOne!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne->empresaOne->Empresa_Ruc:"":"":"":"":"":""}}</span></th>
                 </tr>
                 <tr>
-                    <th style="font-size: 17px;height:40px;font-weight: normal;" class="textLeft">FACTURA</th>
+                    <th style="font-size: 17px;height:40px;font-weight: normal;" class="textLeft">{{$factura}}</th>
                 </tr>
                 <tr>
-                    <th class="alturaCabecera textLeft">No. <span style="margin-left:123px;" class="fontNormal">{{$factura_compra!= null?$factura_compra->secuencia:""}}</span></th>
+                    <th class="alturaCabecera textLeft">No. <span style="margin-left:123px;" class="fontNormal">0000000{{$factura_compra!= null?$factura_compra->id:""}}</span></th>
                 </tr>
                 <tr>
                     <th class="alturaCabecera textLeft">NÚMERO DE AUTORIZACIÓN <br><br><span class="sizeFont2da fontNormal">{{$factura_compra!= null?$factura_compra->no_autorizacion:""}}</span></th>
@@ -116,11 +116,11 @@
         <th colspan="2" style="border: 1px solid black;">
             <table style="width: 100%;">
                 <tr>
-                    <th class="sizeFont2da alturaCabecera2da textLeft">Razón Social / Nombres y Apellidos: <span class="fontNormal" style="margin-left:75px;">{{$factura_compra!=null?$factura_compra->proveedor!=null?$factura_compra->proveedor->razon_social!=""?$factura_compra->proveedor->razon_social:$factura_compra->proveedor->FULLNAME:"":""}}</span></th>
+                    <th class="sizeFont2da alturaCabecera2da textLeft">Razón Social / Nombres y Apellidos: <span class="fontNormal" style="margin-left:75px;">{{$factura_compra!=null?$factura_compra->clienteFact!=null?$factura_compra->clienteFact->NOMBRESCLIENTEPRO!=""?$factura_compra->clienteFact->NOMBRESCLIENTEPRO:$factura_compra->clienteFact->NOMBRESCLIENTEPRO:"":""}}</span></th>
                 </tr>
                 <tr>
-                    <th class="sizeFont2da alturaCabecera2da textLeft">RUC / CI:<span class="fontNormal" style="margin-left:25px;">{{$factura_compra!=null?$factura_compra->proveedor!=null?$factura_compra->proveedor->razon_social!=""?$factura_compra->proveedor->ruc:$factura_compra->proveedor->cedula:"":""}}</span></th>
-                    <th class="sizeFont2da alturaCabecera2da textLeft">Fecha Emisión: <span class="fontNormal" style="margin-left:5px;">{{$factura_compra!=null?$factura_compra->fecha_compra:""}} </span></th>
+                    <th class="sizeFont2da alturaCabecera2da textLeft">RUC / CI:<span class="fontNormal" style="margin-left:25px;">{{$factura_compra!=null?$factura_compra->clienteFact!=null?$factura_compra->clienteFact->NOMBRESCLIENTEPRO!=""?$factura_compra->clienteFact->ruc:$factura_compra->clienteFact->cedula:"":""}}</span></th>
+                    <th class="sizeFont2da alturaCabecera2da textLeft">Fecha Emisión: <span class="fontNormal" style="margin-left:5px;">{{$factura_compra!=null?$factura_compra->created_at:""}} </span></th>
                     <th class="sizeFont2da alturaCabecera2da textLeft">Guía de Remisión:</th>
                 </tr>
             </table>

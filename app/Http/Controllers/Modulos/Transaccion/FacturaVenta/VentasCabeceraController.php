@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Validator;
 use Barryvdh\DomPDF\Facade as PDF;
 
 
+use App\Http\Controllers\Modulos\Reporte\FacturaVenta\FacturaVentaReporteController;
+
 
 
 
@@ -36,6 +38,9 @@ use Illuminate\Support\Facades\Auth;
 
 class VentasCabeceraController extends Controller
 {
+
+     
+
     public function cargarFacturasDelDia()
     {
         try {
@@ -128,6 +133,7 @@ class VentasCabeceraController extends Controller
             //code...
             $user = Auth::user();
             $cotizacion = $request->input('cotizacion');
+            $cotizacion_id = (int)$request->input('cotizacion');
             $datos_inventario = $request->input('inventario');
             $datos_cliente = $request->input('cliente');
             $datos_metodosp = $request->input('metodosp');
@@ -413,7 +419,7 @@ class VentasCabeceraController extends Controller
             
 
 
-             
+            $result = (new FacturaVentaReporteController)->cargarPdfFacturaVenta($data->id,$cotizacion_id);   
 
            
            return  response()->json(['tipo' => $data->id, 'total' =>0 ], 200);

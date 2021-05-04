@@ -406,7 +406,7 @@ export default {
          }
 
       
-        console.log(this.ListaCompra);
+       
       this.autoCloseModalVisible = false;
        
 
