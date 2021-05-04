@@ -17,10 +17,11 @@ class SParFactCreditoDetalle extends Migration
         Schema::create('s_par_fact_credito_detalle', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('id_factura');
+            $table->date('fecha');
+            $table->double('interes',5,3);
             $table->double('total',5,3);
-            $table->double('saldo',5,3);
-            $table->unsignedInteger('id_tiempo_pago');
-            $table->unsignedInteger('id_cliente');
+            $table->double('valor',5,3);
+           
                         /* Datos para auditoria */
             $table->string('usu_created');
             $table->string('usu_update');

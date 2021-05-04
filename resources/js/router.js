@@ -43,6 +43,8 @@ import FacturacionVenta from "./components/Modulos/Transaccion/FacturaVenta/Fact
 import ListarCompraCabecera from "./components/Modulos/Transaccion/FacturaCompra/ListarCompraCabecera";
 import IndexFacturaCompra from "./components/Modulos/Transaccion/FacturaCompra/IndexFacturaCompra";
 
+import IndexCreditos from "./components/Modulos/Transaccion/PagoCredito/Index";
+
 
 
 Vue.use(VueRouter);
@@ -193,7 +195,13 @@ export default new VueRouter({
             path:
                 prefijo + "/modulos/transaccion/factura_compra/crear_modificar_factura_compra",
             component: IndexFacturaCompra
-        }
+        },
+        //IndexCreditos
+        {
+            path:
+                prefijo + "/modulos/transaccion/factura_credito/mostrar_creditos",
+            component: IndexCreditos
+        },
     ],
     mode: "history" //Evita que aparezca # en la ruta
 });

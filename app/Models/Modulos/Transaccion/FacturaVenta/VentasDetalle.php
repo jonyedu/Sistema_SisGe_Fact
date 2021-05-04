@@ -5,7 +5,7 @@ namespace App\Models\Modulos\Transaccion\FacturaVenta;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class s_par_fact_ventas_detalle extends Model
+class VentasDetalle extends Model
 {
     use HasFactory;
     /**

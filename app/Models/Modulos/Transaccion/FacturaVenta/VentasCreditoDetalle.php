@@ -21,6 +21,30 @@ class VentasCreditoDetalle extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id', 'id_factura', 'total', 'saldo', 'id_tiempo_pago', 'id_cliente', 'usu_created', 'usu_update', 'created_at', 'updated_at', 'pcip', 'status'
+        'id', 
+        'id_factura', 
+        'fecha', 
+        'interes', 
+        'total', 
+        'valor', 
+        'usu_created', 
+        'usu_update', 
+        'created_at', 
+        'updated_at', 
+        'pcip', 'status'
     ];
+    protected $appends = [
+        'ESTADOPRO'
+    ];
+    public function getESTADOPROattribute()
+    {
+        if ( $this->status == "1") {
+            return "PENDIENTE";
+        }
+        else {
+            return "CANCELADO";
+        }
+
+       
+    }
 }

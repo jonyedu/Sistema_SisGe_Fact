@@ -35,4 +35,12 @@ class Cliente extends Model
         'pcip',
         'status'
     ];
+    protected $appends = [
+        'NOMBRESCLIENTEPRO'
+    ];
+    public function getNOMBRESCLIENTEPROattribute()
+    {
+         
+            return $this->nombres.' '.$this->apellidos ;
+    }
 }

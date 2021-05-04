@@ -225,6 +225,7 @@ export default {
 
   data: function() {
         return {
+           mensajecambio:"",
             totalPagarf:0,
             srchvalue0: null,
             product8:0,
@@ -316,47 +317,44 @@ export default {
             
         };
     },
-    watch: {
-      
-    },
+    
     computed: {
+       cambioTotal(){
+
+        this.cambio_pagarf = this.total_for - this.forma.total_recibido; 
+
+        if (this.forma.total_recibido > this.total_for) {
+           return mensajecambio = "El total recibido no puede ser menos a la cantidad "
+        }
+        else{
+           return mensajecambio =  ""
+        }
+        
+       },
+       
       enviovuex(){
           this.$store.state.formapagofactura = this.forma;
           return this.$store.state.formapagofactura;
       },
-       sumatoria(){
-
-        // return  this.total_for= this.$store.getters.getInventariofactura;
-        //  if (this.total_pagarf !=null ) {
+       sumatoria()
+       { 
+          
         this.total_for= this.$store.getters.getInventariofactura;
         var element_sum=0;
             
          var element=this.total_for.length;
-         if (element>0) {
+         if (element>0) 
+         {
                 for (let index = 0; index < this.total_for.length; index++) {
-                element_sum += this.total_for[index].['tot'];
-            } 
-         }
-
-        //  for (let index = 0; index < this.total_for.length; index++) {
-        //      element += this.ListaCompra[index].['tot'];
-        // } 
-        //return this.total_pagarf.length;
-         return this.total_for = element_sum;
-         //element_sum;
-        //  }
-        //  else{
-        //    return 0;
-        //  }
-        
-       
-      
+                    element_sum += this.total_for[index].['tot'];
+               }  
+            return this.total_for = element_sum;
+        }
       },
     },
     mounted() {
        return  this.total_for= this.$store.getters.getInventariofactura;
-     //console.log(this.$refs.inventariofact);
-    //this.totalPagarf =  this.$refs.inventariofact.totalPagar;
+   
     },
   methods: {
          redondear(numero, digitos){
@@ -372,6 +370,7 @@ export default {
                yyyy: fecha.getFullYear()
             }
 
+           // return formato.replace(/yy|yyy|mm|dd/gi, matched => map[matched])
             return formato.replace(/dd|mm|yy|yyy/gi, matched => map[matched])
          },
        
@@ -399,62 +398,32 @@ export default {
                          
                        
                          let objeto = {};
-                          
-                        //  console.log('numero'+ index);
-                        //  console.log('numero i '+ i);
-
-                        //  console.log('mes inicio'+fecha.getMonth());
                          fecha2 = new Date();
                            fecha = new Date();
                            var mes = fecha.getMonth();
                            var inde = index;
                            var total = Number(mes)+Number(inde);
                          fecha2.setMonth(total);
-                        //   console.log('valor mes   - '+mes);
-                        //    console.log('valor ind   - '+inde);
-                        //     console.log('valor total   - '+total);
-                        
-                        //   console.log('mes  - '+fecha2.getMonth());
-                        //    console.log('fecha -'+ that.formatoFecha(fecha2,'dd/mm/yy'));
-                        // console.log(fecha2.getFullYear() +"-"+ (fecha2.getMonth()) +"-"+ fecha2.getDate());
-                        //objeto.fecha =  fecha.getFullYear() +"-"+ (fecha.getMonth()) +"-"+ fecha.getDate();
-                         objeto.fecha =  that.formatoFecha(fecha2,'dd/mm/yy');
+                         objeto.fecha =  that.formatoFecha(fecha2,'dd-mm-yy');
                          objeto.valor = parseFloat(that.total_for/meses).toFixed(2);
                          objeto.interes = interes;
                          objeto.total = Number(parseFloat(that.total_for/meses).toFixed(2)) + Number(interes);
                           //console.log(objeto);
                          that.forma.creditofacturaventa.push(objeto);
-                          
-                        //    that.creditofacturaventa.push(objeto);
-                         //  console.log(objeto);
-                        //   console.log( that.redondear(that.total_for/meses,3 ));
-                           
-                          //  console.log(that.forma.creditofacturaventa);
-                          // console.log("fecha: "+fecha.getFullYear() +"-"+ (fecha.getMonth()+1) +"-"+ fecha.getDate() +"- valor" + that.roundToTwo(that.total_for/meses));
-                                         
-                           
                         }    
-                  // console.log(meses);
-                   
-                    
-                })
+                 })
                 .catch(error => {
                     console.log(error);
                     
                 });
-              
-          
-
-       // alert(this.forma.formacreditof);
-        //console.log(this.formapagocredito.proxy);
-        
-     },
-      tipodepago(){
+         },
+     tipodepago(){
          if(this.forma.tipo_pagof==1){
             this.pagotarjeta=false;
             this.pagocheque=false;
              this.pagocredito=false;
             this.pagoefectivo=true;
+            this.forma.total_recibido = this.total_for;
             
           }
           if(this.forma.tipo_pagof==2){
@@ -469,6 +438,7 @@ export default {
             this.pagocheque=true;
              this.pagocredito=false;
               this.pagoefectivo=false;
+           this.forma.cantidad_pagarf = this.total_for;
             
           }
           //pagocredito

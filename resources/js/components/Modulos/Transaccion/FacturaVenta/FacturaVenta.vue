@@ -27,7 +27,7 @@
                        <cliente-factura ref="clientefac">
                        </cliente-factura>
                     </bs-tab>
-                    <bs-tab label="Formas de Pago" icon="credit-card"> 
+                    <bs-tab label="Formas de Pago" icon="credit-card"  v-show="activo"> 
                     <forma-de-pago-factura ref="formaspagofactura">
                     </forma-de-pago-factura>
                     </bs-tab>
@@ -139,147 +139,151 @@ export default {
                             );
                             return;
             }
-             if (ListaMetodosPago.tipo_pagof==0) 
-            {
-                 this.showNotificationProgress(
-                                "Facturación",
-                                "Debe Seleccionar un un metodo de pago" ,
-                                "error"
-                            );
-                            return;
 
-            }
-            else{
-
-            
-
-                            if (ListaMetodosPago.tipo_pagof ==1) {
-                                if (ListaMetodosPago.total_recibido == 0) {
-
-                                   this.showNotificationProgress(
+            if (this.activo == true) {
+                    
+        
+                if (ListaMetodosPago.tipo_pagof==0) 
+                {
+                    this.showNotificationProgress(
                                     "Facturación",
-                                    "Debe Seleccionar el total Recibido" ,
+                                    "Debe Seleccionar un un metodo de pago" ,
                                     "error"
-                                    );
-                                    return;  
+                                );
+                                return;
+
+                }
+                else{
+                    
+                    if (ListaMetodosPago.tipo_pagof ==1) {
+                                    if (ListaMetodosPago.total_recibido == 0) {
+
+                                    this.showNotificationProgress(
+                                        "Facturación",
+                                        "Debe Seleccionar el total Recibido" ,
+                                        "error"
+                                        );
+                                        return;  
+                                    }
+                                    
+                                    
                                 }
-                                
-                                
-                            }
-                             if (ListaMetodosPago.tipo_pagof ==2) {
-                                if (ListaMetodosPago.tarjetasf == 0) {
+                                if (ListaMetodosPago.tipo_pagof ==2) {
+                                    if (ListaMetodosPago.tarjetasf == 0) {
 
-                                   this.showNotificationProgress(
-                                    "Facturación",
-                                    "Debe Seleccionar el total Recibido" ,
-                                    "error"
-                                    );
-                                    return;  
-                                }
-                                if (ListaMetodosPago.numero_tarjeta == 0) {
+                                    this.showNotificationProgress(
+                                        "Facturación",
+                                        "Debe Seleccionar la tarjetas" ,
+                                        "error"
+                                        );
+                                        return;  
+                                    }
+                                    if (ListaMetodosPago.numero_tarjeta == 0) {
 
-                                   this.showNotificationProgress(
-                                    "Facturación",
-                                    "Debe Seleccionar el total Recibido" ,
-                                    "error"
-                                    );
-                                    return;  
-                                }
-                                if (ListaMetodosPago.caduca == 0) {
+                                    this.showNotificationProgress(
+                                        "Facturación",
+                                        "Debe Inresar el numero de tarjeta" ,
+                                        "error"
+                                        );
+                                        return;  
+                                    }
+                                    
+                                    if (ListaMetodosPago.caduca == "") {
 
-                                   this.showNotificationProgress(
-                                    "Facturación",
-                                    "Debe Seleccionar el total Recibido" ,
-                                    "error"
-                                    );
-                                    return;  
-                                }
-                                if (ListaMetodosPago.cliente == 0) {
+                                    this.showNotificationProgress(
+                                        "Facturación",
+                                        "Debe Seleccionar la fecha de Inreso" ,
+                                        "error"
+                                        );
+                                        return;  
+                                    }
+                                    if (ListaMetodosPago.cliente == 0) {
 
-                                   this.showNotificationProgress(
-                                    "Facturación",
-                                    "Debe Seleccionar el total Recibido" ,
-                                    "error"
-                                    );
-                                    return;  
-                                }
-                                
-                                
-                            }
-
-                            if (ListaMetodosPago.tipo_pagof ==3) {
-                                if (ListaMetodosPago.fecha_emision == 0) {
-
-                                   this.showNotificationProgress(
-                                    "Facturación",
-                                    "Debe Seleccionar la Fecha de emisión" ,
-                                    "error"
-                                    );
-                                    return;  
-                                }
-                                if (ListaMetodosPago.cantidad_pagarf == 0) {
-
-                                   this.showNotificationProgress(
-                                    "Facturación",
-                                    "Debe Seleccionar la cantidad" ,
-                                    "error"
-                                    );
-                                    return;  
-                                }
-                                if (ListaMetodosPago.nombref == 0) {
-
-                                   this.showNotificationProgress(
-                                    "Facturación",
-                                    "Debe Seleccionar el nombre" ,
-                                    "error"
-                                    );
-                                    return;  
-                                }
-                                if (ListaMetodosPago.banco == 0) {
-
-                                   this.showNotificationProgress(
-                                    "Facturación",
-                                    "Debe Seleccionar el banco" ,
-                                    "error"
-                                    );
-                                    return;  
+                                    this.showNotificationProgress(
+                                        "Facturación",
+                                        "Debe ingresar el nombre del cliente" ,
+                                        "error"
+                                        );
+                                        return;  
+                                    }
+                                    
+                                    
                                 }
 
-                                 if (ListaMetodosPago.numero_cuenta == 0) {
+                                if (ListaMetodosPago.tipo_pagof ==3) {
+                                    if (ListaMetodosPago.fecha_emision == 0) {
 
-                                   this.showNotificationProgress(
-                                    "Facturación",
-                                    "Debe Seleccionar el Número" ,
-                                    "error"
-                                    );
-                                    return;  
+                                    this.showNotificationProgress(
+                                        "Facturación",
+                                        "Debe Seleccionar la Fecha de emisión" ,
+                                        "error"
+                                        );
+                                        return;  
+                                    }
+                                    if (ListaMetodosPago.cantidad_pagarf == 0) {
+
+                                    this.showNotificationProgress(
+                                        "Facturación",
+                                        "Debe Seleccionar la cantidad" ,
+                                        "error"
+                                        );
+                                        return;  
+                                    }
+                                    if (ListaMetodosPago.nombref == 0) {
+
+                                    this.showNotificationProgress(
+                                        "Facturación",
+                                        "Debe Seleccionar el nombre" ,
+                                        "error"
+                                        );
+                                        return;  
+                                    }
+                                    if (ListaMetodosPago.banco == 0) {
+
+                                    this.showNotificationProgress(
+                                        "Facturación",
+                                        "Debe Seleccionar el banco" ,
+                                        "error"
+                                        );
+                                        return;  
+                                    }
+
+                                    if (ListaMetodosPago.numero_cuenta == 0   ) {
+
+                                    this.showNotificationProgress(
+                                        "Facturación",
+                                        "Debe ingresar el numero de cuenta. máximo 16 caracteres" ,
+                                        "error"
+                                        );
+                                        return;  
+                                    }
+
+                                    if (ListaMetodosPago.beneficiario == 0) {
+
+                                    this.showNotificationProgress(
+                                        "Facturación",
+                                        "Debe Seleccionar el beneficiario" ,
+                                        "error"
+                                        );
+                                        return;  
+                                    }
+                                    
+                                    
                                 }
 
-                                 if (ListaMetodosPago.beneficiario == 0) {
-
-                                   this.showNotificationProgress(
-                                    "Facturación",
-                                    "Debe Seleccionar el beneficiario" ,
-                                    "error"
-                                    );
-                                    return;  
+                                if (ListaMetodosPago.tipo_pagof == 4) {
+                                    if (ListaMetodosPago.creditofacturaventa.length == 0) {
+                                    this.showNotificationProgress(
+                                        "Facturación",
+                                        "Debe Elegir los meses al cual se va dar crédito" ,
+                                        "error"
+                                        );
+                                        return; 
+                                    
                                 }
-                                
-                                
-                            }
-
-                            if (ListaMetodosPago.tipo_pagof == 4) {
-                                 if (ListaMetodosPago.creditofacturaventa.length == 0) {
-                                this.showNotificationProgress(
-                                    "Facturación",
-                                    "Debe Elegir los meses al cual se va dar crédito" ,
-                                    "error"
-                                    );
-                                    return; 
-                                
-                            }
-                            }
-                           
+                                }
+                            
+                }
             }
             //fin
             this.errors = [];
@@ -287,11 +291,30 @@ export default {
 
          
             axios
-                .post(url,{inventario:ListaProductos,
+                .post(url,{cotizacion:that.activo,
+                            inventario:ListaProductos,
                             cliente:ListaCliente,
                             metodosp:ListaMetodosPago})
                 .then(function(response) { 
-                    console.log(response.data);
+                   // console.log(response.data);
+                   if (that.activo==false) {
+                        that.showNotificationProgress(
+                                        "Facturación",
+                                        "Cotización realizada con éxito" ,
+                                        "success"
+                                        );
+                       
+                   } else {
+                       that.showNotificationProgress(
+                                        "Facturación",
+                                        "Compra realizada con éxito" ,
+                                        "success"
+                                        );
+                       
+                       
+                   }
+                    
+                                      
                     
                     
                     
@@ -299,14 +322,20 @@ export default {
                 .catch(error => {
                     //Errores de validación
                   
-
+                    console.log(error);
+                    
                     if (error.response.data.hasOwnProperty("errors")) {
                         const errors = error.response.data.errors;
                        // console.log(error.response.data.errors);
                         for (let error in errors) {
                             if (errors.hasOwnProperty(error)) {
                                // console.log(errors[error][0]);                              
-                                
+                                 this.showNotificationProgress(
+                                    "Facturación",
+                                    "Error en el sistema" +errors ,
+                                    "error"
+                                    );
+                                    return; 
  
                             }
                         }

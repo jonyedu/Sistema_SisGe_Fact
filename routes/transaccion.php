@@ -29,6 +29,8 @@ Route::group(['prefix' => '/modulos/transaccion', 'middleware' => ['auth:web'], 
     //Submenu de Facturacion Venta
     Route::namespace('Modulos\Transaccion\FacturaVenta')->prefix('factura_venta')->group(function () {
         Route::get('cargar_facturas_dia', 'VentasCabeceraController@cargarFacturasDelDia');
+        Route::get('productos_fact_inve/{id}/{id_factura}/{id_producto}', 'VentasCabeceraController@cargarProductosInventarioPorTipos');
+
         Route::get('productos_invo/{este}', 'VentasCabeceraController@cargarProductosInventario');
         //configuraciones
         Route::get('config_tipo', 'VentasCabeceraController@cargar_tipo');
@@ -43,6 +45,31 @@ Route::group(['prefix' => '/modulos/transaccion', 'middleware' => ['auth:web'], 
         Route::get('cargar_forma_id/{id}', 'VentasCabeceraController@cargar_forma_pago_id');
     
     });
+
+
+    Route::namespace('Modulos\Transaccion\Creditos')->prefix('creditos_venta')->group(function () {
+        Route::get('cargar_ccreditos', 'Creditos@cargarClientes');
+        //cargarClientesDetalles
+        Route::get('cargar_detalle/{id}', 'Creditos@cargarClientesDetalles');
+        //updatecuota
+        Route::post('update_cuota', 'Creditos@updatecuota');
+        // Route::get('productos_fact_inve/{id}/{id_factura}/{id_producto}', 'VentasCabeceraController@cargarProductosInventarioPorTipos');
+
+        // Route::get('productos_invo/{este}', 'VentasCabeceraController@cargarProductosInventario');
+        // //configuraciones
+        // Route::get('config_tipo', 'VentasCabeceraController@cargar_tipo');
+        // //cargar_tarjetas
+        // Route::get('cargar_tarjeta', 'VentasCabeceraController@cargar_tarjetas');
+        //  //cargar_tarjetas
+        // Route::get('cargar_banco', 'VentasCabeceraController@cargar_bancos');
+        //  //grabar guardarFacturaVenta
+        // Route::post('guardar_factura', 'VentasCabeceraController@guardarFacturaVenta');
+        //  //cargar_forma_pago
+        // Route::get('cargar_forma', 'VentasCabeceraController@cargar_forma_pago');
+        // Route::get('cargar_forma_id/{id}', 'VentasCabeceraController@cargar_forma_pago_id');
+    
+    });
+
 
 
 
