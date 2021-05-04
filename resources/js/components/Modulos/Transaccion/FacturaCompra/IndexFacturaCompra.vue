@@ -202,8 +202,8 @@ export default {
                 //Datos de factura compra
                 this.factura_compra.datos_factura_compra.factura_compra_cabecera_id =
                     factura_compra.id;
-                this.factura_compra.datos_factura_compra.tipo_documento_id =
-                    factura_compra.id_documento;
+                this.factura_compra.datos_factura_compra.tipo_documento_id = factura_compra.id_documento;
+                this.factura_compra.datos_factura_compra.no_autorizacion = factura_compra.no_autorizacion;
                 this.factura_compra.datos_factura_compra.no_documento =
                     factura_compra.secuencia;
                 this.factura_compra.datos_factura_compra.fmt_registro =
@@ -421,14 +421,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-
-    .btn {
-        margin-bottom: 16px;
-        margin-right: 8px;
-    }
-}
-</style>

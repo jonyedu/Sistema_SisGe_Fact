@@ -17,17 +17,17 @@ class Grupo extends Model
      * @var string
      */
     // protected $connection = 'admin_db_sql';
-    protected $primaryKey = 'Id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'Id',
-        'Codigo',
-        'nombrecorto',
-        'Descripcion',
-        'Estado',
-        'usu_created_update',
+        'id',
+        'codigo',
+        'descripcion',
+        'usu_created',
+        'usu_update',
         'created_at',
         'updated_at',
         'pcip',
+        'status'
     ];
 }

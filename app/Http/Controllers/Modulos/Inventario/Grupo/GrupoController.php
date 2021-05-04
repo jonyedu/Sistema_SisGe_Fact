@@ -13,8 +13,8 @@ class GrupoController extends Controller
     public function cargarGrupoComboBox()
     {
         try {
-            $grupos = Grupo::select('Id', 'Codigo', 'Estado')
-                ->where('Estado', 1)
+            $grupos = Grupo::select('id', 'descripcion', 'status')
+                ->where('status', 1)
                 ->get();
             return  response()->json(['grupos' => $grupos, 'total' => sizeOf($grupos)], 200);
         } catch (Exception $e) {
@@ -25,7 +25,7 @@ class GrupoController extends Controller
     public function cargarGrupoTabla()
     {
         try {
-            $grupos = Grupo::where('Estado', 1)
+            $grupos = Grupo::where('status', 1)
                 ->get();
             return  response()->json(['grupos' => $grupos, 'total' => sizeOf($grupos)], 200);
         } catch (Exception $e) {
@@ -39,15 +39,16 @@ class GrupoController extends Controller
             $user = Auth::user();
             Grupo::updateOrCreate(
                 [
-                    'Id' => $request->input('grupo_id'),
-                    'Estado' => 1
+                    'id' => $request->input('grupo_id'),
+                    'status' => 1
                 ],
                 [
-                    'Codigo' => $request->input('codigo'),
-                    'Descripcion' => $request->input('descripcion'),
-                    'usu_created_update' => $user->codigo,
+                    'codigo' => $request->input('codigo'),
+                    'descripcion' => $request->input('descripcion'),
+                    'usu_created' => $user->codigo,
+                    'usu_update' => $user->codigo,
                     'pcip' => $_SERVER["REMOTE_ADDR"],
-                    'Estado' => 1
+                    'status' => 1
                 ]
             );
 
@@ -61,13 +62,13 @@ class GrupoController extends Controller
     {
         try {
             $user = Auth::user();
-            Grupo::where('Estado', 1)
-                ->where('Id', $id)
+            Grupo::where('status', 1)
+                ->where('id', $id)
                 ->Update(
                     [
-                        'usu_created_update' => $user->codigo,
+                        'usu_update' => $user->codigo,
                         'pcip' =>  $_SERVER["REMOTE_ADDR"],
-                        'Estado' => 0,
+                        'status' => 0,
                     ]
                 );
             return  response()->json(['msj' => 'OK'], 200);

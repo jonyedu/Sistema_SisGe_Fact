@@ -45,6 +45,58 @@ function convertBase64ToBinary($data)
     return $binary;
 }
 
+function convertImgToBinary($data)
+{
+    // Extensión de la imagen
+    $type = pathinfo($data, PATHINFO_EXTENSION);
+
+    // Cargando la imagen
+    $data = file_get_contents($data);
+
+    // Decodificando la imagen en base64
+    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+    return $base64;
+}
+
+
+
+function insertPathArray()
+{
+    $pathArray = [];
+    //1pan_rosca
+    $path = public_path() . '/imgProducto/1pan_rosca.png';
+    array_push($pathArray, $path);
+    //2dona_blanca
+    $path = public_path() . '/imgProducto/2dona_blanca.png';
+    array_push($pathArray, $path);
+    //3protectores_kotex
+    $path = public_path() . '/imgProducto/3protectores_kotex.png';
+    array_push($pathArray, $path);
+    //4GUANTES
+    $path = public_path() . '/imgProducto/4GUANTES.png';
+    array_push($pathArray, $path);
+    //5detergente
+    $path = public_path() . '/imgProducto/5detergente.png';
+    array_push($pathArray, $path);
+    //6PLATOS
+    $path = public_path() . '/imgProducto/6PLATOS.png';
+    array_push($pathArray, $path);
+    //7pe-rosas-sandalo
+    $path = public_path() . '/imgProducto/7pe-rosas-sandalo.png';
+    array_push($pathArray, $path);
+    //8COLA
+    $path = public_path() . '/imgProducto/8COLA.png';
+    array_push($pathArray, $path);
+    //9VOLT
+    $path = public_path() . '/imgProducto/9VOLT.png';
+    array_push($pathArray, $path);
+    //10BEBIDA
+    $path = public_path() . '/imgProducto/10BEBIDA.png';
+    array_push($pathArray, $path);
+
+    return $pathArray;
+}
+
 function getNumeroAleatorio()
 {
     $w_n01 = mt_rand(0, 9);

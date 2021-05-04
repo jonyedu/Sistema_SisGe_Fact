@@ -14,13 +14,14 @@ class SucursalSeeder extends Seeder
      */
     public function run()
     {
+        Sucursal::truncate();
         Sucursal::create([
             'Empresa_Id' => 1,
             'Sucursal_Nombre' => 'AgroAnimals',
-            'Sucursal_Direccion' => 'Galapagos',
-            'Sucursal_Telefonos' => '094949832',
+            'Sucursal_Direccion' => 'Av.Baltra #594 y San Cristobal',
+            'Sucursal_Telefonos' => '0988214766',
             'Sucursal_Administrador' => '',
-            'Sucursal_EMail' => '',
+            'Sucursal_EMail' => 'majo-klamag@hotmail.com',
             'Sucursal_Fax'=> '',
             'Sucursal_Actividad'=> '',
             'Sucursal_Actividad_Inicio'=> date("Y-m-d H:i:s"),

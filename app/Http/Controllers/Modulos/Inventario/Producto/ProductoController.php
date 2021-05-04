@@ -7,14 +7,37 @@ use App\Models\Modulos\Inventario\Producto\Producto;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductoController extends Controller
 {
+    public function verificarStockProductoAll()
+    {
+        try {
+            $productos = Producto::select('id', 'nombre', 'stock_minimo')
+                ->where('status', 1)
+                ->withCount([
+                    'productoInventarioMany AS stock' => function ($query) {
+                        $query->select(DB::raw("SUM(stock) as paidsum"));
+                    }
+                ])
+                ->get();
+            return  response()->json(['productos' => $productos, 'total' => sizeOf($productos)], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
+        }
+    }
     public function cargarProductoTabla()
     {
         try {
-            $productos = Producto::where('status', 1)
-                ->with('proveedor:id,nombre', 'grupo:Id,codigo')
+            $productos = Producto::select('id', 'codigo', 'pvc', 'nombre', 'grupo_id', 'laboratorio_id', 'imagen')
+                ->where('status', 1)
+                ->with('proveedor:id,razon_social', 'grupo:id,descripcion')
+                ->withCount([
+                    'productoInventarioMany AS stock' => function ($query) {
+                        $query->select(DB::raw("SUM(stock) as paidsum"));
+                    }
+                ])
                 ->get();
             return  response()->json(['productos' => $productos, 'total' => sizeOf($productos)], 200);
         } catch (Exception $e) {

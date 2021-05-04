@@ -33,7 +33,7 @@
                             empty: 'No hay Artículos',
                             display: '{0}-{1} de {2} Artículos',
                             pager: 'Artículos por Página'
-                        },
+                        }
                     }"
                     row-hover
                     sortable
@@ -43,39 +43,23 @@
                     <bs-grid-column
                         label="#"
                         text-align="right"
-                        width="50"
+                        width="25"
                         row-numbering
                     ></bs-grid-column>
-                     <bs-grid-column
-                        field="codigo"
-                        label="codigo"
-                        width="300"
+                    <bs-grid-column
+                        field="ruc"
+                        label="Ruc"
+                        width="150"
                     ></bs-grid-column>
                     <bs-grid-column
-                        field="nombre"
-                        label="Nombre"
-                        width="300"
-                    ></bs-grid-column>
-
-                     <bs-grid-column
                         field="razon_social"
                         label="Razón Social"
-                        width="300"
+                        width="150"
                     ></bs-grid-column>
-                     <bs-grid-column
-                        field="direcion"
-                        label="Dirección"
-                        width="300"
-                    ></bs-grid-column>
-                     <bs-grid-column
-                        field="telefono"
-                        label="Teléfono"
-                        width="300"
-                    ></bs-grid-column>
-                   <bs-grid-column
-                        field="estado"
-                        label="Estado"
-                        width="300"
+                    <bs-grid-column
+                        field="FULLNAME"
+                        label="Nombre/Apellido"
+                        width="150"
                     ></bs-grid-column>
                     <bs-grid-column
                         field=""
@@ -87,7 +71,8 @@
                             :column="columns[0]"
                             :item="item"
                             :index="index"
-                        ></bs-grid-cell>
+                            ><span> {{ index + 1 }} </span>
+                        </bs-grid-cell>
                         <bs-grid-cell
                             :column="columns[1]"
                             :item="item"
@@ -98,30 +83,13 @@
                             :item="item"
                             :index="index"
                         ></bs-grid-cell>
-
-                       <bs-grid-cell
+                        <bs-grid-cell
                             :column="columns[3]"
                             :item="item"
                             :index="index"
                         ></bs-grid-cell>
-                         <bs-grid-cell
-                            :column="columns[4]"
-                            :item="item"
-                            :index="index"
-                        ></bs-grid-cell>
-                          <bs-grid-cell
-                            :column="columns[5]"
-                            :item="item"
-                            :index="index"
-                        ></bs-grid-cell>
-                           <bs-grid-cell
-                            :column="columns[6]"
-                            :item="item"
-                            :index="index"
-                        ></bs-grid-cell>
-
                         <bs-grid-cell
-                            :column="columns[7]"
+                            :column="columns[4]"
                             :item="item"
                             :index="index"
                         >
@@ -156,9 +124,7 @@
                                     size="sm"
                                     color="danger"
                                     flat
-                                    @click="
-                                        abriModal(item)
-                                    "
+                                    @click="abriModal(item)"
                                 ></bs-button>
                             </bs-tooltip>
                         </bs-grid-cell>
@@ -173,7 +139,9 @@
             max-width="85%"
         >
             <b>¿Desea eliminar el producto?</b><br />
-            Al eliminar el producto, no podrá usarlo en las transacciones. <br> Presiones Cancelar o presione ESC para salir.
+            Al eliminar el producto, no podrá usarlo en las transacciones.
+            <br />
+            Presiones Cancelar o presione ESC para salir.
 
             <template v-slot:footer>
                 <bs-button
@@ -183,11 +151,7 @@
                 >
                     Cancelar
                 </bs-button>
-                <bs-button
-                    active
-                    color="primary"
-                    @click="eliminarProducto()"
-                >
+                <bs-button active color="primary" @click="eliminarProducto()">
                     OK
                 </bs-button>
             </template>
@@ -200,9 +164,8 @@ import { prefix } from "../../../../variables";
 export default {
     data: function() {
         return {
-
             prefijo: "",
-            trueModalVisible:false,
+            trueModalVisible: false,
             productos: new BsStore({
                 idProperty: "id",
                 dataProperty: "proveedores",
@@ -213,11 +176,10 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
-                    browse:
-                        "/modulos/persona/proveedor/cargar_proveedor_all"
+                    browse: "/modulos/persona/proveedor/cargar_proveedor_all"
                 }
             }),
-            item:{},
+            item: {}
         };
     },
 
@@ -228,11 +190,10 @@ export default {
     methods: {
         btnClickModificar(item) {
             this.$store.state.proveedor = item;
-           // console.log(item);
-
+            // console.log(item);
         },
-        abriModal(item ) {
-            this.trueModalVisible=true;
+        abriModal(item) {
+            this.trueModalVisible = true;
             this.item = item;
         },
         eliminarProducto() {
@@ -247,7 +208,8 @@ export default {
                     that.$refs.gridProducto.reload();
                     that.showNotificationProgress(
                         "Exito al procesar",
-                        "Usted ha eliminado correctamente el producto." + that.item.descripcion,
+                        "Usted ha eliminado correctamente el producto." +
+                            that.item.descripcion,
                         "success"
                     );
                 })
@@ -268,13 +230,7 @@ export default {
                 timeout: 5000
             };
             this.$notification[icon](options, title);
-        },
+        }
     }
 };
 </script>
-
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-}
-</style>

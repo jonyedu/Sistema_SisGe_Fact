@@ -14,6 +14,9 @@ class EmpresaSeeder extends Seeder
      */
     public function run()
     {
+        Empresa::truncate();
+        $path = public_path() . '/imgProducto/LOGO-AGRO-ANIMALS-2021.png';
+        $base64 = convertImgToBinary($path);
         Empresa::updateOrCreate(
             [
                 'Empresa_Nombre' => 'AgroAnimals',
@@ -22,16 +25,16 @@ class EmpresaSeeder extends Seeder
                 'Empresa_Nombre' => 'AgroAnimals',
                 'Empresa_Ciudad' => '',
                 'Empresa_Codigo_Postal' => 593,
-                'Empresa_Correo_Electronico' => 'admin@agroanimals.com.ec',
+                'Empresa_Correo_Electronico' => 'majo-klamag@hotmail.com',
                 'Empresa_Fax' => '',
                 'Empresa_Contribuyente_Especial' => 425,
-                'Empresa_Representante' => 'Jonathan Mora',
+                'Empresa_Representante' => '',
                 'Empresa_Notas' => '',
-                'Empresa_Ruc' => '0954776779001',
-                'Empresa_Telefonos' => '0994949832',
-                'Empresa_Ubicacion_Logo' => '',
+                'Empresa_Ruc' => '1205588120001',
+                'Empresa_Telefonos' => '0988214766',
+                'Empresa_Ubicacion_Logo' => $base64,
                 'Empresa_Ruta_Base' => '',
-                'Empresa_Direccion' => 'Isla Galápago',
+                'Empresa_Direccion' => 'Av.Baltra #594 y San Cristobal',
                 'Empresa_Tipo' => 1,
                 'Empresa_Dsn_Bases' => '',
                 'Empresa_Pais' => '',

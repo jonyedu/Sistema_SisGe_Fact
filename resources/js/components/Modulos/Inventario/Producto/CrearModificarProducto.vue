@@ -221,17 +221,14 @@
                                             </bs-button>
                                         </div>
                                         <div
-                                            class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                            class="col-lg-12 col-md-12 col-sm-12 text-center"
+                                        >
                                             <bs-avatar
                                                 class="md-link"
-                                                :img-src="
-                                                    productoForm.fotoURL
-                                                "
+                                                :img-src="productoForm.fotoURL"
                                                 size="100%"
                                                 rounded
-                                                @click="
-                                                    showSingleItem = true
-                                                "
+                                                @click="showSingleItem = true"
                                             >
                                             </bs-avatar>
                                         </div>
@@ -260,12 +257,12 @@
 <script>
 import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
-import { required, minLength } from "vuelidate/lib/validators";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 
 const productoValidator = {
     producto_id: { required },
     nombre: { required, minLength: minLength(5) },
-    nombre_corto: { required },
+    nombre_corto: { required, maxLength: maxLength(30) },
     stock_maximo: { required },
     stock_minimo: { required },
     pvc: { required },
@@ -282,6 +279,12 @@ export default {
             //Variable para abrir la imagen en modal
             buttons: { close: true },
             showSingleItem: false,
+            imageLoaded: false,
+            image: {
+                size: "",
+                height: "",
+                width: ""
+            },
             singleItem: [
                 {
                     //thumbnail: this.productoForm!=undefined?this.productoForm.fotoURL:"",
@@ -311,7 +314,7 @@ export default {
                         proveedor_id: "",
                         logo: "",
                         fotoURL: "",
-                        file_base_64: "",
+                        file_base_64: ""
                     },
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
@@ -324,7 +327,7 @@ export default {
                             url:
                                 "/modulos/inventario/producto/guardar_modificar_producto",
                             method: "post"
-                        },
+                        }
                     }
                 },
                 null,
@@ -333,6 +336,7 @@ export default {
             //Variables para la validaciones
             requiredErrorMsg: "Este campo es obligatorio.",
             minLengthErrorMsg: "Este campo debe tener al menos 5 caracteres.",
+            maxLengthErrorMsg: "Este campo debe tener al menos 30 caracteres.",
 
             //Objeto para almacenar el arreglo de cada combobox
             cmb: {
@@ -365,13 +369,19 @@ export default {
                         ], */
                         pageSize: 15,
                         restProxy: {
-                            browse:"/modulos/persona/proveedor/cargar_proveedor_all",
+                            browse:
+                                "/modulos/persona/proveedor/cargar_proveedor_all"
                         }
                     }),
                     schema: { displayField: "nombre", valueField: "id" }
                 }
             }
         };
+    },
+    watch: {
+        imageLoaded(value) {
+            this.validarDimensionFile();
+        }
     },
     validations: {
         productoForm: productoValidator
@@ -401,7 +411,6 @@ export default {
         this.$store.state.producto = null;
     },
     computed: {
-        //Metodo para validar el campo nombre
         nombreValidator() {
             return {
                 hasError: this.$v.productoForm.nombre.$error,
@@ -420,11 +429,13 @@ export default {
             return {
                 hasError: this.$v.productoForm.nombre_corto.$error,
                 messages: {
-                    required: this.requiredErrorMsg
+                    required: this.requiredErrorMsg,
+                    maxLength: this.maxLengthErrorMsg
                 },
                 dirty: this.$v.productoForm.nombre_corto.$dirty,
                 validators: {
-                    required: this.$v.productoForm.nombre_corto.required
+                    required: this.$v.productoForm.nombre_corto.required,
+                    maxLength: this.$v.productoForm.nombre_corto.maxLength
                 }
             };
         },
@@ -518,10 +529,9 @@ export default {
         createBase64Image(fileObject) {
             const reader = new FileReader();
             reader.readAsDataURL(fileObject);
-                reader.onload = (e) => {
-                this.productoForm.file_base_64  = e.target.result;
+            reader.onload = e => {
+                this.productoForm.file_base_64 = e.target.result;
             };
-
         },
         onFileSelected(event) {
             if (event.target.files.length > 0) {
@@ -534,14 +544,50 @@ export default {
                     this.productoForm.fotoURL = URL.createObjectURL(
                         this.productoForm.logo
                     );
-                    //var resultado = null;
-                    this.createBase64Image(this.productoForm.logo);
                     this.singleItem[0].title = event.target.files[0].name;
                     this.singleItem[0].imageSrc = this.productoForm.fotoURL;
+                    //Inicio
+                    let reader = new FileReader();
+
+                    reader.readAsDataURL(event.target.files[0]);
+                    reader.onload = evt => {
+                        let img = new Image();
+                        img.onload = () => {
+                            this.image.width = img.width;
+                            this.image.height = img.height;
+                            this.imageLoaded = true;
+                        };
+                        img.src = evt.target.result;
+                    };
+
+                    //Fin
                 } else {
                     this.showNotificationProgress(
                         "Advertencia al cargar la imagen",
                         "Solo imagenes de formato: .jpeg, .jpg, .png son permitidos!",
+                        "warning"
+                    );
+                }
+            }
+        },
+        validarDimensionFile() {
+            if (this.imageLoaded) {
+                if (this.image.width == 350 && this.image.height == 350) {
+                    this.createBase64Image(this.productoForm.logo);
+                    this.image.width = "";
+                    this.image.height = "";
+                    this.imageLoaded = false;
+                } else {
+                    this.image.width = "";
+                    this.image.height = "";
+                    this.imageLoaded = false;
+                    this.productoForm.logo = "";
+                    this.productoForm.fotoURL = "";
+                    this.singleItem[0].title = "";
+                    this.singleItem[0].imageSrc = "";
+                    this.showNotificationProgress(
+                        "Advertencia al cargar la imagen",
+                        "La imagen debe ser una dimensión de 350x350.",
                         "warning"
                     );
                 }
@@ -614,14 +660,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-
-    .btn {
-        margin-bottom: 16px;
-        margin-right: 8px;
-    }
-}
-</style>
