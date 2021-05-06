@@ -47,6 +47,7 @@ class VentasCredito extends Model
 
        
     }
+     
     public function clienteFact()
     {
         return $this->hasOne('App\Models\Modulos\Persona\Cliente\Cliente', 'cliente_id', 'id_cliente');
@@ -54,5 +55,19 @@ class VentasCredito extends Model
     public function tiempoCredito()
     {
         return $this->hasOne('App\Models\Modulos\Parametrizacion\FormaPago\FormaPago', 'id', 'id_tiempo_pago');
+    }
+    
+    public function formapagoFactura()
+    {
+        return $this->hasOne('App\Models\Modulos\Banco\TipoPago\TipoPago', 'tipo_pago', 'formapago');
+    }
+     
+    public function DetalleVenta()
+    {
+        return $this->hasMany('App\Models\Modulos\Transaccion\FacturaVenta\VentasCreditoDetalle', 'id_factura', 'id_factura');
+    }
+    public function usuario()
+    {
+        return $this->hasOne('App\Models\Modulos\Seguridad\Usuario\SegUsuario', 'codigo', 'usu_created');
     }
 }

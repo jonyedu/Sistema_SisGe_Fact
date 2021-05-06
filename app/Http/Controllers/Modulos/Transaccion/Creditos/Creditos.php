@@ -57,7 +57,7 @@ class Creditos extends Controller
 
     public function updatecuota(Request $request){
         try {
-            return  response()->json(['cliente' =>$request->input('status'), 'total' => 0], 200);
+           // return  response()->json(['cliente' =>$request->input('status'), 'total' => 0], 200);
             $user = Auth::user();
 
             if ($request->input('status')==1) {
@@ -73,7 +73,7 @@ class Creditos extends Controller
                      ]
                  );
             } else {
-                return  response()->json(["errors" => "Factura Cancelada"], 422);
+                return  response()->json(["cliente" => 0], 200);
             }
             
 
@@ -82,7 +82,7 @@ class Creditos extends Controller
 
            
 
-            return  response()->json(['cliente' => $actualizar, 'total' => 0], 200);
+            return  response()->json(['cliente' => $request->input('id_factura'), 'total' => 0], 200);
         } catch (Exception $e) {
             return response()->json(['errors' => $e->getMessage()], 500);
         }

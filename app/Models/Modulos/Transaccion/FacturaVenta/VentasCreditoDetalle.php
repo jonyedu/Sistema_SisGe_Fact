@@ -47,4 +47,12 @@ class VentasCreditoDetalle extends Model
 
        
     }
+    public function cabeceraCredito()
+    {
+        return $this->hasOne('App\Models\Modulos\Transaccion\FacturaVenta\VentasCredito', 'id_factura', 'id_factura');
+    }
+    public function usuario()
+    {
+        return $this->hasOne('App\Models\Modulos\Seguridad\Usuario\SegUsuario', 'codigo', 'usu_created');
+    }
 }

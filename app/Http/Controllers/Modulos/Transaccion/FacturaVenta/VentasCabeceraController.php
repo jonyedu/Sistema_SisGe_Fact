@@ -296,7 +296,7 @@ class VentasCabeceraController extends Controller
 
             if ($forma_pago == 4) {
                // return  response()->json(['tipo' =>  $id_cliente["id"], 'total' =>0 ], 200);
-                VentasCredito::create([
+               $data_credito =   VentasCredito::create([
                     'id_factura' =>$id_cabecera
                     ,'total'=> $total
                     ,'id_tiempo_pago'=>  $datos_metodosp["formacreditof"]
