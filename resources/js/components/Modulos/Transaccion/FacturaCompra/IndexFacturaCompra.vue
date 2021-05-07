@@ -224,8 +224,7 @@ export default {
                 this.factura_compra.datos_factura_compra.telefono =
                     factura_compra.proveedor.telefono;
                 //Listar Producto
-                this.factura_compra.listar_producto.proveedor_id =
-                    factura_compra.proveedor.id;
+                this.factura_compra.listar_producto.proveedor_id = factura_compra.proveedor.id;
                 this.factura_compra.listar_producto.total =
                     factura_compra.totalapagar;
                 this.factura_compra.listar_producto.descripcion =
@@ -335,6 +334,7 @@ export default {
                                 "success"
                             );
                             that.lmpCampos();
+                            that.factura_compra.datos_factura_compra.factura_compra_cabecera_id =response.data.factura_compra_cabecera_id;
                         })
                         .catch(function(error) {
                             that.showLoader = false;

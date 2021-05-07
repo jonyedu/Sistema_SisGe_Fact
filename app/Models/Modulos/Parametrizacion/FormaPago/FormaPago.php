@@ -21,6 +21,15 @@ class FormaPago extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id', 'descripcion', 'dias', 'interes','usu_created', 'usu_update', 'created_at', 'updated_at', 'pcip', 'status'
+        'id',
+        'descripcion',
+        'dias',
+        'interes',
+        'usu_created',
+        'usu_update',
+        'created_at',
+        'updated_at',
+        'pcip',
+        'status'
     ];
 }

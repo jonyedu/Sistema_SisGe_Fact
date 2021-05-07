@@ -41,4 +41,9 @@ class VentasCabecera extends Model
         'updated_at',
         'pcip'
     ];
+
+    public function cliente()
+    {
+        return $this->hasOne('App\Models\Modulos\Persona\Cliente\Cliente', 'cliente_id', 'id_cliente');
+    }
 }

@@ -40,7 +40,6 @@ class Cliente extends Model
     ];
     public function getNOMBRESCLIENTEPROattribute()
     {
-         
-            return $this->nombres.' '.$this->apellidos ;
+        return $this->nombres . ' ' . $this->apellidos;
     }
 }

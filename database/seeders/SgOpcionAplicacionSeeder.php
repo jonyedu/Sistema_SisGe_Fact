@@ -283,6 +283,24 @@ class SgOpcionAplicacionSeeder extends Seeder
                 'status' => 1,
             ]
         );
+        //Factura de Crédito
+        SgOpcionAplicacion::updateOrCreate(
+            [
+                'descripcion' => "Factura de Crédito",
+            ],
+            [
+                'modulo' => $modulo->codigo,
+                'descripcion'  => 'Factura de Crédito',
+                'imagen' => 'fas fa-donate',
+                'route' => '/modulos/transaccion/factura_credito/mostrar_creditos',
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+            ]
+        );
 
 
     }

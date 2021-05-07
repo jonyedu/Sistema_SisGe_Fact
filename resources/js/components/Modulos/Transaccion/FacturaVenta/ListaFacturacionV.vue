@@ -1,5 +1,5 @@
 <template>
-      <div class="content-wrapper">
+    <div class="content-wrapper">
         <div class="my-demo-wrapper">
             <bs-card shadow>
                 <bs-card-body>
@@ -33,7 +33,7 @@
                             empty: 'No hay Artículos',
                             display: '{0}-{1} de {2} Artículos',
                             pager: 'Artículos por Página'
-                        },
+                        }
                     }"
                     row-hover
                     sortable
@@ -43,27 +43,24 @@
                     <bs-grid-column
                         label="#"
                         text-align="right"
-                        width="50"
+                        width="25"
                         row-numbering
                     ></bs-grid-column>
-                     <bs-grid-column
+                    <bs-grid-column
                         field="id"
                         label="Factura"
                         width="300"
                     ></bs-grid-column>
-
-
-                     <bs-grid-column
+                    <bs-grid-column
                         field="fecha"
                         label="Fecha"
                         width="300"
                     ></bs-grid-column>
-                     <bs-grid-column
+                    <bs-grid-column
                         field="totalapagar"
                         label="Total"
                         width="300"
                     ></bs-grid-column>
-
 
                     <bs-grid-column
                         field=""
@@ -75,7 +72,8 @@
                             :column="columns[0]"
                             :item="item"
                             :index="index"
-                        ></bs-grid-cell>
+                            ><span> {{ index + 1 }} </span>
+                        </bs-grid-cell>
                         <bs-grid-cell
                             :column="columns[1]"
                             :item="item"
@@ -87,7 +85,7 @@
                             :index="index"
                         ></bs-grid-cell>
 
-                       <bs-grid-cell
+                        <bs-grid-cell
                             :column="columns[3]"
                             :item="item"
                             :index="index"
@@ -129,9 +127,7 @@
                                     size="sm"
                                     color="danger"
                                     flat
-                                    @click="
-                                        abriModal(item)
-                                    "
+                                    @click="abriModal(item)"
                                 ></bs-button>
                             </bs-tooltip>
                         </bs-grid-cell>
@@ -146,7 +142,9 @@
             max-width="85%"
         >
             <b>¿Desea eliminar el producto?</b><br />
-            Al eliminar el producto, no podrá usarlo en las transacciones. <br> Presiones Cancelar o presione ESC para salir.
+            Al eliminar el producto, no podrá usarlo en las transacciones.
+            <br />
+            Presiones Cancelar o presione ESC para salir.
 
             <template v-slot:footer>
                 <bs-button
@@ -156,11 +154,7 @@
                 >
                     Cancelar
                 </bs-button>
-                <bs-button
-                    active
-                    color="primary"
-                    @click="eliminarProducto()"
-                >
+                <bs-button active color="primary" @click="eliminarProducto()">
                     OK
                 </bs-button>
             </template>
@@ -171,13 +165,11 @@
 <script>
 import { prefix } from "../../../../variables";
 
-
 export default {
     data: function() {
         return {
-
             prefijo: "",
-            trueModalVisible:false,
+            trueModalVisible: false,
             productos: new BsStore({
                 idProperty: "id",
                 dataProperty: "factura",
@@ -192,22 +184,21 @@ export default {
                         "/modulos/transaccion/factura_venta/cargar_facturas_dia"
                 }
             }),
-            item:{},
+            item: {}
         };
     },
 
     mounted: function() {
-       this.prefijo = prefix;
+        this.prefijo = prefix;
     },
     beforeDestroy() {},
     methods: {
         btnClickModificar(item) {
             this.$store.state.laboratorio = item;
-           // console.log(item);
-
+            // console.log(item);
         },
-        abriModal(item ) {
-            this.trueModalVisible=true;
+        abriModal(item) {
+            this.trueModalVisible = true;
             this.item = item;
         },
         eliminarProducto() {
@@ -222,7 +213,8 @@ export default {
                     that.$refs.gridProducto.reload();
                     that.showNotificationProgress(
                         "Exito al procesar",
-                        "Usted ha eliminado correctamente el producto." + that.item.descripcion,
+                        "Usted ha eliminado correctamente el producto." +
+                            that.item.descripcion,
                         "success"
                     );
                 })
@@ -243,7 +235,7 @@ export default {
                 timeout: 5000
             };
             this.$notification[icon](options, title);
-        },
+        }
     }
 };
 </script>

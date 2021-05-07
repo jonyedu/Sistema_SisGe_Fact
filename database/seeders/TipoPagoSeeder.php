@@ -17,6 +17,42 @@ class TipoPagoSeeder extends Seeder
         TipoPago::truncate();
         TipoPago::updateOrCreate(
             [
+                'descripcion' => 'Efectivo',
+            ],
+            [
+                'descripcion' => 'Efectivo',
+            ]
+        );
+        TipoPago::updateOrCreate(
+            [
+                'descripcion' => 'Tarjetas',
+            ],
+            [
+                'descripcion' => 'Tarjetas',
+            ]
+        );
+        TipoPago::updateOrCreate(
+            [
+                'descripcion' => 'Cheque',
+            ],
+            [
+                'descripcion' => 'Cheque',
+            ]
+        );
+        TipoPago::updateOrCreate(
+            [
+                'descripcion' => 'Credito',
+            ],
+            [
+                'descripcion' => 'Credito',
+            ]
+        );
+    }
+    public function run1()
+    {
+        TipoPago::truncate();
+        TipoPago::updateOrCreate(
+            [
                 'descripcion' => 'Otros con Utilización del Sistema Financiero',
             ],
             [

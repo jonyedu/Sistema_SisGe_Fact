@@ -12,8 +12,6 @@
                 :disabled="cliente.band"
                 v-model="cliente.cedula"
                 @input="consultarcedula()"
-                
-                required
             >
                 <label>Cédula de Identidad </label>
             </bs-text-field>
@@ -23,7 +21,7 @@
                 label-class="col-md-4 ml-3"
                 v-model="cliente.band"
                 @change="consumidorfinal()"
-                
+
             >
                 S/c
             </bs-switch>
@@ -34,8 +32,6 @@
                 required
                 :disabled="cliente.band"
                 v-model="cliente.nombres"
-              required
-                
             >
                 <label>Nombres </label>
             </bs-text-field>
@@ -46,7 +42,6 @@
                 required
                 :disabled="cliente.band"
                 v-model="cliente.apellidos"
-           required
             >
                 <label>Apellidos</label>
             </bs-text-field>
@@ -57,7 +52,7 @@
                 required
                 :disabled="cliente.band"
                 v-model="cliente.telefono"
-                
+
             >
                 <label>Teléfono</label>
             </bs-text-field>
@@ -68,7 +63,7 @@
                 required
                 :disabled="cliente.band"
                 v-model="cliente.direccion"
-                
+
             >
                 <label>Dirección</label>
             </bs-text-field>
@@ -79,7 +74,7 @@
                 required
                 :disabled="cliente.band"
                 v-model="cliente.email"
-                
+
             >
                 <label>Correo Electronico</label>
             </bs-text-field>
@@ -102,8 +97,8 @@
 </template>
 <script>
 import { prefix } from "../../../../variables";
- 
- 
+
+
 export default {
     data: function() {
         return {
@@ -127,18 +122,18 @@ export default {
             },
             trueModalVisible: false
         };
-        
+
     },
-    
+
     computed: {
-         
+
         validarCliente(){
             if (this.cliente.band = true) {
                // this.active_btn = false;
                  return false;
             } else {
                  return true;
-                
+
             }
 
         },
@@ -152,12 +147,12 @@ export default {
         guardarCliente(){
 
 
-            
+
               let that = this;
             let url = "";
             this.errors = [];
             url = this.prefijo + "/modulos/persona/cliente/guardar_cliente";
-            
+
             axios
                 .post(url, this.cliente)
                 .then(function(response) {
@@ -185,15 +180,15 @@ export default {
 
 
                     }
-                    
 
 
 
-                    
+
+
                 })
                 .catch(error => {
                     //Errores de validación
-                   
+
 
                     if (error.response.data.hasOwnProperty("errors")) {
                         const errors = error.response.data.errors;
@@ -210,7 +205,7 @@ export default {
                             }
                         }
                     }
-                 
+
                 });
 
 
@@ -231,7 +226,7 @@ export default {
                                 "Cliente no registrado",
                                 "error"
                             );
-                            
+
                             that.cliente.nombres = " ";
                             that.cliente.apellidos = "";
                             that.cliente.direccion = "";

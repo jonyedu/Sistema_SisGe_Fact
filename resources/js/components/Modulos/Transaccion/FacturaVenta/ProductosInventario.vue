@@ -1,25 +1,21 @@
 <template>
-  <div class="my-demo-wrapper">
-   <bs-card-body>
-   <bs-alert color="success">
-                           Total a Pagar :  $ {{ sumatoria }}
-                          
-                        </bs-alert>
-                        <div class="auto" id="auto" style="display: none">
-                                        holis {{envio}}
-                                        </div>
-                    <bs-card-content class="text-right">
-                    <div class="row"> 
-                                                <div
-                                                    class="col-lg-8 col-md-8 col-sm-8"
-                                                >
-                                    <bs-search-field
-                                                            v-model="srchvalue0"
-                                                            @search="onSearch">
-                                                        </bs-search-field>
-
-
-                                                </div>
+    <div class="my-demo-wrapper">
+        <bs-card-body>
+            <bs-alert color="success">
+                Total a Pagar : $ {{ sumatoria }}
+            </bs-alert>
+            <div class="auto" id="auto" style="display: none">
+                holis {{ envio }}
+            </div>
+            <bs-card-content class="text-right">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                        <bs-search-field
+                            v-model="srchvalue0"
+                            @search="onSearch"
+                        >
+                        </bs-search-field>
+                    </div>
 
                     <bs-tooltip
                         content="Productos Agregados"
@@ -118,10 +114,11 @@
                 :open.sync="autoCloseModalVisible"
                 title="Cantidad de Producto"
                 max-width="85%"
+                :overlay-close="false"
             >
                 {{ mensaje }}
-                <br>
-               <span COLOR="red">{{mensaje2}}</span> 
+                <br />
+                <span COLOR="red">{{ mensaje2 }}</span>
                 <bs-text-field
                     placeholder="Placeholder"
                     floating-label
@@ -139,26 +136,29 @@
                     >
                         Cancel
                     </bs-button>
-                    <button type="button
+                    <bs-button
+                        outlined
+                        color="secondary"
+                        :disabled="validarRed"
+                        @click="agregarProducto()"
+                    >
+                        Ok
+                    </bs-button>
+                    <!-- <button
+                        type="button
                     "
-                  :disabled="validarRed"
-                   style=" background-color: #4CAF50;
-                    border: none;
-                    color: white;
-                    padding: 5px 22px;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 16px;"
-                    @click="agregarProducto()">
-                    OK
-                    </button>
+                        :disabled="validarRed"
+                        style=" background-color: #4CAF50;border: none;color: white;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;"
+                        @click="agregarProducto()"
+                    >
+                        OK
+                    </button> -->
                     <!-- <bs-button
                         active
-                       v-model="validarRed" 
-                       
+                       v-model="validarRed"
+
                         color="primary"
-                        
+
                     >
                         OK
                     </bs-button> -->
@@ -188,19 +188,19 @@
                                 <bs-list-tile-subtitle>
                                     Cantidad : # {{ item.cant }}
 
-                                     <bs-tooltip
-                            content="Eliminar productos"
-                            placement="bottom"
-                        >
-                            <bs-button
-                                icon="trash-alt"
-                                mode="icon"
-                                icon-size="lg"
-                                color="secondary"
-                                flat
-                                @click="EliminarIndice(idx)"
-                            ></bs-button>
-                        </bs-tooltip>
+                                    <bs-tooltip
+                                        content="Eliminar productos"
+                                        placement="bottom"
+                                    >
+                                        <bs-button
+                                            icon="trash-alt"
+                                            mode="icon"
+                                            icon-size="lg"
+                                            color="secondary"
+                                            flat
+                                            @click="EliminarIndice(idx)"
+                                        ></bs-button>
+                                    </bs-tooltip>
                                 </bs-list-tile-subtitle>
                             </bs-list-tile-content>
                             <bs-list-tile-action
@@ -223,19 +223,12 @@
 
             <!-- MODAL DEL PRODUCTO IMAGEN -->
 
-             <bs-modal
-                :open.sync="modalimagenproductos"
-                
-                max-width="50%"
-            >
-                
-                <br>
-                <bs-card-media 
-                    :title="mensaje"
-                    >
-                    <img :src="imagenp" alt="image">        
+            <bs-modal :open.sync="modalimagenproductos" max-width="50%">
+                <br />
+                <bs-card-media :title="mensaje">
+                    <img :src="imagenp" alt="image" />
                 </bs-card-media>
-               
+
                 <template v-slot:footer>
                     <bs-button
                         outlined
@@ -244,13 +237,13 @@
                     >
                         Cancel
                     </bs-button>
-                    
+
                     <!-- <bs-button
                         active
-                       v-model="validarRed" 
-                       
+                       v-model="validarRed"
+
                         color="primary"
-                        
+
                     >
                         OK
                     </bs-button> -->
@@ -265,17 +258,17 @@ import { prefix } from "../../../../variables";
 export default {
     data: function() {
         return {
-            active_btn:false,
+            active_btn: false,
             totalPagar: 0,
             srchvalue0: null,
             cantidad: 0,
             autoCloseModalVisible: false,
             modalproductos: false,
-            modalimagenproductos:false,
+            modalimagenproductos: false,
             prefijo: "",
-            imagenp:"",
+            imagenp: "",
             Lista: [],
-           
+
             adjuntar: [],
             ListaCompra: [],
             mensaje: "",
@@ -306,137 +299,120 @@ export default {
             item: {}
         };
     },
-     mounted: function() {
-       // this.$store.state.inventariofactura = this.ListaCompra;
+    mounted: function() {
+        // this.$store.state.inventariofactura = this.ListaCompra;
     },
     computed: {
-        envio(){
+        envio() {
             this.$store.state.inventariofactura = this.ListaCompra;
-            return this.$store.state.inventariofactura ;
+            return this.$store.state.inventariofactura;
         },
-      sumatoria(){
-        let total_for=[];
-         var element=0;
-        for (let index = 0; index < this.ListaCompra.length; index++) {
-       // console.log(this.ListaCompra[index]['tot']);
-        
-          element += this.ListaCompra[index].['tot'];
-          
-        }
-       
-     return this.totalPagar = element;
-      },
-       validarRed(){
-         if (this.cantidad >this.Lista.Stock ) {
-           this.mensaje2 =  "El Stock es mayor a la cantidad";
-           //  return "El Stock es mayo a la cantidad";
-           return true;
-         }else if (this.cantidad == 0 || this.cantidad == ""){
-               this.mensaje2 =  "No puede elegir un valor 0";
-              return true;             
-         }else{
-                this.mensaje2 =  "";
-                 return false;      
-         }
-         
-    
-      },
-      
-      
-      
-    },
-  methods: {
-      EliminarIndice(index){
-       
-        this.ListaCompra.splice(index,1)    
-       
-     
-          
+        sumatoria() {
+            let total_for = [];
+            var element = 0;
+            for (let index = 0; index < this.ListaCompra.length; index++) {
+                // console.log(this.ListaCompra[index]['tot']);
 
-      },
-    agregarProducto(){
-
-        if (this.adjuntar.length==0){
-
-            //lista
-
-            //--
-
-
-
-          this.adjuntar.push({ url: this.Lista.producto_inv.imagen,
-          id:this.Lista.producto_inv.id,
-          precio:this.Lista.costo_inv.precio,
-          cant:this.cantidad,
-          tot:this.cantidad*this.Lista.costo_inv.precio,
-          name:this.Lista.producto_inv.nombre,
-          iva:this.Lista.producto_inv.iva,
-          idfac:this.Lista.id,
-          idfacCompra:this.Lista.id_factura});
-      //        this.adjuntar.id_pro_f = this.Lista.producto_inv.id;
-      // this.adjuntar.precio_f = this.Lista.costo_inv.precio;
-      // this.adjuntar.cantidad_f = this.cantidad;
-      // this.adjuntar.totalPagar_f = this.totalPagar;
-      this.ListaCompra= this.adjuntar;
-     // return;
-         }else{
-            for (let i = 0; i < this.adjuntar.length; i++) {
-                if(this.adjuntar[i].id == this.Lista.producto_inv.id){
-                    this.showNotificationProgress(
-                                "Facturacion",
-                                "El producto ya esta Agregado" ,
-                                "error"
-                            );
-                            return;
-                  }
+                element += this.ListaCompra[index]["tot"];
             }
-             
-                     this.adjuntar.push({ url:this.Lista.producto_inv.imagen,
-                     id:this.Lista.producto_inv.id,
-                     precio:this.Lista.costo_inv.precio,
-                     cant:this.cantidad,
-                     tot:this.cantidad*this.Lista.costo_inv.precio,
-                     name:this.Lista.producto_inv.nombre,
-                     iva:this.Lista.producto_inv.iva,
-                     idfac:this.Lista.id,
-                     idfacCompra:this.Lista.id_factura});
-                     this.ListaCompra= this.adjuntar;
-               
-           
-         }
 
-      
-        console.log(this.ListaCompra);
-      this.autoCloseModalVisible = false;
-       
+            return (this.totalPagar = element);
+        },
+        validarRed() {
+            if (this.cantidad > this.Lista.Stock) {
+                this.mensaje2 = "El Stock es mayor a la cantidad";
+                //  return "El Stock es mayo a la cantidad";
+                return true;
+            } else if (this.cantidad == 0 || this.cantidad == "") {
+                this.mensaje2 = "No puede elegir un valor 0";
+                return true;
+            } else {
+                this.mensaje2 = "";
+                return false;
+            }
+        }
+    },
+    methods: {
+        EliminarIndice(index) {
+            this.ListaCompra.splice(index, 1);
+        },
+        agregarProducto() {
+            if (this.adjuntar.length == 0) {
+                //lista
 
-    },
-    calcular(){
-          
-       
+                //--
 
-      // this.totalPagar = this.cantidad * this.Lista.costo_inv.precio;
-    },
-    onSearch(term) {
-       this.srchvalue0 = term;
-        this.inventario_p.fetch(term);
-        //  this.showNotificationProgress(
-        //                 "Facturacion",
-        //                 "Producto Agregado" ,
-        //                 "success"
-        //             );
-    },
-     btnClickModificar(item) {
-       this.autoCloseModalVisible=true;
-       this.Lista= item;
-       this.mensaje = item.producto_inv.nombre + " Valor: " + item.costo_inv.precio;
-      },
-    btnClickMostar(item) {
-       this.modalimagenproductos=true;
-      // this.Lista= item;
-      this.imagenp = item.producto_inv.imagen;
-       this.mensaje = item.producto_inv.nombre + " Valor: " + item.costo_inv.precio;
-      },
+                this.adjuntar.push({
+                    url: this.Lista.producto_inv.imagen,
+                    id: this.Lista.producto_inv.id,
+                    precio: this.Lista.costo_inv.precio,
+                    cant: this.cantidad,
+                    tot: this.cantidad * this.Lista.costo_inv.precio,
+                    name: this.Lista.producto_inv.nombre,
+                    iva: this.Lista.producto_inv.iva,
+                    idfac: this.Lista.id,
+                    idfacCompra: this.Lista.id_factura
+                });
+                //        this.adjuntar.id_pro_f = this.Lista.producto_inv.id;
+                // this.adjuntar.precio_f = this.Lista.costo_inv.precio;
+                // this.adjuntar.cantidad_f = this.cantidad;
+                // this.adjuntar.totalPagar_f = this.totalPagar;
+                this.ListaCompra = this.adjuntar;
+                // return;
+            } else {
+                for (let i = 0; i < this.adjuntar.length; i++) {
+                    if (this.adjuntar[i].id == this.Lista.producto_inv.id) {
+                        this.showNotificationProgress(
+                            "Facturacion",
+                            "El producto ya esta Agregado",
+                            "error"
+                        );
+                        return;
+                    }
+                }
+
+                this.adjuntar.push({
+                    url: this.Lista.producto_inv.imagen,
+                    id: this.Lista.producto_inv.id,
+                    precio: this.Lista.costo_inv.precio,
+                    cant: this.cantidad,
+                    tot: this.cantidad * this.Lista.costo_inv.precio,
+                    name: this.Lista.producto_inv.nombre,
+                    iva: this.Lista.producto_inv.iva,
+                    idfac: this.Lista.id,
+                    idfacCompra: this.Lista.id_factura
+                });
+                this.ListaCompra = this.adjuntar;
+            }
+
+            console.log(this.ListaCompra);
+            this.autoCloseModalVisible = false;
+        },
+        calcular() {
+            // this.totalPagar = this.cantidad * this.Lista.costo_inv.precio;
+        },
+        onSearch(term) {
+            this.srchvalue0 = term;
+            this.inventario_p.fetch(term);
+            //  this.showNotificationProgress(
+            //                 "Facturacion",
+            //                 "Producto Agregado" ,
+            //                 "success"
+            //             );
+        },
+        btnClickModificar(item) {
+            this.autoCloseModalVisible = true;
+            this.Lista = item;
+            this.mensaje =
+                item.producto_inv.nombre + " Valor: " + item.costo_inv.precio;
+        },
+        btnClickMostar(item) {
+            this.modalimagenproductos = true;
+            // this.Lista= item;
+            this.imagenp = item.producto_inv.imagen;
+            this.mensaje =
+                item.producto_inv.nombre + " Valor: " + item.costo_inv.precio;
+        },
         showNotificationProgress(title, message, icon) {
             let options = {
                 message: message,
