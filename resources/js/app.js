@@ -56,17 +56,17 @@ Vue.component(
 // Factura
 Vue.component(
     "inventario-producto",
-    require("./components/Modulos/Transaccion/FacturaVenta/ProductosInventario.vue").default
+    require("./components/Modulos/Transaccion/FacturaVenta/Components/ProductosInventario.vue").default
 );
 
 Vue.component(
     "cliente-factura",
-    require("./components/Modulos/Transaccion/FacturaVenta/ClienteFactura.vue").default
+    require("./components/Modulos/Transaccion/FacturaVenta/Components/ClienteFactura.vue").default
 );
 
 Vue.component(
     "forma-de-pago-factura",
-    require("./components/Modulos/Transaccion/FacturaVenta/FormadePagoFactura.vue").default
+    require("./components/Modulos/Transaccion/FacturaVenta/Components/FormadePagoFactura.vue").default
 );
 
 Vue.component(

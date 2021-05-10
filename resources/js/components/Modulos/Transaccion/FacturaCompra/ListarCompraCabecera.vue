@@ -241,7 +241,7 @@ export default {
                     that.$refs.gridFacturaCompra.reload();
                     that.showNotificationProgress(
                         "Exito al procesar",
-                        "Usted ha eliminado correctamente la factura." + that.item.descripcion,
+                        "Usted ha eliminado correctamente la factura de compra: " + that.item.secuencia,
                         "success"
                     );
                 })

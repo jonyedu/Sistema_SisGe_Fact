@@ -17,6 +17,5 @@
     <!--  Cuerpo -->
     @include('reports.Transaccion.FacturaVenta.partials.Body')
     <br>
-    <!--  Pie de pagina -->
     @include('reports.Transaccion.FacturaVenta.partials.Footer')
 </body>

@@ -156,7 +156,7 @@
           <bs-grid-cell :column="columns[4]" 
                         :item="item" 
                         :index="index"
-                        :class="{'bg-warning': item.status = 1}"></bs-grid-cell>
+                        :class="'bg-warning'"></bs-grid-cell>
          
           <bs-grid-cell :column="columns[6]" 
                         :item="item" 
@@ -244,12 +244,29 @@ export default {
             axios
                 .post(url,item)
                 .then(function(response) { 
-                    console.log(response.data);
-                      that.showNotificationProgress(
+                    //console.log(response.data.id_factura);
+                   // that.generarPdf(response.data.id);
+                    
+                                
+                   if (response.data.cliente!=0) 
+                   {
+                        that.showNotificationProgress(
                                     "Facturación",
-                                    "Factura Cancelada" ,
+                                    "Factura Cancelada con éxito" ,
                                     "success"
                                     );
+                                    that.generarPdf(item.id);
+                       
+                   }else{
+                       that.showNotificationProgress(
+                                    "Facturación",
+                                    "Factura ya ha sido Cancelada" ,
+                                    "error"
+                                    );
+                                    that.generarPdf(item.id);
+
+                   }
+                         
                     
                     
                 })
@@ -269,6 +286,7 @@ export default {
                                     "Error en el sistema" +errors ,
                                     "error"
                                     );
+                                     that.generarPdf(response.data.id);
                                     return; 
  
                             }
@@ -280,6 +298,18 @@ export default {
                  this.source0.fetch(item.id_factura);
 
 
+        },
+         generarPdf(value){
+              // alert(value);
+                 let that = this;
+            let url = "";
+            
+            this.errors = [];
+            url =  "/modulos/reporte/factura_credito/cargar_pdf_factura_credito/"+value;
+            window.open(url, '_blank');
+            //window.location.href =  url;
+         
+            //location.reload();
         },
         btnClickModificar(item) {
             this.$store.state.proveedor = item;
@@ -293,31 +323,7 @@ export default {
             
               this.source0.fetch(item.id_factura);
         },
-        eliminarProducto() {
-            let that = this;
-            let url =
-                "/modulos/administracion/producto/eliminar_producto/" +
-                this.item.id;
-            axios
-                .delete(url)
-                .then(function() {
-                    that.trueModalVisible = false;
-                    that.$refs.gridProducto.reload();
-                    that.showNotificationProgress(
-                        "Exito al procesar",
-                        "Usted ha eliminado correctamente el producto." + that.item.descripcion,
-                        "success"
-                    );
-                })
-                .catch(error => {
-                    that.trueModalVisible = false;
-                    that.showNotificationProgress(
-                        "Error en eliminarProducto",
-                        "Por favor comuníquese con el administrador." + error,
-                        "error"
-                    );
-                });
-        },
+         
         showNotificationProgress(title, message, icon) {
             let options = {
                 message: message,

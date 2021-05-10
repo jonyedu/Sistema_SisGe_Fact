@@ -39,7 +39,7 @@ import ModificarCrearSucursal from "./components/Modulos/Seguridad/Sucursal/Crea
 
 //Modulo Transaccion
 import ListaFacturacionVenta from "./components/Modulos/Transaccion/FacturaVenta/ListaFacturacionV";
-import FacturacionVenta from "./components/Modulos/Transaccion/FacturaVenta/FacturaVenta";
+import IndexFacturacionVenta from "./components/Modulos/Transaccion/FacturaVenta/IndexFacturacionVenta";
 import ListarCompraCabecera from "./components/Modulos/Transaccion/FacturaCompra/ListarCompraCabecera";
 import IndexFacturaCompra from "./components/Modulos/Transaccion/FacturaCompra/IndexFacturaCompra";
 
@@ -184,7 +184,7 @@ export default new VueRouter({
         {
             path:
                 prefijo + "/modulos/transaccion/factura_venta/crear_modificar_factura_venta",
-            component: FacturacionVenta
+            component: IndexFacturacionVenta
         },
         {
             path:

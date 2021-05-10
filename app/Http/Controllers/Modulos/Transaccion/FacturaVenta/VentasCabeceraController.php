@@ -25,23 +25,29 @@ use Illuminate\Support\Facades\Validator;
 use Barryvdh\DomPDF\Facade as PDF;
 
 
+use App\Http\Controllers\Modulos\Reporte\FacturaVenta\FacturaVentaReporteController;
+
 
 
 
 use App\Http\Controllers\Controller;
 use App\Models\Modulos\Banco\TipoPago\TipoPago;
+use App\Models\Modulos\Parametrizacion\ConfigFacturero\ConfigFacturero;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class VentasCabeceraController extends Controller
 {
+
+
+
     public function cargarFacturasDelDia()
     {
         try {
-            $factura = VentasCabecera::select('id', 'id_cliente', 'fecha', 'totalapagar', 'status')
-                ->where('status', 1)
+            $factura = VentasCabecera::select('id', 'id_cliente', 'secuencia', 'fecha', 'totalapagar', 'status')
                 ->with('cliente:cliente_id,nombres,apellidos')
+                ->where('status', 1)
                 ->get();
             return  response()->json(['factura' => $factura, 'total' => sizeOf($factura)], 200);
         } catch (Exception $e) {
@@ -133,14 +139,19 @@ class VentasCabeceraController extends Controller
             //code...
             $user = Auth::user();
             $cotizacion = $request->input('cotizacion');
+            $cotizacion_id = (int)$request->input('cotizacion');
             $datos_inventario = $request->input('inventario');
             $datos_cliente = $request->input('cliente');
+            $datos_inventario_factura = $request->input('datos_inventario_factura');
             $datos_metodosp = $request->input('metodosp');
 
             if ($cotizacion == true) {
 
                 $forma_pago =  $datos_metodosp["tipo_pagof"];
                 $id_cliente = $datos_cliente["id"];
+                $secuencia = $datos_cliente["no_documento"];
+                $no_autorizacion = $datos_cliente["no_autorizacion"];
+                $observacion = $datos_inventario_factura["observacion"];
                 $total = 0;
                 $subtotal12 = 0;
                 $subtotal0 = 0;
@@ -174,7 +185,10 @@ class VentasCabeceraController extends Controller
 
                 $data =  VentasCabecera::create(
                     [
+                        //  'SecCirPro' => 0
                         'id_cliente' => $id_cliente,
+                        'secuencia' => $secuencia,
+                        'no_autorizacion' => $no_autorizacion,
                         'fecha' => date("Y-m-d H:i:s"),
                         'viva' => $iva,
                         'subtotaliva1' => $subtotal12,
@@ -186,13 +200,27 @@ class VentasCabeceraController extends Controller
                         'caj' => 0,
                         'cambio' => 0,
                         'recibido' => 0,
+                        'observacion' => $observacion,
                         'status' => 1,
                         'usu_created' => $user->codigo,
                         'usu_update' => $user->codigo,
-                        'pcip' => $_SERVER["REMOTE_ADDR"], 'status' => 1
+                        'pcip' => $_SERVER["REMOTE_ADDR"],
+                        'status' => 1
                     ]
 
                 );
+
+                //Aqui es para actualizar el numero de secuencia
+                $facturero = ConfigFacturero::where('no_autorizacion', $no_autorizacion)
+                    ->where('status', 1)
+                    ->first();
+
+                ConfigFacturero::where('id', $facturero->id)
+                    ->where('status', 1)
+                    ->update([
+                        'usu_update' => $user->codigo,
+                        'secuencia' => $facturero->secuencia + 1,
+                    ]);
 
                 $id_cabecera = $data->id;
                 // $total= 0;
@@ -207,14 +235,18 @@ class VentasCabeceraController extends Controller
 
                     VentasDetalle::create(
                         [
+                            //  'SecCirPro' => 0
                             'id_facturav' => $id_cabecera,
                             'id_producto' => $datos_inventario[$i]["id"],
                             'iva' => $datos_inventario[$i]["iva"],
                             'factor' => 0,
                             'valor' => $datos_inventario[$i]["precio"],
                             'cantidad' => $datos_inventario[$i]["cant"],
-                            'total' => $datos_inventario[$i]["tot"]
-
+                            'total' => $datos_inventario[$i]["tot"],
+                            'usu_created' => $user->codigo,
+                            'usu_update' => $user->codigo,
+                            'pcip' => $_SERVER["REMOTE_ADDR"],
+                            'status' => 1,
                         ]
 
                     );
@@ -247,7 +279,14 @@ class VentasCabeceraController extends Controller
                     VentasTarjetas::create(
                         [
                             //  'SecCirPro' => 0
-                            'factura' => $id_cabecera, 'numero' => 0, 'numero_tarjeta' =>  $datos_metodosp["numero_tarjeta"], 'caduca' =>  $datos_metodosp["caduca"], 'cliente' => $datos_metodosp["cliente"], 'registro' => date("Y-m-d H:i:s"), 'usuario_ingreso' =>  $user->codigo, 'fecha_ingreso' => date("Y-m-d H:i:s"), 'status' => 1
+                            'factura' => $id_cabecera,
+                            'numero' => 0,
+                            'numero_tarjeta' =>  $datos_metodosp["numero_tarjeta"],
+                            'caduca' =>  $datos_metodosp["caduca"],
+                            'cliente' => $datos_metodosp["cliente"],
+                            'registro' => date("Y-m-d H:i:s"),
+                            'usuario_ingreso' =>  $user->codigo,
+                            'fecha_ingreso' => date("Y-m-d H:i:s"), 'status' => 1
 
                         ]
 
@@ -258,8 +297,19 @@ class VentasCabeceraController extends Controller
                     VentasCheque::create(
                         [
                             //  'SecCirPro' => 0
-                            'id_facturav' => $id_cabecera, 'fecha_emision' => $datos_metodosp["fecha_emision"], 'cantidad' =>  $datos_metodosp["cantidad_pagarf"], 'nombre' =>  $datos_metodosp["nombref"], 'banco' => $datos_metodosp["banco"], 'beneficiario' => $datos_metodosp["beneficiario"], 'numero_cuenta' => $datos_metodosp["numero_cuenta"], 'usu_created' =>  $user->codigo, 'usu_update' =>  $user->codigo, 'created_at' =>  date("Y-m-d H:i:s"), 'updated_at' =>  date("Y-m-d H:i:s"), 'pcip' => $_SERVER["REMOTE_ADDR"], 'status' => 1
-
+                            'id_facturav' => $id_cabecera,
+                            'fecha_emision' => $datos_metodosp["fecha_emision"],
+                            'cantidad' =>  $datos_metodosp["cantidad_pagarf"],
+                            'nombre' =>  $datos_metodosp["nombref"],
+                            'banco' => $datos_metodosp["banco"],
+                            'beneficiario' => $datos_metodosp["beneficiario"],
+                            'numero_cuenta' => $datos_metodosp["numero_cuenta"],
+                            'usu_created' =>  $user->codigo,
+                            'usu_update' =>  $user->codigo,
+                            'created_at' =>  date("Y-m-d H:i:s"),
+                            'updated_at' =>  date("Y-m-d H:i:s"),
+                            'pcip' => $_SERVER["REMOTE_ADDR"],
+                            'status' => 1
                         ]
 
                     );
@@ -268,8 +318,17 @@ class VentasCabeceraController extends Controller
 
                 if ($forma_pago == 4) {
                     // return  response()->json(['tipo' =>  $id_cliente["id"], 'total' =>0 ], 200);
-                    VentasCredito::create([
-                        'id_factura' => $id_cabecera, 'total' => $total, 'id_tiempo_pago' =>  $datos_metodosp["formacreditof"], 'id_cliente' => $id_cliente, 'usu_created' =>  $user->codigo, 'usu_update' =>  $user->codigo, 'created_at' =>  date("Y-m-d H:i:s"), 'updated_at' =>  date("Y-m-d H:i:s"), 'pcip' => $_SERVER["REMOTE_ADDR"], 'status' => 1
+                    $data_credito =   VentasCredito::create([
+                        'id_factura' => $id_cabecera,
+                        'total' => $total,
+                        'id_tiempo_pago' => $datos_metodosp["formacreditof"],
+                        'id_cliente' => $id_cliente,
+                        'usu_created' =>  $user->codigo,
+                        'usu_update' =>  $user->codigo,
+                        'created_at' =>  date("Y-m-d H:i:s"),
+                        'updated_at' =>  date("Y-m-d H:i:s"),
+                        'pcip' => $_SERVER["REMOTE_ADDR"],
+                        'status' => 1
 
                     ]);
                     //return  response()->json(['tipo' =>  $datos_metodosp["creditofacturaventa"], 'total' =>0 ], 200);
@@ -278,7 +337,17 @@ class VentasCabeceraController extends Controller
                         # code...
 
                         VentasCreditoDetalle::create([
-                            'id_factura' => $id_cabecera, 'fecha' =>  date('Y-m-d', strtotime($datos_metodosp["creditofacturaventa"][$i]["fecha"])), 'interes' => $datos_metodosp["creditofacturaventa"][$i]["interes"], 'total' =>  $datos_metodosp["creditofacturaventa"][$i]["total"], 'valor' => $datos_metodosp["creditofacturaventa"][$i]["valor"], 'usu_created' =>  $user->codigo, 'usu_update' =>  $user->codigo, 'created_at' =>  date("Y-m-d H:i:s"), 'updated_at' =>  date("Y-m-d H:i:s"), 'pcip' => $_SERVER["REMOTE_ADDR"], 'status' => 1
+                            'id_factura' => $id_cabecera,
+                            'fecha' =>  date('Y-m-d', strtotime($datos_metodosp["creditofacturaventa"][$i]["fecha"])),
+                            'interes' => $datos_metodosp["creditofacturaventa"][$i]["interes"],
+                            'total' =>  $datos_metodosp["creditofacturaventa"][$i]["total"],
+                            'valor' => $datos_metodosp["creditofacturaventa"][$i]["valor"],
+                            'usu_created' =>  $user->codigo,
+                            'usu_update' => $user->codigo,
+                            'created_at' => date("Y-m-d H:i:s"),
+                            'updated_at' =>  date("Y-m-d H:i:s"),
+                            'pcip' => $_SERVER["REMOTE_ADDR"],
+                            'status' => 1
 
                         ]);
                     }
@@ -310,6 +379,7 @@ class VentasCabeceraController extends Controller
 
                 $data =  CotizacionCabecera::create(
                     [
+                        //  'SecCirPro' => 0
                         'id_cliente' => $id_cliente,
                         'fecha' => date("Y-m-d H:i:s"),
                         'viva' => $iva,
@@ -326,7 +396,7 @@ class VentasCabeceraController extends Controller
                         'usu_created' => $user->codigo,
                         'usu_update' => $user->codigo,
                         'pcip' => $_SERVER["REMOTE_ADDR"],
-                        'status' => 1,
+                        'status' => 1
                     ]
 
                 );
@@ -337,7 +407,19 @@ class VentasCabeceraController extends Controller
                     CotizacionDetalle::create(
                         [
                             //  'SecCirPro' => 0
-                            'id_facturac' => $id_cabecera, 'id_producto' => $datos_inventario[$i]["id"], 'iva' => $datos_inventario[$i]["iva"], 'factor' => 0, 'valor' => $datos_inventario[$i]["precio"], 'cantidad' => $datos_inventario[$i]["cant"], 'total' => $datos_inventario[$i]["tot"], 'usu_created' => $user->codigo, 'usu_update' => $user->codigo, 'created_at' =>  date("Y-m-d H:i:s"), 'updated_at' =>  date("Y-m-d H:i:s"), 'pcip' => $_SERVER["REMOTE_ADDR"], 'status' => 1
+                            'id_facturac' => $id_cabecera,
+                            'id_producto' => $datos_inventario[$i]["id"],
+                            'iva' => $datos_inventario[$i]["iva"],
+                            'factor' => 0,
+                            'valor' => $datos_inventario[$i]["precio"],
+                            'cantidad' => $datos_inventario[$i]["cant"],
+                            'total' => $datos_inventario[$i]["tot"],
+                            'usu_created' => $user->codigo,
+                            'usu_update' => $user->codigo,
+                            'created_at' =>  date("Y-m-d H:i:s"),
+                            'updated_at' =>  date("Y-m-d H:i:s"),
+                            'pcip' => $_SERVER["REMOTE_ADDR"],
+                            'status' => 1
 
                         ]
 
@@ -347,13 +429,13 @@ class VentasCabeceraController extends Controller
 
 
 
-
+            //$result = (new FacturaVentaReporteController)->cargarPdfFacturaVenta($data->id, $cotizacion_id);
 
 
             return  response()->json(['tipo' => $data->id, 'total' => 0], 200);
         } catch (Exception $th) {
             //throw $th;
-            return  response()->json(['errors' =>  $th->getMessage(), 'total' => 0], 200);
+            return  response()->json(['errors' =>  $th->getMessage()], 500);
         }
     }
 

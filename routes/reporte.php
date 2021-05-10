@@ -21,4 +21,14 @@ Route::group(['prefix' => '/modulos/reporte', 'middleware' => ['auth:web'], 'ver
     Route::namespace('Modulos\Reporte\FacturaCompra')->prefix('factura_compra')->group(function () {
         Route::get('cargar_pdf_factura_compra/{factura_compra_cabecera_id}', 'FacturaCompraReporteController@cargarPdfFacturaCompra');
     });
+
+    //ventas
+    Route::namespace('Modulos\Reporte\FacturaVenta')->prefix('factura_venta')->group(function () {
+        Route::get('cargar_pdf_factura_venta/{id}/{id_ide}', 'FacturaVentaReporteController@cargarPdfFacturaVenta');
+    });
+
+    //credito
+    Route::namespace('Modulos\Reporte\FacturaVenta')->prefix('factura_credito')->group(function () {
+        Route::get('cargar_pdf_factura_credito/{id}', 'FacturaVentaReporteController@cargarPdfFacturaVentaCredito');
+    });
 });

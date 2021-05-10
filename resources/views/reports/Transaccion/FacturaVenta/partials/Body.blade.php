@@ -28,13 +28,13 @@
         <th>Precio Unitario</th>
         <th>Precio Total</th>
     </tr>
-    @if ($factura_compra != null)
-    @forelse ($factura_compra->compraDetalle as $detalle)
+    @if ($factura_compra->DetalleVenta != null)
+    @forelse ($factura_compra->DetalleVenta as $detalle)
     <tr>
         <td style="font-size: 10px;text-align: center;">{{$detalle->producto->codigo}}</td>
-        <td class="configListProduct">{{$detalle->cantidad}}</td>
+        <td class="configListProduct">{{ (int)$detalle->cantidad}}</td>
         <td style="font-size: 10px;text-align: left;">{{$detalle->producto->nombre}}</td>
-        <td class="configListProduct">${{$detalle->costo}}</td>
+        <td class="configListProduct">${{$detalle->valor}}</td>
         <td class="configListProduct">${{$detalle->total}}</td>
     </tr>
     @empty

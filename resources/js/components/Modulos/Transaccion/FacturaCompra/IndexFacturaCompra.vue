@@ -225,8 +225,9 @@ export default {
                     factura_compra.proveedor.telefono;
                 //Listar Producto
                 this.factura_compra.listar_producto.proveedor_id = factura_compra.proveedor.id;
-                this.factura_compra.listar_producto.total =
-                    factura_compra.totalapagar;
+                this.factura_compra.listar_producto.total = factura_compra.totalapagar;
+                this.factura_compra.listar_producto.sub_total_0 = factura_compra.sub_total_0;
+                this.factura_compra.listar_producto.sub_total_12 = factura_compra.sub_total_12;
                 this.factura_compra.listar_producto.descripcion =
                     factura_compra.observacion;
                 //forma de pago
@@ -235,47 +236,6 @@ export default {
                 await this.$refs.refSeleccionaProducto.cmb.productos.proxy.fetch(
                     factura_compra.proveedor.id
                 );
-
-                /* var compra_detalle = factura_compra.compra_detalle;
-
-                var object = {};
-
-                for (let i = 0; i < compra_detalle.length; i++) {
-                    let i_pro_inv = null;
-                    for (
-                        let j = 0;
-                        j < compra_detalle[i].producto_inventario.length;
-                        j++
-                    ) {
-                        if (
-                            compra_detalle[i].producto_inventario[j].id_factura ==
-                                factura_compra.id &&
-                            compra_detalle[i].producto_inventario[j].id_producto ==
-                                compra_detalle[i].producto.id
-                        ) {
-                            i_pro_inv = i;
-                            break;
-                        }
-                    }
-                    this.factura_compra.listar_producto.producto_id = 180;
-                    object = {
-                        factura_compra_cuerpo_id:
-                            compra_detalle[i].producto_inventario[i_pro_inv].id,
-                        id: compra_detalle[i].producto.id,
-                        nombre: compra_detalle[i].producto.nombre,
-                        imagen: compra_detalle[i].producto.imagen,
-                        stock:
-                            compra_detalle[i].producto_inventario[i_pro_inv].stock,
-                        precio: compra_detalle[i].costo,
-                        cantidad: compra_detalle[i].cantidad,
-                        iva: compra_detalle[i].producto.iva,
-                        total: compra_detalle[i].cantidad * compra_detalle[i].costo
-                    };
-                    this.factura_compra.listar_producto.productosCarrito._items.push(
-                        object
-                    );
-                }
-                //this.$refs.refSeleccionaProducto.prueba2(); */
                 this.showLoader = false;
             }
         },

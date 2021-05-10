@@ -39,4 +39,25 @@ class CotizacionCabecera extends Model
         'created_at',
         'updated_at', 'pcip'
     ];
+    public function clienteFact()
+    {
+        return $this->hasOne('App\Models\Modulos\Persona\Cliente\Cliente', 'cliente_id', 'id_cliente');
+    }
+    public function formapagoFactura()
+    {
+        return $this->hasOne('App\Models\Modulos\Banco\TipoPago\TipoPago', 'tipo_pago', 'formapago');
+    }
+    public function tiempoCredito()
+    {
+        return $this->hasOne('App\Models\Modulos\Parametrizacion\FormaPago\FormaPago', 'id', 'id_tiempo_pago');
+    }
+
+    public function DetalleVenta()
+    {
+        return $this->hasMany('App\Models\Modulos\Transaccion\Cotizacion\CotizacionDetalle', 'id_facturac', 'id');
+    }
+    public function usuario()
+    {
+        return $this->hasOne('App\Models\Modulos\Seguridad\Usuario\SegUsuario', 'codigo', 'usu_created');
+    }
 }

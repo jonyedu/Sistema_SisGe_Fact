@@ -135,6 +135,7 @@
                                     placement="bottom"
                                 >
                                     <bs-button
+                                        v-if="item.cliente_id != 1"
                                         icon="pen"
                                         mode="icon"
                                         size="sm"
@@ -150,6 +151,7 @@
                                 placement="bottom"
                             >
                                 <bs-button
+                                    v-if="item.cliente_id != 1"
                                     icon="trash-alt"
                                     mode="icon"
                                     size="sm"

@@ -1,15 +1,15 @@
 import Vue from "vue";
-import Vuex from "vuex"
+import Vuex from "vuex";
 
 //import emergencia_store from './modules/emergencia_store'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
-       // emergencia_store
+        // emergencia_store
     },
-    state:{
+    state: {
         proveedor: null,
         producto: null,
         usuario: null,
@@ -21,157 +21,165 @@ export default new Vuex.Store({
         profesion: null,
         grupo: null,
         cliente: null,
-        inventariofactura:null,
-        clientefactura:null,
-        formapagofactura:null,
+        factura_compra: null,
+        inventariofactura: null,
+        datos_inventario_factura: {},
+        clientefactura: null,
+        formapagofactura: null
     },
 
     //una mutacion se va a realizar siempre y cuando sea llamada desde una acccion
-    mutations:{
-       
-        addProveedor(state ){
+    mutations: {
+        addProveedor(state) {
             state.proveedor = state.proveedor;
         },
-        addUsuario(state ){
+        addUsuario(state) {
             state.usuario = state.usuario;
         },
-        addModulo(state ){
+        addModulo(state) {
             state.modulo = state.modulo;
         },
-        addSubModulo(state ){
+        addSubModulo(state) {
             state.subModulo = state.subModulo;
         },
-        addPerfil(state ){
+        addPerfil(state) {
             state.perfil = state.perfil;
         },
-        addEmpresa(state ){
+        addEmpresa(state) {
             state.empresa = state.empresa;
         },
-        addSucursal(state ){
+        addSucursal(state) {
             state.sucursal = state.sucursal;
         },
-        addProfesion(state ){
+        addProfesion(state) {
             state.profesion = state.profesion;
         },
-        addGrupo(state ){
+        addGrupo(state) {
             state.grupo = state.grupo;
         },
-        addCliente(state ){
+        addCliente(state) {
             state.cliente = state.cliente;
         },
-        addFormapagofactura(state ){
+        addFacturaCompra(state) {
+            state.factura_compra = state.factura_compra;
+        },
+        addFormapagofactura(state) {
             state.formapagofactura = state.formapagofactura;
         },
-        addClientefactura(state ){
+        addClientefactura(state) {
             state.clientefactura = state.clientefactura;
         },
-        addInventariofactura(state ){
+        addInventariofactura(state) {
             state.inventariofactura = state.inventariofactura;
+        },
+        addDatoInventarioFactura(state) {
+            state.datos_inventario_factura = state.datos_inventario_factura;
         },
     },
     //eventos actions del store
-    actions:{
-        addInventariofacturaAction(context ){
-            context.commit('addInventariofactura');
+    actions: {
+        addInventariofacturaAction(context) {
+            context.commit("addInventariofactura");
         },
-        addClientefacturaAction(context ){
-            context.commit('addClientefactura');
+        addClientefacturaAction(context) {
+            context.commit("addClientefactura");
         },
-        addFormapagofacturaAction(context ){
-            context.commit('addFormapagofactura');
+        addFormapagofacturaAction(context) {
+            context.commit("addFormapagofactura");
         },
-
-
-        addProductoAction(context ){
-            context.commit('addProducto');
+        addProductoAction(context) {
+            context.commit("addProducto");
         },
-        addProveedorAction(context ){
-            context.commit('addProveedor');
+        addProveedorAction(context) {
+            context.commit("addProveedor");
         },
-        addUsuarioAction(context ){
-            context.commit('addUsuario');
+        addUsuarioAction(context) {
+            context.commit("addUsuario");
         },
-        addModuloAction(context ){
-            context.commit('addModulo');
+        addModuloAction(context) {
+            context.commit("addModulo");
         },
-        addSubModuloAction(context ){
-            context.commit('addSubModulo');
+        addSubModuloAction(context) {
+            context.commit("addSubModulo");
         },
-        addPerfilAction(context ){
-            context.commit('addPerfil');
+        addPerfilAction(context) {
+            context.commit("addPerfil");
         },
-        addEmpresaAction(context ){
-            context.commit('addEmpresa');
+        addEmpresaAction(context) {
+            context.commit("addEmpresa");
         },
-        addSucursalAction(context ){
-            context.commit('addSucursal');
+        addSucursalAction(context) {
+            context.commit("addSucursal");
         },
-        addProfesionAction(context ){
-            context.commit('addProfesion');
+        addProfesionAction(context) {
+            context.commit("addProfesion");
         },
-        addGrupoAction(context ){
-            context.commit('addGrupo');
+        addGrupoAction(context) {
+            context.commit("addGrupo");
         },
-        addClienteAction(context ){
-            context.commit('addCliente');
+        addClienteAction(context) {
+            context.commit("addCliente");
         },
-        addFacturaCompraAction(context ){
-            context.commit('addFacturaCompra');
+        addFacturaCompraAction(context) {
+            context.commit("addFacturaCompra");
+        },
+        addDatoInventarioFacturaAction(context) {
+            context.commit("addDatoInventarioFactura");
         },
     },
-    getters:{
-       
-        getFormapagofactura(state){
+    getters: {
+        getFormapagofactura(state) {
             return state.formapagofactura;
         },
 
-        getClientefactura(state){
+        getClientefactura(state) {
             return state.clientefactura;
         },
 
-        getInventariofactura(state){
-                return state.inventariofactura;
+        getInventariofactura(state) {
+            return state.inventariofactura;
         },
-
-        getProducto(state){
+        getProducto(state) {
             return state.producto;
         },
-        getProveedor(state){
+        getProveedor(state) {
             return state.proveedor;
         },
-        getUsuario(state){
+        getUsuario(state) {
             return state.usuario;
         },
-        getModulo(state){
+        getModulo(state) {
             return state.modulo;
         },
-        getSubModulo(state){
+        getSubModulo(state) {
             return state.subModulo;
         },
-        getPerfil(state){
+        getPerfil(state) {
             return state.perfil;
         },
-        getEmpresa(state){
+        getEmpresa(state) {
             return state.empresa;
         },
-        getSucursal(state){
+        getSucursal(state) {
             return state.sucursal;
         },
-        getProfesion(state){
+        getProfesion(state) {
             return state.profesion;
         },
-        getGrupo(state){
+        getGrupo(state) {
             return state.grupo;
         },
-        getCliente(state){
+        getCliente(state) {
             return state.cliente;
         },
-        getFacturaCompra(state){
+        getFacturaCompra(state) {
             return state.factura_compra;
+        },
+        getDatosInventarioFactura(state) {
+            return state.datos_inventario_factura;
         },
     }
 });
-
 
 /*
     VUEX: Se implementa cuando la aplicacion maneja muchos componentes,
@@ -193,4 +201,3 @@ export default new Vuex.Store({
     #HakunaMatata ♥ JG
 
 */
-

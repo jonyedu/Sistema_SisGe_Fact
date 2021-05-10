@@ -35,4 +35,8 @@ class CotizacionDetalle extends Model
         'pcip', 
         'status'
     ];
+    public function producto()
+    {
+        return $this->hasOne('App\Models\Modulos\Inventario\Producto\Producto', 'id', 'id_producto');
+    }
 }

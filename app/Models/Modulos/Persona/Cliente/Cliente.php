@@ -18,7 +18,7 @@ class Cliente extends Model
      */
     // protected $connection = 'admin_db_sql';
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
         'cliente_id',
@@ -33,7 +33,7 @@ class Cliente extends Model
         'created_at',
         'updated_at',
         'pcip',
-        'status'
+        'status',
     ];
     protected $appends = [
         'NOMBRESCLIENTEPRO'

@@ -17,9 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => '/modulos/parametrizacion', 'middleware' => ['auth:web'], 'verified'], function () {
 
-    //Submenu de Facturacion Compra
     Route::namespace('Modulos\Parametrizacion\TipoDocumento')->prefix('tipo_documento')->group(function () {
         Route::get('cargar_tipo_documento_combo_box', 'TipoDocumentoController@cargarTipoDocumentoComboBox');
+    });
+
+    Route::namespace('Modulos\Parametrizacion\ConfigFacturero')->prefix('config_facturero')->group(function () {
+        Route::get('get_no_factura', 'ConfigFactureroController@getNoFactura');
     });
 
 
