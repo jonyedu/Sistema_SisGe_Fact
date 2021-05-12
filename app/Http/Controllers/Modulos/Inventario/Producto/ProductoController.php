@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Modulos\Inventario\Producto\ProductoCosto;
+
 class ProductoController extends Controller
 {
     public function verificarStockProductoAll()
@@ -109,6 +111,22 @@ class ProductoController extends Controller
                     ]
                 );
             return  response()->json(['msj' => 'OK'], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
+        }
+    }
+
+    public function cargarProductocostoId($id)
+    {
+        try {
+            $productos =ProductoCosto::select('idproducto','factor',
+            'costo','costoi','preciou','precio','precioi','utili','rentabilidad')
+            ->where('status', 1)
+            ->where('idproducto', $id)
+            ->first();
+            
+            
+            return  response()->json(['productos' => $productos, 'total' => 1], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }

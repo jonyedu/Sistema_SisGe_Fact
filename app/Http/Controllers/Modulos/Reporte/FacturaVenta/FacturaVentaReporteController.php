@@ -126,7 +126,7 @@ class FacturaVentaReporteController extends Controller
                              $no_documento = $factura_venta->id;
                               $nombreArchivo = getNamePdf($nombre, $no_documento);
 
-     //  return response()->json(['mensaje' => $factura_venta ], 200);
+      return response()->json(['mensaje' => $factura_venta ], 200);
       
       $pdf = PDF::loadView('reports.Transaccion.FacturaCredito.FacturaCredito', [
           'factura_compra' => $factura_venta,

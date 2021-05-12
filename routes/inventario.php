@@ -32,6 +32,8 @@ Route::group(['prefix' => '/modulos/inventario', 'middleware' => ['auth:web'], '
         Route::get('verificar_stock_producto_all', 'ProductoController@verificarStockProductoAll');
         Route::post('guardar_modificar_producto', 'ProductoController@guardarModificarProducto');
         Route::delete('eliminar_producto/{id}', 'ProductoController@eliminarProducto');
+        //costos
+        Route::get('cargar_costo/{id}', 'ProductoController@cargarProductocostoId');
     });
 
 

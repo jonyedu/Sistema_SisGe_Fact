@@ -201,6 +201,8 @@
                                                 <label>Grupo</label>
                                             </bs-combobox>
                                         </div>
+
+                                    
                                         <div
                                             class="col-lg-12 col-md-12 col-sm-12 mt-3 text-center"
                                         >
@@ -234,6 +236,180 @@
                                         </div>
                                     </div>
                                 </form>
+                                    <!-- aqui va el grio de costo -->
+                                     <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
+                            <bs-grid
+                                :data-source="
+                                    productosCarrito
+                                "
+                                row-hover
+                                sortable
+                                :flip-on-small-screen="false"
+                            >
+                                <bs-grid-column
+                                    field="costo"
+                                    label="costo"
+                                    width="125"
+                                ></bs-grid-column>
+                                <bs-grid-column
+                                    field="factor"
+                                    label="factor"
+                                    min-width="175"
+                                >
+                                </bs-grid-column>
+                                
+                                <bs-grid-column
+                                    field="costoi"
+                                    label="costoi"
+                                    width="100"
+                                ></bs-grid-column>
+                                 <bs-grid-column
+                                    field="preciou"
+                                    label="preciou"
+                                    width="100"
+                                ></bs-grid-column>
+                                 <bs-grid-column
+                                    field="precio"
+                                    label="precio"
+                                    width="100"
+                                ></bs-grid-column>
+                                 <bs-grid-column
+                                    field="precioi"
+                                    label="precioi"
+                                    width="100"
+                                ></bs-grid-column>
+                                 <bs-grid-column
+                                    field="utili"
+                                    label="utili"
+                                    width="100"
+                                ></bs-grid-column>
+                                 <bs-grid-column
+                                    field="rentabilidad"
+                                    label="rentabilidad"
+                                    width="100"
+                                ></bs-grid-column>
+                                <bs-grid-column
+                                    field=""
+                                    label="Acciones"
+                                    width="100"
+                                ></bs-grid-column>
+                                <template
+                                    v-slot:datarow="{ columns, item, index }"
+                                >
+                                    <bs-grid-cell
+                                        :column="columns[0]"
+                                        :item="item"
+                                        :index="index"
+                                    >
+                                        <bs-text-field
+                                           
+                                            v-model="item.costo"
+                                        >
+                                        </bs-text-field>
+                                    </bs-grid-cell>
+                                     <bs-grid-cell
+                                        :column="columns[1]"
+                                        :item="item"
+                                        :index="index"
+                                    >
+                                        <bs-text-field
+                                           
+                                            v-model="item.factor"
+                                        >
+                                        </bs-text-field>
+                                    </bs-grid-cell>
+                                     <bs-grid-cell
+                                        :column="columns[2]"
+                                        :item="item"
+                                        :index="index"
+                                    >
+                                        <bs-text-field
+                                           
+                                            v-model="item.costoi"
+                                        >
+                                        </bs-text-field>
+                                    </bs-grid-cell>
+                                     <bs-grid-cell
+                                        :column="columns[3]"
+                                        :item="item"
+                                        :index="index"
+                                    >
+                                        <bs-text-field
+                                           
+                                            v-model="item.preciou"
+                                        >
+                                        </bs-text-field>
+                                    </bs-grid-cell>
+                                     <bs-grid-cell
+                                        :column="columns[4]"
+                                        :item="item"
+                                        :index="index"
+                                    >
+                                        <bs-text-field
+                                           
+                                            v-model="item.precio"
+                                        >
+                                        </bs-text-field>
+                                    </bs-grid-cell>
+                                     <bs-grid-cell
+                                        :column="columns[5]"
+                                        :item="item"
+                                        :index="index"
+                                    >
+                                        <bs-text-field
+                                           
+                                            v-model="item.precioi"
+                                        >
+                                        </bs-text-field>
+                                    </bs-grid-cell>
+                                     <bs-grid-cell
+                                        :column="columns[6]"
+                                        :item="item"
+                                        :index="index"
+                                    >
+                                        <bs-text-field
+                                           
+                                            v-model="item.utili"
+                                        >
+                                        </bs-text-field>
+                                    </bs-grid-cell>
+                                     <bs-grid-cell
+                                        :column="columns[7]"
+                                        :item="item"
+                                        :index="index"
+                                    >
+                                        <bs-text-field
+                                           
+                                            v-model="item.rentabilidad"
+                                        >
+                                        </bs-text-field>
+                                    </bs-grid-cell>
+                                    
+                                     
+                                    
+                                    <bs-grid-cell
+                                        :column="columns[9]"
+                                        :item="item"
+                                        :index="index"
+                                    >
+                                        <bs-tooltip
+                                            content="Eliminar productos"
+                                            placement="bottom"
+                                        >
+                                            <bs-button
+                                                icon="trash-alt"
+                                                mode="icon"
+                                                size="sm"
+                                                color="danger"
+                                                flat
+                                             
+                                            ></bs-button>
+                                        </bs-tooltip>
+                                    </bs-grid-cell>
+                                </template>
+                            </bs-grid>
+                        </div>
+                                        <!-- aqui finaliza -->
                             </bs-card-content>
                         </bs-card-body>
                     </bs-card>
@@ -275,6 +451,13 @@ export default {
     mixins: [validationMixin],
     data: function() {
         return {
+            //aqui
+
+           productosCarrito: new BsArrayStore([], {
+                                idProperty: "index"
+                            }),
+                  
+            //fin
             id_producto: 10,
             //Variable para abrir la imagen en modal
             buttons: { close: true },
@@ -386,8 +569,11 @@ export default {
     validations: {
         productoForm: productoValidator
     },
-
+    created() {
+       
+    },
     mounted: function() {
+        
         this.prefijo = prefix;
         if (this.$store.getters.getProducto != null) {
             var producto = this.$store.getters.getProducto;
@@ -405,7 +591,22 @@ export default {
             this.productoForm.fotoURL = producto.imagen;
             this.productoForm.file_base_64 = producto.imagen;
             this.singleItem[0].imageSrc = producto.imagen;
+             this.agregarDetalle();
+        }else
+        {
+           this.productosCarrito._items.push({producto_id:0,
+                        costo: 0,
+                        factor:1,
+                        costoi: 0,
+                        preciou: 0,
+                        precio: 0,
+                        precioi: 0,
+                        utili: 0,
+                        rentabilidad: 0,
+                        
+                    });  
         }
+       
     },
     beforeDestroy: function() {
         this.$store.state.producto = null;
@@ -526,6 +727,76 @@ export default {
     },
 
     methods: {
+        agregarDetalle() {
+           
+            var id_pr = this.productoForm.producto_id;
+             console.log(id_pr);
+            
+            let that = this;
+            let url = "";
+               url =  "/modulos/inventario/producto/cargar_costo/"+ id_pr;
+            
+         
+            axios
+                .get(url)
+                .then(function(response) { 
+                    //console.log(response.data.productos.costo);
+                    if (response.data.productos.length == 0) {
+                         that.productosCarrito._items.push({producto_id:id_pr,
+                        costo: 0,
+                        factor:0,
+                        costoi: 0,
+                        preciou: 0,
+                        precio: 0,
+                        precioi: 0,
+                        utili: 0,
+                        rentabilidad: 0,
+                        
+                    });
+                        
+                    } else {
+                        
+                   
+                    that.productosCarrito._items.push({producto_id:response.data.productos.idproducto,
+                        costo: response.data.productos.costo,
+                        factor:response.data.productos.factor,
+                        costoi: response.data.productos.costoi,
+                        preciou: response.data.productos.preciou,
+                        precio: response.data.productos.precio,
+                        precioi: response.data.productos.precioi,
+                        utili: response.data.productos.utili,
+                        rentabilidad: response.data.productos.rentabilidad,
+                        
+                    });
+                    }
+                    
+                })
+                .catch(error => {
+                    //Errores de validación
+                  
+                    console.log(error);
+                    
+                    if (error.response.data.hasOwnProperty("errors")) {
+                        const errors = error.response.data.errors;
+                       // console.log(error.response.data.errors);
+                        for (let error in errors) {
+                            if (errors.hasOwnProperty(error)) {
+                               // console.log(errors[error][0]);                              
+                                 this.showNotificationProgress(
+                                    "Facturación",
+                                    "Error en el sistema" +errors ,
+                                    "error"
+                                    );
+                                    return; 
+ 
+                            }
+                        }
+                    }
+                    
+                });
+            
+          
+        },
         createBase64Image(fileObject) {
             const reader = new FileReader();
             reader.readAsDataURL(fileObject);

@@ -45,6 +45,8 @@ import IndexFacturaCompra from "./components/Modulos/Transaccion/FacturaCompra/I
 
 import IndexCreditos from "./components/Modulos/Transaccion/PagoCredito/Index";
 
+import IndexArqueCaja from "./components/Modulos/Transaccion/ArqueCaja/IndexArque";
+
 
 
 Vue.use(VueRouter);
@@ -201,6 +203,12 @@ export default new VueRouter({
             path:
                 prefijo + "/modulos/transaccion/factura_credito/mostrar_creditos",
             component: IndexCreditos
+        },
+         //IndexArqueo  
+         {
+            path:
+                prefijo + "/modulos/transaccion/factura_arqueo/mostrar_arqueo",
+            component: IndexArqueCaja
         },
     ],
     mode: "history" //Evita que aparezca # en la ruta
