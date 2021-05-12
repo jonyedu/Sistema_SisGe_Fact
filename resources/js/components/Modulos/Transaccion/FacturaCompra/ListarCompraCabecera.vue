@@ -43,7 +43,7 @@
                     <bs-grid-column
                         label="#"
                         text-align="right"
-                        width="50"
+                        width="25"
                         row-numbering
                     ></bs-grid-column>
                     <bs-grid-column
@@ -86,7 +86,8 @@
                             :column="columns[0]"
                             :item="item"
                             :index="index"
-                        ></bs-grid-cell>
+                            ><span> {{ index + 1 }} </span>
+                        </bs-grid-cell>
                         <bs-grid-cell
                             :column="columns[1]"
                             :item="item"
@@ -240,7 +241,7 @@ export default {
                     that.$refs.gridFacturaCompra.reload();
                     that.showNotificationProgress(
                         "Exito al procesar",
-                        "Usted ha eliminado correctamente la factura." + that.item.descripcion,
+                        "Usted ha eliminado correctamente la factura de compra: " + that.item.secuencia,
                         "success"
                     );
                 })

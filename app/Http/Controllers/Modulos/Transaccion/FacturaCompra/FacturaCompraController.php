@@ -201,7 +201,7 @@ class FacturaCompraController extends Controller
 
 
 
-            return  response()->json(['msj' => 'OK'], 200);
+            return  response()->json(['msj' => 'OK', 'factura_compra_cabecera_id' => $compra_cabecera->id ], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }

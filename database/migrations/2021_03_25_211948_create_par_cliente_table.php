@@ -18,7 +18,9 @@ class CreateParClienteTable extends Migration
                 $table->bigIncrements('cliente_id');
                 $table->string('nombres');
                 $table->string('apellidos');
+                $table->string('ruc')->nullable();
                 $table->string('cedula');
+                $table->string('razon_social')->nullable();
                 $table->string('telefono');
                 $table->string('direccion');
                 $table->string('correo');

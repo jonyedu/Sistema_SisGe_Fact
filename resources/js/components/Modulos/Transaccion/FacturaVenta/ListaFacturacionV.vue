@@ -1,5 +1,5 @@
 <template>
-      <div class="content-wrapper">
+    <div class="content-wrapper">
         <div class="my-demo-wrapper">
             <bs-card shadow>
                 <bs-card-body>
@@ -33,7 +33,7 @@
                             empty: 'No hay Artículos',
                             display: '{0}-{1} de {2} Artículos',
                             pager: 'Artículos por Página'
-                        },
+                        }
                     }"
                     row-hover
                     sortable
@@ -43,28 +43,29 @@
                     <bs-grid-column
                         label="#"
                         text-align="right"
-                        width="50"
+                        width="25"
                         row-numbering
                     ></bs-grid-column>
-                     <bs-grid-column
-                        field="id"
-                        label="Factura"
-                        width="300"
-                    ></bs-grid-column>
-
-
-                     <bs-grid-column
-                        field="fecha"
+                    <bs-grid-column
+                        field="DATE"
                         label="Fecha"
+                        width="130"
+                    ></bs-grid-column>
+                    <bs-grid-column
+                        field="cliente.NOMBRESCLIENTEPRO"
+                        label="Cliente"
                         width="300"
                     ></bs-grid-column>
-                     <bs-grid-column
+                    <bs-grid-column
+                        field="secuencia"
+                        label="Secuencia"
+                        width="150"
+                    ></bs-grid-column>
+                    <bs-grid-column
                         field="totalapagar"
                         label="Total"
-                        width="300"
+                        width="75"
                     ></bs-grid-column>
-
-
                     <bs-grid-column
                         field=""
                         label="Acciones"
@@ -75,7 +76,8 @@
                             :column="columns[0]"
                             :item="item"
                             :index="index"
-                        ></bs-grid-cell>
+                            ><span> {{ index + 1 }} </span>
+                        </bs-grid-cell>
                         <bs-grid-cell
                             :column="columns[1]"
                             :item="item"
@@ -86,15 +88,19 @@
                             :item="item"
                             :index="index"
                         ></bs-grid-cell>
-
-                       <bs-grid-cell
+                        <bs-grid-cell
                             :column="columns[3]"
+                            :item="item"
+                            :index="index"
+                        ></bs-grid-cell>
+                        <bs-grid-cell
+                            :column="columns[4]"
                             :item="item"
                             :index="index"
                         ></bs-grid-cell>
 
                         <bs-grid-cell
-                            :column="columns[4]"
+                            :column="columns[5]"
                             :item="item"
                             :index="index"
                         >
@@ -105,6 +111,7 @@
                                 "
                             >
                                 <bs-tooltip
+                                    v-if="false"
                                     content="Modificar productos"
                                     placement="bottom"
                                 >
@@ -129,9 +136,7 @@
                                     size="sm"
                                     color="danger"
                                     flat
-                                    @click="
-                                        abriModal(item)
-                                    "
+                                    @click="abriModal(item)"
                                 ></bs-button>
                             </bs-tooltip>
                         </bs-grid-cell>
@@ -146,7 +151,9 @@
             max-width="85%"
         >
             <b>¿Desea eliminar el producto?</b><br />
-            Al eliminar el producto, no podrá usarlo en las transacciones. <br> Presiones Cancelar o presione ESC para salir.
+            Al eliminar el producto, no podrá usarlo en las transacciones.
+            <br />
+            Presiones Cancelar o presione ESC para salir.
 
             <template v-slot:footer>
                 <bs-button
@@ -156,11 +163,7 @@
                 >
                     Cancelar
                 </bs-button>
-                <bs-button
-                    active
-                    color="primary"
-                    @click="eliminarProducto()"
-                >
+                <bs-button active color="primary" @click="eliminar()">
                     OK
                 </bs-button>
             </template>
@@ -171,13 +174,11 @@
 <script>
 import { prefix } from "../../../../variables";
 
-
 export default {
     data: function() {
         return {
-
             prefijo: "",
-            trueModalVisible:false,
+            trueModalVisible: false,
             productos: new BsStore({
                 idProperty: "id",
                 dataProperty: "factura",
@@ -192,28 +193,27 @@ export default {
                         "/modulos/transaccion/factura_venta/cargar_facturas_dia"
                 }
             }),
-            item:{},
+            item: {}
         };
     },
 
     mounted: function() {
-       this.prefijo = prefix;
+        this.prefijo = prefix;
     },
     beforeDestroy() {},
     methods: {
         btnClickModificar(item) {
             this.$store.state.laboratorio = item;
-           // console.log(item);
-
+            // console.log(item);
         },
-        abriModal(item ) {
-            this.trueModalVisible=true;
+        abriModal(item) {
+            this.trueModalVisible = true;
             this.item = item;
         },
-        eliminarProducto() {
+        eliminar() {
             let that = this;
             let url =
-                "/modulos/transaccion/producto/eliminar_producto/" +
+                "/modulos/transaccion/factura_venta/eliminar_factura_venta/" +
                 this.item.id;
             axios
                 .delete(url)
@@ -222,14 +222,15 @@ export default {
                     that.$refs.gridProducto.reload();
                     that.showNotificationProgress(
                         "Exito al procesar",
-                        "Usted ha eliminado correctamente el producto." + that.item.descripcion,
+                        "Usted ha eliminado correctamente la factura de venta: " +
+                            that.item.secuencia,
                         "success"
                     );
                 })
                 .catch(error => {
                     that.trueModalVisible = false;
                     that.showNotificationProgress(
-                        "Error en eliminarProducto",
+                        "Error en eliminar",
                         "Por favor comuníquese con el administrador." + error,
                         "error"
                     );
@@ -243,7 +244,7 @@ export default {
                 timeout: 5000
             };
             this.$notification[icon](options, title);
-        },
+        }
     }
 };
 </script>

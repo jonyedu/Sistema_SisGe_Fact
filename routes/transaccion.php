@@ -28,9 +28,10 @@ Route::group(['prefix' => '/modulos/transaccion', 'middleware' => ['auth:web'], 
 
     //Submenu de Facturacion Venta
     Route::namespace('Modulos\Transaccion\FacturaVenta')->prefix('factura_venta')->group(function () {
+        Route::get('consultar_no_factura/{no_factura}', 'FacturaVentaController@consultarNoFactura');
         Route::get('cargar_facturas_dia', 'VentasCabeceraController@cargarFacturasDelDia');
         Route::get('productos_fact_inve/{id}/{id_factura}/{id_producto}', 'VentasCabeceraController@cargarProductosInventarioPorTipos');
-
+        Route::delete('eliminar_factura_venta/{factuca_venta_cabecera_id}', 'FacturaVentaController@eliminarFacturaVenta');
         Route::get('productos_invo/{este}', 'VentasCabeceraController@cargarProductosInventario');
         //configuraciones
         Route::get('config_tipo', 'VentasCabeceraController@cargar_tipo');
@@ -43,7 +44,7 @@ Route::group(['prefix' => '/modulos/transaccion', 'middleware' => ['auth:web'], 
          //cargar_forma_pago
         Route::get('cargar_forma', 'VentasCabeceraController@cargar_forma_pago');
         Route::get('cargar_forma_id/{id}', 'VentasCabeceraController@cargar_forma_pago_id');
-    
+
     });
 
 
@@ -57,11 +58,27 @@ Route::group(['prefix' => '/modulos/transaccion', 'middleware' => ['auth:web'], 
     
     });
 
+<<<<<<< HEAD
     Route::namespace('Modulos\Transaccion\Arqueo')->prefix('arque_caja')->group(function () {
         Route::get('cargar_arque', 'ArqueoCaja@cargarTiposArqueo');
         
      
     
+=======
+        // Route::get('productos_invo/{este}', 'VentasCabeceraController@cargarProductosInventario');
+        // //configuraciones
+        // Route::get('config_tipo', 'VentasCabeceraController@cargar_tipo');
+        // //cargar_tarjetas
+        // Route::get('cargar_tarjeta', 'VentasCabeceraController@cargar_tarjetas');
+        //  //cargar_tarjetas
+        // Route::get('cargar_banco', 'VentasCabeceraController@cargar_bancos');
+        //  //grabar guardarFacturaVenta
+        // Route::post('guardar_factura', 'VentasCabeceraController@guardarFacturaVenta');
+        //  //cargar_forma_pago
+        // Route::get('cargar_forma', 'VentasCabeceraController@cargar_forma_pago');
+        // Route::get('cargar_forma_id/{id}', 'VentasCabeceraController@cargar_forma_pago_id');
+
+>>>>>>> 98c235e37d89b597d0f047a6960ca9d06585db12
     });
 
 

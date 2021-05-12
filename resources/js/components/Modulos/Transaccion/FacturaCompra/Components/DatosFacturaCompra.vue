@@ -244,8 +244,16 @@ export default {
                 hasError: this.$v.dataFacturaCompra.no_documento.$error,
                 messages: {
                     required: this.requiredErrorMsg,
-                    minLength: this.getMensajeValidator(1,this.$v.dataFacturaCompra.no_documento.$params.minLength.min),
-                    maxLength: this.getMensajeValidator(2,this.$v.dataFacturaCompra.no_documento.$params.maxLength.max),
+                    minLength: this.getMensajeValidator(
+                        1,
+                        this.$v.dataFacturaCompra.no_documento.$params.minLength
+                            .min
+                    ),
+                    maxLength: this.getMensajeValidator(
+                        2,
+                        this.$v.dataFacturaCompra.no_documento.$params.maxLength
+                            .max
+                    )
                 },
                 dirty: this.$v.dataFacturaCompra.no_documento.$dirty,
                 validators: {
@@ -273,8 +281,14 @@ export default {
                 hasError: this.$v.dataFacturaCompra.cedula.$error,
                 messages: {
                     required: this.requiredErrorMsg,
-                    minLength: this.getMensajeValidator(1,this.$v.dataFacturaCompra.cedula.$params.minLength.min),
-                    maxLength: this.getMensajeValidator(2,this.$v.dataFacturaCompra.cedula.$params.maxLength.max),
+                    minLength: this.getMensajeValidator(
+                        1,
+                        this.$v.dataFacturaCompra.cedula.$params.minLength.min
+                    ),
+                    maxLength: this.getMensajeValidator(
+                        2,
+                        this.$v.dataFacturaCompra.cedula.$params.maxLength.max
+                    )
                 },
                 dirty: this.$v.dataFacturaCompra.cedula.$dirty,
                 validators: {
@@ -289,17 +303,28 @@ export default {
                 hasError: this.$v.dataFacturaCompra.no_autorizacion.$error,
                 messages: {
                     required: this.requiredErrorMsg,
-                    minLength: this.getMensajeValidator(1,this.$v.dataFacturaCompra.no_autorizacion.$params.minLength.min),
-                    maxLength: this.getMensajeValidator(2,this.$v.dataFacturaCompra.no_autorizacion.$params.maxLength.max),
+                    minLength: this.getMensajeValidator(
+                        1,
+                        this.$v.dataFacturaCompra.no_autorizacion.$params
+                            .minLength.min
+                    ),
+                    maxLength: this.getMensajeValidator(
+                        2,
+                        this.$v.dataFacturaCompra.no_autorizacion.$params
+                            .maxLength.max
+                    )
                 },
                 dirty: this.$v.dataFacturaCompra.no_autorizacion.$dirty,
                 validators: {
-                    required: this.$v.dataFacturaCompra.no_autorizacion.required,
-                    minLength: this.$v.dataFacturaCompra.no_autorizacion.minLength,
-                    maxLength: this.$v.dataFacturaCompra.no_autorizacion.maxLength
+                    required: this.$v.dataFacturaCompra.no_autorizacion
+                        .required,
+                    minLength: this.$v.dataFacturaCompra.no_autorizacion
+                        .minLength,
+                    maxLength: this.$v.dataFacturaCompra.no_autorizacion
+                        .maxLength
                 }
             };
-        },
+        }
     },
     methods: {
         consultarNoFactura() {
@@ -396,9 +421,15 @@ export default {
         getMensajeValidator(opc, value) {
             switch (opc) {
                 case 1:
-                    return this.minLengthErrorMsg = "Este campo debe tener al menos" + value + " caracteres.";
+                    return (this.minLengthErrorMsg =
+                        "Este campo debe tener al menos" +
+                        value +
+                        " caracteres.");
                 case 2:
-                    return this.maxLengthErrorMsg = "Este campo debe tener al menos" + value + " caracteres.";
+                    return (this.maxLengthErrorMsg =
+                        "Este campo debe tener al menos" +
+                        value +
+                        " caracteres.");
                 default:
                     break;
             }
@@ -406,4 +437,3 @@ export default {
     }
 };
 </script>
-

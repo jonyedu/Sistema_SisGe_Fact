@@ -23,6 +23,8 @@ class VentasCabecera extends Model
     protected $fillable = [
         'id',
         'id_cliente',
+        'secuencia',
+        'no_autorizacion',
         'fecha',
         'viva',
         'subtotaliva1',
@@ -34,13 +36,28 @@ class VentasCabecera extends Model
         'caj',
         'cambio',
         'recibido',
-        'status',
+        'observacion',
         'usu_created',
         'usu_update',
         'created_at',
         'updated_at',
-        'pcip'
+        'pcip',
+        'status',
     ];
+
+    public $appends = [
+        'DATE'
+    ];
+
+    public function getDATEattribute()
+    {
+        return convertDatetimeADate($this->fecha);
+    }
+
+    public function cliente()
+    {
+        return $this->hasOne('App\Models\Modulos\Persona\Cliente\Cliente', 'cliente_id', 'id_cliente');
+    }
     public function clienteFact()
     {
         return $this->hasOne('App\Models\Modulos\Persona\Cliente\Cliente', 'cliente_id', 'id_cliente');

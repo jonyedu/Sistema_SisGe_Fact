@@ -12,12 +12,11 @@ class VentasDetalle extends Model
      * @var string
      */
     protected $table = 's_par_fact_ventas_detalle';
+    protected $primaryKey = 'id';
     /**
      * @var string
      */
     // protected $connection = 'admin_db_sql';
-
-    public $timestamps = false;
 
     protected $fillable = [
         'id',
@@ -28,10 +27,15 @@ class VentasDetalle extends Model
         'valor',
         'cantidad',
         'total',
+        'usu_created',
+        'usu_update',
+        'created_at',
+        'updated_at',
+        'pcip',
+        'status',
     ];
     public function producto()
     {
         return $this->hasOne('App\Models\Modulos\Inventario\Producto\Producto', 'id', 'id_producto');
     }
-
 }
