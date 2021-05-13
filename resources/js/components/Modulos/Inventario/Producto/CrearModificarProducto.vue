@@ -165,6 +165,7 @@
                                                         v-model="
                                                             productoForm.pvc
                                                         "
+                                                         @change="cambiarCosto()"
                                                         :external-validator="
                                                             pvcValidator
                                                         "
@@ -179,6 +180,7 @@
                                                         v-model="
                                                             productoForm.iva
                                                         "
+                                                       @change="cambiarIva()"
                                                         color="primary"
                                                         label-position="left"
                                                         label-class="col-md-4 ml-3"
@@ -312,33 +314,21 @@
                                         :item="item"
                                         :index="index"
                                     >
-                                        <bs-text-field
-                                           
-                                            v-model="item.factor"
-                                        >
-                                        </bs-text-field>
+                                       
                                     </bs-grid-cell>
                                      <bs-grid-cell
                                         :column="columns[2]"
                                         :item="item"
                                         :index="index"
                                     >
-                                        <bs-text-field
-                                           
-                                            v-model="item.costoi"
-                                        >
-                                        </bs-text-field>
+                                         
                                     </bs-grid-cell>
                                      <bs-grid-cell
                                         :column="columns[3]"
                                         :item="item"
                                         :index="index"
                                     >
-                                        <bs-text-field
-                                           
-                                            v-model="item.preciou"
-                                        >
-                                        </bs-text-field>
+                                        
                                     </bs-grid-cell>
                                      <bs-grid-cell
                                         :column="columns[4]"
@@ -356,33 +346,21 @@
                                         :item="item"
                                         :index="index"
                                     >
-                                        <bs-text-field
-                                           
-                                            v-model="item.precioi"
-                                        >
-                                        </bs-text-field>
+                                         
                                     </bs-grid-cell>
                                      <bs-grid-cell
                                         :column="columns[6]"
                                         :item="item"
                                         :index="index"
                                     >
-                                        <bs-text-field
-                                           
-                                            v-model="item.utili"
-                                        >
-                                        </bs-text-field>
+                                        
                                     </bs-grid-cell>
                                      <bs-grid-cell
                                         :column="columns[7]"
                                         :item="item"
                                         :index="index"
                                     >
-                                        <bs-text-field
-                                           
-                                            v-model="item.rentabilidad"
-                                        >
-                                        </bs-text-field>
+                                        
                                     </bs-grid-cell>
                                     
                                      
@@ -727,6 +705,30 @@ export default {
     },
 
     methods: {
+         cambiarIva(){
+             if (this.productoForm.iva) {
+                   var costoiva = 0;
+             costoiva =  this.productosCarrito._items[0].costo * 12/100;
+               this.productosCarrito._items[0].costoi = Number(this.productosCarrito._items[0].costo)+ parseFloat(costoiva);
+                 //: Rentabilidad = (Ganancia / Inversión) x 100.
+                var ganacia = 0;
+                var rentabilidad = 0;
+                ganacia = this.productosCarrito._items[0].precio -  this.productosCarrito._items[0].costo;
+                rentabilidad = parseFloat(ganacia) /  parseFloat(this.productosCarrito._items[0].costo) * 100;
+                 this.productosCarrito._items[0].rentabilidad = parseFloat(rentabilidad);
+
+             } else {
+                  
+               this.productosCarrito._items[0].costoi = Number(this.productosCarrito._items[0].costo);
+                 
+             }
+           
+
+           
+        },
+        cambiarCosto(){
+            this.productosCarrito._items[0].costo =  this.productoForm.pvc;
+        },
         agregarDetalle() {
            
             var id_pr = this.productoForm.producto_id;
