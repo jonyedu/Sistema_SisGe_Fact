@@ -165,7 +165,7 @@
                                                         v-model="
                                                             productoForm.pvc
                                                         "
-                                                         @change="cambiarCosto()"
+                                                            @change="cambiarIva()"
                                                         :external-validator="
                                                             pvcValidator
                                                         "
@@ -303,11 +303,7 @@
                                         :item="item"
                                         :index="index"
                                     >
-                                        <bs-text-field
-                                           
-                                            v-model="item.costo"
-                                        >
-                                        </bs-text-field>
+                                        
                                     </bs-grid-cell>
                                      <bs-grid-cell
                                         :column="columns[1]"
@@ -335,18 +331,19 @@
                                         :item="item"
                                         :index="index"
                                     >
-                                        <bs-text-field
-                                           
-                                            v-model="item.precio"
-                                        >
-                                        </bs-text-field>
+                                      
                                     </bs-grid-cell>
                                      <bs-grid-cell
                                         :column="columns[5]"
                                         :item="item"
                                         :index="index"
                                     >
-                                         
+                                           <bs-text-field
+                                        
+                                            v-model="item.precioi"
+                                            @change="cambiarIva()"
+                                        >
+                                        </bs-text-field>
                                     </bs-grid-cell>
                                      <bs-grid-cell
                                         :column="columns[6]"
@@ -706,22 +703,44 @@ export default {
 
     methods: {
          cambiarIva(){
+           
+             var costo = 0;
+             var costeo = 0;
+
+             costo = this.productoForm.pvc * 1;
+             this.productosCarrito._items[0].costo = costo;
+
+
+
              if (this.productoForm.iva) {
-                   var costoiva = 0;
-             costoiva =  this.productosCarrito._items[0].costo * 12/100;
-               this.productosCarrito._items[0].costoi = Number(this.productosCarrito._items[0].costo)+ parseFloat(costoiva);
-                 //: Rentabilidad = (Ganancia / Inversión) x 100.
-                var ganacia = 0;
-                var rentabilidad = 0;
-                ganacia = this.productosCarrito._items[0].precio -  this.productosCarrito._items[0].costo;
-                rentabilidad = parseFloat(ganacia) /  parseFloat(this.productosCarrito._items[0].costo) * 100;
-                 this.productosCarrito._items[0].rentabilidad = parseFloat(rentabilidad);
+
+            this.productosCarrito._items[0].costoi = costo + ((costo * 12)/100);
+            costeo = this.productosCarrito._items[0].precioi /1.12;
+
+
+
+            //        var costoiva = 0;
+            //  costoiva =  this.productosCarrito._items[0].costo * 12/100;
+            //    this.productosCarrito._items[0].costoi = Number(this.productosCarrito._items[0].costo)+ parseFloat(costoiva);
+            //      //: Rentabilidad = (Ganancia / Inversión) x 100.
+            //     var ganacia = 0;
+            //     var rentabilidad = 0;
+            //     ganacia = this.productosCarrito._items[0].precio -  this.productosCarrito._items[0].costo;
+            //     rentabilidad = parseFloat(ganacia) /  parseFloat(this.productosCarrito._items[0].costo) * 100;
+            //      this.productosCarrito._items[0].rentabilidad = parseFloat(rentabilidad);
 
              } else {
+                 costeo = this.productosCarrito._items[0].precioi;
+                 this.productosCarrito._items[0].costoi = costo;
                   
-               this.productosCarrito._items[0].costoi = Number(this.productosCarrito._items[0].costo);
+               
                  
              }
+             //this.productosCarrito._items[0].costoi = Number(this.productosCarrito._items[0].costo);
+              this.productosCarrito._items[0].precio = costeo;
+              this.productosCarrito._items[0].preciou = costeo / 1;
+              this.productosCarrito._items[0].utili = (100 * ((costeo - costo) / costo));
+              this.productosCarrito._items[0].rentabilidad = (100 * ((costeo - costo) /  costeo));
            
 
            
