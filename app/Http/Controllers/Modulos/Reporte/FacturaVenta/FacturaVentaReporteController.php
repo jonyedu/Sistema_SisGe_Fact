@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Modulos\Reporte\FacturaVenta;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Transaccion\FacturaVenta\EnvioFacturaVentaMail;
+use App\Models\Modulos\Seguridad\Sucursal\Sucursal;
 use Illuminate\Http\Request;
 
 use Barryvdh\DomPDF\Facade as PDF;
@@ -20,11 +22,12 @@ use App\Models\Modulos\Transaccion\Cotizacion\CotizacionDetalle;
 
 use App\Models\Modulos\Transaccion\FacturaVenta\VentasCredito;
 use App\Models\Modulos\Transaccion\FacturaVenta\VentasCreditoDetalle;
+use Illuminate\Support\Facades\Mail;
 
 class FacturaVentaReporteController extends Controller
 {
     //
-    public function cargarPdfFacturaVenta($factura_venta_cabecera_id, $id)
+    public function cargarPdfFacturaVenta($factura_venta_cabecera_id, $id, $enviar)
     {
         //Variables
         $nombreArchivo = null;
@@ -49,7 +52,7 @@ class FacturaVentaReporteController extends Controller
             )
                 ->where('id', $factura_venta_cabecera_id)
                 ->where('status', 1)
-                ->with('clienteFact:cliente_id,nombres,apellidos,cedula,direccion')
+                ->with('clienteFact:cliente_id,nombres,apellidos,cedula,direccion,correo')
                 ->with('formapagoFactura:tipo_pago,descripcion')
                 ->with('DetalleVenta.producto:id,codigo,nombre')
 
@@ -57,7 +60,7 @@ class FacturaVentaReporteController extends Controller
                     'usuario:codigo,perfil',
                     'usuario.opcionPorAplicacionPerfilOne:perfil,modulo',
                     'usuario.opcionPorAplicacionPerfilOne.moduloOne:codigo,sucursal',
-                    'usuario.opcionPorAplicacionPerfilOne.moduloOne.sucursalOne:Sucursal_Id,Empresa_Id,Sucursal_Direccion'
+                    'usuario.opcionPorAplicacionPerfilOne.moduloOne.sucursalOne.empresaOne:Empresa_Id,Empresa_Nombre,Empresa_Direccion,Empresa_Ubicacion_Logo,Empresa_Ruc,Empresa_Contribuyente_Especial,Empresa_Obligado_Contabilidad'
                 )
                 ->first();
 
@@ -72,7 +75,74 @@ class FacturaVentaReporteController extends Controller
                 'nombreArchivo' =>  $nombreArchivo,
                 'factura' => "FACTURA",
             ]);
-            return $pdf->stream($nombreArchivo);
+            //return $pdf->stream($nombreArchivo);
+
+
+
+
+
+            //if enviar es "" solo mostrará el pdf
+            if ($enviar == "false") {
+                return $pdf->stream($nombreArchivo);
+            }
+            //if enviar es "true" enviara el pdf al proveedor y mostrara
+            else if ($enviar == "true") {
+                //directorio a donde guardar
+                $path = public_path('documentosEnviar/facturaVenta/');
+
+
+                //verificamos que el directorio , existe en el servidor
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+
+                //Ruta para guardar en el servidor
+                $destinationPath = $path;
+                //Concatenar la ruta y el nombre del archivo
+                $rutaSave = $destinationPath . $nombreArchivo;
+                //return response()->json(['rutaSave' => $rutaSave], 500);
+
+                //Guardalo en una variable
+                $pdf->save($rutaSave);
+                //Aqui es donde guarda en el servidor
+                //file_put_contents($rutaSave, $output);
+
+                //Obtenemos el mail del cliente, para enviar la factura
+                $correo_cliente = $factura_venta->clienteFact != null ? $factura_venta->clienteFact->correo : null;
+
+                //si no hay correo del cliente, se obtiene el correo del administrador de la sucursar
+                if ($correo_cliente == null) {
+                    $sucursal = Sucursal::where('status', 1)
+                        ->orderBy('updated_at', 'desc')
+                        ->first();
+
+                    if ($sucursal != null) {
+                        $correo_cliente = $sucursal->Sucursal_EMail;
+                    } else {
+                        $correo_cliente = 'sincorreo@hotmail.com';
+                    }
+                }
+
+                $rutaImg = ($factura_venta != null ?
+                    ($factura_venta->usuario != null ?
+                        ($factura_venta->usuario->opcionPorAplicacionPerfilOne != null ?
+                            ($factura_venta->usuario->opcionPorAplicacionPerfilOne->moduloOne != null ?
+                                ($factura_venta->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne != null ?
+                                    ($factura_venta->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne->empresaOne != null ?
+                                        ($factura_venta->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne->empresaOne->Empresa_Ubicacion_Logo) : '') : '') : '') : '') : '') : '');
+
+                //Enviar la prescripcion vía Email al paciente
+                Mail::to($correo_cliente)->send(new EnvioFacturaVentaMail($rutaSave, $factura_venta->clienteFact, $rutaImg));
+
+                //return response()->json(['mensaje' =>$correo_cliente], 500);
+                //Eliminar el archivo del servidor
+                if (file_exists($rutaSave)) {
+                    unlink($rutaSave);
+                }
+                // Fin Codigo para enviar la prescripcion al paciente por correo electrónico
+
+                return $pdf->stream($nombreArchivo);
+            }
         } else {
             $factura_venta = CotizacionCabecera::select(
                 'id',
@@ -93,15 +163,14 @@ class FacturaVentaReporteController extends Controller
             )
                 ->where('id', $factura_venta_cabecera_id)
                 ->where('status', 1)
-                ->with('clienteFact:cliente_id,nombres,apellidos,cedula,direccion')
+                ->with('clienteFact:cliente_id,nombres,apellidos,cedula,direccion,correo')
                 ->with('formapagoFactura:tipo_pago,descripcion')
                 ->with('DetalleVenta.producto:id,codigo,nombre')
-
                 ->with(
                     'usuario:codigo,perfil',
                     'usuario.opcionPorAplicacionPerfilOne:perfil,modulo',
                     'usuario.opcionPorAplicacionPerfilOne.moduloOne:codigo,sucursal',
-                    'usuario.opcionPorAplicacionPerfilOne.moduloOne.sucursalOne:Sucursal_Id,Empresa_Id,Sucursal_Direccion'
+                    'usuario.opcionPorAplicacionPerfilOne.moduloOne.sucursalOne.empresaOne:Empresa_Id,Empresa_Nombre,Empresa_Direccion,Empresa_Ubicacion_Logo,Empresa_Ruc,Empresa_Contribuyente_Especial,Empresa_Obligado_Contabilidad'
                 )
                 ->first();
 
@@ -116,7 +185,70 @@ class FacturaVentaReporteController extends Controller
                 'nombreArchivo' =>  $nombreArchivo,
                 'factura' => "COTIZACIÓN",
             ]);
-            return $pdf->stream($nombreArchivo);
+            //return $pdf->stream($nombreArchivo);
+
+            //if enviar es "" solo mostrará el pdf
+            if ($enviar == "false") {
+                return $pdf->stream($nombreArchivo);
+            }
+            //if enviar es "true" enviara el pdf al proveedor y mostrara
+            else if ($enviar == "true") {
+                //directorio a donde guardar
+                $path = public_path('documentosEnviar/facturaVenta/');
+
+
+                //verificamos que el directorio , existe en el servidor
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+
+                //Ruta para guardar en el servidor
+                $destinationPath = $path;
+                //Concatenar la ruta y el nombre del archivo
+                $rutaSave = $destinationPath . $nombreArchivo;
+                //return response()->json(['rutaSave' => $rutaSave], 500);
+
+                //Guardalo en una variable
+                $pdf->save($rutaSave);
+                //Aqui es donde guarda en el servidor
+                //file_put_contents($rutaSave, $output);
+
+                //Obtenemos el mail del cliente, para enviar la factura
+                $correo_cliente = $factura_venta->clienteFact != null ? $factura_venta->clienteFact->correo : null;
+
+                //si no hay correo del cliente, se obtiene el correo del administrador de la sucursar
+                if ($correo_cliente == null) {
+                    $sucursal = Sucursal::where('status', 1)
+                        ->orderBy('updated_at', 'desc')
+                        ->first();
+
+                    if ($sucursal != null) {
+                        $correo_cliente = $sucursal->Sucursal_EMail;
+                    } else {
+                        $correo_cliente = 'sincorreo@hotmail.com';
+                    }
+                }
+
+                $rutaImg = ($factura_venta != null ?
+                    ($factura_venta->usuario != null ?
+                        ($factura_venta->usuario->opcionPorAplicacionPerfilOne != null ?
+                            ($factura_venta->usuario->opcionPorAplicacionPerfilOne->moduloOne != null ?
+                                ($factura_venta->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne != null ?
+                                    ($factura_venta->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne->empresaOne != null ?
+                                        ($factura_venta->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne->empresaOne->Empresa_Ubicacion_Logo) : '') : '') : '') : '') : '') : '');
+
+                //Enviar la prescripcion vía Email al paciente
+                Mail::to($correo_cliente)->send(new EnvioFacturaVentaMail($rutaSave, $factura_venta->clienteFact, $rutaImg));
+
+                //return response()->json(['mensaje' =>$correo_cliente], 500);
+                //Eliminar el archivo del servidor
+                if (file_exists($rutaSave)) {
+                    unlink($rutaSave);
+                }
+                // Fin Codigo para enviar la prescripcion al paciente por correo electrónico
+
+                return $pdf->stream($nombreArchivo);
+            }
         }
 
         ///aqui trataré de hacer el report para el credito :v
@@ -152,27 +284,26 @@ class FacturaVentaReporteController extends Controller
             ->where('id', $factura_venta_cabecera_id)
 
 
-                  ->with('cabeceraCredito:id,id_factura,total,id_tiempo_pago,id_cliente','cabeceraCredito.clienteFact:cliente_id,nombres,apellidos,cedula,direccion' )
-                  ->with('usuario:codigo,perfil',
-                  'usuario.opcionPorAplicacionPerfilOne:perfil,modulo',
-                  'usuario.opcionPorAplicacionPerfilOne.moduloOne:codigo,sucursal',
-                   'usuario.opcionPorAplicacionPerfilOne.moduloOne.sucursalOne:Sucursal_Id,Empresa_Id,Sucursal_Direccion')
-                  ->first();
+            ->with('cabeceraCredito:id,id_factura,total,id_tiempo_pago,id_cliente', 'cabeceraCredito.clienteFact:cliente_id,nombres,apellidos,cedula,direccion')
+            ->with(
+                'usuario:codigo,perfil',
+                'usuario.opcionPorAplicacionPerfilOne:perfil,modulo',
+                'usuario.opcionPorAplicacionPerfilOne.moduloOne:codigo,sucursal',
+                'usuario.opcionPorAplicacionPerfilOne.moduloOne.sucursalOne:Sucursal_Id,Empresa_Id,Sucursal_Direccion'
+            )
+            ->first();
 
-                  $nombre = $factura_venta->clienteFact != null ? $factura_venta->clienteFact->NOMBRESCLIENTEPRO : "Sin nombre";
-                             $no_documento = $factura_venta->id;
-                              $nombreArchivo = getNamePdf($nombre, $no_documento);
+        $nombre = $factura_venta->clienteFact != null ? $factura_venta->clienteFact->NOMBRESCLIENTEPRO : "Sin nombre";
+        $no_documento = $factura_venta->id;
+        $nombreArchivo = getNamePdf($nombre, $no_documento);
 
-      return response()->json(['mensaje' => $factura_venta ], 200);
+        return response()->json(['mensaje' => $factura_venta], 200);
 
-      $pdf = PDF::loadView('reports.Transaccion.FacturaCredito.FacturaCredito', [
-          'factura_compra' => $factura_venta,
-          'nombreArchivo' =>  $nombreArchivo,
-          'factura' => "FACTURA - CREDITO",
-      ]);
-      return $pdf->stream($nombreArchivo);
-
-
-
+        $pdf = PDF::loadView('reports.Transaccion.FacturaCredito.FacturaCredito', [
+            'factura_compra' => $factura_venta,
+            'nombreArchivo' =>  $nombreArchivo,
+            'factura' => "FACTURA - CREDITO",
+        ]);
+        return $pdf->stream($nombreArchivo);
     }
 }

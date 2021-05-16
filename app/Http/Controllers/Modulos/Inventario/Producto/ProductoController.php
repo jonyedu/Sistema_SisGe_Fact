@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Modulos\Inventario\Producto\ProductoCosto;
+use App\Models\Modulos\Inventario\Producto\ProductoInventario;
 
 class ProductoController extends Controller
 {
@@ -32,7 +33,7 @@ class ProductoController extends Controller
     public function cargarProductoTabla()
     {
         try {
-            $productos = Producto::select('id', 'codigo', 'pvc', 'nombre', 'grupo_id', 'laboratorio_id', 'imagen')
+            $productos = Producto::select('id', 'codigo', 'pvc', 'nombre', 'nombrecorto', 'descripcion', 'stock_maximo', 'stock_minimo', 'iva', 'grupo_id', 'laboratorio_id', 'imagen')
                 ->where('status', 1)
                 ->with('proveedor:id,razon_social', 'grupo:id,descripcion')
                 ->withCount([
@@ -61,7 +62,6 @@ class ProductoController extends Controller
 
     public function guardarModificarProducto(Request $request)
     {
-        //return  response()->json(['datos' => $request->input()]);
         try {
             $user = Auth::user();
             Producto::updateOrCreate(
@@ -90,6 +90,28 @@ class ProductoController extends Controller
                     'status' => 1
                 ]
             );
+            $costos_productos = $request->input('productosCarrito._items');
+            foreach ($costos_productos as $costo_producto) {
+                ProductoCosto::updateOrCreate(
+                    [
+                        'idproducto' => $costo_producto['producto_id'],
+                    ],
+                    [
+                        'idproducto' => $costo_producto['producto_id'],
+                        'factor' => 1,
+                        'costo' => $costo_producto['costo'],
+                        'costoi' => $costo_producto['costoi'],
+                        'preciou' => $costo_producto['preciou'],
+                        'precio' => $costo_producto['precio'],
+                        'precioi' => $costo_producto['precioi'],
+                        'utili' => $costo_producto['utili'],
+                        'rentabilidad' => $costo_producto['rentabilidad'],
+                        'status' => 1,
+                    ]
+                );
+            }
+
+
 
             return  response()->json(['msj' => 'OK'], 200);
         } catch (Exception $e) {
@@ -119,13 +141,22 @@ class ProductoController extends Controller
     public function cargarProductocostoId($id)
     {
         try {
-            $productos =ProductoCosto::select('idproducto','factor',
-            'costo','costoi','preciou','precio','precioi','utili','rentabilidad')
-            ->where('status', 1)
-            ->where('idproducto', $id)
-            ->first();
-            
-            
+            $productos = ProductoCosto::select(
+                'idproducto',
+                'factor',
+                'costo',
+                'costoi',
+                'preciou',
+                'precio',
+                'precioi',
+                'utili',
+                'rentabilidad'
+            )
+                ->where('status', 1)
+                ->where('idproducto', $id)
+                ->first();
+
+
             return  response()->json(['productos' => $productos, 'total' => 1], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);

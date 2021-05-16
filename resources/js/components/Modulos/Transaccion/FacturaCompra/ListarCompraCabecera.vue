@@ -79,7 +79,7 @@
                     <bs-grid-column
                         field=""
                         label="Acciones"
-                        width="100"
+                        width="110"
                     ></bs-grid-column>
                     <template v-slot:datarow="{ columns, item, index }">
                         <bs-grid-cell
@@ -143,7 +143,6 @@
                                     ></bs-button>
                                 </bs-tooltip>
                             </router-link>
-
                             <bs-tooltip
                                 content="Eliminar factura compra"
                                 placement="bottom"
@@ -158,6 +157,34 @@
                                         abriModal(item)
                                     "
                                 ></bs-button>
+                            </bs-tooltip>
+                            <bs-tooltip
+                                content="Imprimir Factura de Compra"
+                                placement="bottom"
+                            >
+                                <bs-button
+                                    icon="file-pdf"
+                                    mode="icon"
+                                    size="sm"
+                                    color="red"
+                                    flat
+                                    @click="imprimirPdf(item)"
+                                >
+                                </bs-button>
+                            </bs-tooltip>
+                            <bs-tooltip
+                                content="Enviar Factura al Proveedor"
+                                placement="bottom"
+                            >
+                                <bs-button
+                                    icon="file-import"
+                                    mode="icon"
+                                    size="sm"
+                                    color="info"
+                                    flat
+                                    @click="enviarPdf(item)"
+                                >
+                                </bs-button>
                             </bs-tooltip>
                         </bs-grid-cell>
                     </template>
@@ -262,6 +289,36 @@ export default {
                 timeout: 5000
             };
             this.$notification[icon](options, title);
+        },
+        imprimirPdf(item) {
+            if (item.id > 0) {
+                window.open(
+                    "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
+                        item.id + "/" +
+                            'false'
+                );
+            } else {
+                this.showNotificationProgress(
+                    "Advertencia",
+                    "No existe factura de compra, para imprimir.",
+                    "warning"
+                );
+            }
+        },
+        enviarPdf(item) {
+            if (item.id > 0) {
+                window.open(
+                    "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
+                        item.id + "/" +
+                            'true'
+                );
+            } else {
+                this.showNotificationProgress(
+                    "Advertencia",
+                    "No existe factura de compra, para enviar al proveedor.",
+                    "warning"
+                );
+            }
         },
     }
 };

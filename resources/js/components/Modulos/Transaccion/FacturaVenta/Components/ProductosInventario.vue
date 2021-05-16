@@ -38,17 +38,17 @@
                 row-hover
             >
                 <bs-grid-column
-                    field="nombre"
+                    field="producto_inv.nombre"
                     label="Producto"
                     min-width="175"
                 ></bs-grid-column>
                 <bs-grid-column
-                    field="precio"
+                    field="costo_inv.precio"
                     label="Valor"
                     width="120"
                 ></bs-grid-column>
                 <bs-grid-column
-                    field="stock"
+                    field="Stock"
                     label="Stock"
                     width="100"
                 ></bs-grid-column>
@@ -144,24 +144,6 @@
                     >
                         Ok
                     </bs-button>
-                    <!-- <button
-                        type="button
-                    "
-                        :disabled="validarRed"
-                        style=" background-color: #4CAF50;border: none;color: white;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;"
-                        @click="agregarProducto()"
-                    >
-                        OK
-                    </button> -->
-                    <!-- <bs-button
-                        active
-                       v-model="validarRed"
-
-                        color="primary"
-
-                    >
-                        OK
-                    </bs-button> -->
                 </template>
             </bs-modal>
             <!-- FIN DEL MODAL -->
@@ -389,7 +371,7 @@ export default {
                 this.ListaCompra = this.adjuntar;
             }
 
-            this.adjuntar.push({
+            /* this.adjuntar.push({
                 url: this.Lista.producto_inv.imagen,
                 id: this.Lista.producto_inv.id,
                 precio: this.Lista.costo_inv.precio,
@@ -399,7 +381,7 @@ export default {
                 iva: this.Lista.producto_inv.iva,
                 idfac: this.Lista.id,
                 idfacCompra: this.Lista.id_factura
-            });
+            }); */
             this.ListaCompra = this.adjuntar;
 
             this.autoCloseModalVisible = false;

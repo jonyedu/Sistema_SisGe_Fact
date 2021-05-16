@@ -30,7 +30,7 @@ class ProductoInventario extends Model
         'created_at',
         'updated_at',
         'pcip',
-        'status'
+        'status',
     ];
     public function ProductoInv()
     {

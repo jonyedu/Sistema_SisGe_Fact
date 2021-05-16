@@ -24,7 +24,7 @@ Route::group(['prefix' => '/modulos/reporte', 'middleware' => ['auth:web'], 'ver
 
     //ventas
     Route::namespace('Modulos\Reporte\FacturaVenta')->prefix('factura_venta')->group(function () {
-        Route::get('cargar_pdf_factura_venta/{id}/{id_ide}', 'FacturaVentaReporteController@cargarPdfFacturaVenta');
+        Route::get('cargar_pdf_factura_venta/{id}/{id_ide}/{enviar}', 'FacturaVentaReporteController@cargarPdfFacturaVenta');
     });
 
     //credito

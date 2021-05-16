@@ -125,7 +125,6 @@
                                     ></bs-button>
                                 </bs-tooltip>
                             </router-link>
-
                             <bs-tooltip
                                 content="Eliminar productos"
                                 placement="bottom"
@@ -138,6 +137,34 @@
                                     flat
                                     @click="abriModal(item)"
                                 ></bs-button>
+                            </bs-tooltip>
+                            <bs-tooltip
+                                content="Imprimir Factura de Compra"
+                                placement="bottom"
+                            >
+                                <bs-button
+                                    icon="file-pdf"
+                                    mode="icon"
+                                    size="sm"
+                                    color="red"
+                                    flat
+                                    @click="imprimirPdf(item)"
+                                >
+                                </bs-button>
+                            </bs-tooltip>
+                            <bs-tooltip
+                                content="Enviar Factura al Proveedor"
+                                placement="bottom"
+                            >
+                                <bs-button
+                                    icon="file-import"
+                                    mode="icon"
+                                    size="sm"
+                                    color="info"
+                                    flat
+                                    @click="enviarPdf(item)"
+                                >
+                                </bs-button>
                             </bs-tooltip>
                         </bs-grid-cell>
                     </template>
@@ -244,7 +271,39 @@ export default {
                 timeout: 5000
             };
             this.$notification[icon](options, title);
-        }
+        },
+        imprimirPdf(item) {
+            if (item.id > 0) {
+                window.open("/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
+                    item.id   +
+                    "/" +
+                    true + "/" +
+                            'false'
+                );
+            } else {
+                this.showNotificationProgress(
+                    "Advertencia",
+                    "No existe factura de venta, para imprimir.",
+                    "warning"
+                );
+            }
+        },
+        enviarPdf(item) {
+            if (item.id > 0) {
+                window.open("/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
+                    item.id  +
+                    "/" +
+                    true + "/" +
+                            'true'
+                );
+            } else {
+                this.showNotificationProgress(
+                    "Advertencia",
+                    "No existe factura de venta, para imprimir.",
+                    "warning"
+                );
+            }
+        },
     }
 };
 </script>

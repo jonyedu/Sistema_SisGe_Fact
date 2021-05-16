@@ -37,7 +37,7 @@
                             </bs-button>
                         </bs-tooltip>
                         <bs-tooltip
-                            content="Guardar cliente"
+                            content="Imprimir Factura de Compra"
                             placement="bottom"
                         >
                             <bs-button
@@ -46,6 +46,19 @@
                                 icon-size="sm"
                                 color="red"
                                 @click="imprimirPdf()"
+                            >
+                            </bs-button>
+                        </bs-tooltip>
+                        <bs-tooltip
+                            content="Enviar Factura al Cliente"
+                            placement="bottom"
+                        >
+                            <bs-button
+                                mode="icon"
+                                icon="file-import"
+                                icon-size="sm"
+                                color="info"
+                                @click="enviarPdf()"
                             >
                             </bs-button>
                         </bs-tooltip>
@@ -395,21 +408,37 @@ export default {
                 });
         },
         imprimirPdf() {
-            // alert(value);
-            let that = this;
-            let url = "";
-            var i = this.activo ? 1 : 0;
-            this.errors = [];
-            url =
-                "/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
-                that.id_documento  +
-                "/" +
-                this.activo;
-            window.open(url, "_blank");
-            //window.location.href =  url;
-
-            //location.reload();
-        }
+            if (this.id_documento > 0) {
+                window.open("/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
+                    this.id_documento  +
+                    "/" +
+                    this.activo + "/" +
+                            'false'
+                );
+            } else {
+                this.showNotificationProgress(
+                    "Advertencia",
+                    "No existe factura de venta, para imprimir.",
+                    "warning"
+                );
+            }
+        },
+        enviarPdf() {
+            if (this.id_documento > 0) {
+                window.open("/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
+                    this.id_documento  +
+                    "/" +
+                    this.activo + "/" +
+                            'true'
+                );
+            } else {
+                this.showNotificationProgress(
+                    "Advertencia",
+                    "No existe factura de venta, para imprimir.",
+                    "warning"
+                );
+            }
+        },
     }
 };
 </script>

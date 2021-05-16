@@ -29,7 +29,13 @@ class FacturaCompraReporteController extends Controller
                     ->with(['compraDetalle' => function ($i) {
                         $i->where('status', 1)->select('id', 'id_facturac', 'id_prod', 'costo', 'cantidad', 'total');
                     }])
-                    ->with('usuario:codigo,perfil', 'usuario.opcionPorAplicacionPerfilOne:perfil,modulo', 'usuario.opcionPorAplicacionPerfilOne.moduloOne:codigo,sucursal', 'usuario.opcionPorAplicacionPerfilOne.moduloOne.sucursalOne:Sucursal_Id,Empresa_Id,Sucursal_Direccion', 'usuario.opcionPorAplicacionPerfilOne.moduloOne.sucursalOne.empresaOne:Empresa_Id,Empresa_Nombre,Empresa_Direccion,Empresa_Ubicacion_Logo,Empresa_Ruc,Empresa_Contribuyente_Especial,Empresa_Obligado_Contabilidad')
+                    ->with(
+                        'usuario:codigo,perfil',
+                        'usuario.opcionPorAplicacionPerfilOne:perfil,modulo',
+                        'usuario.opcionPorAplicacionPerfilOne.moduloOne:codigo,sucursal',
+                        'usuario.opcionPorAplicacionPerfilOne.moduloOne.sucursalOne:Sucursal_Id,Empresa_Id,Sucursal_Direccion',
+                        'usuario.opcionPorAplicacionPerfilOne.moduloOne.sucursalOne.empresaOne:Empresa_Id,Empresa_Nombre,Empresa_Direccion,Empresa_Ubicacion_Logo,Empresa_Ruc,Empresa_Contribuyente_Especial,Empresa_Obligado_Contabilidad'
+                    )
                     ->first();
                 if ($factura_compra != null) {
                     //Codigo para enviar la prescripcion al paciente por correo electrónico
