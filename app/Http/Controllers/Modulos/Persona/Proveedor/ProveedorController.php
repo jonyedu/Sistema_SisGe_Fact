@@ -35,6 +35,7 @@ class ProveedorController extends Controller
                 'razon_social',
                 'direccion',
                 'telefono',
+                'correo',
                 'status'
             )
                 ->where('status', 1)
@@ -75,6 +76,7 @@ class ProveedorController extends Controller
                     'razon_social' => $request->input('razon_social'),
                     'direccion' => $request->input('direccion'),
                     'telefono' => $request->input('telefono'),
+                    'correo' => $request->input('correo'),
                     'usu_created' => $user->codigo,
                     'usu_update' => $user->codigo,
                     'created_at' => date("Y-m-d H:i:s"),

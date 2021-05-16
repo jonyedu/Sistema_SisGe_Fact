@@ -19,7 +19,7 @@ Route::group(['prefix' => '/modulos/reporte', 'middleware' => ['auth:web'], 'ver
 
     //Submenu de
     Route::namespace('Modulos\Reporte\FacturaCompra')->prefix('factura_compra')->group(function () {
-        Route::get('cargar_pdf_factura_compra/{factura_compra_cabecera_id}', 'FacturaCompraReporteController@cargarPdfFacturaCompra');
+        Route::get('cargar_pdf_factura_compra/{factura_compra_cabecera_id}/{enviar}', 'FacturaCompraReporteController@cargarPdfFacturaCompra');
     });
 
     //ventas

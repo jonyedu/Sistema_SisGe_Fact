@@ -23,6 +23,7 @@ class CreateParLaboratorioTable extends Migration
                 $table->string('razon_social');
                 $table->string('direccion');
                 $table->string('telefono');
+                $table->string('correo');
                 /* Datos para auditoria */
                 $table->string('usu_created');
                 $table->string('usu_update');

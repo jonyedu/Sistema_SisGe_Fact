@@ -126,6 +126,8 @@ class FacturaVentaReporteController extends Controller
     }
 
 
+
+
     public function cargarPdfFacturaVentaCredito($factura_venta_cabecera_id)
     {
         //Variables
@@ -148,12 +150,11 @@ class FacturaVentaReporteController extends Controller
             'updated_at'
         )
             ->where('id', $factura_venta_cabecera_id)
-<<<<<<< HEAD
-                  
- 
+
+
                   ->with('cabeceraCredito:id,id_factura,total,id_tiempo_pago,id_cliente','cabeceraCredito.clienteFact:cliente_id,nombres,apellidos,cedula,direccion' )
-                  ->with('usuario:codigo,perfil', 
-                  'usuario.opcionPorAplicacionPerfilOne:perfil,modulo', 
+                  ->with('usuario:codigo,perfil',
+                  'usuario.opcionPorAplicacionPerfilOne:perfil,modulo',
                   'usuario.opcionPorAplicacionPerfilOne.moduloOne:codigo,sucursal',
                    'usuario.opcionPorAplicacionPerfilOne.moduloOne.sucursalOne:Sucursal_Id,Empresa_Id,Sucursal_Direccion')
                   ->first();
@@ -163,40 +164,15 @@ class FacturaVentaReporteController extends Controller
                               $nombreArchivo = getNamePdf($nombre, $no_documento);
 
       return response()->json(['mensaje' => $factura_venta ], 200);
-      
+
       $pdf = PDF::loadView('reports.Transaccion.FacturaCredito.FacturaCredito', [
           'factura_compra' => $factura_venta,
           'nombreArchivo' =>  $nombreArchivo,
           'factura' => "FACTURA - CREDITO",
       ]);
       return $pdf->stream($nombreArchivo);
-      
-        
-        
-=======
 
 
-            ->with('cabeceraCredito:id,id_factura,total,id_tiempo_pago,id_cliente', 'cabeceraCredito.clienteFact:cliente_id,nombres,apellidos,cedula,direccion')
-            ->with(
-                'usuario:codigo,perfil',
-                'usuario.opcionPorAplicacionPerfilOne:perfil,modulo',
-                'usuario.opcionPorAplicacionPerfilOne.moduloOne:codigo,sucursal',
-                'usuario.opcionPorAplicacionPerfilOne.moduloOne.sucursalOne:Sucursal_Id,Empresa_Id,Sucursal_Direccion'
-            )
-            ->first();
 
-        $nombre = $factura_venta->clienteFact != null ? $factura_venta->clienteFact->NOMBRESCLIENTEPRO : "Sin nombre";
-        $no_documento = $factura_venta->id;
-        $nombreArchivo = getNamePdf($nombre, $no_documento);
-
-        //  return response()->json(['mensaje' => $factura_venta ], 200);
-
-        $pdf = PDF::loadView('reports.Transaccion.FacturaCredito.FacturaCredito', [
-            'factura_compra' => $factura_venta,
-            'nombreArchivo' =>  $nombreArchivo,
-            'factura' => "FACTURA - CREDITO",
-        ]);
-        return $pdf->stream($nombreArchivo);
->>>>>>> 98c235e37d89b597d0f047a6960ca9d06585db12
     }
 }

@@ -152,6 +152,7 @@ function getNamePdf($persona, $no_documento)
     $persona = $persona;
     $no_documento = $no_documento;
     $fechaImpresion = date("Y-m-d H:i:s");
+    $fechaImpresion = str_replace(':', '_', $fechaImpresion);
     $extension = '.pdf';
     $nombreArchivo = $persona . '-' . $no_documento . '-' . $fechaImpresion . $extension;
     return $nombreArchivo;

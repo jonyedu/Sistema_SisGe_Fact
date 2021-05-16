@@ -137,6 +137,17 @@
                                             >
                                                 <label>Cédula</label>
                                             </bs-text-field>
+                                            <bs-text-field
+                                                prepend-icon-outer="phone-square-alt"
+                                                floating-label
+                                                outlined
+                                                v-model="proveedorForm.correo"
+                                                :external-validator="
+                                                    correoValidator
+                                                "
+                                            >
+                                                <label>Correo</label>
+                                            </bs-text-field>
                                         </div>
                                     </div>
                                 </form>
@@ -153,7 +164,7 @@
 <script>
 import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
-import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import { required, minLength, maxLength, email } from "vuelidate/lib/validators";
 
 const proveedorValidator = {
     nombre: { required, minLength: minLength(5) },
@@ -161,7 +172,8 @@ const proveedorValidator = {
     direccion: { required, minLength: minLength(5) },
     telefono: { required, minLength: minLength(5) },
     cedula: { required, minLength: minLength(10), maxLength: maxLength(10) },
-    ruc: { required, minLength: minLength(13), maxLength: maxLength(13) }
+    ruc: { required, minLength: minLength(13), maxLength: maxLength(13) },
+    correo: { required, email},
 };
 export default {
     mixins: [validationMixin],
@@ -185,7 +197,8 @@ export default {
                         telefono: "",
                         cedula: "",
                         ruc: "",
-                        estado: false
+                        estado: false,
+                        correo: "",
                     },
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
@@ -207,7 +220,8 @@ export default {
             //Variables para la validaciones
             requiredErrorMsg: "Este campo es obligatorio.",
             minLengthErrorMsg: "Este campo debe tener al menos 10 caracteres.",
-            maxLengthErrorMsg: "Este campo debe tener al menos 10 caracteres."
+            maxLengthErrorMsg: "Este campo debe tener al menos 10 caracteres.",
+            emailErrorMsg: "Por favor ingrese una dirección de correo electrónico válida.",
 
             //Objeto para almacenar el arreglo de cada combobox
         };
@@ -219,17 +233,18 @@ export default {
     mounted: function() {
         this.prefijo = prefix;
         if (this.$store.getters.getProveedor != null) {
-            var producto = this.$store.getters.getProveedor;
-            this.proveedorForm.proveedor_id = producto.id;
-            this.proveedorForm.codigo = producto.codigo;
-            this.proveedorForm.nombre = producto.nombre;
-            this.proveedorForm.apellido = producto.apellido;
-            this.proveedorForm.razon_social = producto.razon_social;
-            this.proveedorForm.direccion = producto.direcion;
-            this.proveedorForm.telefono = producto.telefono;
-            this.proveedorForm.cedula = producto.cedula;
-            this.proveedorForm.ruc = producto.ruc;
-            this.proveedorForm.estado = Boolean(producto.estado);
+            var proveedor = this.$store.getters.getProveedor;
+            this.proveedorForm.proveedor_id = proveedor.id;
+            this.proveedorForm.codigo = proveedor.codigo;
+            this.proveedorForm.nombre = proveedor.nombre;
+            this.proveedorForm.apellido = proveedor.apellido;
+            this.proveedorForm.razon_social = proveedor.razon_social;
+            this.proveedorForm.direccion = proveedor.direccion;
+            this.proveedorForm.telefono = proveedor.telefono;
+            this.proveedorForm.cedula = proveedor.cedula;
+            this.proveedorForm.ruc = proveedor.ruc;
+            this.proveedorForm.correo = proveedor.correo;
+            this.proveedorForm.estado = Boolean(proveedor.estado);
         }
     },
     beforeDestroy: function() {
@@ -321,6 +336,20 @@ export default {
                     required: this.$v.proveedorForm.ruc.required,
                     minLength: this.$v.proveedorForm.ruc.minLength,
                     maxLength: this.$v.proveedorForm.ruc.maxLength
+                }
+            };
+        },
+        correoValidator() {
+            return {
+                hasError: this.$v.proveedorForm.correo.$error,
+                messages: {
+                    required: this.requiredErrorMsg,
+                    email: this.emailErrorMsg
+                },
+                dirty: this.$v.proveedorForm.correo.$dirty,
+                validators: {
+                    required: this.$v.proveedorForm.correo.required,
+                    email: this.$v.proveedorForm.correo.email
                 }
             };
         }

@@ -24,7 +24,7 @@
                         </router-link>
 
                         <bs-tooltip
-                            content="Guardar cliente"
+                            content="Guardar Proveedor"
                             placement="bottom"
                         >
                             <bs-button
@@ -37,7 +37,7 @@
                             </bs-button>
                         </bs-tooltip>
                         <bs-tooltip
-                            content="Guardar cliente"
+                            content="Imprimir Factura de Compra"
                             placement="bottom"
                         >
                             <bs-button
@@ -46,6 +46,19 @@
                                 icon-size="sm"
                                 color="red"
                                 @click="imprimirPdf()"
+                            >
+                            </bs-button>
+                        </bs-tooltip>
+                        <bs-tooltip
+                            content="Enviar Factura al Proveedor"
+                            placement="bottom"
+                        >
+                            <bs-button
+                                mode="icon"
+                                icon="file-import"
+                                icon-size="sm"
+                                color="info"
+                                @click="enviarPdf()"
                             >
                             </bs-button>
                         </bs-tooltip>
@@ -368,7 +381,8 @@ export default {
                 window.open(
                     "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
                         this.factura_compra.datos_factura_compra
-                            .factura_compra_cabecera_id
+                            .factura_compra_cabecera_id + "/" +
+                            'false'
                 );
             } else {
                 this.showNotificationProgress(
@@ -377,7 +391,26 @@ export default {
                     "warning"
                 );
             }
-        }
+        },
+        enviarPdf() {
+            if (
+                this.factura_compra.datos_factura_compra
+                    .factura_compra_cabecera_id != ""
+            ) {
+                window.open(
+                    "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
+                        this.factura_compra.datos_factura_compra
+                            .factura_compra_cabecera_id + "/" +
+                            'true'
+                );
+            } else {
+                this.showNotificationProgress(
+                    "Advertencia",
+                    "No existe factura de compra, para enviar al proveedor.",
+                    "warning"
+                );
+            }
+        },
     }
 };
 </script>
