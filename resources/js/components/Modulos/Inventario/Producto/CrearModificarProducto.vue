@@ -165,7 +165,7 @@
                                                         v-model="
                                                             productoForm.pvc
                                                         "
-                                                            @change="cambiarIva()"
+                                                        @change="cambiarIva()"
                                                         :external-validator="
                                                             pvcValidator
                                                         "
@@ -180,7 +180,7 @@
                                                         v-model="
                                                             productoForm.iva
                                                         "
-                                                       @change="cambiarIva()"
+                                                        @change="cambiarIva()"
                                                         color="primary"
                                                         label-position="left"
                                                         label-class="col-md-4 ml-3"
@@ -204,123 +204,128 @@
                                             </bs-combobox>
                                         </div>
                                         <!-- aqui va el grio de costo -->
-                                 <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
-                                    <bs-grid
-                                        :data-source="
-                                            productoForm.productosCarrito
-                                        "
-                                        row-hover
-                                        sortable
-                                        :flip-on-small-screen="false"
-                                    >
-                                        <bs-grid-column
-                                            field="costo"
-                                            label="costo"
-                                            width="125"
-                                        ></bs-grid-column>
-                                        <!-- <bs-grid-column
+                                        <div
+                                            class="col-lg-12 col-md-12 col-sm-12 mt-3"
+                                        >
+                                            <bs-grid
+                                                :data-source="
+                                                    productoForm.productosCarrito
+                                                "
+                                                row-hover
+                                                sortable
+                                                :flip-on-small-screen="false"
+                                            >
+                                                <bs-grid-column
+                                                    field="costo"
+                                                    label="costo"
+                                                    width="125"
+                                                ></bs-grid-column>
+                                                <!-- <bs-grid-column
                                             field="factor"
                                             label="factor"
                                             min-width="175"
                                         >
                                         </bs-grid-column> -->
-                                        <bs-grid-column
-                                            field="costoi"
-                                            label="costoi"
-                                            width="100"
-                                        ></bs-grid-column>
-                                        <bs-grid-column
-                                            field="preciou"
-                                            label="preciou"
-                                            width="100"
-                                        ></bs-grid-column>
-                                        <bs-grid-column
-                                            field="precio"
-                                            label="precio"
-                                            width="100"
-                                        ></bs-grid-column>
-                                        <bs-grid-column
-                                            field="precioi"
-                                            label="precioi"
-                                            width="100"
-                                        ></bs-grid-column>
-                                        <bs-grid-column
-                                            field="utili"
-                                            label="utili"
-                                            width="100"
-                                        ></bs-grid-column>
-                                        <bs-grid-column
-                                            field="rentabilidad"
-                                            label="rentabilidad"
-                                            width="100"
-                                        ></bs-grid-column>
-                                        <!-- <bs-grid-column
+                                                <bs-grid-column
+                                                    field="costoi"
+                                                    label="costoi"
+                                                    width="100"
+                                                ></bs-grid-column>
+                                                <bs-grid-column
+                                                    field="preciou"
+                                                    label="preciou"
+                                                    width="100"
+                                                ></bs-grid-column>
+                                                <bs-grid-column
+                                                    field="precio"
+                                                    label="precio"
+                                                    width="100"
+                                                ></bs-grid-column>
+                                                <bs-grid-column
+                                                    field="precioi"
+                                                    label="precioi"
+                                                    width="100"
+                                                ></bs-grid-column>
+                                                <bs-grid-column
+                                                    field="utili"
+                                                    label="utili"
+                                                    width="100"
+                                                ></bs-grid-column>
+                                                <bs-grid-column
+                                                    field="rentabilidad"
+                                                    label="rentabilidad"
+                                                    width="100"
+                                                ></bs-grid-column>
+                                                <!-- <bs-grid-column
                                             field=""
                                             label="Acciones"
                                             width="100"
                                         ></bs-grid-column> -->
-                                        <template
-                                            v-slot:datarow="{ columns, item, index }"
-                                        >
-                                            <bs-grid-cell
-                                                :column="columns[0]"
-                                                :item="item"
-                                                :index="index"
-                                            >
-
-                                            </bs-grid-cell>
-                                            <!-- <bs-grid-cell
+                                                <template
+                                                    v-slot:datarow="{
+                                                        columns,
+                                                        item,
+                                                        index
+                                                    }"
+                                                >
+                                                    <bs-grid-cell
+                                                        :column="columns[0]"
+                                                        :item="item"
+                                                        :index="index"
+                                                    >
+                                                    </bs-grid-cell>
+                                                    <!-- <bs-grid-cell
                                                 :column="columns[1]"
                                                 :item="item"
                                                 :index="index"
                                             </bs-grid-cell>> -->
-                                            <bs-grid-cell
-                                                :column="columns[1]"
-                                                :item="item"
-                                                :index="index"
-                                            >
+                                                    <bs-grid-cell
+                                                        :column="columns[1]"
+                                                        :item="item"
+                                                        :index="index"
+                                                    >
+                                                    </bs-grid-cell>
+                                                    <bs-grid-cell
+                                                        :column="columns[2]"
+                                                        :item="item"
+                                                        :index="index"
+                                                    >
+                                                    </bs-grid-cell>
+                                                    <bs-grid-cell
+                                                        :column="columns[3]"
+                                                        :item="item"
+                                                        :index="index"
+                                                    >
+                                                    </bs-grid-cell>
+                                                    <bs-grid-cell
+                                                        :column="columns[4]"
+                                                        :item="item"
+                                                        :index="index"
+                                                    >
+                                                        <bs-text-field
+                                                            v-model="
+                                                                item.precioi
+                                                            "
+                                                            @change="
+                                                                cambiarIva()
+                                                            "
+                                                        >
+                                                        </bs-text-field>
+                                                    </bs-grid-cell>
+                                                    <bs-grid-cell
+                                                        :column="columns[5]"
+                                                        :item="item"
+                                                        :index="index"
+                                                    >
+                                                    </bs-grid-cell>
+                                                    <bs-grid-cell
+                                                        :column="columns[6]"
+                                                        :item="item"
+                                                        :index="index"
+                                                    >
+                                                    </bs-grid-cell>
 
-                                            </bs-grid-cell>
-                                            <bs-grid-cell
-                                                :column="columns[2]"
-                                                :item="item"
-                                                :index="index"
-                                            >
-
-                                            </bs-grid-cell>
-                                            <bs-grid-cell
-                                                :column="columns[3]"
-                                                :item="item"
-                                                :index="index"
-                                            >
-
-                                            </bs-grid-cell>
-                                            <bs-grid-cell
-                                                :column="columns[4]"
-                                                :item="item"
-                                                :index="index"
-                                            >
-                                                <bs-text-field
-
-                                                    v-model="item.precioi"
-                                                    @change="cambiarIva()"
-                                                >
-                                                </bs-text-field>
-                                            </bs-grid-cell>
-                                            <bs-grid-cell
-                                                :column="columns[5]"
-                                                :item="item"
-                                                :index="index"
-                                            >
-                                            </bs-grid-cell>
-                                            <bs-grid-cell
-                                                :column="columns[6]"
-                                                :item="item"
-                                                :index="index"
-                                            >
-                                            </bs-grid-cell>
-
-                                            <!-- <bs-grid-cell
+                                                    <!-- <bs-grid-cell
                                                 :column="columns[9]"
                                                 :item="item"
                                                 :index="index"
@@ -339,11 +344,10 @@
                                                     ></bs-button>
                                                 </bs-tooltip>
                                             </bs-grid-cell> -->
-                                        </template>
-                                    </bs-grid>
-                                </div>
-                                <!-- aqui finaliza -->
-
+                                                </template>
+                                            </bs-grid>
+                                        </div>
+                                        <!-- aqui finaliza -->
 
                                         <div
                                             class="col-lg-12 col-md-12 col-sm-12 mt-3 text-center"
@@ -462,7 +466,7 @@ export default {
                         //aqui
                         productosCarrito: new BsArrayStore([], {
                             idProperty: "index"
-                        }),
+                        })
 
                         //fin
                     },
@@ -536,11 +540,8 @@ export default {
     validations: {
         productoForm: productoValidator
     },
-    created() {
-
-    },
+    created() {},
     mounted: function() {
-
         this.prefijo = prefix;
         if (this.$store.getters.getProducto != null) {
             var producto = this.$store.getters.getProducto;
@@ -550,7 +551,7 @@ export default {
             this.productoForm.stock_maximo = producto.stock_maximo;
             this.productoForm.stock_minimo = producto.stock_minimo;
             this.productoForm.pvc = producto.pvc;
-            this.productoForm.iva = producto.iva == 1?true:false;
+            this.productoForm.iva = producto.iva == 1 ? true : false;
             this.productoForm.descripcion = producto.descripcion;
             this.productoForm.codigo = producto.codigo;
             this.productoForm.grupo_id = producto.grupo_id;
@@ -559,21 +560,19 @@ export default {
             this.productoForm.file_base_64 = producto.imagen;
             this.singleItem[0].imageSrc = producto.imagen;
             this.agregarDetalle();
-        }else
-        {
-           this.productoForm.productosCarrito._items.push({producto_id:0,
-                        costo: 0,
-                        factor:1,
-                        costoi: 0,
-                        preciou: 0,
-                        precio: 0,
-                        precioi: 0,
-                        utili: 0,
-                        rentabilidad: 0,
-
-                    });
+        } else {
+            this.productoForm.productosCarrito._items.push({
+                producto_id: 0,
+                costo: 0,
+                factor: 1,
+                costoi: 0,
+                preciou: 0,
+                precio: 0,
+                precioi: 0,
+                utili: 0,
+                rentabilidad: 0
+            });
         }
-
     },
     beforeDestroy: function() {
         this.$store.state.producto = null;
@@ -694,7 +693,7 @@ export default {
     },
 
     methods: {
-         cambiarIva(){
+        cambiarIva() {
             //varible para quita los decimales
 
             var costo = 0;
@@ -703,121 +702,122 @@ export default {
             costo = this.productoForm.pvc * 1;
             this.productoForm.productosCarrito._items[0].costo = costo;
 
-
-
             if (this.productoForm.iva) {
+                this.productoForm.productosCarrito._items[0].costoi =
+                    costo + (costo * 12) / 100;
+                costeo =
+                    this.productoForm.productosCarrito._items[0].precioi / 1.12;
 
-            this.productoForm.productosCarrito._items[0].costoi = costo + ((costo * 12)/100);
-            costeo = this.productoForm.productosCarrito._items[0].precioi /1.12;
-
-
-
-            //        var costoiva = 0;
-            //  costoiva =  this.productoForm.productosCarrito._items[0].costo * 12/100;
-            //    this.productoForm.productosCarrito._items[0].costoi = Number(this.productoForm.productosCarrito._items[0].costo)+ parseFloat(costoiva);
-            //      //: Rentabilidad = (Ganancia / Inversión) x 100.
-            //     var ganacia = 0;
-            //     var rentabilidad = 0;
-            //     ganacia = this.productoForm.productosCarrito._items[0].precio -  this.productoForm.productosCarrito._items[0].costo;
-            //     rentabilidad = parseFloat(ganacia) /  parseFloat(this.productoForm.productosCarrito._items[0].costo) * 100;
-            //      this.productoForm.productosCarrito._items[0].rentabilidad = parseFloat(rentabilidad);
-
+                //        var costoiva = 0;
+                //  costoiva =  this.productoForm.productosCarrito._items[0].costo * 12/100;
+                //    this.productoForm.productosCarrito._items[0].costoi = Number(this.productoForm.productosCarrito._items[0].costo)+ parseFloat(costoiva);
+                //      //: Rentabilidad = (Ganancia / Inversión) x 100.
+                //     var ganacia = 0;
+                //     var rentabilidad = 0;
+                //     ganacia = this.productoForm.productosCarrito._items[0].precio -  this.productoForm.productosCarrito._items[0].costo;
+                //     rentabilidad = parseFloat(ganacia) /  parseFloat(this.productoForm.productosCarrito._items[0].costo) * 100;
+                //      this.productoForm.productosCarrito._items[0].rentabilidad = parseFloat(rentabilidad);
             } else {
-                 costeo = this.productoForm.productosCarrito._items[0].precioi;
-                 this.productoForm.productosCarrito._items[0].costoi = costo;
-
+                costeo = this.productoForm.productosCarrito._items[0].precioi;
+                this.productoForm.productosCarrito._items[0].costoi = costo;
             }
-             //this.productoForm.productosCarrito._items[0].costoi = Number(this.productoForm.productosCarrito._items[0].costo);
-              this.productoForm.productosCarrito._items[0].precio = costeo;
-              this.productoForm.productosCarrito._items[0].preciou = costeo / 1;
-              this.productoForm.productosCarrito._items[0].utili = (100 * ((costeo - costo) / costo));
-              this.productoForm.productosCarrito._items[0].rentabilidad = (100 * ((costeo - costo) /  costeo));
+            //this.productoForm.productosCarrito._items[0].costoi = Number(this.productoForm.productosCarrito._items[0].costo);
+            this.productoForm.productosCarrito._items[0].precio = costeo;
+            this.productoForm.productosCarrito._items[0].preciou = costeo / 1;
+            this.productoForm.productosCarrito._items[0].utili =
+                100 * ((costeo - costo) / costo);
+            this.productoForm.productosCarrito._items[0].rentabilidad =
+                100 * ((costeo - costo) / costeo);
 
             //proceso para quitar los decimales
-            this.productoForm.productosCarrito._items[0].costo = this.productoForm.productosCarrito._items[0].costo.toFixed(4);
-            this.productoForm.productosCarrito._items[0].costoi = this.productoForm.productosCarrito._items[0].costoi.toFixed(4);
-            this.productoForm.productosCarrito._items[0].preciou = this.productoForm.productosCarrito._items[0].preciou.toFixed(4);
+            this.productoForm.productosCarrito._items[0].costo = this.productoForm.productosCarrito._items[0].costo.toFixed(
+                4
+            );
+            this.productoForm.productosCarrito._items[0].costoi = this.productoForm.productosCarrito._items[0].costoi.toFixed(
+                4
+            );
+            this.productoForm.productosCarrito._items[0].preciou = this.productoForm.productosCarrito._items[0].preciou.toFixed(
+                4
+            );
 
-            this.productoForm.productosCarrito._items[0].precio = +this.productoForm.productosCarrito._items[0].precio;
-            this.productoForm.productosCarrito._items[0].precio = this.productoForm.productosCarrito._items[0].precio.toFixed(4);
+            this.productoForm.productosCarrito._items[0].precio = +this
+                .productoForm.productosCarrito._items[0].precio;
+            this.productoForm.productosCarrito._items[0].precio = this.productoForm.productosCarrito._items[0].precio.toFixed(
+                4
+            );
             //this.productoForm.productosCarrito._items[0].precioi = this.productoForm.productosCarrito._items[0].precioi.toFixed(4);
 
-            this.productoForm.productosCarrito._items[0].utili = this.productoForm.productosCarrito._items[0].utili.toFixed(4);
-            this.productoForm.productosCarrito._items[0].rentabilidad = this.productoForm.productosCarrito._items[0].rentabilidad.toFixed(4);
-
-
+            this.productoForm.productosCarrito._items[0].utili = this.productoForm.productosCarrito._items[0].utili.toFixed(
+                4
+            );
+            this.productoForm.productosCarrito._items[0].rentabilidad = this.productoForm.productosCarrito._items[0].rentabilidad.toFixed(
+                4
+            );
         },
-        cambiarCosto(){
-            this.productoForm.productosCarrito._items[0].costo =  this.productoForm.pvc;
+        cambiarCosto() {
+            this.productoForm.productosCarrito._items[0].costo = this.productoForm.pvc;
         },
         agregarDetalle() {
-            if(this.productoForm.producto_id > 0){
+            if (this.productoForm.producto_id > 0) {
                 var id_pr = this.productoForm.producto_id;
 
-            let that = this;
-            let url = "";
-               url =  "/modulos/inventario/producto/cargar_costo/"+ id_pr;
+                let that = this;
+                let url = "";
+                url = "/modulos/inventario/producto/cargar_costo/" + id_pr;
 
-
-            axios
-                .get(url)
-                .then(function(response) {
-                    //console.log(response.data.productos.costo);
-                    if (response.data.productos.length == 0) {
-                         that.productoForm.productosCarrito._items.push({producto_id:id_pr,
-                        costo: 0,
-                        factor:0,
-                        costoi: 0,
-                        preciou: 0,
-                        precio: 0,
-                        precioi: 0,
-                        utili: 0,
-                        rentabilidad: 0,
-
+                axios
+                    .get(url)
+                    .then(function(response) {
+                        //console.log(response.data.productos.costo);
+                        if (response.data.productos.length == 0) {
+                            that.productoForm.productosCarrito._items.push({
+                                producto_id: id_pr,
+                                costo: 0,
+                                factor: 0,
+                                costoi: 0,
+                                preciou: 0,
+                                precio: 0,
+                                precioi: 0,
+                                utili: 0,
+                                rentabilidad: 0
+                            });
+                        } else {
+                            that.productoForm.productosCarrito._items.push({
+                                producto_id: response.data.productos.idproducto,
+                                costo: response.data.productos.costo,
+                                factor: response.data.productos.factor,
+                                costoi: response.data.productos.costoi,
+                                preciou: response.data.productos.preciou,
+                                precio: response.data.productos.precio,
+                                precioi: response.data.productos.precioi,
+                                utili: response.data.productos.utili,
+                                rentabilidad:
+                                    response.data.productos.rentabilidad
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        that.showNotificationProgress(
+                            "Error en agregarDetalle",
+                            "Por favor comuníquese con el administrador. " +
+                                error,
+                            "error"
+                        );
                     });
-
-                    } else {
-
-
-                    that.productoForm.productosCarrito._items.push({producto_id:response.data.productos.idproducto,
-                        costo: response.data.productos.costo,
-                        factor:response.data.productos.factor,
-                        costoi: response.data.productos.costoi,
-                        preciou: response.data.productos.preciou,
-                        precio: response.data.productos.precio,
-                        precioi: response.data.productos.precioi,
-                        utili: response.data.productos.utili,
-                        rentabilidad: response.data.productos.rentabilidad,
-
-                    });
-                    }
-
-                })
-                .catch(error => {
-                    that.showNotificationProgress(
-                                "Error en agregarDetalle",
-                                "Por favor comuníquese con el administrador. " +
-                                    error,
-                                "error"
-                            );
-                });
-            }else{
+            } else {
                 this.productoForm.productosCarrito._items = [];
-                this.productoForm.productosCarrito._items.push({producto_id:id_pr,
-                        costo: 0,
-                        factor:0,
-                        costoi: 0,
-                        preciou: 0,
-                        precio: 0,
-                        precioi: 0,
-                        utili: 0,
-                        rentabilidad: 0,
-                        });
+                this.productoForm.productosCarrito._items.push({
+                    producto_id: id_pr,
+                    costo: 0,
+                    factor: 0,
+                    costoi: 0,
+                    preciou: 0,
+                    precio: 0,
+                    precioi: 0,
+                    utili: 0,
+                    rentabilidad: 0
+                });
             }
-
-
-
-
         },
         createBase64Image(fileObject) {
             const reader = new FileReader();
