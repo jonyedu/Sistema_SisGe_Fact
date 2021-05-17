@@ -36,17 +36,23 @@ class FacturaVentaReporteController extends Controller
             $factura_venta = VentasCabecera::select(
                 'id',
                 'id_cliente',
+                'secuencia',
+                'no_autorizacion',
                 'fecha',
                 'viva',
-                'subtotaliva1',
                 'iva',
-                'subtotaliva2',
-                'totalapagar',
+                'sub_total_12',
+                'sub_total_0',
+                'descuento',
+                'sub_total',
+                'iva_12',
+                'total',
                 'tipopago',
                 'formapago',
+                'caj',
                 'cambio',
                 'recibido',
-                'status',
+                'observacion',
                 'usu_created',
                 'created_at'
             )
@@ -71,7 +77,7 @@ class FacturaVentaReporteController extends Controller
             //return response()->json(['mensaje' => $factura_venta ], 200);
 
             $pdf = PDF::loadView('reports.Transaccion.FacturaVenta.FacturaVenta', [
-                'factura_compra' => $factura_venta,
+                'factura_venta' => $factura_venta,
                 'nombreArchivo' =>  $nombreArchivo,
                 'factura' => "FACTURA",
             ]);
@@ -83,6 +89,7 @@ class FacturaVentaReporteController extends Controller
 
             //if enviar es "" solo mostrará el pdf
             if ($enviar == "false") {
+                //return response()->json(['factura_venta' => $factura_venta], 200);
                 return $pdf->stream($nombreArchivo);
             }
             //if enviar es "true" enviara el pdf al proveedor y mostrara
@@ -297,7 +304,7 @@ class FacturaVentaReporteController extends Controller
         $no_documento = $factura_venta->id;
         $nombreArchivo = getNamePdf($nombre, $no_documento);
 
-        return response()->json(['mensaje' => $factura_venta], 200);
+        //return response()->json(['mensaje' => $factura_venta], 200);
 
         $pdf = PDF::loadView('reports.Transaccion.FacturaCredito.FacturaCredito', [
             'factura_compra' => $factura_venta,

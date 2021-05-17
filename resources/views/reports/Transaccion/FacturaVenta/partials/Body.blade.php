@@ -28,8 +28,8 @@
         <th>Precio Unitario</th>
         <th>Precio Total</th>
     </tr>
-    @if ($factura_compra->DetalleVenta != null)
-    @forelse ($factura_compra->DetalleVenta as $detalle)
+    @if ($factura_venta->DetalleVenta != null)
+    @forelse ($factura_venta->DetalleVenta as $detalle)
     <tr>
         <td style="font-size: 10px;text-align: center;">{{$detalle->producto->codigo}}</td>
         <td class="configListProduct">{{ (int)$detalle->cantidad}}</td>

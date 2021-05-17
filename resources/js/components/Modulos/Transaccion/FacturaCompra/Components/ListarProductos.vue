@@ -16,96 +16,6 @@
                                 <label>Proveedor</label>
                             </bs-combobox>
                         </div>
-                        <!-- <div class="col-lg-4 col-md-4 col-sm-12">
-                            <bs-combobox
-                                v-model="dataListarProducto.producto_id"
-                                :data-source="cmb.productos"
-                                clear-button
-                            >
-                            </bs-combobox>
-                        </div> -->
-                        <!-- <div class="col-lg-5 col-md-5 col-sm-10" v-if="false">
-                            <bs-tooltip
-                                ref="msjProducto"
-                                content="Seleccione un producto, para añadirlo"
-                            >
-                                <bs-combobox
-                                    v-model="dataListarProducto.producto_id"
-                                    :data-source="cmb.productos"
-                                    floating-label
-                                    outlined
-                                    clear-button
-                                    :external-validator="productoValidator"
-                                    :minimum-items-for-search="3"
-                                    image-size="32"
-                                    rounded-image
-                                    show-image
-                                    listbox-color="info-color"
-                                    item-separator
-                                >
-                                    <template
-                                        slot="optionItem"
-                                        slot-scope="{ item }"
-                                    >
-                                        <bs-list-tile-title>
-                                            <span>{{ item.nombre }}</span>
-                                            <span
-                                                class="float-right font-weight-light small"
-                                                >${{
-                                                    item.producto_costo != null
-                                                        ? item.producto_costo
-                                                              .precio
-                                                        : ""
-                                                }}
-                                                <br />${{
-                                                    item.producto_costo != null
-                                                        ? item.producto_costo
-                                                              .costo
-                                                        : ""
-                                                }}
-                                            </span>
-                                        </bs-list-tile-title>
-                                        <bs-list-tile-subtitle
-                                            >Stock :
-                                            <span class="mb-6">
-                                                {{
-                                                    item.producto_inventario !=
-                                                    null
-                                                        ? item
-                                                              .producto_inventario
-                                                              .stock
-                                                        : ""
-                                                }}
-                                            </span>
-                                        </bs-list-tile-subtitle>
-                                    </template>
-                                    <label>Productos</label>
-                                </bs-combobox>
-                            </bs-tooltip>
-                        </div> -->
-                        <!-- <div class="col-lg-2 col-md-2 col-sm-1" v-if="false">
-                            <bs-text-field
-                                floating-label
-                                outlined
-                                v-model="dataListarProducto.cantidad"
-                                :external-validator="cantidadValidator"
-                            >
-                                <label>Cantidad</label>
-                            </bs-text-field>
-                        </div> -->
-                        <!-- <div class="col-lg-1 col-md-1 col-sm-1 mt-3">
-                            <bs-tooltip
-                                content="Agregar Producto"
-                                placement="bottom"
-                            >
-                                <bs-button
-                                    mode="icon"
-                                    icon="shopping-cart"
-                                    icon-size="sm"
-                                    @click="prueba()"
-                                ></bs-button>
-                            </bs-tooltip>
-                        </div> -->
                         <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
                             <bs-grid
                                 :data-source="
@@ -164,7 +74,9 @@
                                             v-model="item.producto_id"
                                             :data-source="cmb.productos"
                                             clear-button
-                                            @change="setDataProductoComboBox(index)"
+                                            @change="
+                                                setDataProductoComboBox(index)
+                                            "
                                         >
                                         </bs-combobox>
                                     </bs-grid-cell>
@@ -174,8 +86,9 @@
                                         :index="index"
                                     >
                                         <bs-text-field
-                                        @change="calcular12y0()"
-                                        v-model="item.precio">
+                                            @change="calcular12y0()"
+                                            v-model="item.precio"
+                                        >
                                         </bs-text-field>
                                     </bs-grid-cell>
                                     <bs-grid-cell
@@ -227,125 +140,6 @@
                             </div>
                         </div>
                         <br />
-                        <!-- copia -->
-                        <!-- <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
-                            <bs-grid
-                                :data-source="
-                                    dataListarProducto.productosCarrito
-                                "
-                                :pageable="pagination"
-                                row-hover
-                                sortable
-                                :flip-on-small-screen="false"
-                            >
-                                <bs-grid-column
-                                    field="nombre"
-                                    label="Producto"
-                                    min-width="175"
-                                ></bs-grid-column>
-                                <bs-grid-column
-                                    field="imagen"
-                                    label="Imagen"
-                                    width="100"
-                                    text-align="center"
-                                ></bs-grid-column>
-                                <bs-grid-column
-                                    field="stock"
-                                    label="Stock"
-                                    width="120"
-                                ></bs-grid-column>
-                                <bs-grid-column
-                                    field="precio"
-                                    label="Precio"
-                                    width="100"
-                                ></bs-grid-column>
-                                <bs-grid-column
-                                    field="cantidad"
-                                    label="Cantidad"
-                                    width="100"
-                                ></bs-grid-column>
-                                <bs-grid-column
-                                    field="total"
-                                    label="Total"
-                                    width="100"
-                                ></bs-grid-column>
-                                <bs-grid-column
-                                    field=""
-                                    label="Acciones"
-                                    width="100"
-                                ></bs-grid-column>
-                                <template
-                                    v-slot:datarow="{ columns, item, index }"
-                                >
-                                    <bs-grid-cell
-                                        :column="columns[0]"
-                                        :item="item"
-                                        :index="index"
-                                    ></bs-grid-cell>
-                                    <bs-grid-cell
-                                        :column="columns[1]"
-                                        :item="item"
-                                        :index="index"
-                                    >
-                                        <bs-list-tile-leading
-                                            :img-src="item.imagen"
-                                            circle
-                                        ></bs-list-tile-leading>
-                                    </bs-grid-cell>
-                                    <bs-grid-cell
-                                        :column="columns[2]"
-                                        :item="item"
-                                        :index="index"
-                                    >
-                                    </bs-grid-cell>
-                                    <bs-grid-cell
-                                        :column="columns[3]"
-                                        :item="item"
-                                        :index="index"
-                                    ></bs-grid-cell>
-                                    <bs-grid-cell
-                                        :column="columns[4]"
-                                        :item="item"
-                                        :index="index"
-                                    >
-                                        <bs-text-field
-                                            @change="calcular12y0()"
-                                            v-model="item.cantidad"
-                                        >
-                                        </bs-text-field>
-                                    </bs-grid-cell>
-                                    <bs-grid-cell
-                                        :column="columns[5]"
-                                        :item="item"
-                                        :index="index"
-                                    >
-                                        <span
-                                            v-text="item.cantidad * item.precio"
-                                        >
-                                        </span>
-                                    </bs-grid-cell>
-                                    <bs-grid-cell
-                                        :column="columns[6]"
-                                        :item="item"
-                                        :index="index"
-                                    >
-                                        <bs-tooltip
-                                            content="Eliminar productos"
-                                            placement="bottom"
-                                        >
-                                            <bs-button
-                                                icon="trash-alt"
-                                                mode="icon"
-                                                size="sm"
-                                                color="danger"
-                                                flat
-                                                @click="quitarProducto(item)"
-                                            ></bs-button>
-                                        </bs-tooltip>
-                                    </bs-grid-cell>
-                                </template>
-                            </bs-grid>
-                        </div> -->
                         <div class="col-lg-8 col-md-8 col-sm-12 mt-3 card-left">
                             <bs-card shadow style="height:90%">
                                 <bs-text-area
@@ -404,7 +198,7 @@
 <script>
 import { prefix } from "../../../../../variables";
 import { validationMixin } from "vuelidate";
-import { required} from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 
 const productoValidator = {
     proveedor_id: { required },
@@ -489,7 +283,7 @@ export default {
             },
 
             //Variables para la validaciones
-            requiredErrorMsg: "Este campo es obligatorio.",
+            requiredErrorMsg: "Este campo es obligatorio."
         };
     },
     validations: {
@@ -500,7 +294,6 @@ export default {
         if (this.$store.getters.getFacturaCompra == null) {
             this.agregarDetalle();
         }
-
     },
     computed: {
         proveedorValidator() {
@@ -529,14 +322,20 @@ export default {
         }
     },
     methods: {
-        setDataProductoComboBox(index){
-            var producto_id = this.dataListarProducto.productosCarrito._items[index].producto_id;
-            var dataProductoSelect =  this.cmb.productos.proxy._items.find(producto => producto.id == producto_id);
-            this.dataListarProducto.productosCarrito._items[index].iva = dataProductoSelect.iva;
-            this.dataListarProducto.productosCarrito._items[index].precio = dataProductoSelect.pvc;
+        setDataProductoComboBox(index) {
+            var producto_id = this.dataListarProducto.productosCarrito._items[
+                index
+            ].producto_id;
+            var dataProductoSelect = this.cmb.productos.proxy._items.find(
+                producto => producto.id == producto_id
+            );
+            this.dataListarProducto.productosCarrito._items[index].iva =
+                dataProductoSelect.iva;
+            this.dataListarProducto.productosCarrito._items[index].precio =
+                dataProductoSelect.pvc;
             this.calcular12y0();
         },
-        setProductosCarrito(){
+        setProductosCarrito() {
             this.showLoader = true;
             if (this.$store.getters.getFacturaCompra != null) {
                 var factura_compra = this.$store.getters.getFacturaCompra;
@@ -546,36 +345,48 @@ export default {
 
                 for (let i = 0; i < compra_detalle.length; i++) {
                     let i_pro_inv = null;
-                    for (let j = 0; j < compra_detalle[i].producto_inventario.length;j++) {
+                    for (
+                        let j = 0;
+                        j < compra_detalle[i].producto_inventario.length;
+                        j++
+                    ) {
                         if (
-                            compra_detalle[i].producto_inventario[j].id_factura == factura_compra.id &&
-                            compra_detalle[i].producto_inventario[j].id_producto == compra_detalle[i].producto.id
+                            compra_detalle[i].producto_inventario[j]
+                                .id_factura == factura_compra.id &&
+                            compra_detalle[i].producto_inventario[j]
+                                .id_producto == compra_detalle[i].producto.id
                         ) {
                             i_pro_inv = i;
                             break;
                         }
                     }
                     object = {
-                        index:0,
+                        index: 0,
                         factura_compra_cuerpo_id: compra_detalle[i].id,
-                        producto_inventario_id: compra_detalle[i].producto_inventario[i_pro_inv].id,
+                        producto_inventario_id:
+                            compra_detalle[i].producto_inventario[i_pro_inv].id,
                         producto_id: compra_detalle[i].producto.id,
                         nombre: compra_detalle[i].producto.nombre,
                         imagen: compra_detalle[i].producto.imagen,
-                        stock: compra_detalle[i].producto_inventario[i_pro_inv].stock,
+                        stock:
+                            compra_detalle[i].producto_inventario[i_pro_inv]
+                                .stock,
                         precio: compra_detalle[i].costo,
                         cantidad: compra_detalle[i].cantidad,
                         iva: compra_detalle[i].producto.iva,
-                        total: compra_detalle[i].cantidad * compra_detalle[i].costo
+                        total:
+                            compra_detalle[i].cantidad * compra_detalle[i].costo
                     };
-                    this.dataListarProducto.productosCarrito._items.push(object);
+                    this.dataListarProducto.productosCarrito._items.push(
+                        object
+                    );
                 }
             }
             this.showLoader = false;
         },
         agregarDetalle() {
             this.dataListarProducto.productosCarrito._items.push({
-                index:0,
+                index: 0,
                 factura_compra_cuerpo_id: 0,
                 producto_inventario_id: 0,
                 producto_id: 0,
@@ -592,95 +403,6 @@ export default {
             this.dataListarProducto.productosCarrito._items.splice(index, 1);
             this.calcular12y0();
         },
-        /* agregarProducto() {
-            var that = this;
-            let encontrado = false;
-            let producto_id = "";
-            let producto_nombre = "";
-            let producto_imagen = "";
-            let stock = "";
-            let precio = "";
-            let iva = "";
-            this.$v.$touch();
-            if (!this.$v.$error) {
-                this.showLoader = true;
-                //Busca el producto que se desea agregar, en el arreglo de la tabla
-                if (
-                    this.dataListarProducto.productosCarrito._items.length > 0
-                ) {
-                    for (
-                        let i = 0;
-                        i <
-                        this.dataListarProducto.productosCarrito._items.length;
-                        i++
-                    ) {
-                        let producto = this.dataListarProducto.productosCarrito
-                            ._items[i];
-                        if (
-                            producto.id == this.dataListarProducto.producto_id
-                        ) {
-                            encontrado = true;
-                            break;
-                        }
-                    }
-                }
-                //Si no existe en la tabla, se agrega los productos.
-                if (!encontrado) {
-                    //Se recorre el arreglo del combobox del productos, para sacar los datos y agregarlos en la tabla
-                    for (
-                        let i = 0;
-                        i < this.cmb.productos.proxy._items.length;
-                        i++
-                    ) {
-                        let producto = this.cmb.productos.proxy._items[i];
-                        if (
-                            producto.id == this.dataListarProducto.producto_id
-                        ) {
-                            producto_id = +producto.id;
-                            producto_nombre = producto.nombre;
-                            producto_imagen = producto.imagen;
-                            stock =
-                                producto.producto_inventario != null
-                                    ? producto.producto_inventario.stock
-                                    : 0;
-                            iva = producto.iva;
-                            precio =
-                                producto.producto_costo != null
-                                    ? producto.producto_costo.precio
-                                    : 0;
-                            break;
-                        }
-                    }
-                    //Si el stock es mayor 0, se agrega al carrito
-                    this.dataListarProducto.productosCarrito._items.push({
-                        factura_compra_cuerpo_id: 0,
-                        id: producto_id,
-                        nombre: producto_nombre,
-                        imagen: producto_imagen,
-                        stock: stock,
-                        precio: precio,
-                        cantidad: this.dataListarProducto.cantidad,
-                        iva: iva,
-                        total: this.dataListarProducto.cantidad * precio
-                    });
-                    this.lmpCampos();
-                    this.showLoader = false;
-                    this.calcular12y0();
-                    this.showNotificationProgress(
-                        "Exito al Procesar",
-                        "Producto agregado correctamente.",
-                        "success"
-                    );
-                } else {
-                    this.showNotificationProgress(
-                        "Existe un error",
-                        "El producto que intenta vender, ya se encuentra en la tabla.",
-                        "error"
-                    );
-                    this.showLoader = false;
-                }
-            }
-        }, */
         calcular12y0() {
             var sub_total_12 = 0;
             var sub_total_0 = 0;

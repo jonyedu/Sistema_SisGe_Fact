@@ -49,7 +49,7 @@ class ProductoController extends Controller
     }
     public function cargarProductoPorId($id)
     {
-        return  response()->json(['id' => $id], 200);
+        //return  response()->json(['id' => $id], 200);
         try {
             $productos = Producto::where('status', 1)
                 ->with('laboratorio:id,nombre', 'grupo:Id,codigo')

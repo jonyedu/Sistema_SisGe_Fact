@@ -56,7 +56,7 @@
         $rutaImg = $factura_compra!=null?$factura_compra->usuario!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne->empresaOne!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne->empresaOne->Empresa_Ubicacion_Logo:'':'':'':'':'':'';
         @endphp
         @if($rutaImg !=null)
-        <th class="sizeWidthCabecera"><img src="{{ $factura_compra!=null?$factura_compra->usuario!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne->empresaOne!=null?$factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne->empresaOne->Empresa_Ubicacion_Logo:'':'':'':'':'':''}}}}" alt="No hay logo" width="300px" height="100px"></th>
+        <th class="sizeWidthCabecera"><img src="{{ $rutaImg }}" alt="No hay logo" width="300px" height="100px"></th>
         @else
         <th class="sizeWidthCabecera"><img src="{{ public_path('icons/logo/no_tiene_logo.png') }}" width="300px" height="30px" /></th>
         @endif
@@ -116,7 +116,7 @@
         <th colspan="2" style="border: 1px solid black;">
             <table style="width: 100%;">
                 <tr>
-                    <th class="sizeFont2da alturaCabecera2da textLeft">Razón Social / Nombres y Apellidos: <span class="fontNormal" style="margin-left:75px;">{{$factura_compra!=null?$factura_compra->proveedor!=null?$factura_compra->proveedor->razon_social!=""?$factura_compra->proveedor->razon_social:$factura_compra->proveedor->FULLNAME:"":""}}</span></th>
+                    <th class="sizeFont2da alturaCabecera2da textLeft">Razón Social / Nombres y Apellidos: <span class="fontNormal" style="margin-left:50px;">{{$factura_compra!=null?$factura_compra->proveedor!=null?$factura_compra->proveedor->razon_social!=""?$factura_compra->proveedor->razon_social:$factura_compra->proveedor->FULLNAME:"":""}}</span></th>
                 </tr>
                 <tr>
                     <th class="sizeFont2da alturaCabecera2da textLeft">RUC / CI:<span class="fontNormal" style="margin-left:25px;">{{$factura_compra!=null?$factura_compra->proveedor!=null?$factura_compra->proveedor->razon_social!=""?$factura_compra->proveedor->ruc:$factura_compra->proveedor->cedula:"":""}}</span></th>

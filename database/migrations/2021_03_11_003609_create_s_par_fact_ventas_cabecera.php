@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnsTosParFactVentasCabecera extends Migration
+class CreateSParFactVentasCabecera extends Migration
 {
     /**
      * Run the migrations.
@@ -21,10 +21,13 @@ class AddColumnsTosParFactVentasCabecera extends Migration
                 $table->string('no_autorizacion');
                 $table->datetime('fecha');
                 $table->unsignedInteger('viva');
-                $table->decimal('subtotaliva1', 18, 2);
                 $table->unsignedInteger('iva');
-                $table->decimal('subtotaliva2', 18, 2);
-                $table->decimal('totalapagar', 18, 2);
+                $table->decimal('sub_total_12', 18, 4);
+                $table->decimal('sub_total_0', 18, 4);
+                $table->decimal('descuento', 18, 4);
+                $table->decimal('sub_total', 18, 4);
+                $table->decimal('iva_12', 18, 4);
+                $table->decimal('total', 18, 4);
                 $table->unsignedInteger('tipopago');
                 $table->unsignedInteger('formapago');
                 $table->unsignedInteger('caj');

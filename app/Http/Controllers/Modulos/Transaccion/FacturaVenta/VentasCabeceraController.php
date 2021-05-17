@@ -45,7 +45,7 @@ class VentasCabeceraController extends Controller
     public function cargarFacturasDelDia()
     {
         try {
-            $factura = VentasCabecera::select('id', 'id_cliente', 'secuencia', 'fecha', 'totalapagar', 'status')
+            $factura = VentasCabecera::select('id', 'id_cliente', 'secuencia', 'fecha', 'total', 'status')
                 ->with('cliente:cliente_id,nombres,apellidos')
                 ->where('status', 1)
                 ->get();
@@ -65,7 +65,7 @@ class VentasCabeceraController extends Controller
                 'id',
                 'id_factura',
             )
-                ->with('ProductoInv:id,nombre,imagen,iva')
+                ->with('ProductoInv:id,nombre,iva,imagen')
                 ->whereHas('ProductoInv', function ($query) use ($nombre) {
 
                     return $query->where("nombre", 'LIKE', '%' . $nombre . '%');
@@ -135,6 +135,7 @@ class VentasCabeceraController extends Controller
 
     public function guardarFacturaVenta(Request $request)
     {
+        //return  response()->json(['tipo' => $request->input(), 'total' =>0 ], 500);
         try {
             //code...
             $user = Auth::user();
@@ -151,7 +152,6 @@ class VentasCabeceraController extends Controller
                 $id_cliente = $datos_cliente["id"];
                 $secuencia = $datos_cliente["no_documento"];
                 $no_autorizacion = $datos_cliente["no_autorizacion"];
-                $observacion = $datos_inventario_factura["observacion"];
                 $total = 0;
                 $subtotal12 = 0;
                 $subtotal0 = 0;
@@ -191,16 +191,21 @@ class VentasCabeceraController extends Controller
                         'no_autorizacion' => $no_autorizacion,
                         'fecha' => date("Y-m-d H:i:s"),
                         'viva' => $iva,
-                        'subtotaliva1' => $subtotal12,
                         'iva' => $viva,
-                        'subtotaliva2' => $subtotal0,
-                        'totalapagar' => $total,
+
+                        'sub_total_12' => $datos_inventario_factura["sub_total_12"],
+                        'sub_total_0' => $datos_inventario_factura["sub_total_0"],
+                        'descuento' => $datos_inventario_factura["descuento"],
+                        'sub_total' => $datos_inventario_factura["sub_total"],
+                        'iva_12' => $datos_inventario_factura["iva_12"],
+                        'total' => $datos_inventario_factura["total"],
+
                         'tipopago' => 0,
                         'formapago' => $forma_pago,
                         'caj' => 0,
                         'cambio' => 0,
                         'recibido' => 0,
-                        'observacion' => $observacion,
+                        'observacion' => $datos_inventario_factura["observacion"],
                         'status' => 1,
                         'usu_created' => $user->codigo,
                         'usu_update' => $user->codigo,

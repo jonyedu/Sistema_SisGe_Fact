@@ -18,8 +18,6 @@ class VentasCabecera extends Model
     // protected $connection = 'admin_db_sql';
     protected  $primaryKey = 'id';
 
-    public $timestamps = false;
-
     protected $fillable = [
         'id',
         'id_cliente',
@@ -27,10 +25,13 @@ class VentasCabecera extends Model
         'no_autorizacion',
         'fecha',
         'viva',
-        'subtotaliva1',
         'iva',
-        'subtotaliva2',
-        'totalapagar',
+        'sub_total_12',
+        'sub_total_0',
+        'descuento',
+        'sub_total',
+        'iva_12',
+        'total',
         'tipopago',
         'formapago',
         'caj',
