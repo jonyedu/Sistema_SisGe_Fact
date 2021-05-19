@@ -39,9 +39,6 @@ use Illuminate\Support\Facades\Auth;
 
 class VentasCabeceraController extends Controller
 {
-
-
-
     public function cargarFacturasDelDia()
     {
         try {

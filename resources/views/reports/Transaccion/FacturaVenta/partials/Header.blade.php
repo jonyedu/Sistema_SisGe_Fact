@@ -69,10 +69,10 @@
                     <th style="font-size: 17px;height:40px;font-weight: normal;" class="textLeft">{{$factura}}</th>
                 </tr>
                 <tr>
-                    <th class="alturaCabecera textLeft">No. <span style="margin-left:123px;" class="fontNormal">0000000{{$factura_venta!= null?$factura_venta->id:""}}</span></th>
+                    <th class="alturaCabecera textLeft">No. <span style="margin-left:123px;" class="fontNormal">{{$factura_venta!= null?$factura_venta->secuencia:""}}</span></th>
                 </tr>
                 <tr>
-                    <th class="alturaCabecera textLeft">NÚMERO DE AUTORIZACIÓN <br><br><span class="sizeFont2da fontNormal">{{$factura_venta!= null?$factura_venta->no_autorizacion:""}}</span></th>
+                    <th class="alturaCabecera textLeft">NÚMERO DE AUTORIZACIÓN <br><br><span class="sizeFont2da fontNormal"> {{$factura_venta!= null?$factura_venta->no_autorizacion:""}} </span></th>
                     </th>
                 </tr>
                 <tr>

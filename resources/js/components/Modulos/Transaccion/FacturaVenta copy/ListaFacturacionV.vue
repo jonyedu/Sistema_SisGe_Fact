@@ -47,21 +47,25 @@
                         row-numbering
                     ></bs-grid-column>
                     <bs-grid-column
-                        field="id"
-                        label="Factura"
+                        field="DATE"
+                        label="Fecha"
+                        width="130"
+                    ></bs-grid-column>
+                    <bs-grid-column
+                        field="cliente.NOMBRESCLIENTEPRO"
+                        label="Cliente"
                         width="300"
                     ></bs-grid-column>
                     <bs-grid-column
-                        field="fecha"
-                        label="Fecha"
-                        width="300"
+                        field="secuencia"
+                        label="Secuencia"
+                        width="150"
                     ></bs-grid-column>
                     <bs-grid-column
                         field="totalapagar"
                         label="Total"
-                        width="300"
+                        width="75"
                     ></bs-grid-column>
-
                     <bs-grid-column
                         field=""
                         label="Acciones"
@@ -84,15 +88,19 @@
                             :item="item"
                             :index="index"
                         ></bs-grid-cell>
-
                         <bs-grid-cell
                             :column="columns[3]"
                             :item="item"
                             :index="index"
                         ></bs-grid-cell>
-
                         <bs-grid-cell
                             :column="columns[4]"
+                            :item="item"
+                            :index="index"
+                        ></bs-grid-cell>
+
+                        <bs-grid-cell
+                            :column="columns[5]"
                             :item="item"
                             :index="index"
                         >
@@ -103,6 +111,7 @@
                                 "
                             >
                                 <bs-tooltip
+                                    v-if="false"
                                     content="Modificar productos"
                                     placement="bottom"
                                 >
@@ -116,7 +125,6 @@
                                     ></bs-button>
                                 </bs-tooltip>
                             </router-link>
-
                             <bs-tooltip
                                 content="Eliminar productos"
                                 placement="bottom"
@@ -129,6 +137,34 @@
                                     flat
                                     @click="abriModal(item)"
                                 ></bs-button>
+                            </bs-tooltip>
+                            <bs-tooltip
+                                content="Imprimir Factura de Compra"
+                                placement="bottom"
+                            >
+                                <bs-button
+                                    icon="file-pdf"
+                                    mode="icon"
+                                    size="sm"
+                                    color="red"
+                                    flat
+                                    @click="imprimirPdf(item)"
+                                >
+                                </bs-button>
+                            </bs-tooltip>
+                            <bs-tooltip
+                                content="Enviar Factura al Proveedor"
+                                placement="bottom"
+                            >
+                                <bs-button
+                                    icon="file-import"
+                                    mode="icon"
+                                    size="sm"
+                                    color="info"
+                                    flat
+                                    @click="enviarPdf(item)"
+                                >
+                                </bs-button>
                             </bs-tooltip>
                         </bs-grid-cell>
                     </template>
@@ -154,7 +190,7 @@
                 >
                     Cancelar
                 </bs-button>
-                <bs-button active color="primary" @click="eliminarProducto()">
+                <bs-button active color="primary" @click="eliminar()">
                     OK
                 </bs-button>
             </template>
@@ -201,10 +237,10 @@ export default {
             this.trueModalVisible = true;
             this.item = item;
         },
-        eliminarProducto() {
+        eliminar() {
             let that = this;
             let url =
-                "/modulos/transaccion/producto/eliminar_producto/" +
+                "/modulos/transaccion/factura_venta/eliminar_factura_venta/" +
                 this.item.id;
             axios
                 .delete(url)
@@ -213,15 +249,15 @@ export default {
                     that.$refs.gridProducto.reload();
                     that.showNotificationProgress(
                         "Exito al procesar",
-                        "Usted ha eliminado correctamente el producto." +
-                            that.item.descripcion,
+                        "Usted ha eliminado correctamente la factura de venta: " +
+                            that.item.secuencia,
                         "success"
                     );
                 })
                 .catch(error => {
                     that.trueModalVisible = false;
                     that.showNotificationProgress(
-                        "Error en eliminarProducto",
+                        "Error en eliminar",
                         "Por favor comuníquese con el administrador." + error,
                         "error"
                     );
@@ -235,7 +271,39 @@ export default {
                 timeout: 5000
             };
             this.$notification[icon](options, title);
-        }
+        },
+        imprimirPdf(item) {
+            if (item.id > 0) {
+                window.open("/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
+                    item.id   +
+                    "/" +
+                    true + "/" +
+                            'false'
+                );
+            } else {
+                this.showNotificationProgress(
+                    "Advertencia",
+                    "No existe factura de venta, para imprimir.",
+                    "warning"
+                );
+            }
+        },
+        enviarPdf(item) {
+            if (item.id > 0) {
+                window.open("/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
+                    item.id  +
+                    "/" +
+                    true + "/" +
+                            'true'
+                );
+            } else {
+                this.showNotificationProgress(
+                    "Advertencia",
+                    "No existe factura de venta, para imprimir.",
+                    "warning"
+                );
+            }
+        },
     }
 };
 </script>

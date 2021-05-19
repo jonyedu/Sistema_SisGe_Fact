@@ -142,6 +142,41 @@ export default {
                     );
                 });
         },
+        verificarFacturaCaducadaAll() {
+            let that = this;
+            let url =
+                "/modulos/inventario/producto/verificar_stock_producto_all";
+            axios
+                .get(url)
+                .then(function(response) {
+                    var productos = response.data.productos;
+                    var sin_stock = false;
+                    productos.forEach(producto => {
+                        let object = {};
+                        if (producto.stock <= producto.stock_minimo) {
+                            sin_stock = true;
+                            object.nombre = producto.nombre;
+                            object.stock = producto.stock;
+                            that.sin_stock_array.push(object);
+                        }
+                    });
+                    if (sin_stock) {
+                        that.trueModalVisible = true;
+                        /* that.showNotificationProgress(
+                            "Productos sin Stock",
+                            "Existen productos que estan por acabar o no tienen stock, por favor verifique en el modulo de Inventario/Producto.",
+                            "warning"
+                        ); */
+                    }
+                })
+                .catch(error => {
+                    that.showNotificationProgress(
+                        "Error en verificarStockProductoAll",
+                        "Por favor comuníquese con el administrador. " + error,
+                        "error"
+                    );
+                });
+        },
         verificarStockProductoAll() {
             let that = this;
             let url =

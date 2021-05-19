@@ -22,12 +22,12 @@ class CreateSParFactVentasCabecera extends Migration
                 $table->datetime('fecha');
                 $table->unsignedInteger('viva');
                 $table->unsignedInteger('iva');
-                $table->decimal('sub_total_12', 18, 4);
-                $table->decimal('sub_total_0', 18, 4);
-                $table->decimal('descuento', 18, 4);
-                $table->decimal('sub_total', 18, 4);
-                $table->decimal('iva_12', 18, 4);
-                $table->decimal('total', 18, 4);
+                $table->decimal('sub_total_12', 18, 2);
+                $table->decimal('sub_total_0', 18, 2);
+                $table->decimal('descuento', 18, 2);
+                $table->decimal('sub_total', 18, 2);
+                $table->decimal('iva_12', 18, 2);
+                $table->decimal('total', 18, 2);
                 $table->unsignedInteger('tipopago');
                 $table->unsignedInteger('formapago');
                 $table->unsignedInteger('caj');

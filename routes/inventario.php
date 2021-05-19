@@ -28,6 +28,7 @@ Route::group(['prefix' => '/modulos/inventario', 'middleware' => ['auth:web'], '
     //Submenu de Producto
     Route::namespace('Modulos\Inventario\Producto')->prefix('producto')->group(function () {
         Route::get('cargar_all_producto', 'ProductoController@cargarProductoTabla');
+        Route::get('cargar_producto_inventario_combo_box', 'ProductoController@cargarProductoInventarioComboBox');
         Route::get('producto_por_id/{id}', 'ProductoController@cargarProductoPorId');
         Route::get('verificar_stock_producto_all', 'ProductoController@verificarStockProductoAll');
         Route::post('guardar_modificar_producto', 'ProductoController@guardarModificarProducto');
