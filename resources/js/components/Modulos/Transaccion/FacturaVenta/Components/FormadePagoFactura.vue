@@ -1,6 +1,6 @@
 <template>
     <div>
-      <!--   <bs-alert color="success"> Total a Pagar : $ {{ sumatoria }} </bs-alert> -->
+        <bs-alert color="success"> Total a Pagar : $ {{ sumatoria }} </bs-alert>
         <div class="auto" id="auto" style="display: none">
             holis {{ enviovuex }}
         </div>
@@ -342,7 +342,7 @@ export default {
             this.$store.state.formapagofactura = this.forma;
             return this.$store.state.formapagofactura;
         },
-        /* sumatoria() {
+        sumatoria() {
             this.total_for = this.$store.getters.getInventariofactura;
             var element_sum = 0;
 
@@ -353,7 +353,7 @@ export default {
                 }
                 return (this.total_for = element_sum);
             }
-        } */
+        }
     },
     mounted() {
         return (this.total_for = this.$store.getters.getInventariofactura);

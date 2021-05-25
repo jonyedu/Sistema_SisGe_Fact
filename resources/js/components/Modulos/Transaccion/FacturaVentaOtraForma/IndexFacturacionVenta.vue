@@ -197,6 +197,7 @@ export default {
                     "Debe Seleccionar un cliente o elegir la opcion de consumidor final",
                     "error"
                 );
+                this.showLoader = false;
                 return;
             }
             if (ListaCliente.no_documento == "") {
@@ -205,6 +206,7 @@ export default {
                     "Debe ingresar el numero de factura.",
                     "error"
                 );
+                this.showLoader = false;
                 return;
             }
             if (ListaCliente.no_autorizacion == "") {
@@ -213,6 +215,7 @@ export default {
                     "Debe ingresar el numero de autorización.",
                     "error"
                 );
+                this.showLoader = false;
                 return;
             }
             if (ListaProductos.length == 0) {
@@ -221,6 +224,7 @@ export default {
                     "Debe tener Agregado un producto al carrito",
                     "error"
                 );
+                this.showLoader = false;
                 return;
             }
 
@@ -231,6 +235,7 @@ export default {
                         "Debe Seleccionar un un metodo de pago",
                         "error"
                     );
+                    this.showLoader = false;
                     return;
                 } else {
                     if (ListaMetodosPago.tipo_pagof == 1) {
@@ -240,6 +245,7 @@ export default {
                                 "Debe Seleccionar el total Recibido",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
                     }
@@ -250,6 +256,7 @@ export default {
                                 "Debe Seleccionar la tarjetas",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
                         if (ListaMetodosPago.numero_tarjeta == 0) {
@@ -258,6 +265,7 @@ export default {
                                 "Debe Inresar el numero de tarjeta",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
 
@@ -267,6 +275,7 @@ export default {
                                 "Debe Seleccionar la fecha de Inreso",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
                         if (ListaMetodosPago.cliente == 0) {
@@ -275,6 +284,7 @@ export default {
                                 "Debe ingresar el nombre del cliente",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
                     }
@@ -286,6 +296,7 @@ export default {
                                 "Debe Seleccionar la Fecha de emisión",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
                         if (ListaMetodosPago.cantidad_pagarf == 0) {
@@ -294,6 +305,7 @@ export default {
                                 "Debe Seleccionar la cantidad",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
                         if (ListaMetodosPago.nombref == 0) {
@@ -302,6 +314,7 @@ export default {
                                 "Debe Seleccionar el nombre",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
                         if (ListaMetodosPago.banco == 0) {
@@ -310,6 +323,7 @@ export default {
                                 "Debe Seleccionar el banco",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
 
@@ -319,6 +333,7 @@ export default {
                                 "Debe ingresar el numero de cuenta. máximo 16 caracteres",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
 
@@ -328,6 +343,7 @@ export default {
                                 "Debe Seleccionar el beneficiario",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
                     }
@@ -339,6 +355,7 @@ export default {
                                 "Debe Elegir los meses al cual se va dar crédito",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
                     }
@@ -389,11 +406,12 @@ export default {
                         for (let error in errors) {
                             if (errors.hasOwnProperty(error)) {
                                 // console.log(errors[error][0]);
-                                this.showNotificationProgress(
+                                that.showNotificationProgress(
                                     "Facturación",
                                     "Error en el sistema" + errors,
                                     "error"
                                 );
+                                that.showLoader = false;
                                 return;
                             }
                         }
