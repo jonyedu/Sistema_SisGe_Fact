@@ -284,7 +284,6 @@ export default {
                                 "Debe ingresar el nombre del cliente",
                                 "error"
                             );
-                            this.showLoader = false;
                             return;
                         }
                     }
@@ -314,7 +313,6 @@ export default {
                                 "Debe Seleccionar el nombre",
                                 "error"
                             );
-                            this.showLoader = false;
                             return;
                         }
                         if (ListaMetodosPago.banco == 0) {

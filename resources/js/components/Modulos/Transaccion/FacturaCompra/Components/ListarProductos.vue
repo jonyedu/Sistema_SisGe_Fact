@@ -323,16 +323,10 @@ export default {
     },
     methods: {
         setDataProductoComboBox(index) {
-            var producto_id = this.dataListarProducto.productosCarrito._items[
-                index
-            ].producto_id;
-            var dataProductoSelect = this.cmb.productos.proxy._items.find(
-                producto => producto.id == producto_id
-            );
-            this.dataListarProducto.productosCarrito._items[index].iva =
-                dataProductoSelect.iva;
-            this.dataListarProducto.productosCarrito._items[index].precio =
-                dataProductoSelect.pvc;
+            var producto_id = this.dataListarProducto.productosCarrito._items[index].producto_id;
+            var dataProductoSelect = this.cmb.productos.proxy._items.find(producto => producto.id == producto_id);
+            this.dataListarProducto.productosCarrito._items[index].iva =dataProductoSelect.iva;
+            this.dataListarProducto.productosCarrito._items[index].precio =dataProductoSelect.pvc;
             this.calcular12y0();
         },
         setProductosCarrito() {

@@ -33,6 +33,16 @@ class ProductoController extends Controller
     public function cargarProductoInventarioComboBox()
     {
         try {
+            $producto_inventario = DB::select("call spStock");
+
+            return  response()->json(['producto_inventario' => $producto_inventario, 'total' => sizeOf($producto_inventario)], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
+        }
+    }
+    public function cargarProductoInventarioComboBox1()
+    {
+        try {
             $producto_inventario = Producto::select(
                 'id',
                 'pvc',
@@ -50,50 +60,8 @@ class ProductoController extends Controller
             $filtered = $producto_inventario->filter(function ($value, $key) {
                 return $value->stock != null;
             });
-            /* $producto_inventario = ProductoInventario::select(
-                'id_producto',
-                'Stock',
-                'id',
-                'id_factura',
-            )
-                ->with('ProductoInv:id,nombre,iva,imagen')
-                ->whereHas('ProductoInv', function ($query) {
-                    return $query->where("status", 1);
-                })
-                ->with("costoInv:idproducto,precio")
-                ->get(); */
-
-            // ->with("inventarioP:id,stock")  ->where('loan_officers', 'like', '%' . $officerId . '%')
-            // ->with("costoP:id,precio")
-
 
             return  response()->json(['producto_inventario' => $filtered, 'total' => sizeOf($filtered)], 200);
-        } catch (Exception $e) {
-            return response()->json(['mensaje' => $e->getMessage()], 500);
-        }
-    }
-    public function cargarProductoInventarioComboBox1()
-    {
-        try {
-
-            $producto_inventario = ProductoInventario::select(
-                'id_producto',
-                'Stock',
-                'id',
-                'id_factura',
-            )
-                ->with('ProductoInv:id,nombre,iva,imagen')
-                ->whereHas('ProductoInv', function ($query) {
-                    return $query->where("status", 1);
-                })
-                ->with("costoInv:idproducto,precio")
-                ->get();
-
-            // ->with("inventarioP:id,stock")  ->where('loan_officers', 'like', '%' . $officerId . '%')
-            // ->with("costoP:id,precio")
-
-
-            return  response()->json(['producto_inventario' => $producto_inventario, 'total' => sizeOf($producto_inventario)], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
         }

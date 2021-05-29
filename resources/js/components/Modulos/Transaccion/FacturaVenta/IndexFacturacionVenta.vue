@@ -227,6 +227,15 @@ export default {
                 this.showLoader = false;
                 return;
             }
+            if (datos_inventario_factura.observacion == "") {
+                this.showNotificationProgress(
+                    "Facturación",
+                    "Debe tener una observación",
+                    "error"
+                );
+                this.showLoader = false;
+                return;
+            }
 
             if (this.activo == true) {
                 if (ListaMetodosPago.tipo_pagof == 0) {
@@ -284,6 +293,7 @@ export default {
                                 "Debe ingresar el nombre del cliente",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
                     }
@@ -313,6 +323,7 @@ export default {
                                 "Debe Seleccionar el nombre",
                                 "error"
                             );
+                            this.showLoader = false;
                             return;
                         }
                         if (ListaMetodosPago.banco == 0) {

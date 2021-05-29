@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Modulos\Transaccion\FacturaVenta;
 
 use App\Models\Modulos\Transaccion\FacturaVenta\VentasCabecera;
 use App\Models\Modulos\Transaccion\FacturaVenta\VentasDetalle;
-use App\Models\Modulos\Inventario\Producto\ProductoInventario;
+use App\Models\Modulos\Inventario\Producto\stock;
 use App\Models\Modulos\Banco\TarjetaCredito\TarjetaCredito;
 use App\Models\Modulos\Banco\Banco\Banco;
 use App\Models\Modulos\Parametrizacion\FormaPago\FormaPago;
@@ -32,6 +32,7 @@ use App\Http\Controllers\Modulos\Reporte\FacturaVenta\FacturaVentaReporteControl
 
 use App\Http\Controllers\Controller;
 use App\Models\Modulos\Banco\TipoPago\TipoPago;
+use App\Models\Modulos\Inventario\Producto\ProductoInventario;
 use App\Models\Modulos\Parametrizacion\ConfigFacturero\ConfigFacturero;
 use Exception;
 use Illuminate\Http\Request;
@@ -58,7 +59,7 @@ class VentasCabeceraController extends Controller
 
             $producto_inventario = ProductoInventario::select(
                 'id_producto',
-                'Stock',
+                'stock',
                 'id',
                 'id_factura',
             )
@@ -85,7 +86,7 @@ class VentasCabeceraController extends Controller
     {
         try {
 
-            $producto_inventario = ProductoInventario::select('Stock')
+            $producto_inventario = ProductoInventario::select('stock')
                 ->where('id', $id)
                 ->where('id_factura', $id_factura)
                 ->where('id_producto', $id_producto)
@@ -138,10 +139,12 @@ class VentasCabeceraController extends Controller
             $user = Auth::user();
             $cotizacion = $request->input('cotizacion');
             $cotizacion_id = (int)$request->input('cotizacion');
+            //$datos_inventario = $request->input('inventario');
             $datos_inventario = $request->input('inventario');
             $datos_cliente = $request->input('cliente');
             $datos_inventario_factura = $request->input('datos_inventario_factura');
             $datos_metodosp = $request->input('metodosp');
+
 
             if ($cotizacion == true) {
 
@@ -156,21 +159,23 @@ class VentasCabeceraController extends Controller
                 $viva = 0;
                 $inventariop_p = [];
 
-                // return  response()->json(['tipo' => $id_cliente, 'total' =>0 ], 200);
-
+                //return  response()->json(['request' => $request->input()], 500);
                 for ($i = 0; $i < sizeof($datos_inventario); $i++) {
                     # code...
                     if ($datos_inventario[$i]["iva"] == 1) {
                         $viva += $datos_inventario[$i]["precio"] / 1.12;
-                        $subtotal12 += $viva * $datos_inventario[$i]["cant"];
+                        $subtotal12 += $viva * $datos_inventario[$i]["cantidad"];
                         $iva = 12;
                     }
                     if ($datos_inventario[$i]["iva"] == 2) {
-                        $subtotal0 += $datos_inventario[$i]["tot"];
+                        $subtotal0 += $datos_inventario[$i]["total"];
                     }
 
-                    $total += $datos_inventario[$i]["tot"];
+                    $total += $datos_inventario[$i]["total"];
                 }
+
+
+                //return  response()->json(['tipo' => $request->input(), 'total' =>0 ], 500);
 
                 // $total= 0;
                 // $subtotal12 = 0;
@@ -189,7 +194,6 @@ class VentasCabeceraController extends Controller
                         'fecha' => date("Y-m-d H:i:s"),
                         'viva' => $iva,
                         'iva' => $viva,
-
                         'sub_total_12' => $datos_inventario_factura["sub_total_12"],
                         'sub_total_0' => $datos_inventario_factura["sub_total_0"],
                         'descuento' => $datos_inventario_factura["descuento"],
@@ -231,20 +235,20 @@ class VentasCabeceraController extends Controller
                 // $iva=0;
                 // $viva=0;
                 //VentasDetalle
+                //return  response()->json(['tipo' => $request->input(), 'total' =>0 ], 500);
                 for ($i = 0; $i < sizeof($datos_inventario); $i++) {
                     # code...
 
 
                     VentasDetalle::create(
                         [
-                            //  'SecCirPro' => 0
                             'id_facturav' => $id_cabecera,
-                            'id_producto' => $datos_inventario[$i]["id"],
+                            'id_producto' => $datos_inventario[$i]["producto_id"],
                             'iva' => $datos_inventario[$i]["iva"],
                             'factor' => 0,
                             'valor' => $datos_inventario[$i]["precio"],
-                            'cantidad' => $datos_inventario[$i]["cant"],
-                            'total' => $datos_inventario[$i]["tot"],
+                            'cantidad' => $datos_inventario[$i]["cantidad"],
+                            'total' => $datos_inventario[$i]["total"],
                             'usu_created' => $user->codigo,
                             'usu_update' => $user->codigo,
                             'pcip' => $_SERVER["REMOTE_ADDR"],
@@ -255,22 +259,24 @@ class VentasCabeceraController extends Controller
 
                     //aqui voy a actualizar :v
 
-                    $producto_inventario = ProductoInventario::select('Stock')
-                        ->where('id', $datos_inventario[$i]["idfac"])
-                        ->where('id_factura', $datos_inventario[$i]["idfacCompra"])
-                        ->where('id_producto', $datos_inventario[$i]["id"])
+                    $producto_inventario = ProductoInventario::select('stock')
+                        ->where('id', $datos_inventario[$i]["producto_inventario_id"])
                         ->first();
 
 
 
-                    $inventario_final = $producto_inventario->Stock - $datos_inventario[$i]["cant"];
-                    // return  response()->json(['tipo' =>  $inventario_final, 'total' =>0 ], 200);
-                    ProductoInventario::where('id', $datos_inventario[$i]["idfac"])
-                        ->where('id_factura', $datos_inventario[$i]["idfacCompra"])
-                        ->where('id_producto', $datos_inventario[$i]["id"])
+                    $inventario_final = $producto_inventario->stock - $datos_inventario[$i]["cantidad"];
+                    //return  response()->json(['tipo' =>  $inventario_final, 'total' =>0 ], 200);
+                    ProductoInventario::where('id', $datos_inventario[$i]["producto_inventario_id"])
                         ->update(
                             [
-                                'Stock' => $inventario_final
+                                'stock' => $inventario_final,
+                                'usu_created' =>  $user->codigo,
+                                'usu_update' =>  $user->codigo,
+                                'created_at' =>  date("Y-m-d H:i:s"),
+                                'updated_at' =>  date("Y-m-d H:i:s"),
+                                'pcip' => $_SERVER["REMOTE_ADDR"],
+                                'status' => 1
 
                             ]
                         );
@@ -369,14 +375,14 @@ class VentasCabeceraController extends Controller
                     # code...
                     if ($datos_inventario[$i]["iva"] == 1) {
                         $viva += $datos_inventario[$i]["precio"] / 1.12;
-                        $subtotal12 += $viva * $datos_inventario[$i]["cant"];
+                        $subtotal12 += $viva * $datos_inventario[$i]["cantidad"];
                         $iva = 12;
                     }
                     if ($datos_inventario[$i]["iva"] == 2) {
-                        $subtotal0 += $datos_inventario[$i]["tot"];
+                        $subtotal0 += $datos_inventario[$i]["total"];
                     }
 
-                    $total += $datos_inventario[$i]["tot"];
+                    $total += $datos_inventario[$i]["total"];
                 }
 
                 $data =  CotizacionCabecera::create(
@@ -414,8 +420,8 @@ class VentasCabeceraController extends Controller
                             'iva' => $datos_inventario[$i]["iva"],
                             'factor' => 0,
                             'valor' => $datos_inventario[$i]["precio"],
-                            'cantidad' => $datos_inventario[$i]["cant"],
-                            'total' => $datos_inventario[$i]["tot"],
+                            'cantidad' => $datos_inventario[$i]["cantidad"],
+                            'total' => $datos_inventario[$i]["total"],
                             'usu_created' => $user->codigo,
                             'usu_update' => $user->codigo,
                             'created_at' =>  date("Y-m-d H:i:s"),
