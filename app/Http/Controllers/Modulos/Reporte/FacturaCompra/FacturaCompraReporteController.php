@@ -100,9 +100,9 @@ class FacturaCompraReporteController extends Controller
                                                 ($factura_compra->usuario->opcionPorAplicacionPerfilOne->moduloOne->sucursalOne->empresaOne->Empresa_Ubicacion_Logo) : '') : '') : '') : '') : '') : '');
 
                         //Enviar la prescripcion vía Email al paciente
-                        Mail::to($correo_proveedor)->send(new EnvioFacturaCompraMail($rutaSave, $factura_compra->proveedor, $rutaImg));
-
-                        //return response()->json(['mensaje' =>$correo_proveedor], 500);
+                        $email = Mail::to($correo_proveedor)->send(new EnvioFacturaCompraMail($rutaSave, $factura_compra->proveedor, $rutaImg));
+                        
+                        return response()->json(['email' =>$email], 500);
                         //Eliminar el archivo del servidor
                         if (file_exists($rutaSave)) {
                             unlink($rutaSave);
