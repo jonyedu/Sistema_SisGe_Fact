@@ -63,8 +63,7 @@ export default new VueRouter({
             component: Grupo
         },
         {
-            path:
-                prefijo + "/modulos/inventario/grupo/crear_modificar_grupo",
+            path: prefijo + "/modulos/inventario/grupo/crear_modificar_grupo",
             component: ModificarCrearGrupo
         },
         {
@@ -72,34 +71,29 @@ export default new VueRouter({
             component: Producto
         },
         {
-            path:
-                prefijo +
+            path: prefijo +
                 "/modulos/inventario/producto/crear_modificar_producto",
             component: ModificarCrearProducto
         },
 
         //Persona
         {
-            path:
-                prefijo +
+            path: prefijo +
                 "/modulos/persona/proveedor/mostrar_proveedor",
             component: Proveedor
         },
         {
-            path:
-                prefijo +
+            path: prefijo +
                 "/modulos/persona/proveedor/crear_modificar_proveedor",
             component: ModificarCrearProveedor
         },
         {
-            path:
-                prefijo +
+            path: prefijo +
                 "/modulos/persona/cliente/mostrar_cliente",
             component: Cliente
         },
         {
-            path:
-                prefijo +
+            path: prefijo +
                 "/modulos/persona/cliente/crear_modificar_cliente",
             component: ModificarCrearCliente
         },
@@ -112,8 +106,7 @@ export default new VueRouter({
             component: Usuario
         },
         {
-            path:
-                prefijo + "/modulos/seguridad/usuario/crear_modificar_usuario",
+            path: prefijo + "/modulos/seguridad/usuario/crear_modificar_usuario",
             component: ModificarCrearUsuario
         },
         {
@@ -137,14 +130,12 @@ export default new VueRouter({
             component: SubModulo
         },
         {
-            path:
-                prefijo +
+            path: prefijo +
                 "/modulos/seguridad/sub_modulo/crear_modificar_sub_modulo",
             component: ModificarCrearSubModulo
         },
         {
-            path:
-                prefijo +
+            path: prefijo +
                 "/modulos/seguridad/perfil_por_usuario/mostrar_perfil_por_usuario",
             component: PerfilPorUsuario
         },
@@ -153,8 +144,7 @@ export default new VueRouter({
             component: Profesion
         },
         {
-            path:
-                prefijo +
+            path: prefijo +
                 "/modulos/seguridad/profesion/crear_modificar_profesion",
             component: ModificarCrearProfesion
         },
@@ -163,8 +153,7 @@ export default new VueRouter({
             component: Empresa
         },
         {
-            path:
-                prefijo + "/modulos/seguridad/empresa/crear_modificar_empresa",
+            path: prefijo + "/modulos/seguridad/empresa/crear_modificar_empresa",
             component: ModificarCrearEmpresa
         },
         {
@@ -172,53 +161,43 @@ export default new VueRouter({
             component: Sucursal
         },
         {
-            path:
-                prefijo +
+            path: prefijo +
                 "/modulos/seguridad/sucursal/crear_modificar_sucursal",
             component: ModificarCrearSucursal
         },
 
         //Transaccion
         {
-            path:
-                prefijo + "/modulos/transaccion/factura_venta/mostrar_factura_venta",
+            path: prefijo + "/modulos/transaccion/factura_venta/mostrar_factura_venta",
             component: ListaFacturacionVenta
         },
         {
-            path:
-                prefijo + "/modulos/transaccion/factura_venta/crear_modificar_factura_venta",
+            path: prefijo + "/modulos/transaccion/factura_venta/crear_modificar_factura_venta",
             component: IndexFacturacionVenta
         },
         {
-            path:
-                prefijo + "/modulos/transaccion/factura_compra/mostrar_factura_compra",
+            path: prefijo + "/modulos/transaccion/factura_compra/mostrar_factura_compra",
             component: ListarCompraCabecera
         },
         {
-            path:
-                prefijo + "/modulos/transaccion/factura_compra/crear_modificar_factura_compra",
+            path: prefijo + "/modulos/transaccion/factura_compra/crear_modificar_factura_compra",
             component: IndexFacturaCompra
         },
         //IndexCreditos
         {
-            path:
-                prefijo + "/modulos/transaccion/factura_credito/mostrar_creditos",
+            path: prefijo + "/modulos/transaccion/factura_credito/mostrar_creditos",
             component: IndexCreditos
         },
-         //IndexArqueo  
-         {
-            path:
-                prefijo + "/modulos/transaccion/factura_arqueo/mostrar_arqueo",
+        //IndexArqueo  
+        {
+            path: prefijo + "/modulos/transaccion/factura_arqueo/mostrar_arqueo",
             component: IndexArqueCaja
         },
         //IndexListaArqueCaja
         {
-            path:
-                prefijo + "/modulos/transaccion/factura_arqueo/lista_arqueo",
+            path: prefijo + "/modulos/transaccion/factura_arqueo/lista_arqueo",
             component: IndexListaArqueCaja
         },
     ],
-    mode: "history" //Evita que aparezca # en la ruta
+    mode: "history" //Evita que aparezca # en la ruta 
 });
-
-

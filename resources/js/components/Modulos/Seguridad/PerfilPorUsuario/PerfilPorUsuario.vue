@@ -82,6 +82,8 @@
 import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
+import {BsModel} from "vue-mdbootstrap";
+import {BsStore} from "vue-mdbootstrap";
 
 const configurarPermisoValidator = {
     modulo_id: { required },
