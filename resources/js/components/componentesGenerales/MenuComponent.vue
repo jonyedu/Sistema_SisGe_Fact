@@ -126,7 +126,7 @@ export default {
         },
         cargarMenu() {
             let that = this;
-            let url =
+            let url = /* this.$store.state.ruta +  */
                 "/modulos/seguridad/perfil_por_usuario/cargar_menu/" +
                 this.$props.user.perfil;
             axios
