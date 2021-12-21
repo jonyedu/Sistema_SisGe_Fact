@@ -16,7 +16,7 @@
                             >
                                 <bs-button
                                     mode="icon"
-                                    icon="reply"
+                                    icon="list"
                                     icon-size="sm"
                                 >
                                 </bs-button>

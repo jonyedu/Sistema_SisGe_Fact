@@ -4,12 +4,12 @@
             <bs-card shadow>
                 <bs-card-body>
                     <bs-card-content class="text-right">
-                        <!-- <router-link
+                        <router-link
                             :to="
                                 prefijo +
                                     '/modulos/inventario/grupo/crear_modificar_grupo'
                             "
-                        > -->
+                        >
                          
                             <bs-tooltip
                                 content="Crear nuevos grupo"

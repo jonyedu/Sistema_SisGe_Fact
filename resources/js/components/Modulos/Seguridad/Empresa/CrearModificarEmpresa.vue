@@ -18,7 +18,7 @@
                                     >
                                         <bs-button
                                             mode="icon"
-                                            icon="reply"
+                                            icon="list"
                                             icon-size="sm"
                                         >
                                         </bs-button>
@@ -107,6 +107,8 @@
                                                 <label>Contador</label>
                                             </bs-text-field>
                                             <bs-date-time-field
+                                                first-day-of-week="1"
+                                                locale="es-es"
                                                 v-model="
                                                     empresaForm.inicio_actividades
                                                 "
@@ -123,6 +125,8 @@
                                                 >
                                             </bs-date-time-field>
                                             <bs-date-time-field
+                                                first-day-of-week="1"
+                                                locale="es-es"
                                                 v-model="
                                                     empresaForm.inscripcion
                                                 "
@@ -209,6 +213,8 @@
                                                 <label>Contador Ruc</label>
                                             </bs-text-field>
                                             <bs-date-time-field
+                                                first-day-of-week="1"
+                                                locale="es-es"
                                                 v-model="
                                                     empresaForm.constitucion
                                                 "
@@ -222,6 +228,8 @@
                                                 <label>Constitución</label>
                                             </bs-date-time-field>
                                             <bs-date-time-field
+                                                first-day-of-week="1"
+                                                locale="es-es"
                                                 v-model="
                                                     empresaForm.actualizacion
                                                 "

@@ -1,11 +1,10 @@
 <template>
     <div class="my-demo-wrapper">
         <div class="row">
-            <div v-if="false" class="col-lg-12 col-md-12 col-sm-12 mt-3">
+            <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
                 <bs-card-body>
                     <bs-alert color="success">
-                        Total a Pagar : $
-                        <!-- {{ sumatoria }} -->
+                        Total a Pagar : $ {{ sumatoria }}
                     </bs-alert>
                     <div class="auto" id="auto" style="display: none">
                         holis {{ envio }}
@@ -35,121 +34,204 @@
                 </bs-card-body>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
-                <bs-grid
-                    :data-source="productosCarrito"
-                    row-hover
-                    sortable
-                    :flip-on-small-screen="false"
-                >
-                    <bs-grid-column
-                        field="cantidad"
-                        label="Cantidad"
-                        width="125"
-                    ></bs-grid-column>
-                    <bs-grid-column
-                        field="nombre"
-                        label="Producto"
-                        min-width="175"
+                <bs-card shadow>
+                    <bs-grid :data-source="inventario_p" row-hover>
+                        <bs-grid-column
+                            field="producto_inv.nombre"
+                            label="Producto"
+                            min-width="175"
+                        ></bs-grid-column>
+                        <bs-grid-column
+                            field="costo_inv.precio"
+                            label="Valor"
+                            width="120"
+                        ></bs-grid-column>
+                        <bs-grid-column
+                            field="Stock"
+                            label="Stock"
+                            width="100"
+                        ></bs-grid-column>
+                        <bs-grid-column
+                            label="Action"
+                            width="100"
+                            text-align="center"
+                        ></bs-grid-column>
+                        <template v-slot:datarow="{ columns, item, index }">
+                            <bs-grid-cell
+                                :column="columns[0]"
+                                :item="item"
+                                :index="index"
+                            ></bs-grid-cell>
+                            <bs-grid-cell
+                                :column="columns[1]"
+                                :item="item"
+                                :index="index"
+                            ></bs-grid-cell>
+                            <bs-grid-cell
+                                :column="columns[2]"
+                                :item="item"
+                                :index="index"
+                            ></bs-grid-cell>
+
+                            <bs-grid-cell
+                                :column="columns[3]"
+                                :item="item"
+                                :index="index"
+                            >
+                                <bs-tooltip
+                                    content="Mostrar Detalles"
+                                    placement="bottom"
+                                >
+                                    <bs-button
+                                        icon="camera-retro"
+                                        mode="icon"
+                                        icon-size="lg"
+                                        color="secondary"
+                                        flat
+                                        @click="btnClickMostar(item)"
+                                    ></bs-button>
+                                </bs-tooltip>
+                                <bs-tooltip
+                                    content="Elegir Cantidad"
+                                    placement="bottom"
+                                >
+                                    <bs-button
+                                        icon="cart-arrow-down"
+                                        mode="icon"
+                                        icon-size="lg"
+                                        color="secondary"
+                                        flat
+                                        @click="btnClickModificar(item)"
+                                    ></bs-button>
+                                </bs-tooltip>
+                            </bs-grid-cell>
+                        </template>
+                    </bs-grid>
+
+                    <!-- MODAL DEL PRODUCTO -->
+                    <bs-modal
+                        :open.sync="autoCloseModalVisible"
+                        title="Cantidad de Producto"
+                        max-width="85%"
+                        :overlay-close="false"
                     >
-                    </bs-grid-column>
-                    <bs-grid-column
-                        field="precio"
-                        label="Precio"
-                        width="100"
-                    ></bs-grid-column>
-                    <bs-grid-column
-                        field="total"
-                        label="Total"
-                        width="100"
-                    ></bs-grid-column>
-                    <bs-grid-column
-                        field=""
-                        label="Acciones"
-                        width="100"
-                    ></bs-grid-column>
-                    <template v-slot:datarow="{ columns, item, index }">
-                        <bs-grid-cell
-                            :column="columns[0]"
-                            :item="item"
-                            :index="index"
+                        {{ mensaje }}
+                        <br />
+                        <span COLOR="red">{{ mensaje2 }}</span>
+                        <bs-text-field
+                            placeholder="Placeholder"
+                            floating-label
+                            outlined
+                            @keydown="calcular()"
+                            v-model="cantidad"
                         >
-                            <bs-text-field
-                                @change="calcular12y0()"
-                                v-model="item.cantidad"
+                            <label>Ingrese una Cantidad </label>
+                        </bs-text-field>
+                        <template v-slot:footer>
+                            <bs-button
+                                outlined
+                                color="secondary"
+                                @click="autoCloseModalVisible = false"
                             >
-                            </bs-text-field>
-                        </bs-grid-cell>
-                        <bs-grid-cell
-                            :column="columns[1]"
-                            :item="item"
-                            :index="index"
-                        >
-                            <bs-combobox
-                                v-model="item.producto_id"
-                                :data-source="cmb.productos"
-                                clear-button
-                                @change="setDataProductoComboBox(item)"
+                                Cancel
+                            </bs-button>
+                            <bs-button
+                                outlined
+                                color="secondary"
+                                :disabled="validarRed"
+                                @click="agregarProducto()"
                             >
-                            </bs-combobox>
-                        </bs-grid-cell>
-                        <bs-grid-cell
-                            :column="columns[2]"
-                            :item="item"
-                            :index="index"
-                        >
-                            <bs-text-field
-                                @change="calcular12y0()"
-                                v-model="item.precio"
+                                Ok
+                            </bs-button>
+                        </template>
+                    </bs-modal>
+                    <!-- FIN DEL MODAL -->
+                    <!-- aqui va el modal de la lista  -->
+                    <bs-modal
+                        :open.sync="modalproductos"
+                        title="Productos Agregados"
+                        max-width="85%"
+                    >
+                        <bs-list-view>
+                            <bs-subheader>Summer Recipes</bs-subheader>
+                            <template v-for="(item, idx) in ListaCompra">
+                                <bs-list-tile :key="item.title" navigable>
+                                    <bs-list-tile-leading
+                                        :img-src="item.url"
+                                        :size="{ height: 56, width: 85 }"
+                                        center
+                                    >
+                                    </bs-list-tile-leading>
+                                    <bs-list-tile-content multi-line>
+                                        <bs-list-tile-title class="font-weight-bold">
+                                            {{ item.name }}
+                                        </bs-list-tile-title>
+                                        <bs-list-tile-subtitle>
+                                            Cantidad : # {{ item.cant }}
+
+                                            <bs-tooltip
+                                                content="Eliminar productos"
+                                                placement="bottom"
+                                            >
+                                                <bs-button
+                                                    icon="trash-alt"
+                                                    mode="icon"
+                                                    icon-size="lg"
+                                                    color="secondary"
+                                                    flat
+                                                    @click="EliminarIndice(idx)"
+                                                ></bs-button>
+                                            </bs-tooltip>
+                                        </bs-list-tile-subtitle>
+                                    </bs-list-tile-content>
+                                    <bs-list-tile-action
+                                        class="rating text-grey-500"
+                                        :center="false"
+                                    >
+                                        0{{ idx + 1 }}
+                                    </bs-list-tile-action>
+                                </bs-list-tile>
+                                <bs-divider
+                                    v-if="idx + 1 < ListaCompra.length"
+                                    :key="item.name + idx"
+                                    left-indent="118"
+                                >
+                                </bs-divider>
+                            </template>
+                        </bs-list-view>
+                    </bs-modal>
+                    <!-- aqui termina -->
+
+                    <!-- MODAL DEL PRODUCTO IMAGEN -->
+
+                    <bs-modal :open.sync="modalimagenproductos" max-width="50%">
+                        <br />
+                        <bs-card-media :title="mensaje">
+                            <img :src="imagenp" alt="image" />
+                        </bs-card-media>
+
+                        <template v-slot:footer>
+                            <bs-button
+                                outlined
+                                color="secondary"
+                                @click="modalimagenproductos = false"
                             >
-                            </bs-text-field>
-                        </bs-grid-cell>
-                        <bs-grid-cell
-                            :column="columns[3]"
-                            :item="item"
-                            :index="index"
-                        >
-                            <span
-                                @change="calcular12y0()"
-                                v-text="item.cantidad * item.precio"
+                                Cancel
+                            </bs-button>
+
+                            <!-- <bs-button
+                                active
+                            v-model="validarRed"
+
+                                color="primary"
+
                             >
-                            </span>
-                        </bs-grid-cell>
-                        <bs-grid-cell
-                            :column="columns[4]"
-                            :item="item"
-                            :index="index"
-                        >
-                            <bs-tooltip
-                                content="Eliminar productos"
-                                placement="bottom"
-                            >
-                                <bs-button
-                                    icon="trash-alt"
-                                    mode="icon"
-                                    size="sm"
-                                    color="danger"
-                                    flat
-                                    @click="quitarProducto(index)"
-                                ></bs-button>
-                            </bs-tooltip>
-                        </bs-grid-cell>
-                    </template>
-                </bs-grid>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-4 mt-3 ">
-                        <bs-button
-                            class="btn"
-                            icon-size="sm"
-                            icon="shopping-cart"
-                            @click="agregarDetalle()"
-                            color="primary"
-                            pill
-                            >Agregar detalle</bs-button
-                        >
-                    </div>
-                </div>
+                                OK
+                            </bs-button> -->
+                        </template>
+                    </bs-modal>
+                    <!-- FIN DEL MODAL -->
+                </bs-card>
             </div>
             <div class="col-lg-8 col-md-8 col-sm-12 mt-3 card-left">
                 <bs-card shadow style="height:90%">
@@ -182,7 +264,6 @@
                                     >Descuento
                                     <span class="float-right"
                                         ><bs-text-field
-                                            class="text-right"
                                             @change="calcular12y0()"
                                             v-model="
                                                 datos_inventario_factura.descuento
@@ -228,33 +309,9 @@
 </template>
 <script>
 import {BsStore} from "vue-mdbootstrap";
-import {BsArrayStore } from "vue-mdbootstrap";
 export default {
     data: function() {
         return {
-            //por mi controla
-            productosCarrito: new BsArrayStore([], {
-                idProperty: "index"
-            }),
-            cmb: {
-                productos: {
-                    proxy: new BsStore({
-                        idProperty: "id",
-                        dataProperty: "producto_inventario",
-                        totalProperty: "total",
-                        remoteSort: false,
-                        restProxy: {
-                            browse:
-                                "/modulos/inventario/producto/cargar_producto_inventario_combo_box"
-                        }
-                    }),
-                    schema: {
-                        displayField: "nombre",
-                        valueField: "id"
-                    }
-                }
-            },
-
             active_btn: false,
             totalPagar: 0.0,
             srchvalue0: null,
@@ -279,13 +336,13 @@ export default {
                 paging: [5, 10, 15, 25, [-1, "All"]]
             },
             datos_inventario_factura: {
-                observacion: "",
-                sub_total_12: 0.0,
-                sub_total_0: 0.0,
-                descuento: 0.0,
-                sub_total: 0.0,
-                iva_12: 0.0,
-                total: 0.0
+                observacion: "factura de venta.",
+                sub_total_12: 0.00,
+                sub_total_0: 0.00,
+                descuento: 0.00,
+                sub_total: 0.00,
+                iva_12: 0.00,
+                total: 0.00
             },
             inventario_p: new BsStore({
                 idProperty: "id_producto",
@@ -306,23 +363,21 @@ export default {
         };
     },
     mounted: function() {
-        this.agregarDetalle();
         // this.$store.state.inventariofactura = this.ListaCompra;
     },
     computed: {
         envio() {
-            //this.$store.state.inventariofactura = this.ListaCompra;
-            this.$store.state.inventariofactura = this.productosCarrito._items;
+            this.$store.state.inventariofactura = this.ListaCompra;
             return this.$store.state.inventariofactura;
         },
-        /* sumatoria() {
+        sumatoria() {
             let total_for = [];
             var element = 0;
             for (let index = 0; index < this.ListaCompra.length; index++) {
                 element += this.ListaCompra[index]["tot"];
             }
             return (this.totalPagar = element.toFixed(2));
-        }, */
+        },
         subTotal0() {
             var element = 0;
             for (let index = 0; index < this.ListaCompra.length; index++) {
@@ -345,30 +400,6 @@ export default {
         }
     },
     methods: {
-        setDataProductoComboBox(item) {
-            var dataProductoSelect = this.cmb.productos.proxy._items.find(
-                producto => producto.id == item.producto_id
-            );
-            item.producto_inventario_id =dataProductoSelect.id;
-            item.iva =dataProductoSelect.iva;
-            item.precio = +dataProductoSelect.preciou;
-            item.precio = item.precio.toFixed(2);
-            item.total =dataProductoSelect.pvc * item.cantidad;
-            this.calcular12y0();
-            this.$store.state.inventariofactura = this.productosCarrito._items;
-            this.$store.state.datos_inventario_factura = this.datos_inventario_factura;
-        },
-        agregarDetalle() {
-            this.productosCarrito._items.push({
-                producto_inventario_id:0,
-                producto_id: 0,
-                stock: 0,
-                precio: 0,
-                cantidad: 0,
-                iva: 0,
-                total: 0
-            });
-        },
         EliminarIndice(index) {
             this.ListaCompra.splice(index, 1);
         },
@@ -392,6 +423,15 @@ export default {
                 // this.adjuntar.totalPagar_f = this.totalPagar;
                 this.ListaCompra = this.adjuntar;
                 this.$store.state.datos_inventario_factura = this.datos_inventario_factura;
+                /* this.$store.state.datos_inventario_factura.sub_total_12 = this.datos_inventario_factura.sub_total_12;
+                this.$store.state.datos_inventario_factura.sub_total_0 = this.datos_inventario_factura.sub_total_0;
+                this.$store.state.datos_inventario_factura.descuento = this.datos_inventario_factura.descuento;
+                this.$store.state.datos_inventario_factura.sub_total = this.datos_inventario_factura.sub_total;
+                this.$store.state.datos_inventario_factura.iva_12 = this.datos_inventario_factura.iva_12;
+                this.$store.state.datos_inventario_factura.total = this.datos_inventario_factura.total; */
+                console.log(this.$store.state.datos_inventario_factura);
+                console.log(this.datos_inventario_factura);
+                // return;
             } else {
                 for (let i = 0; i < this.adjuntar.length; i++) {
                     if (this.adjuntar[i].id == this.Lista.producto_inv.id) {
@@ -436,14 +476,13 @@ export default {
             this.autoCloseModalVisible = false;
         },
         calcular12y0() {
-            var sub_total_12 = 0.0;
-            var sub_total_0 = 0.0;
-            var descuento = 0.0;
-            var sub_total = 0.0;
-            var iva_12 = 0.0;
-            var total = 0.0;
-            this.productosCarrito._items.forEach(function(data) {
-                data.total = data.cantidad * data.precio;
+            var sub_total_12 = 0.00;
+            var sub_total_0 = 0.00;
+            var descuento = 0.00;
+            var sub_total = 0.00;
+            var iva_12 = 0.00;
+            var total = 0.00;
+            this.adjuntar.forEach(function(data) {
                 //tiene iva
                 if (data.iva) {
                     sub_total_12 += +data.total;
@@ -457,9 +496,7 @@ export default {
             iva_12 = sub_total_12 * 0.12;
             total = sub_total + iva_12;
 
-            this.datos_inventario_factura.sub_total_12 = sub_total_12.toFixed(
-                2
-            );
+            this.datos_inventario_factura.sub_total_12 = sub_total_12.toFixed(2);
             this.datos_inventario_factura.sub_total_0 = sub_total_0.toFixed(2);
             this.datos_inventario_factura.sub_total = sub_total.toFixed(2);
             this.datos_inventario_factura.iva_12 = iva_12.toFixed(2);
