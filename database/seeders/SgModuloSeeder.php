@@ -14,6 +14,7 @@ class SgModuloSeeder extends Seeder
      */
     public function run()
     {
+        SgModulo::truncate();
         SgModulo::updateOrCreate(
             [
                 'descripcion' => 'Banco',

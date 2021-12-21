@@ -15,6 +15,7 @@ class SgOpcionAplicacionSeeder extends Seeder
      */
     public function run()
     {
+        SgOpcionAplicacion::truncate();
         //Modulo Banco
 
         //Modulo Inventario
