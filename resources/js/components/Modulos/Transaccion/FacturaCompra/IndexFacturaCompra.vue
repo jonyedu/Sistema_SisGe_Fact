@@ -113,6 +113,8 @@ import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import ListarCompraCabecera from "./ListarCompraCabecera.vue";
 import ListarProducto from "../../Inventario/Producto/ListarProducto.vue";
+import {BsArrayStore } from "vue-mdbootstrap";
+import {BsModel} from "vue-mdbootstrap";
 
 export default {
     components: { ListarCompraCabecera, ListarProducto },

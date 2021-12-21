@@ -227,7 +227,8 @@
     </div>
 </template>
 <script>
-import { prefix } from "../../../../../variables";
+import {BsStore} from "vue-mdbootstrap";
+import {BsArrayStore } from "vue-mdbootstrap";
 export default {
     data: function() {
         return {

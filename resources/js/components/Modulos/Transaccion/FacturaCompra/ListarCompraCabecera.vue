@@ -222,6 +222,7 @@
 
 <script>
 import { prefix } from "../../../../variables";
+import {BsStore} from "vue-mdbootstrap";
 export default {
     data: function() {
         return {

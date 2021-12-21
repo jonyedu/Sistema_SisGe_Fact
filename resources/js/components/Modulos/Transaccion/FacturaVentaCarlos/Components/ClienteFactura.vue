@@ -131,7 +131,6 @@
     </div>
 </template>
 <script>
-import { prefix } from "../../../../../variables";
 
 export default {
     data: function() {

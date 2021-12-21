@@ -199,6 +199,7 @@
 import { prefix } from "../../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
+import {BsStore} from "vue-mdbootstrap";
 
 const productoValidator = {
     proveedor_id: { required },

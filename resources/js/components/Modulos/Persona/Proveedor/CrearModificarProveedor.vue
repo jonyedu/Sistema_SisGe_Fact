@@ -165,6 +165,7 @@
 import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength, email } from "vuelidate/lib/validators";
+import {BsModel} from "vue-mdbootstrap";
 
 const proveedorValidator = {
     nombre: { required, minLength: minLength(5) },

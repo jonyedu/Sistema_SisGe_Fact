@@ -406,6 +406,9 @@
 import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import {BsStore} from "vue-mdbootstrap";
+import {BsModel} from "vue-mdbootstrap";
+import {BsArrayStore } from "vue-mdbootstrap";
 
 const productoValidator = {
     producto_id: { required },

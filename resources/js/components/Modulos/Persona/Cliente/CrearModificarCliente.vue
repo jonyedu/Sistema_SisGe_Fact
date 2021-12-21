@@ -141,6 +141,7 @@
 import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
+import {BsModel} from "vue-mdbootstrap";
 
 const clienteValidator = {
     nombre: { required},

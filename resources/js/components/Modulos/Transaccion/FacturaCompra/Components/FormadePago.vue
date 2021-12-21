@@ -78,6 +78,7 @@
 import { prefix } from "../../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required} from "vuelidate/lib/validators";
+import {BsStore} from "vue-mdbootstrap";
 
 const productoValidator = {
     forma_pago_id: { required },

@@ -122,7 +122,6 @@
 <script>
 import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
-import { required, minLength } from "vuelidate/lib/validators";
 
 export default {
     mixins: [validationMixin],

@@ -13,11 +13,9 @@ import "vue-select-sides/styles/themes/soft.scss";
 
 //nuevas librerias
 // main.js
-import VueMdb, { AxiosPlugin, /* BsStore, BsModel */ } from "vue-mdbootstrap";
+import VueMdb, { AxiosPlugin } from "vue-mdbootstrap";
 Vue.use(VueMdb);
 Vue.use(AxiosPlugin);
-// Vue.use(BsStore);
-// Vue.use(BsModel);
 
 
 //import Vuelidate from 'vuelidate';

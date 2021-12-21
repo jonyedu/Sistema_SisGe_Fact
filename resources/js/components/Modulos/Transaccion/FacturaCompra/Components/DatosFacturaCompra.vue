@@ -140,6 +140,7 @@
 import { prefix } from "../../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import {BsStore} from "vue-mdbootstrap";
 
 const datosFacturaValidator = {
     fmt_registro: { required },
