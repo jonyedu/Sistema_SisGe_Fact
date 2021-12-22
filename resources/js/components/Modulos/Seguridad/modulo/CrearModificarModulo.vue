@@ -8,7 +8,7 @@
                             <bs-card-content class="text-right">
                                 <router-link
                                     :to="
-                                        prefijo +
+                                        $store.state.url_prefix +
                                             '/modulos/seguridad/modulo/mostrar_modulo'
                                     "
                                 >
@@ -118,7 +118,6 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required} from "vuelidate/lib/validators";
 import {BsModel} from "vue-mdbootstrap";
@@ -137,8 +136,6 @@ export default {
         return {
             //variable que controla el progreso
             showLoader: false,
-            //Variables para obtener el index
-            prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
             moduloForm: new BsModel(
                 {
@@ -153,12 +150,12 @@ export default {
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/seguridad/modulo/guardar_modulo",
                             method: "post"
                         },
                         update: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/seguridad/modulo/modificar_modulo",
                             method: "post"
                         }
@@ -179,7 +176,7 @@ export default {
                         dataProperty: "empresas",
                         remoteSort: false,
                         restProxy: {
-                            browse:
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/seguridad/empresa/cargar_empresa_combo_box"
                         }
                     }),
@@ -192,7 +189,7 @@ export default {
                         dataProperty: "sucursales",
                         remoteSort: false,
                         restProxy: {
-                            browse:
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/seguridad/sucursal/cargar_sucursal_combo_box"
                         }
                     }),
@@ -206,7 +203,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
         if (this.$store.getters.getModulo != null) {
             var modulo = this.$store.getters.getModulo;
             this.moduloForm.modulo_id = modulo.codigo;

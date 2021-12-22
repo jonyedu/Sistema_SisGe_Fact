@@ -8,7 +8,7 @@
                             <bs-card-content class="text-right">
                                 <router-link
                                     :to="
-                                        prefijo +
+                                        $store.state.url_prefix +
                                             '/modulos/persona/cliente/mostrar_cliente'
                                     "
                                 >
@@ -138,7 +138,6 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
 import {BsModel} from "vue-mdbootstrap";
@@ -157,8 +156,6 @@ export default {
         return {
             //variable que controla el progreso
             showLoader: false,
-            //Variables para obtener el index
-            prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
             clienteForm: new BsModel(
                 {
@@ -175,12 +172,12 @@ export default {
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/persona/cliente/guardar_modificar_cliente",
                             method: "post"
                         },
                         update: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/persona/cliente/guardar_modificar_cliente",
                             method: "post"
                         }
@@ -199,7 +196,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
         if (this.$store.getters.getCliente != null) {
             var cliente = this.$store.getters.getCliente;
             this.clienteForm.cliente_id = cliente.cliente_id;

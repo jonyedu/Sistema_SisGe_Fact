@@ -319,7 +319,6 @@ export default {
             autoCloseModalVisible: false,
             modalproductos: false,
             modalimagenproductos: false,
-            prefijo: "",
             imagenp: "",
             Lista: [],
 
@@ -354,8 +353,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 // sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
-                    // browse:"/modulos/administracion/facturacion/productos_invo/",
-                    fetch:
+                    fetch: this.$store.stateicon="list" +
                         "/modulos/transaccion/factura_venta/productos_invo/{id}"
                 }
             }),

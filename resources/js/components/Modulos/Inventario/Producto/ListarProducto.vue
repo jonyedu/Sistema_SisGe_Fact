@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/inventario/producto/crear_modificar_producto'
                             "
                         >
@@ -162,7 +162,7 @@
                         >
                             <router-link
                                 :to="
-                                    prefijo +
+                                    $store.state.url_prefix +
                                         '/modulos/inventario/producto/crear_modificar_producto'
                                 "
                             >
@@ -227,12 +227,10 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import {BsStore} from "vue-mdbootstrap";
 export default {
     data: function() {
         return {
-            prefijo: "",
             trueModalVisible: false,
             productos: new BsStore({
                 idProperty: "id",
@@ -244,8 +242,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
-                    browse: "/modulos/inventario/producto/cargar_all_producto"
-                    //fetch: "/modulos/inventario/producto/producto_por_id",
+                    browse: this.$store.state.url_prefix + "/modulos/inventario/producto/cargar_all_producto"
                 }
             }),
             item: {}
@@ -253,7 +250,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy() {},
     methods: {
@@ -266,7 +262,7 @@ export default {
         },
         eliminarProducto() {
             let that = this;
-            let url =
+            let url = this.$store.state.url_prefix +
                 "/modulos/inventario/producto/eliminar_producto/" +
                 this.item.id;
             axios

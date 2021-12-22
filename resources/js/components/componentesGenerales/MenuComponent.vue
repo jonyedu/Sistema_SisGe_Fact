@@ -29,7 +29,7 @@
                 >
                     <li class="nav-item" @click="changeMenu()">
                         <router-link
-                            :to="prefijo + subMenu.route"
+                            :to="$store.state.url_prefix + subMenu.route"
                             class="nav-link ml-3"
                             ><i :class="subMenu.imagen"> </i>
                             <p>
@@ -72,7 +72,7 @@
                 >
                     <router-link
                         :to="
-                            prefijo +
+                            $store.state.url_prefix +
                                 '/modulos/inventario/producto/mostrar_producto'
                         "
                     >
@@ -86,7 +86,7 @@
                 >
                     <router-link
                         :to="
-                            prefijo +
+                            $store.state.url_prefix +
                                 '/modulos/transaccion/factura_compra/crear_modificar_factura_compra'
                         "
                     >
@@ -98,7 +98,6 @@
     </nav>
 </template>
 <script>
-import { prefix } from "../../variables";
 export default {
     props: {
         user: {
@@ -107,14 +106,12 @@ export default {
     },
     data: function() {
         return {
-            prefijo: "",
             trueModalVisible: false,
             menus: [],
             sin_stock_array: []
         };
     },
     mounted: function() {
-        this.prefijo = prefix;
         this.cargarMenu();
         this.verificarStockProductoAll();
     },
@@ -126,7 +123,7 @@ export default {
         },
         cargarMenu() {
             let that = this;
-            let url = /* this.$store.state.ruta +  */
+            let url = this.$store.state.url_prefix + 
                 "/modulos/seguridad/perfil_por_usuario/cargar_menu/" +
                 this.$props.user.perfil;
             axios
@@ -144,7 +141,7 @@ export default {
         },
         verificarFacturaCaducadaAll() {
             let that = this;
-            let url =
+            let url = this.$store.state.url_prefix + 
                 "/modulos/inventario/producto/verificar_stock_producto_all";
             axios
                 .get(url)
@@ -179,7 +176,7 @@ export default {
         },
         verificarStockProductoAll() {
             let that = this;
-            let url =
+            let url = this.$store.state.url_prefix + 
                 "/modulos/inventario/producto/verificar_stock_producto_all";
             axios
                 .get(url)

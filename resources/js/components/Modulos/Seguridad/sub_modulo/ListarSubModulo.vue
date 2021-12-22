@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/seguridad/sub_modulo/crear_modificar_sub_modulo'
                             "
                         >
@@ -90,7 +90,7 @@
                         >
                             <router-link
                                 :to="
-                                    prefijo +
+                                    $store.state.url_prefix +
                                         '/modulos/seguridad/sub_modulo/crear_modificar_sub_modulo'
                                 "
                             >
@@ -154,12 +154,10 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import {BsStore} from "vue-mdbootstrap";
 export default {
     data: function() {
         return {
-            prefijo: "",
             trueModalVisible: false,
             subModulos: new BsStore({
                 idProperty: "codigo",
@@ -171,14 +169,13 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "descripcion", direction: "asc" }],
                 restProxy: {
-                    browse: "/modulos/seguridad/sub_modulo/cargar_sub_modulo_table"
+                    browse: this.$store.state.url_prefix + "/modulos/seguridad/sub_modulo/cargar_sub_modulo_table"
                 }
             }),
             item: {}
         };
     },
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy: function() {},
     methods: {
@@ -191,7 +188,7 @@ export default {
         },
         eliminarSubModulo() {
             let that = this;
-            let url =
+            let url = this.$store.state.url_prefix +
                 "/modulos/seguridad/sub_modulo/eliminar_sub_modulo/" +
                 this.item.codigo;
             axios

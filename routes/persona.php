@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::group(['prefix' => '/modulos/persona', 'middleware' => ['auth:web'], 'verified'], function () {
+Route::group(['prefix' => 'modulos/persona', 'middleware' => ['auth:web'], 'verified'], function () {
 
     //Submenu de Cliente
     Route::namespace('Modulos\Persona\Cliente')->prefix('cliente')->group(function () {

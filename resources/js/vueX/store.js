@@ -10,7 +10,9 @@ export default new Vuex.Store({
         // emergencia_store
     },
     state: {
-        ruta: "/sisgebefact",
+        //ruta_request: "/sisgebefact/api",
+        //ruta_prefix: "/sisgebefact",
+        url_prefix: "/sisgebefact",
         proveedor: null,
         producto: null,
         usuario: null,

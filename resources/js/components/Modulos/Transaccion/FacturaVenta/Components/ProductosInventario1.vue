@@ -244,7 +244,7 @@ export default {
                         totalProperty: "total",
                         remoteSort: false,
                         restProxy: {
-                            browse:
+                            browse: this.$store.stateicon="list" +
                                 "/modulos/inventario/producto/cargar_producto_inventario_combo_box"
                         }
                     }),
@@ -262,7 +262,6 @@ export default {
             autoCloseModalVisible: false,
             modalproductos: false,
             modalimagenproductos: false,
-            prefijo: "",
             imagenp: "",
             Lista: [],
 
@@ -297,8 +296,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 // sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
-                    // browse:"/modulos/administracion/facturacion/productos_invo/",
-                    fetch:
+                    fetch: this.$store.stateicon="list" +
                         "/modulos/transaccion/factura_venta/productos_invo/{id}"
                 }
             }),

@@ -8,7 +8,7 @@
                             <bs-card-content class="text-right">
                                 <router-link
                                     :to="
-                                        prefijo +
+                                        $store.state.url_prefix +
                                             '/modulos/seguridad/perfil/mostrar_perfil'
                                     "
                                 >
@@ -78,11 +78,9 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required} from "vuelidate/lib/validators";
 import {BsModel} from "vue-mdbootstrap";
-import {BsStore} from "vue-mdbootstrap";
 
 const perfilValidator = {
     descripcion: { required},
@@ -94,8 +92,6 @@ export default {
         return {
             //variable que controla el progreso
             showLoader: false,
-            //Variables para obtener el index
-            prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
             perfilForm: new BsModel(
                 {
@@ -107,12 +103,12 @@ export default {
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/seguridad/perfil/guardar_perfil",
                             method: "post"
                         },
                         update: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/seguridad/perfil/modificar_perfil",
                             method: "post"
                         }
@@ -130,7 +126,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
         if (this.$store.getters.getPerfil != null) {
             var perfil = this.$store.getters.getPerfil;
             this.perfilForm.perfil_id = perfil.codigo;

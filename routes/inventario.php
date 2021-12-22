@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::group(['prefix' => '/modulos/inventario', 'middleware' => ['auth:web'], 'verified'], function () {
+Route::group(['prefix' => 'modulos/inventario', 'middleware' => ['auth:web'], 'verified'], function () {
 
     //Submenu de Grupo
     Route::namespace('Modulos\Inventario\Grupo')->prefix('grupo')->group(function () {
@@ -36,8 +36,8 @@ Route::group(['prefix' => '/modulos/inventario', 'middleware' => ['auth:web'], '
         //costos
         Route::get('cargar_costo/{id}', 'ProductoController@cargarProductocostoId');
     });
-
-
-
-
 });
+
+// $prefijo = config('global.router_prefix');
+// Route::get($prefijo . '/{any}', 'AppController@index')->where('any', '.*');
+// Route::get($prefijo, 'AppController@index')->where('any', '.*')->name('main');

@@ -8,7 +8,7 @@
                             <bs-card-content class="text-right">
                                 <router-link
                                     :to="
-                                        prefijo +
+                                        $store.state.url_prefix +
                                             '/modulos/seguridad/empresa/mostrar_empresa'
                                     "
                                 >
@@ -300,7 +300,6 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
 import {BsModel} from "vue-mdbootstrap";
@@ -332,8 +331,6 @@ export default {
             ],
             //variable que controla el progreso
             showLoader: false,
-            //Variables para obtener el index
-            prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
             empresaForm: new BsModel(
                 {
@@ -361,11 +358,11 @@ export default {
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
-                            url: "/modulos/seguridad/empresa/guardar_empresa",
+                            url: this.$store.state.url_prefix + "/modulos/seguridad/empresa/guardar_empresa",
                             method: "post"
                         },
                         update: {
-                            url: "/modulos/seguridad/empresa/modificar_empresa",
+                            url: this.$store.state.url_prefix + "/modulos/seguridad/empresa/modificar_empresa",
                             method: "post"
                         }
                     }
@@ -384,7 +381,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
         if (this.$store.getters.getEmpresa != null) {
             var empresa = this.$store.getters.getEmpresa;
             this.empresaForm.empresa_id = empresa.Empresa_Id;

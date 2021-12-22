@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/transaccion/factura_compra/mostrar_factura_compra'
                             "
                         >
@@ -109,7 +109,6 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import ListarCompraCabecera from "./ListarCompraCabecera.vue";
 import ListarProducto from "../../Inventario/Producto/ListarProducto.vue";
@@ -133,8 +132,6 @@ export default {
             activeTabSetCarrito: false,
             //variable que controla el progreso
             showLoader: false,
-            //Variables para obtener el index
-            prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
 
             //Variables para la validaciones
@@ -180,12 +177,12 @@ export default {
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
-                            url:
+                            url: this.$store.stateicon="list" +
                                 "/modulos/transaccion/factura_compra/guardar_modificar_factura_compra",
                             method: "post"
                         },
                         update: {
-                            url:
+                            url: this.$store.stateicon="list" +
                                 "/modulos/transaccion/factura_compra/guardar_modificar_factura_compra",
                             method: "post"
                         }
@@ -198,7 +195,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
         this.setFacturaCompra();
     },
     beforeDestroy: function() {
@@ -380,8 +376,8 @@ export default {
                 this.factura_compra.datos_factura_compra
                     .factura_compra_cabecera_id != ""
             ) {
-                window.open(
-                    "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
+                window.open( 
+                    this.$store.state.url_prefix + "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
                         this.factura_compra.datos_factura_compra
                             .factura_compra_cabecera_id + "/" +
                             'false'
@@ -400,7 +396,7 @@ export default {
                     .factura_compra_cabecera_id != ""
             ) {
                 window.open(
-                    "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
+                    this.$store.state.url_prefix + "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
                         this.factura_compra.datos_factura_compra
                             .factura_compra_cabecera_id + "/" +
                             'true'

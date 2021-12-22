@@ -79,7 +79,6 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
 import {BsModel} from "vue-mdbootstrap";
@@ -93,7 +92,6 @@ export default {
     mixins: [validationMixin],
     data: function() {
         return {
-            prefijo: "",
             //variable que controla el progreso
             showLoader: false,
             //Objeto donde tendrá todas las variables del formulario
@@ -109,7 +107,7 @@ export default {
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         update: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/seguridad/perfil_por_usuario/actualizar_perfil_por_usuario",
                             method: "post"
                         }
@@ -126,7 +124,7 @@ export default {
                         dataProperty: "modulos",
                         remoteSort: false,
                         restProxy: {
-                            browse:
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/seguridad/modulo/cargar_modulo_combo_box"
                         }
                     }),
@@ -141,7 +139,7 @@ export default {
                         dataProperty: "perfiles",
                         remoteSort: false,
                         restProxy: {
-                            browse:
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/seguridad/perfil/cargar_perfil_combo_box"
                         }
                     }),
@@ -159,7 +157,6 @@ export default {
         configurarPermisoForm: configurarPermisoValidator
     },
     mounted: function() {
-        this.prefijo = prefix;
     },
     computed: {
         moduloValidator() {
@@ -195,7 +192,7 @@ export default {
                 this.configurarPermisoForm.perfil_id != ""
             ) {
                 let that = this;
-                let url =
+                let url = this.$store.state.url_prefix +
                     "/modulos/seguridad/perfil_por_usuario/cargar_perfil_por_usuario/" +
                     this.configurarPermisoForm.modulo_id +
                     "/" +
@@ -249,7 +246,7 @@ export default {
         },
         actualizarPerfilPorUsuario1() {
             let that = this;
-            let url =
+            let url = this.$store.state.url_prefix +
                 "/modulos/seguridad/perfil_por_usuario/actualizar_perfil_por_usuario";
             this.showLoader = true;
             axios

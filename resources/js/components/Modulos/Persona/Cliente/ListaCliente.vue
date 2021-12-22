@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/persona/cliente/crear_modificar_cliente'
                             "
                         >
@@ -126,7 +126,7 @@
                         >
                             <router-link
                                 :to="
-                                    prefijo +
+                                    $store.state.url_prefix +
                                         '/modulos/persona/cliente/crear_modificar_cliente'
                                 "
                             >
@@ -197,13 +197,10 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import {BsStore} from "vue-mdbootstrap";
 export default {
     data: function() {
         return {
-
-            prefijo: "",
             trueModalVisible:false,
             clientes: new BsStore({
                 idProperty: "cliente_id",
@@ -215,7 +212,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "nombres", direction: "asc" }],
                 restProxy: {
-                    browse:
+                    browse: this.$store.state.url_prefix +
                         "/modulos/persona/cliente/cargar_cliente_all"
                 }
             }),
@@ -224,7 +221,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy() {},
     methods: {
@@ -239,7 +235,7 @@ export default {
         },
         eliminarcliente() {
             let that = this;
-            let url =
+            let url = this.$store.state.url_prefix +
                 "/modulos/persona/cliente/eliminar_cliente/" +
                 this.item.cliente_id;
             axios

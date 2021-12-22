@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/transaccion/factura_compra/crear_modificar_factura_compra'
                             "
                         >
@@ -125,7 +125,7 @@
                         >
                             <router-link
                                 :to="
-                                    prefijo +
+                                    $store.state.url_prefix +
                                         '/modulos/transaccion/factura_compra/crear_modificar_factura_compra'
                                 "
                             >
@@ -221,12 +221,10 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import {BsStore} from "vue-mdbootstrap";
 export default {
     data: function() {
         return {
-            prefijo: "",
             trueModalVisible:false,
             facturas_compras: new BsStore({
                 idProperty: "id",
@@ -238,7 +236,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
-                    browse: "/modulos/transaccion/factura_compra/cargar_all_factura_compra_cabecera",
+                    browse: this.$store.stateicon="list" + "/modulos/transaccion/factura_compra/cargar_all_factura_compra_cabecera",
                 }
             }),
             item:{},
@@ -246,7 +244,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy() {},
     methods: {
@@ -259,7 +256,7 @@ export default {
         },
         eliminar() {
             let that = this;
-            let url =
+            let url = this.$store.stateicon="list" +
                 "/modulos/transaccion/factura_compra/eliminar_factura_compra/" +
                 this.item.id;
             axios
@@ -294,7 +291,7 @@ export default {
         imprimirPdf(item) {
             if (item.id > 0) {
                 window.open(
-                    "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
+                    this.$store.state.url_prefix + "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
                         item.id + "/" +
                             'false'
                 );
@@ -309,7 +306,7 @@ export default {
         enviarPdf(item) {
             if (item.id > 0) {
                 window.open(
-                    "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
+                    this.$store.state.url_prefix + "/modulos/reporte/factura_compra/cargar_pdf_factura_compra/" +
                         item.id + "/" +
                             'true'
                 );

@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/persona/proveedor/crear_modificar_proveedor'
                             "
                         >
@@ -194,13 +194,10 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import {BsStore} from "vue-mdbootstrap";
 export default {
     data: function() {
         return {
-
-            prefijo: "",
             trueModalVisible:false,
             creditos: new BsStore({
                 idProperty: "id",
@@ -212,7 +209,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
-                    browse:
+                    browse: this.$store.stateicon="list" +
                         "/modulos/transaccion/creditos_venta/cargar_ccreditos"
                 }
             }),
@@ -234,13 +231,12 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy() {},
     methods: {
         pagacuota(item){
               let that = this;
-            let url = "/modulos/transaccion/creditos_venta/update_cuota/";
+            let url = this.$store.stateicon="list" + "/modulos/transaccion/creditos_venta/update_cuota/";
               console.log(item);
             axios
                 .post(url,item)
@@ -306,7 +302,7 @@ export default {
             let url = "";
             
             this.errors = [];
-            url =  "/modulos/reporte/factura_credito/cargar_pdf_factura_credito/"+value;
+            url =  this.$store.stateicon="list" + "/modulos/reporte/factura_credito/cargar_pdf_factura_credito/"+value;
             window.open(url, '_blank');
             //window.location.href =  url;
          

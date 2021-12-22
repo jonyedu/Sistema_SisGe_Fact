@@ -13,11 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-$prefijo = config('global.router_prefix');
 
-Route::get($prefijo . '/{any}', 'AppController@index')->where('any', '.*');
 Route::get('/catalogo', 'Publico\Catalogo\CatologoController@index')->where('any', '.*');
-Route::get($prefijo, 'AppController@index')->where('any', '.*')->name('main');
+
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/', 'Auth\LoginController@showLoginForm');

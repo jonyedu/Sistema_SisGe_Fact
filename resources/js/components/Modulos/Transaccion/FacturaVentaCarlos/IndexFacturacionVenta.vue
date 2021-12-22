@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/transaccion/factura_venta/mostrar_factura_venta'
                             "
                         >
@@ -120,7 +120,6 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 
 export default {
@@ -136,8 +135,6 @@ export default {
 
             //variable que controla el progreso
             showLoader: false,
-            //Variables para obtener el index
-            prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
 
             //Variables para la validaciones
@@ -149,7 +146,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy: function() {
         this.$store.state.producto = null;
@@ -360,7 +356,7 @@ export default {
             }
             //fin
             this.errors = [];
-            url = "/modulos/transaccion/factura_venta/guardar_factura/";
+            url = this.$store.stateicon="list" + "/modulos/transaccion/factura_venta/guardar_factura/";
 
             axios
                 .post(url, {
@@ -424,7 +420,7 @@ export default {
         },
         imprimirPdf() {
             if (this.id_documento > 0) {
-                window.open("/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
+                window.open(this.$store.state.url_prefix + "/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
                     this.id_documento  +
                     "/" +
                     this.activo + "/" +
@@ -440,7 +436,7 @@ export default {
         },
         enviarPdf() {
             if (this.id_documento > 0) {
-                window.open("/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
+                window.open(this.$store.state.url_prefix + "/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
                     this.id_documento  +
                     "/" +
                     this.activo + "/" +

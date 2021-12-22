@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::group(['prefix' => '/modulos/reporte', 'middleware' => ['auth:web'], 'verified'], function () {
+Route::group(['prefix' => 'modulos/reporte', 'middleware' => ['auth:web'], 'verified'], function () {
 
     //Submenu de
     Route::namespace('Modulos\Reporte\FacturaCompra')->prefix('factura_compra')->group(function () {

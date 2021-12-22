@@ -75,7 +75,6 @@
     </div>
 </template>
 <script>
-import { prefix } from "../../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required} from "vuelidate/lib/validators";
 import {BsStore} from "vue-mdbootstrap";
@@ -117,7 +116,7 @@ export default {
                     totalProperty: "total",
                     remoteSort: false,
                     restProxy: {
-                        browse: "/modulos/transaccion/factura_venta/config_tipo"
+                        browse: this.$store.stateicon="list" + "/modulos/transaccion/factura_venta/config_tipo"
                     }
                 }),
                 schema: { displayField: "descripcion", valueField: "tipo_pago" }
@@ -159,7 +158,7 @@ export default {
         consultarcedula() {
             let that = this;
             let url =
-                this.prefijo +
+                this.$store.stateicon="list"  +
                 "/modulos/persona/cliente/cargar_cliente_cedula/" +
                 this.cliente.cedula;
             axios

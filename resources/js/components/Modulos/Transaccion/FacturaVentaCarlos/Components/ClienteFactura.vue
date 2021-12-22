@@ -140,7 +140,6 @@ export default {
             srchvalue0: null,
             cantidad: 0,
             autoCloseModalVisible: false,
-            prefijo: "",
             Lista: [],
             mensaje: "",
             cliente: {
@@ -180,7 +179,7 @@ export default {
         consultarNoFactura() {
             if (this.cliente.no_documento.length == 17) {
                 let that = this;
-                let url =
+                let url = this.$store.stateicon="list" +
                     "/modulos/transaccion/factura_venta/consultar_no_factura/" +
                     this.cliente.no_documento;
                 axios
@@ -199,7 +198,7 @@ export default {
         },
         getNoFactura() {
             let that = this;
-            let url =
+            let url = this.$store.stateicon="list" +
                 "/modulos/parametrizacion/config_facturero/get_no_factura";
             axios
                 .get(url)
@@ -211,59 +210,11 @@ export default {
                 })
                 .catch(error => {});
         },
-        /* guardarCliente() {
-            let that = this;
-            let url = "";
-            this.errors = [];
-            url = this.prefijo + "/modulos/persona/cliente/guardar_cliente";
-
-            axios
-                .post(url, this.cliente)
-                .then(function(response) {
-                    //that.arreglito.indexOf(response.data.lista);
-
-                    // console.log( response.data.lista);
-
-                    if (response.data.lista != 0) {
-                        that.cliente.id = response.data.lista;
-                        that.showNotificationProgress(
-                            "Facturacion",
-                            "Cliente registrado",
-                            "success"
-                        );
-                    } else {
-                        that.showNotificationProgress(
-                            "Facturacion",
-                            "Cliente ya se encuentra registrado",
-                            "error"
-                        );
-                    }
-                })
-                .catch(error => {
-                    //Errores de validación
-
-                    if (error.response.data.hasOwnProperty("errors")) {
-                        const errors = error.response.data.errors;
-                        // console.log(error.response.data.errors);
-                        for (let error in errors) {
-                            if (errors.hasOwnProperty(error)) {
-                                // console.log(errors[error][0]);
-
-                                that.showNotificationProgress(
-                                    "Facturacion",
-                                    errors[error][0],
-                                    "error"
-                                );
-                            }
-                        }
-                    }
-                });
-        }, */
         consultarcedula() {
             if (this.cliente.cedula.length == 10) {
                 let that = this;
                 let url =
-                    this.prefijo +
+                    this.$store.stateicon="list" +
                     "/modulos/persona/cliente/cargar_cliente_cedula/" +
                     this.cliente.cedula;
                 axios

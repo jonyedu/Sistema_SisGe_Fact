@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { prefix } from "./variables";
+import store from "./vueX/store";
 import VueRouter from "vue-router";
 
 //Modulo Banco
@@ -51,7 +51,7 @@ import IndexListaArqueCaja from "./components/Modulos/Transaccion/ArqueCaja/List
 
 
 Vue.use(VueRouter);
-let prefijo = prefix;
+let prefijo = store.state.url_prefix;
 export default new VueRouter({
     routes: [
 

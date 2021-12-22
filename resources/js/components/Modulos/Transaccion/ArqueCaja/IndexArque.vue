@@ -5,7 +5,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/transaccion/factura_arqueo/lista_arqueo'
                             "
                         >
@@ -117,12 +117,9 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 export default {
     data: function() {
         return {
-
-            prefijo: "",
             trueModalVisible:false,
             
             arqueoCaja: new BsArrayStore([], {
@@ -147,7 +144,6 @@ export default {
         },
     },
     mounted: function() {
-        this.prefijo = prefix;
         this.agregarDetalle()
     },
     beforeDestroy() {},
@@ -155,7 +151,7 @@ export default {
         grabarArque(){
              let that = this;
             let url = "";
-               url =  "/modulos/transaccion/arque_caja/cargar_grabar/";
+               url =  this.$store.stateicon="list" + "/modulos/transaccion/arque_caja/cargar_grabar/";
              for (let index = 0; index < this.arqueoCaja._items.length; index++) {
                 
                 if (this.arqueoCaja._items[index].cantidad.length == 0) {
@@ -218,7 +214,7 @@ export default {
             
             let that = this;
             let url = "";
-               url =  "/modulos/transaccion/arque_caja/cargar_arque/";
+               url = this.$store.stateicon="list" + "/modulos/transaccion/arque_caja/cargar_arque/";
             
          
             axios

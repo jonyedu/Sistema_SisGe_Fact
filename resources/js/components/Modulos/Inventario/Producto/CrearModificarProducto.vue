@@ -8,7 +8,7 @@
               <bs-card-content class="text-right">
                 <router-link
                   :to="
-                    prefijo + '/modulos/inventario/producto/mostrar_producto'
+                    $store.state.url_prefix + '/modulos/inventario/producto/mostrar_producto'
                   "
                 >
                   <bs-tooltip content="Volver hacia atras" placement="bottom">
@@ -330,7 +330,6 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import { BsStore } from "vue-mdbootstrap";
@@ -372,8 +371,6 @@ export default {
       ],
       //variable que controla el progreso
       showLoader: false,
-      //Variables para obtener el index
-      prefijo: "",
       //Objeto donde tendrá todas las variables del formulario
       productoForm: new BsModel(
         {
@@ -403,11 +400,11 @@ export default {
           //Variables para realizar las peticiones al servidor, save, update, fetch, delete
           proxy: {
             save: {
-              url: "/modulos/inventario/producto/guardar_modificar_producto",
+              url: this.$store.state.url_prefix + "/modulos/inventario/producto/guardar_modificar_producto",
               method: "post",
             },
             update: {
-              url: "/modulos/inventario/producto/guardar_modificar_producto",
+              url: this.$store.state.url_prefix + "/modulos/inventario/producto/guardar_modificar_producto",
               method: "post",
             },
           },
@@ -430,7 +427,7 @@ export default {
             totalProperty: "total",
             remoteSort: false,
             restProxy: {
-              browse: "/modulos/inventario/grupo/cargar_grupo_combo_box",
+              browse: this.$store.state.url_prefix + "/modulos/inventario/grupo/cargar_grupo_combo_box",
             },
           }),
           schema: { displayField: "descripcion", valueField: "id" },
@@ -450,7 +447,7 @@ export default {
                         ], */
             pageSize: 15,
             restProxy: {
-              browse: "/modulos/persona/proveedor/cargar_proveedor_all",
+              browse: this.$store.state.url_prefix + "/modulos/persona/proveedor/cargar_proveedor_all",
             },
           }),
           schema: { displayField: "nombre", valueField: "id" },
@@ -468,7 +465,6 @@ export default {
   },
   created() {},
   mounted: function () {
-    this.prefijo = prefix;
     if (this.$store.getters.getProducto != null) {
       var producto = this.$store.getters.getProducto;
       this.productoForm.producto_id = producto.id;
@@ -739,7 +735,7 @@ export default {
 
         let that = this;
         let url = "";
-        url = "/modulos/inventario/producto/cargar_costo/" + id_pr;
+        url = this.$store.state.url_prefix + "/modulos/inventario/producto/cargar_costo/" + id_pr;
 
         axios
           .get(url)

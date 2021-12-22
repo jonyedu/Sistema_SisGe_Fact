@@ -8,7 +8,7 @@
                             <bs-card-content class="text-right">
                                 <router-link
                                     :to="
-                                        prefijo +
+                                        $store.state.url_prefix +
                                             '/modulos/seguridad/usuario/mostrar_usuario'
                                     "
                                 >
@@ -171,7 +171,6 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import {BsModel} from "vue-mdbootstrap";
@@ -193,8 +192,6 @@ export default {
         return {
             //variable que controla el progreso
             showLoader: false,
-            //Variables para obtener el index
-            prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
             usuarioForm: new BsModel(
                 {
@@ -213,12 +210,12 @@ export default {
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/seguridad/usuario/guardar_usuario",
                             method: "post"
                         },
                         update: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/seguridad/usuario/modificar_usuario",
                             method: "post"
                         }
@@ -242,7 +239,7 @@ export default {
                         dataProperty: "profesiones",
                         remoteSort: false,
                         restProxy: {
-                            browse:
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/seguridad/profesion/cargar_profesion_combo_box"
                         }
                     }),
@@ -255,7 +252,7 @@ export default {
                         dataProperty: "perfiles",
                         remoteSort: false,
                         restProxy: {
-                            browse:
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/seguridad/perfil/cargar_perfil_combo_box"
                         }
                     }),
@@ -269,7 +266,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
         if (this.$store.getters.getUsuario != null) {
             var usuario = this.$store.getters.getUsuario;
             this.usuarioForm.usuario_id = usuario.codigo;
