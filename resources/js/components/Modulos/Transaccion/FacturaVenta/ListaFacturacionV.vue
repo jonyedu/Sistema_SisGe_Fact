@@ -215,7 +215,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "fecha", direction: "asc" }],
                 restProxy: {
-                    browse: this.$store.stateicon="list" +
+                    browse: this.$store.state.url_prefix +
                         "/modulos/transaccion/factura_venta/cargar_facturas_dia"
                 }
             }),
@@ -237,7 +237,7 @@ export default {
         },
         eliminar() {
             let that = this;
-            let url = this.$store.stateicon="list" +
+            let url = this.$store.state.url_prefix +
                 "/modulos/transaccion/factura_venta/eliminar_factura_venta/" +
                 this.item.id;
             axios

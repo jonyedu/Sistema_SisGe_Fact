@@ -116,7 +116,7 @@ export default {
                     totalProperty: "total",
                     remoteSort: false,
                     restProxy: {
-                        browse: this.$store.stateicon="list" + "/modulos/transaccion/factura_venta/config_tipo"
+                        browse: this.$store.state.url_prefix + "/modulos/transaccion/factura_venta/config_tipo"
                     }
                 }),
                 schema: { displayField: "descripcion", valueField: "tipo_pago" }
@@ -158,7 +158,7 @@ export default {
         consultarcedula() {
             let that = this;
             let url =
-                this.$store.stateicon="list"  +
+                this.$store.state.url_prefix  +
                 "/modulos/persona/cliente/cargar_cliente_cedula/" +
                 this.cliente.cedula;
             axios

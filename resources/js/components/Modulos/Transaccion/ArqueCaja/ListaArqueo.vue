@@ -126,7 +126,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
-                    browse: this.$store.stateicon="list" + "/modulos/transaccion/arque_caja/consultar_arqueo"
+                    browse: this.$store.state.url_prefix + "/modulos/transaccion/arque_caja/consultar_arqueo"
                 }
             }),
             item: {}
@@ -147,7 +147,7 @@ export default {
         eliminarProducto() {
             let that = this;
             let url =
-                this.$store.stateicon="list" + "/modulos/inventario/producto/eliminar_producto/" +
+                this.$store.state.url_prefix + "/modulos/inventario/producto/eliminar_producto/" +
                 this.item.id;
             axios
                 .delete(url)

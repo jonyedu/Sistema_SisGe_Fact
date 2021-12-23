@@ -356,7 +356,7 @@ export default {
             }
             //fin
             this.errors = [];
-            url = this.$store.stateicon="list" + "/modulos/transaccion/factura_venta/guardar_factura/";
+            url = this.$store.state.url_prefix + "/modulos/transaccion/factura_venta/guardar_factura/";
 
             axios
                 .post(url, {

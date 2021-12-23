@@ -353,7 +353,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 // sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
-                    fetch: this.$store.stateicon="list" +
+                    fetch: this.$store.state.url_prefix +
                         "/modulos/transaccion/factura_venta/productos_invo/{id}"
                 }
             }),

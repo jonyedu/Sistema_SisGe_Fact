@@ -1,40 +1,44 @@
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light" >
+    <ul class="navbar-nav ml-auto" style="width: 100%;">
+        <div class="" style="width: 100%;">
+            <div class="" style="width: 100%;">
+                <bs-appbar class="bg-indigo" shadow>
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-        <!-- Settings Dropdown -->
-        <div class=" sm:flex sm:items-center sm:ml-6">
-            <x-jet-dropdown align="right" width="48">
-                <x-slot name="trigger">
-                    <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                        <div>{{  Auth::user()!=null?Auth::user()->FULLNAME:"" }}</div>
 
-                        <div class="ml-1">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                    </button>
-                </x-slot>
-                <x-slot name="content">
-                    <!-- Account Management -->
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                        {{ __('Manage Account') }}
-                    </div>
-                    <!-- Authentication -->
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
+                    <bs-spacer></bs-spacer>
+                    <bs-appbar-title class="text-white" title="{{  Auth::user()!=null?Auth::user()->FULLNAME:'' }}">
+                    </bs-appbar-title>
+                    <bs-appbar-items>
+                        <bs-menu class="ml-2" placement="bottom-right">
+                            <bs-button mode="icon" color="light-grey" flat>
+                                <bs-icon icon="MoreVert"></bs-icon>
+                            </bs-button>
+                            <template v-slot:content>
+                                <bs-list-view slot="content">
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        {{ __('Manage Account') }}
+                                    </div>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
 
-                        <x-jet-dropdown-link href="{{ route('logout') }}" onclick="event.preventDefault();
+                                        <bs-list-tile url="{{ route('logout') }}">
+                                            <bs-list-tile-title>
+                                                <x-jet-dropdown-link href="{{ route('logout') }}" onclick="event.preventDefault();
                                                             this.closest('form').submit();">
-                            {{ __('Salir') }}
-                        </x-jet-dropdown-link>
-                    </form>
-                </x-slot>
-            </x-jet-dropdown>
+                                                    {{ __('Salir') }}
+                                                </x-jet-dropdown-link>
+                                            </bs-list-tile-title>
+                                        </bs-list-tile>
+                                    </form>
+                                </bs-list-view>
+                            </template>
+                        </bs-menu>
+                    </bs-appbar-items>
+                    <bs-button color="light-grey" mode="icon" flat>
+                        <bs-icon data-widget="pushmenu" icon="MenuBars"></bs-icon>
+                    </bs-button>
+                </bs-appbar>
+            </div>
         </div>
-        <li>
-            <a style="padding: .5rem 1rem;display: contents;" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
     </ul>
 </nav>

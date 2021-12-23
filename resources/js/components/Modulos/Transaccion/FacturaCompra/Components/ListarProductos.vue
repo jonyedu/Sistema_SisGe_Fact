@@ -257,7 +257,7 @@ export default {
                         totalProperty: "total",
                         pageSize: 15,
                         restProxy: {
-                            browse: this.$store.stateicon="list" +
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/persona/proveedor/cargar_proveedor_all"
                         }
                     }),
@@ -270,7 +270,7 @@ export default {
                         totalProperty: "total",
                         remoteSort: false,
                         restProxy: {
-                            fetch: this.$store.stateicon="list" +
+                            fetch: this.$store.state.url_prefix +
                                 "/modulos/transaccion/factura_compra/cargar_producto_por_proveedor/{id}"
                         }
                     }),

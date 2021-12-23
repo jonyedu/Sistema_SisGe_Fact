@@ -151,7 +151,7 @@ export default {
         grabarArque(){
              let that = this;
             let url = "";
-               url =  this.$store.stateicon="list" + "/modulos/transaccion/arque_caja/cargar_grabar/";
+               url =  this.$store.state.url_prefix + "/modulos/transaccion/arque_caja/cargar_grabar/";
              for (let index = 0; index < this.arqueoCaja._items.length; index++) {
                 
                 if (this.arqueoCaja._items[index].cantidad.length == 0) {
@@ -214,7 +214,7 @@ export default {
             
             let that = this;
             let url = "";
-               url = this.$store.stateicon="list" + "/modulos/transaccion/arque_caja/cargar_arque/";
+               url = this.$store.state.url_prefix + "/modulos/transaccion/arque_caja/cargar_arque/";
             
          
             axios

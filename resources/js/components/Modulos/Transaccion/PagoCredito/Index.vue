@@ -209,7 +209,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
-                    browse: this.$store.stateicon="list" +
+                    browse: this.$store.state.url_prefix +
                         "/modulos/transaccion/creditos_venta/cargar_ccreditos"
                 }
             }),
@@ -236,7 +236,7 @@ export default {
     methods: {
         pagacuota(item){
               let that = this;
-            let url = this.$store.stateicon="list" + "/modulos/transaccion/creditos_venta/update_cuota/";
+            let url = this.$store.state.url_prefix + "/modulos/transaccion/creditos_venta/update_cuota/";
               console.log(item);
             axios
                 .post(url,item)
@@ -302,7 +302,7 @@ export default {
             let url = "";
             
             this.errors = [];
-            url =  this.$store.stateicon="list" + "/modulos/reporte/factura_credito/cargar_pdf_factura_credito/"+value;
+            url =  this.$store.state.url_prefix + "/modulos/reporte/factura_credito/cargar_pdf_factura_credito/"+value;
             window.open(url, '_blank');
             //window.location.href =  url;
          

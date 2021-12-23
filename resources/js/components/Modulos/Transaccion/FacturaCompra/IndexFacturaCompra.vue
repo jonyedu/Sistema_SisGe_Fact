@@ -177,12 +177,12 @@ export default {
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
-                            url: this.$store.stateicon="list" +
+                            url: this.$store.state.url_prefix +
                                 "/modulos/transaccion/factura_compra/guardar_modificar_factura_compra",
                             method: "post"
                         },
                         update: {
-                            url: this.$store.stateicon="list" +
+                            url: this.$store.state.url_prefix +
                                 "/modulos/transaccion/factura_compra/guardar_modificar_factura_compra",
                             method: "post"
                         }

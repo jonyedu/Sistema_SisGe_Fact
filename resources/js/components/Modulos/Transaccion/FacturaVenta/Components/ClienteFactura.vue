@@ -179,7 +179,7 @@ export default {
         consultarNoFactura() {
             if (this.cliente.no_documento.length == 17) {
                 let that = this;
-                let url = this.$store.stateicon="list" +
+                let url = this.$store.state.url_prefix +
                     "/modulos/transaccion/factura_venta/consultar_no_factura/" +
                     this.cliente.no_documento;
                 axios
@@ -198,7 +198,7 @@ export default {
         },
         getNoFactura() {
             let that = this;
-            let url = this.$store.stateicon="list" +
+            let url = this.$store.state.url_prefix +
                 "/modulos/parametrizacion/config_facturero/get_no_factura";
             axios
                 .get(url)
@@ -261,7 +261,7 @@ export default {
             if (this.cliente.cedula.length == 10) {
                 let that = this;
                 let url =
-                    this.$store.stateicon="list" +
+                    this.$store.state.url_prefix +
                     "/modulos/persona/cliente/cargar_cliente_cedula/" +
                     this.cliente.cedula;
                 axios

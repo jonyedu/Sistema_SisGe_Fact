@@ -30,10 +30,11 @@
 
 <body class="hold-transition sidebar-mini layout-fixed" style="line-height: 2.1;">
     <!-- Es para la barra superior, donde muestra el Dashboard -->
-    @livewire('navigation-dropdown')
+    
 
     <!-- Main Sidebar Container -->
-    <div id="app" >
+    <div id="app">
+    @livewire('navigation-dropdown')
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="col-lg-12 col-md-12 col-sm-4">

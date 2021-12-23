@@ -277,7 +277,7 @@ export default {
                     totalProperty: "total",
                     remoteSort: false,
                     restProxy: {
-                        browse: this.$store.stateicon="list" + "/modulos/transaccion/factura_venta/config_tipo"
+                        browse: this.$store.state.url_prefix + "/modulos/transaccion/factura_venta/config_tipo"
                     }
                 }),
                 schema: { displayField: "descripcion", valueField: "tipo_pago" }
@@ -289,7 +289,7 @@ export default {
                     totalProperty: "total",
                     remoteSort: false,
                     restProxy: {
-                        browse: this.$store.stateicon="list" +
+                        browse: this.$store.state.url_prefix +
                             "/modulos/transaccion/factura_venta/cargar_tarjeta"
                     }
                 }),
@@ -302,7 +302,7 @@ export default {
                     totalProperty: "total",
                     remoteSort: false,
                     restProxy: {
-                        browse: this.$store.stateicon="list" +
+                        browse: this.$store.state.url_prefix +
                             "/modulos/transaccion/factura_venta/cargar_banco"
                     }
                 }),
@@ -315,7 +315,7 @@ export default {
                     totalProperty: "dias",
                     remoteSort: false,
                     restProxy: {
-                        browse: this.$store.stateicon="list" +
+                        browse: this.$store.state.url_prefix +
                             "/modulos/transaccion/factura_venta/cargar_forma"
                     }
                 }),
@@ -388,7 +388,7 @@ export default {
             var interesb = 0;
             that.forma.creditofacturaventa = [];
             let url =
-                this.$store.stateicon="list" +
+                this.$store.state.url_prefix +
                 "/modulos/transaccion/factura_venta/cargar_forma_id/" +
                 this.forma.formacreditof;
             axios
@@ -454,7 +454,7 @@ export default {
         consultarcedula() {
             let that = this;
             let url =
-                this.$store.stateicon="list" +
+                this.$store.state.url_prefix +
                 "/modulos/persona/cliente/cargar_cliente_cedula/" +
                 this.cliente.cedula;
             axios

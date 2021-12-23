@@ -189,7 +189,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "FULLNAME", direction: "asc" }],
                 restProxy: {
-                    browse: this.$store.stateicon="list" + "/modulos/seguridad/usuario/cargar_usuario_table"
+                    browse: this.$store.state.url_prefix + "/modulos/seguridad/usuario/cargar_usuario_table"
                 }
             }),
             item: {}
@@ -208,7 +208,7 @@ export default {
         },
         eliminarUsuario() {
             let that = this;
-            let url = this.$store.stateicon="list" +
+            let url = this.$store.state.url_prefix +
                 "/modulos/seguridad/usuario/eliminar_usuario/" +
                 this.item.codigo;
             axios

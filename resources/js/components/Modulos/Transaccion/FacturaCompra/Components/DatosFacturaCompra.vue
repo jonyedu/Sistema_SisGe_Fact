@@ -209,7 +209,7 @@ export default {
                         totalProperty: "total",
                         pageSize: 15,
                         restProxy: {
-                            browse: this.$store.stateicon="list" +
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/parametrizacion/tipo_documento/cargar_tipo_documento_combo_box"
                         }
                     }),
@@ -331,7 +331,7 @@ export default {
             //alert(this.dataFacturaCompra.no_documento.length);
             if (this.dataFacturaCompra.no_documento.length == 17) {
                 let that = this;
-                let url = this.$store.stateicon="list" +
+                let url = this.$store.state.url_prefix +
                     "/modulos/transaccion/factura_compra/consultar_no_factura/" +
                     this.dataFacturaCompra.no_documento;
                 axios
@@ -367,7 +367,7 @@ export default {
         consultarcedula() {
             if (this.dataFacturaCompra.cedula.length == 10) {
                 let that = this;
-                let url = this.$store.stateicon="list" +
+                let url = this.$store.state.url_prefix +
                     "/modulos/persona/proveedor/cargar_proveedor_cedula/" +
                     this.dataFacturaCompra.cedula;
                 axios
