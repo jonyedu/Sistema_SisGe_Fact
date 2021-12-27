@@ -18,6 +18,13 @@ import Cliente from "./components/Modulos/Persona/Cliente/ListaCliente";
 import ModificarCrearCliente from "./components/Modulos/Persona/Cliente/CrearModificarCliente";
 
 //Modulo Reporte
+import ProveedorReports from "./components/Modulos/Reportes/Proveedores/index";
+import ClienteReports from "./components/Modulos/Reportes/Clientes/index";
+import VentasReports from "./components/Modulos/Reportes/Ventas/index";
+
+
+
+
 
 //Modulo Seguridad
 import Usuario from "./components/Modulos/Seguridad/Usuario/ListarUsuario";
@@ -99,6 +106,20 @@ export default new VueRouter({
         },
 
         //Reporte
+        //ClienteReports
+        {
+            path: prefijo + "/modulos/reportres/proveedores/mostrar_index",
+            component: ProveedorReports
+        },
+        //VentasReports
+        {
+            path: prefijo + "/modulos/reportres/ventas/mostrar_index",
+            component: VentasReports
+        },
+        {
+            path: prefijo + "/modulos/reportres/cliente/mostrar_index",
+            component: ClienteReports
+        },
 
         //Seguridad
         {

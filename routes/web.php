@@ -13,21 +13,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-$prefijo = config('global.router_prefix');
+// $prefijo = config('global.router_prefix');
 
-Route::get($prefijo . '/{any}', 'AppController@index')->where('any', '.*');
-Route::get('/catalogo', 'Publico\Catalogo\CatologoController@index')->where('any', '.*');
-Route::get($prefijo, 'AppController@index')->where('any', '.*')->name('main');
+// Route::get($prefijo . '/{any}', 'AppController@index')->where('any', '.*');
+// Route::get('/catalogo', 'Publico\Catalogo\CatologoController@index')->where('any', '.*');
+// Route::get($prefijo, 'AppController@index')->where('any', '.*')->name('main');
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/', 'Auth\LoginController@showLoginForm');
-    Route::post('/login', 'Auth\LoginController@authenticate');
+   // Route::post('/login', 'Auth\LoginController@authenticate');
 });
 
 Route::group(['middleware' => ['auth:web'], 'verified'], function () {
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 });
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+// Route::get('/', function () {
+//     return redirect()->route('login');
+// });
+
+
+$prefijo = config('global.router_prefix');
+//$prefijo ="";
+ Route::get($prefijo . '/{any}', 'AppController@index')->where('any', '.*');
+ Route::get($prefijo, 'AppController@index')->where('any', '.*');

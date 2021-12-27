@@ -264,7 +264,52 @@ class FacturaVentaReporteController extends Controller
 
     }
 
+    public function cargarFechaVenta($fechadesde,$fechahasta)
+    {
+        try {
+            $factura_venta = VentasCabecera::select(
+                'id_cliente',
+        'secuencia',
+      
+        'fecha',
+        'viva',
+        'iva',
+        'sub_total_12',
+        'sub_total_0',
+        'descuento',
+        'sub_total',
+        'iva_12',
+        'total',
+        'tipopago',
+        'formapago',
+        'caj',
+        'cambio',
+                 
+            )
+            ->whereBetween('fecha',[ $fechadesde,$fechahasta])
+                
+                ->where('status', 1)
+                ->with('clienteFact:cliente_id,nombres,apellidos,cedula,direccion,correo')
+                ->with('formapagoFactura:tipo_pago,descripcion')
+                ->with('DetalleVenta.producto:id,codigo,nombre')
 
+                
+                ->get();
+              return  response()->json(['factura' => $factura_venta, 'total' =>  $factura_venta->sum('totalapagar')], 200);
+
+
+                $pdf = PDF::loadView('reports.Transaccion.ReporteCompra.reporte', [
+                    'factura' => $factura_compra,
+                    'total' => $factura_compra->sum('totalapagar'),
+                    'nombre_reporte' =>  "REPORTE DE COMPRAS",
+                    
+                ]);
+                return $pdf->stream("REPORTE DE COMPRAS");
+           // return  response()->json(['clientes' => $clientes, 'total' => sizeOf($clientes)], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
+        }
+    }
 
 
     public function cargarPdfFacturaVentaCredito($factura_venta_cabecera_id)
