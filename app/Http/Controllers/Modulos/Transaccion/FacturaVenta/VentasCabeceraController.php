@@ -276,7 +276,8 @@ class VentasCabeceraController extends Controller
 
 
                     $inventario_final = $producto_inventario->stock - $datos_inventario[$i]["cant"];
-                    return  response()->json(['tipo' =>  $inventario_final, 'total' =>0 ], 500);
+                    if($inventario_final <= 0) return  response()->json(['msj' => 'No existe stock para el producto'], 422);
+                    //return  response()->json(['tipo' =>  $inventario_final, 'total' =>0 ], 500);
                     ProductoInventario::where('id', $datos_inventario[$i]["idfac"])
                         ->where('id_factura', $datos_inventario[$i]["idfacCompra"])
                         ->where('id_producto', $datos_inventario[$i]["id"])
