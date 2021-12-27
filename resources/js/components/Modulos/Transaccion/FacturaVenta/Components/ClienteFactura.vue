@@ -47,11 +47,10 @@
                         prepend-icon="address-book"
                         floating-label
                         required
-                        :disabled="true"
                         v-model="cliente.no_autorizacion"
                         clear-button
                     >
-                        <label># Aurorización</label>
+                        <label># Autorización</label>
                     </bs-text-field>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
@@ -308,6 +307,7 @@ export default {
                 this.cliente.direccion = ".";
                 this.cliente.telefono = "0";
                 this.cliente.email = "0";
+                this.cliente.no_autorizacion = "0";
             } else {
                 this.cliente.id = "0";
                 this.cliente.cedula = "";
@@ -316,6 +316,7 @@ export default {
                 this.cliente.direccion = "";
                 this.cliente.telefono = "";
                 this.cliente.email = "";
+                this.cliente.no_autorizacion = "";
             }
         },
         calcular() {

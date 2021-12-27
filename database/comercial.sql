@@ -101,7 +101,7 @@ CREATE TABLE `config_departamento` (
   PRIMARY KEY (`Departamento_Id`),
   KEY `FK_Centro_Costo_Centro_Costo` (`Sucursal_Id`),
   CONSTRAINT `FK_Centro_Costo_Centro_Costo` FOREIGN KEY (`Sucursal_Id`) REFERENCES `config_sucursales` (`Sucursal_Id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +130,7 @@ CREATE TABLE `config_empresa` (
   `Empresa_Fax` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `Empresa_Contribuyente_Especial` tinyint(1) NOT NULL,
   `Empresa_Representante` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `Empresa_Notas` longtext,
+  `Empresa_Notas` longtext CHARACTER SET utf8,
   `Empresa_Ruc` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `Empresa_Telefonos` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `Empresa_Ubicacion_Logo` longblob,
@@ -144,7 +144,7 @@ CREATE TABLE `config_empresa` (
   `Empresa_Contador_Ruc` varchar(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `Empresa_Actividad` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `Empresa_Razon_Social` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `Empresa_Obligado_Contabilidad` varchar(11) NOT NULL,
+  `Empresa_Obligado_Contabilidad` varchar(11) CHARACTER SET utf8 NOT NULL,
   `Empresa_Representante_Id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `Empresa_Representante_Id_Tipo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `Empresa_Inicio_Actividades` datetime DEFAULT NULL,
@@ -164,7 +164,7 @@ CREATE TABLE `config_empresa` (
   `pcip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `status` int DEFAULT NULL,
   PRIMARY KEY (`Empresa_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,7 +197,7 @@ CREATE TABLE `config_facturero` (
   `pcip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,6 +206,7 @@ CREATE TABLE `config_facturero` (
 
 LOCK TABLES `config_facturero` WRITE;
 /*!40000 ALTER TABLE `config_facturero` DISABLE KEYS */;
+INSERT INTO `config_facturero` VALUES (1,'001','002',1,'0123456789','1','1','2021-12-27 13:37:27','2021-12-27 13:37:27','192.168.1.196',1);
 /*!40000 ALTER TABLE `config_facturero` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,7 +273,7 @@ CREATE TABLE `config_parametros` (
   `name_pc` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `status` int DEFAULT NULL,
   PRIMARY KEY (`Codigo1`,`Codigo2`,`Codigo3`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,7 +321,7 @@ CREATE TABLE `config_sucursales` (
   PRIMARY KEY (`Sucursal_Id`),
   KEY `FK_sucursales_empresas` (`Empresa_Id`),
   CONSTRAINT `FK_sucursales_empresas` FOREIGN KEY (`Empresa_Id`) REFERENCES `config_empresa` (`Empresa_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -351,7 +352,7 @@ CREATE TABLE `config_tarjetascredito` (
   `TarCodigoCuenta` bigint DEFAULT NULL,
   `TarCtaAuxiliar` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `TarCodDepartamento` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -405,7 +406,7 @@ CREATE TABLE `config_tipopago` (
   `tipo_pago` int NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`tipo_pago`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -431,7 +432,7 @@ CREATE TABLE `cont_descripcion_gastos` (
   `asiento_contable` int DEFAULT NULL,
   `status` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -460,7 +461,7 @@ CREATE TABLE `cont_gastos_diarios` (
   `status` int DEFAULT NULL,
   `fecha` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -573,7 +574,7 @@ CREATE TABLE `par_estado` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `Descripcion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -601,10 +602,10 @@ CREATE TABLE `par_grupos` (
   `usu_update` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `pcip` varchar(255) NOT NULL,
+  `pcip` varchar(255) CHARACTER SET utf8 NOT NULL,
   `status` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -613,7 +614,7 @@ CREATE TABLE `par_grupos` (
 
 LOCK TABLES `par_grupos` WRITE;
 /*!40000 ALTER TABLE `par_grupos` DISABLE KEYS */;
-INSERT INTO `par_grupos` VALUES (1,'5454','sadasdasasd',36,36,'2021-12-21 19:02:19','2021-12-21 19:02:19','192.168.8.78',1),(2,'003','fffffffffr6gth8uiop+',36,36,'2021-12-21 19:03:39','2021-12-21 19:03:39','192.168.8.82',1),(3,'0001','njbjnjm',36,36,'2021-12-21 19:04:23','2021-12-21 19:04:23','192.168.8.82',1),(4,'jhk','hjkjnkm,',36,36,'2021-12-21 19:05:43','2021-12-21 19:05:43','192.168.8.82',1);
+INSERT INTO `par_grupos` VALUES (1,'5454','sadasdasasd',36,36,'2021-12-21 19:02:19','2021-12-21 19:02:19','192.168.8.78',1),(2,'003','fffffffffr6gth8uiop+',36,36,'2021-12-21 19:03:39','2021-12-21 19:03:39','192.168.8.82',1),(3,'0001','njbjnjm',36,36,'2021-12-21 19:04:23','2021-12-21 19:04:23','192.168.8.82',1),(4,'jhk','hjkjnkm,',36,36,'2021-12-21 19:05:43','2021-12-21 19:05:43','192.168.8.82',1),(5,'000123456','prueba',36,36,'2021-12-23 20:52:19','2021-12-23 20:52:19','192.168.8.82',1);
 /*!40000 ALTER TABLE `par_grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -798,7 +799,7 @@ CREATE TABLE `s_par_fact_compra_cabecera` (
   `p_inicial` decimal(18,2) DEFAULT NULL,
   `status` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -825,7 +826,7 @@ CREATE TABLE `s_par_fact_compra_creditos` (
   `fecha_pago` date DEFAULT NULL,
   `valor` decimal(18,2) DEFAULT NULL,
   `estado` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -856,7 +857,7 @@ CREATE TABLE `s_par_fact_compra_detalle` (
   `pagado` int DEFAULT NULL,
   `status` int DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1023,27 +1024,31 @@ DROP TABLE IF EXISTS `s_par_fact_ventas_cabecera`;
 CREATE TABLE `s_par_fact_ventas_cabecera` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_cliente` int DEFAULT NULL,
+  `secuencia` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `no_autorizacion` varchar(45) NOT NULL,
   `fecha` datetime DEFAULT NULL,
   `viva` int DEFAULT NULL,
-  `subtotaliva1` decimal(18,2) DEFAULT NULL,
   `iva` decimal(18,2) DEFAULT NULL,
-  `subtotaliva2` decimal(18,2) DEFAULT NULL,
-  `totalapagar` decimal(18,2) DEFAULT NULL,
+  `sub_total_12` decimal(18,2) DEFAULT NULL,
+  `sub_total_0` decimal(18,2) DEFAULT NULL,
+  `descuento` decimal(18,2) DEFAULT NULL,
+  `sub_total` decimal(18,2) DEFAULT NULL,
+  `iva_12` decimal(18,2) DEFAULT NULL,
+  `total` decimal(10,0) DEFAULT NULL,
   `tipopago` int DEFAULT NULL,
   `formapago` int DEFAULT NULL,
   `caj` int DEFAULT NULL,
   `cambio` decimal(18,2) DEFAULT NULL,
   `recibido` decimal(18,2) DEFAULT NULL,
-  `status` int DEFAULT NULL,
-  `usu_created` varchar(255) NOT NULL,
-  `usu_update` varchar(255) NOT NULL,
+  `observacion` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `usu_created` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `usu_update` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `pcip` varchar(255) NOT NULL,
-  `secuencia` varchar(45) NOT NULL,
-  `total` decimal(10,0) DEFAULT NULL,
+  `pcip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `status` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1052,7 +1057,7 @@ CREATE TABLE `s_par_fact_ventas_cabecera` (
 
 LOCK TABLES `s_par_fact_ventas_cabecera` WRITE;
 /*!40000 ALTER TABLE `s_par_fact_ventas_cabecera` DISABLE KEYS */;
-INSERT INTO `s_par_fact_ventas_cabecera` VALUES (1,1,'2021-04-30 15:54:27',0,0.00,0.00,52.00,52.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(2,1,'2021-04-30 16:19:41',0,0.00,0.00,52.00,52.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(3,1,'2021-04-30 16:21:02',0,0.00,0.00,52.00,52.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(4,1,'2021-04-30 16:22:44',0,0.00,0.00,52.00,52.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(5,1,'2021-05-01 17:50:35',0,0.00,0.00,16.50,16.50,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(6,2,'2021-05-02 10:18:57',0,0.00,0.00,20.00,20.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(7,2,'2021-05-02 10:28:12',0,0.00,0.00,20.00,20.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(8,2,'2021-05-02 10:43:02',0,0.00,0.00,20.00,20.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(9,2,'2021-05-02 10:43:27',0,0.00,0.00,20.00,20.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(10,2,'2021-05-02 10:45:09',0,0.00,0.00,20.00,20.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(11,2,'2021-05-02 10:49:18',0,0.00,0.00,20.00,20.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(12,2,'2021-05-02 10:54:35',0,0.00,0.00,20.00,20.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(13,2,'2021-05-02 10:55:12',0,0.00,0.00,20.00,20.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(14,2,'2021-05-02 10:58:13',0,0.00,0.00,20.00,20.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(15,2,'2021-05-02 11:11:18',0,0.00,0.00,20.00,20.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(16,2,'2021-05-02 11:12:48',0,0.00,0.00,20.00,20.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(17,2,'2021-05-02 11:13:03',0,0.00,0.00,20.00,20.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(18,2,'2021-05-02 11:13:45',0,0.00,0.00,20.00,20.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(19,2,'2021-05-02 11:13:58',0,0.00,0.00,20.00,20.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(20,2,'2021-05-02 11:23:51',0,0.00,0.00,12.00,12.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(21,1,'2021-05-02 11:26:05',0,0.00,0.00,50.00,50.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(22,1,'2021-05-02 11:28:13',0,0.00,0.00,50.00,50.00,0,2,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(23,1,'2021-05-02 13:54:23',0,0.00,0.00,77.50,77.50,0,3,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(24,1,'2021-05-02 13:54:52',0,0.00,0.00,77.50,77.50,0,3,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(25,1,'2021-05-02 13:56:40',0,0.00,0.00,77.50,77.50,0,3,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(26,1,'2021-05-02 13:57:06',0,0.00,0.00,77.50,77.50,0,3,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(27,1,'2021-05-02 13:58:02',0,0.00,0.00,77.50,77.50,0,3,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(28,1,'2021-05-02 14:06:44',0,0.00,0.00,77.50,77.50,0,3,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(29,1,'2021-05-02 14:07:05',0,0.00,0.00,77.50,77.50,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(30,1,'2021-05-02 14:15:22',0,0.00,0.00,77.50,77.50,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(31,1,'2021-05-02 14:17:09',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(32,1,'2021-05-02 14:19:10',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(33,1,'2021-05-02 14:21:00',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(34,1,'2021-05-02 14:21:36',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(35,1,'2021-05-02 14:22:44',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(36,1,'2021-05-02 14:25:22',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(37,1,'2021-05-02 14:27:19',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(38,1,'2021-05-02 14:28:51',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(39,1,'2021-05-02 14:29:25',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(40,1,'2021-05-02 14:29:53',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(41,1,'2021-05-02 14:30:30',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(42,1,'2021-05-02 14:54:44',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(43,1,'2021-05-02 14:55:43',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(44,1,'2021-05-02 14:55:54',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(45,1,'2021-05-02 14:56:54',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(46,1,'2021-05-02 14:58:40',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(47,1,'2021-05-02 14:58:48',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(48,1,'2021-05-02 15:00:10',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(49,1,'2021-05-02 15:02:33',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(50,1,'2021-05-02 15:02:39',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(51,1,'2021-05-02 15:02:56',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(52,1,'2021-05-02 15:03:08',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(53,1,'2021-05-02 15:03:13',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(54,1,'2021-05-02 15:03:55',0,0.00,0.00,50.00,50.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(55,1,'2021-05-02 17:25:01',0,0.00,0.00,25.00,25.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(56,1,'2021-05-02 17:50:21',0,0.00,0.00,25.00,25.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(57,1,'2021-05-02 17:51:10',0,0.00,0.00,25.00,25.00,0,4,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(58,1,'2021-05-02 17:52:50',0,0.00,0.00,24.50,24.50,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(59,1,'2021-05-02 17:56:55',0,0.00,0.00,50.00,50.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(60,1,'2021-05-02 17:57:42',0,0.00,0.00,50.00,50.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(61,1,'2021-05-02 17:58:38',0,0.00,0.00,50.00,50.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(62,1,'2021-05-02 17:59:24',0,0.00,0.00,50.00,50.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(63,1,'2021-05-02 18:00:56',0,0.00,0.00,50.00,50.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(64,1,'2021-05-02 18:01:39',0,0.00,0.00,50.00,50.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(65,1,'2021-05-02 18:02:40',0,0.00,0.00,50.00,50.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(66,1,'2021-05-02 18:09:09',0,0.00,0.00,50.00,50.00,0,1,0,0.00,0.00,1,'24','24','2021-04-01 05:00:00','2021-04-01 05:00:00','127.0.0.1','',NULL),(67,1,'2021-05-03 23:30:46',0,0.00,0.00,5.00,5.00,0,1,0,0.00,0.00,1,'24','24',NULL,NULL,'127.0.0.1','',NULL),(68,1,'2021-05-03 23:32:29',0,0.00,0.00,10.00,10.00,0,1,0,0.00,0.00,1,'24','24',NULL,NULL,'127.0.0.1','',NULL),(69,1,'2021-05-03 23:35:56',0,0.00,0.00,2.50,2.50,0,1,0,0.00,0.00,1,'24','24',NULL,NULL,'127.0.0.1','',NULL);
+INSERT INTO `s_par_fact_ventas_cabecera` VALUES (1,1,'000-000-000000001','0','2021-12-27 09:00:24',0,0.00,5.00,0.00,0.00,5.00,0.60,6,0,1,0,0.00,0.00,'factura de venta.','36','36','2021-12-27 14:00:24','2021-12-27 14:00:24','127.0.0.1',1),(2,1,'000-000-000000001','0','2021-12-27 09:01:01',0,0.00,5.00,0.00,0.00,5.00,0.60,6,0,1,0,0.00,0.00,'factura de venta.','36','36','2021-12-27 14:01:01','2021-12-27 14:01:01','127.0.0.1',1),(3,1,'000-000-000000001','0','2021-12-27 09:01:52',0,0.00,5.00,0.00,0.00,5.00,0.60,6,0,1,0,0.00,0.00,'factura de venta.','36','36','2021-12-27 14:01:52','2021-12-27 14:01:52','127.0.0.1',1);
 /*!40000 ALTER TABLE `s_par_fact_ventas_cabecera` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1072,8 +1077,14 @@ CREATE TABLE `s_par_fact_ventas_detalle` (
   `valor` decimal(18,2) DEFAULT NULL,
   `cantidad` decimal(18,2) DEFAULT NULL,
   `total` decimal(18,2) DEFAULT NULL,
+  `usu_created` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `usu_update` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `pcip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1082,7 +1093,7 @@ CREATE TABLE `s_par_fact_ventas_detalle` (
 
 LOCK TABLES `s_par_fact_ventas_detalle` WRITE;
 /*!40000 ALTER TABLE `s_par_fact_ventas_detalle` DISABLE KEYS */;
-INSERT INTO `s_par_fact_ventas_detalle` VALUES (1,3,45,2,0,1.00,50.00,50.00),(2,3,49,2,0,0.50,4.00,2.00),(3,4,45,2,0,1.00,50.00,50.00),(4,4,49,2,0,0.50,4.00,2.00),(5,5,45,2,0,1.00,2.00,2.00),(6,5,49,2,0,0.50,20.00,10.00),(7,5,44,2,0,1.50,3.00,4.50),(8,6,49,2,0,0.50,25.00,12.50),(9,6,44,2,0,1.50,3.00,4.50),(10,6,1,2,0,1.00,3.00,3.00),(11,7,49,2,0,0.50,25.00,12.50),(12,7,44,2,0,1.50,3.00,4.50),(13,7,1,2,0,1.00,3.00,3.00),(14,8,49,2,0,0.50,25.00,12.50),(15,8,44,2,0,1.50,3.00,4.50),(16,8,1,2,0,1.00,3.00,3.00),(17,9,49,2,0,0.50,25.00,12.50),(18,9,44,2,0,1.50,3.00,4.50),(19,9,1,2,0,1.00,3.00,3.00),(20,10,49,2,0,0.50,25.00,12.50),(21,10,44,2,0,1.50,3.00,4.50),(22,10,1,2,0,1.00,3.00,3.00),(23,11,49,2,0,0.50,25.00,12.50),(24,11,44,2,0,1.50,3.00,4.50),(25,11,1,2,0,1.00,3.00,3.00),(26,12,49,2,0,0.50,25.00,12.50),(27,12,44,2,0,1.50,3.00,4.50),(28,12,1,2,0,1.00,3.00,3.00),(29,13,49,2,0,0.50,25.00,12.50),(30,13,44,2,0,1.50,3.00,4.50),(31,13,1,2,0,1.00,3.00,3.00),(32,14,49,2,0,0.50,25.00,12.50),(33,14,44,2,0,1.50,3.00,4.50),(34,14,1,2,0,1.00,3.00,3.00),(35,15,49,2,0,0.50,25.00,12.50),(36,15,44,2,0,1.50,3.00,4.50),(37,15,1,2,0,1.00,3.00,3.00),(38,16,49,2,0,0.50,25.00,12.50),(39,16,44,2,0,1.50,3.00,4.50),(40,16,1,2,0,1.00,3.00,3.00),(41,17,49,2,0,0.50,25.00,12.50),(42,17,44,2,0,1.50,3.00,4.50),(43,17,1,2,0,1.00,3.00,3.00),(44,18,49,2,0,0.50,25.00,12.50),(45,18,44,2,0,1.50,3.00,4.50),(46,18,1,2,0,1.00,3.00,3.00),(47,19,49,2,0,0.50,25.00,12.50),(48,19,44,2,0,1.50,3.00,4.50),(49,19,1,2,0,1.00,3.00,3.00),(50,20,45,2,0,1.00,2.00,2.00),(51,20,49,2,0,0.50,20.00,10.00),(52,21,45,2,0,1.00,50.00,50.00),(53,22,45,2,0,1.00,50.00,50.00),(54,23,45,2,0,1.00,50.00,50.00),(55,23,49,2,0,0.50,45.00,22.50),(56,23,1,2,0,1.00,5.00,5.00),(57,24,45,2,0,1.00,50.00,50.00),(58,24,49,2,0,0.50,45.00,22.50),(59,24,1,2,0,1.00,5.00,5.00),(60,25,45,2,0,1.00,50.00,50.00),(61,25,49,2,0,0.50,45.00,22.50),(62,25,1,2,0,1.00,5.00,5.00),(63,26,45,2,0,1.00,50.00,50.00),(64,26,49,2,0,0.50,45.00,22.50),(65,26,1,2,0,1.00,5.00,5.00),(66,27,45,2,0,1.00,50.00,50.00),(67,27,49,2,0,0.50,45.00,22.50),(68,27,1,2,0,1.00,5.00,5.00),(69,28,45,2,0,1.00,50.00,50.00),(70,28,49,2,0,0.50,45.00,22.50),(71,28,1,2,0,1.00,5.00,5.00),(72,29,45,2,0,1.00,50.00,50.00),(73,29,49,2,0,0.50,45.00,22.50),(74,29,1,2,0,1.00,5.00,5.00),(75,30,45,2,0,1.00,50.00,50.00),(76,30,49,2,0,0.50,45.00,22.50),(77,30,1,2,0,1.00,5.00,5.00),(78,31,45,2,0,1.00,50.00,50.00),(79,32,45,2,0,1.00,50.00,50.00),(80,33,45,2,0,1.00,50.00,50.00),(81,34,45,2,0,1.00,50.00,50.00),(82,35,45,2,0,1.00,50.00,50.00),(83,36,45,2,0,1.00,50.00,50.00),(84,37,45,2,0,1.00,50.00,50.00),(85,38,45,2,0,1.00,50.00,50.00),(86,39,45,2,0,1.00,50.00,50.00),(87,40,45,2,0,1.00,50.00,50.00),(88,41,45,2,0,1.00,50.00,50.00),(89,42,45,2,0,1.00,50.00,50.00),(90,43,45,2,0,1.00,50.00,50.00),(91,44,45,2,0,1.00,50.00,50.00),(92,45,45,2,0,1.00,50.00,50.00),(93,46,45,2,0,1.00,50.00,50.00),(94,47,45,2,0,1.00,50.00,50.00),(95,48,45,2,0,1.00,50.00,50.00),(96,49,45,2,0,1.00,50.00,50.00),(97,50,45,2,0,1.00,50.00,50.00),(98,51,45,2,0,1.00,50.00,50.00),(99,52,45,2,0,1.00,50.00,50.00),(100,53,45,2,0,1.00,50.00,50.00),(101,54,45,2,0,1.00,50.00,50.00),(102,1,NULL,2,0,1.00,50.00,50.00),(103,55,49,2,0,0.50,50.00,25.00),(104,56,49,2,0,0.50,50.00,25.00),(105,60,45,2,0,1.00,50.00,50.00),(106,61,45,2,0,1.00,50.00,50.00),(107,62,45,2,0,1.00,50.00,50.00),(108,63,45,2,0,1.00,50.00,50.00),(109,64,45,2,0,1.00,50.00,50.00),(110,65,45,2,0,1.00,50.00,50.00),(111,66,45,2,0,1.00,50.00,50.00),(112,67,45,2,0,1.00,5.00,5.00),(113,68,49,2,0,0.50,20.00,10.00),(114,69,49,2,0,0.50,5.00,2.50);
+INSERT INTO `s_par_fact_ventas_detalle` VALUES (1,1,45,2,0,1.00,5.00,5.00,'36','36','2021-12-27 14:00:25','2021-12-27 14:00:25','127.0.0.1',1),(2,2,45,2,0,1.00,5.00,5.00,'36','36','2021-12-27 14:01:02','2021-12-27 14:01:02','127.0.0.1',1),(3,3,45,2,0,1.00,5.00,5.00,'36','36','2021-12-27 14:01:52','2021-12-27 14:01:52','127.0.0.1',1);
 /*!40000 ALTER TABLE `s_par_fact_ventas_detalle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1112,7 +1123,7 @@ CREATE TABLE `s_par_factura_tarjeta` (
   `name_pc` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `status` int DEFAULT NULL,
   PRIMARY KEY (`tarjetas`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1149,13 +1160,13 @@ CREATE TABLE `s_par_producto` (
   `refrigeracion` int DEFAULT NULL,
   `iva` int DEFAULT NULL,
   `imagen` longblob,
-  `usu_created_update` varchar(255) NOT NULL,
+  `usu_created_update` varchar(255) CHARACTER SET utf8 NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `pcip` varchar(255) NOT NULL,
+  `pcip` varchar(255) CHARACTER SET utf8 NOT NULL,
   `status` int unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1188,7 +1199,7 @@ CREATE TABLE `s_par_producto_costo` (
   `rentabilidad` decimal(18,4) DEFAULT NULL,
   `status` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1215,7 +1226,7 @@ CREATE TABLE `s_par_producto_inv_ventas_compras` (
   `id_producto` int DEFAULT NULL,
   `cantidad` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1272,7 +1283,7 @@ CREATE TABLE `seg_modulo` (
   `sucursal` bigint NOT NULL,
   `codigo` int NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `imagen` varchar(100) NOT NULL DEFAULT 'fas fa-tasks',
+  `imagen` varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT 'fas fa-tasks',
   `usu_created` int NOT NULL,
   `created_at` datetime NOT NULL,
   `usu_update` int NOT NULL,
@@ -1284,7 +1295,7 @@ CREATE TABLE `seg_modulo` (
   KEY `FK_SEG_MODULO_CONFIG_EMPRESA` (`empresa`),
   CONSTRAINT `FK_SEG_MODULO_CONFIG_EMPRESA` FOREIGN KEY (`empresa`) REFERENCES `config_empresa` (`Empresa_Id`),
   CONSTRAINT `FK_SEG_MODULO_CONFIG_SUCURSALES` FOREIGN KEY (`sucursal`) REFERENCES `config_sucursales` (`Sucursal_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1309,7 +1320,7 @@ CREATE TABLE `seg_opcion_aplicacion` (
   `codigo` int NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `imagen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `route` varchar(100) NOT NULL DEFAULT '/',
+  `route` varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT '/',
   `usu_created` int NOT NULL,
   `created_at` datetime NOT NULL,
   `usu_update` int DEFAULT NULL,
@@ -1317,7 +1328,7 @@ CREATE TABLE `seg_opcion_aplicacion` (
   `pcip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `status` int NOT NULL,
   PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1351,7 +1362,7 @@ CREATE TABLE `seg_opcion_aplicacion_por_perfil` (
   `pcip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `status` int NOT NULL,
   PRIMARY KEY (`id`,`perfil`,`modulo`,`opcion_aplicacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1382,7 +1393,7 @@ CREATE TABLE `seg_perfil` (
   `pcname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `status` int NOT NULL,
   PRIMARY KEY (`codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1440,7 +1451,7 @@ CREATE TABLE `seg_usuario` (
   `apellido` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `usuario` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `email` varchar(255) DEFAULT 'sin.correo@bspi.org',
+  `email` varchar(255) CHARACTER SET utf8 DEFAULT 'sin.correo@bspi.org',
   `perfil` int NOT NULL,
   `profesion` int DEFAULT NULL,
   `abreviatura` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
@@ -1459,7 +1470,7 @@ CREATE TABLE `seg_usuario` (
   CONSTRAINT `FK_SEG_USUARIO_CONFIG_EMPRESA` FOREIGN KEY (`empresa`) REFERENCES `config_empresa` (`Empresa_Id`),
   CONSTRAINT `FK_SEG_USUARIO_CONFIG_SUCURSALES` FOREIGN KEY (`sucursal`) REFERENCES `config_sucursales` (`Sucursal_Id`),
   CONSTRAINT `FK_SEG_USUARIO_SEG_PERFIL` FOREIGN KEY (`perfil`) REFERENCES `seg_perfil` (`codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1498,7 +1509,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('KOG9yxUmwbzC7WJNsI2bfGPcZNrtTXdYzIGSG3y2',36,'192.168.8.78','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Edg/96.0.1054.62','YTo2OntzOjY6Il90b2tlbiI7czo0MDoibUFVWXFDNklsQ3BVUjJsOU1KWEVpbVlNOGhaNjBLc2NzWmQ1cno5aSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6OTM6Imh0dHA6Ly8xOTIuMTY4LjguNzg6ODAwMC9TaXNHZV9GYWN0L21vZHVsb3MvdHJhbnNhY2Npb24vZmFjdHVyYV9jb21wcmEvbW9zdHJhcl9mYWN0dXJhX2NvbXByYSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NToibG9naW4iO2E6MTp7czo4OiJhdHRlbXB0cyI7aToyO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozNjtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJC5TOFRoeU51MGUwSlhveDA4VW16MGVMQVNiRDBGVU94SVFnYTE4NVBYZFZVcEtWM3JmMWhhIjt9',1640120768),('q4BGSYMREUrc2hxvarl1jRi44AwdLKqTEFLkQ9Vc',36,'192.168.8.82','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Edg/96.0.1054.57','YTo2OntzOjY6Il90b2tlbiI7czo0MDoiNUtGUnUydU9IZ3pTY21rQjJweUY4NWlCbjZ3NUFrblBTNWJOU2ZBYiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTAxOiJodHRwOi8vMTkyLjE2OC44Ljc4OjgwMDAvU2lzR2VfRmFjdC9tb2R1bG9zL3RyYW5zYWNjaW9uL2ZhY3R1cmFfY29tcHJhL2NyZWFyX21vZGlmaWNhcl9mYWN0dXJhX2NvbXByYSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NToibG9naW4iO2E6MTp7czo4OiJhdHRlbXB0cyI7aToyO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozNjtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJC5TOFRoeU51MGUwSlhveDA4VW16MGVMQVNiRDBGVU94SVFnYTE4NVBYZFZVcEtWM3JmMWhhIjt9',1640121348);
+INSERT INTO `sessions` VALUES ('al8kgmHM80ew8YOenHlsbi6T0yenb1ETyS0J6XLl',36,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Edg/96.0.1054.62','YTo3OntzOjY6Il90b2tlbiI7czo0MDoieGJKaVFnaGZycFl3eHdhTm9XRldYMnltS3d5cTFFaVRpaEk3NERTQiI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czoyMToiaHR0cDovLzEyNy4wLjAuMTo4MDAwIjt9czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6ODg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9tb2R1bG9zL3JlcG9ydGUvZmFjdHVyYV92ZW50YS9jYXJnYXJfcGRmX2ZhY3R1cmFfdmVudGEvMS90cnVlL3RydWUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU6ImxvZ2luIjthOjE6e3M6ODoiYXR0ZW1wdHMiO2k6Mjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MzY7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCQuUzhUaHlOdTBlMEpYb3gwOFVtejBlTEFTYkQwRlVPeElRZ2ExODVQWGRWVXBLVjNyZjFoYSI7fQ==',1640613854),('ZtYpczNkjZgF4zBVVnkVd3NQ4aZhiGWajI1wCKz1',36,'192.168.8.78','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Edg/96.0.1054.62','YTo3OntzOjY6Il90b2tlbiI7czo0MDoiZHh4NjRRVWhaUmIxTUtsdkpIVHBqR3FkUXJxNmVUbDFaVlpzam5OUCI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czozMToiaHR0cDovLzE5Mi4xNjguOC43OC9zaXNnZWJlZmFjdCI7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjMxOiJodHRwOi8vMTkyLjE2OC44Ljc4L3Npc2dlYmVmYWN0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1OiJsb2dpbiI7YToxOntzOjg6ImF0dGVtcHRzIjtpOjI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjM2O3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkLlM4VGh5TnUwZTBKWG94MDhVbXowZUxBU2JEMEZVT3hJUWdhMTg1UFhkVlVwS1YzcmYxaGEiO30=',1640610569);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1510,14 +1521,14 @@ DROP TABLE IF EXISTS `sysdiagrams`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sysdiagrams` (
-  `name` varchar(160) NOT NULL,
+  `name` varchar(160) CHARACTER SET utf8 NOT NULL,
   `principal_id` int NOT NULL,
   `diagram_id` int NOT NULL AUTO_INCREMENT,
   `version` int DEFAULT NULL,
   `definition` longblob,
   PRIMARY KEY (`diagram_id`),
   UNIQUE KEY `UK_principal_name` (`principal_id`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1543,7 +1554,7 @@ CREATE TABLE `tbcaja` (
   `fecha` date DEFAULT NULL,
   `usr` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=500 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=500 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1570,7 +1581,7 @@ CREATE TABLE `tbregistros` (
   `usuario` int DEFAULT NULL,
   `fecha` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1636,4 +1647,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-21 16:37:42
+-- Dump completed on 2021-12-27  9:05:19

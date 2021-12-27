@@ -213,20 +213,27 @@ class VentasCabeceraController extends Controller
                         'pcip' => $_SERVER["REMOTE_ADDR"],
                         'status' => 1
                     ]
-
                 );
+
+                //return  response()->json(['data' => $data], 500);
 
                 //Aqui es para actualizar el numero de secuencia
                 $facturero = ConfigFacturero::where('no_autorizacion', $no_autorizacion)
                     ->where('status', 1)
                     ->first();
 
-                ConfigFacturero::where('id', $facturero->id)
-                    ->where('status', 1)
-                    ->update([
-                        'usu_update' => $user->codigo,
-                        'secuencia' => $facturero->secuencia + 1,
-                    ]);
+                if ($facturero != null) {
+                    ConfigFacturero::where('id', $facturero->id)
+                        ->where('status', 1)
+                        ->update([
+                            'usu_update' => $user->codigo,
+                            'secuencia' => $facturero->secuencia + 1,
+                        ]);
+                }
+
+                //return  response()->json(['facturero' => $facturero], 500);
+
+
 
                 $id_cabecera = $data->id;
                 // $total= 0;
@@ -235,7 +242,7 @@ class VentasCabeceraController extends Controller
                 // $iva=0;
                 // $viva=0;
                 //VentasDetalle
-                //return  response()->json(['tipo' => $request->input(), 'total' =>0 ], 500);
+                //return  response()->json(['datos_inventario' => $datos_inventario,], 500);
                 for ($i = 0; $i < sizeof($datos_inventario); $i++) {
                     # code...
 
@@ -243,11 +250,11 @@ class VentasCabeceraController extends Controller
                     VentasDetalle::create(
                         [
                             'id_facturav' => $id_cabecera,
-                            'id_producto' => $datos_inventario[$i]["producto_id"],
+                            'id_producto' => $datos_inventario[$i]["id"],
                             'iva' => $datos_inventario[$i]["iva"],
                             'factor' => 0,
                             'valor' => $datos_inventario[$i]["precio"],
-                            'cantidad' => $datos_inventario[$i]["cantidad"],
+                            'cantidad' => $datos_inventario[$i]["cant"],
                             'total' => $datos_inventario[$i]["total"],
                             'usu_created' => $user->codigo,
                             'usu_update' => $user->codigo,
@@ -256,18 +263,23 @@ class VentasCabeceraController extends Controller
                         ]
 
                     );
+                    //return  response()->json(['datos_inventario' => $datos_inventario,], 500);
 
                     //aqui voy a actualizar :v
-
-                    $producto_inventario = ProductoInventario::select('stock')
-                        ->where('id', $datos_inventario[$i]["producto_inventario_id"])
+                    $producto_inventario = ProductoInventario::select('Stock')
+                        ->where('id', $datos_inventario[$i]["idfac"])
+                        ->where('id_factura', $datos_inventario[$i]["idfacCompra"])
+                        ->where('id_producto', $datos_inventario[$i]["id"])
                         ->first();
 
+                    //return  response()->json(['producto_inventario' => $producto_inventario,], 500);
 
 
-                    $inventario_final = $producto_inventario->stock - $datos_inventario[$i]["cantidad"];
-                    //return  response()->json(['tipo' =>  $inventario_final, 'total' =>0 ], 200);
-                    ProductoInventario::where('id', $datos_inventario[$i]["producto_inventario_id"])
+                    $inventario_final = $producto_inventario->stock - $datos_inventario[$i]["cant"];
+                    return  response()->json(['tipo' =>  $inventario_final, 'total' =>0 ], 500);
+                    ProductoInventario::where('id', $datos_inventario[$i]["idfac"])
+                        ->where('id_factura', $datos_inventario[$i]["idfacCompra"])
+                        ->where('id_producto', $datos_inventario[$i]["id"])
                         ->update(
                             [
                                 'stock' => $inventario_final,
