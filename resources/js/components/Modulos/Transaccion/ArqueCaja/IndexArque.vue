@@ -24,8 +24,6 @@
                     </bs-card-content>
                 </bs-card-body>
             </bs-card>
-        <div class="my-demo-wrapper">
-            <div class="my-demo-wrapper">
                 <bs-alert color="purple" icon="coins">
                 <h5>Arqueo de Caja!</h5>
                
@@ -34,7 +32,7 @@
                    Total de ventas en Efectivo :  ${{  calculartotal }}
                 </p>
                 </bs-alert>
-            </div>
+            
             <bs-card shadow>
                 <!-- aqui va el grid -->
                      
@@ -105,13 +103,13 @@
                         
                 <!-- fin -->
             </bs-card>
-             <div class="my-demo-wrapper text-center">
+             <div class="text-center">
                 
                 <bs-button color="success"
                 @click="grabarArque()">Grabar Arqueo</bs-button>
                
             </div>
-        </div>
+     
        
     </div>
 </template>
@@ -278,8 +276,3 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-}
-</style>

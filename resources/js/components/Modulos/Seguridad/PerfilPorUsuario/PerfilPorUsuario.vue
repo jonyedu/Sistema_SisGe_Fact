@@ -1,6 +1,5 @@
 <template>
     <div class="content-wrapper">
-        <div class="my-demo-wrapper">
             <bs-card shadow>
                 <bs-card-body>
                     <bs-card-content class="text-right">
@@ -73,7 +72,7 @@
                     </bs-card-content>
                 </bs-card-body>
             </bs-card>
-        </div>
+ 
         <bs-mask-loader :show="showLoader"></bs-mask-loader>
     </div>
 </template>

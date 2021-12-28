@@ -28,7 +28,7 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed" style="line-height: 2.1;">
+<body class="hold-transition sidebar-mini layout-fixed">
     <!-- Es para la barra superior, donde muestra el Dashboard -->
     
 

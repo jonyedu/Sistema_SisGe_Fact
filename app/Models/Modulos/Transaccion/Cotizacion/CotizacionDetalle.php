@@ -17,7 +17,7 @@ class CotizacionDetalle extends Model
      */
     // protected $connection = 'admin_db_sql';
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
         'id', 

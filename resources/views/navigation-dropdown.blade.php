@@ -1,5 +1,5 @@
 <nav class="main-header navbar navbar-expand navbar-white navbar-light" >
-    <ul class="navbar-nav ml-auto" style="width: 100%;">
+    <ul class="navbar-nav" style="width: 100%;">
         <div class="" style="width: 100%;">
             <div class="" style="width: 100%;">
                 <bs-appbar class="bg-indigo" shadow>

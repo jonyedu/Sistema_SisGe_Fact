@@ -1,5 +1,4 @@
 <template>
-    <div class="my-demo-wrapper">
         <div class="row">
             <div v-if="false" class="col-lg-12 col-md-12 col-sm-12 mt-3">
                 <bs-card-body>
@@ -224,7 +223,7 @@
                 </bs-card>
             </div>
         </div>
-    </div>
+ 
 </template>
 <script>
 import {BsStore} from "vue-mdbootstrap";
@@ -497,16 +496,3 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-
-    .small-box {
-        max-width: 480px;
-    }
-
-    .card-right {
-        margin-left: auto;
-    }
-}
-</style>

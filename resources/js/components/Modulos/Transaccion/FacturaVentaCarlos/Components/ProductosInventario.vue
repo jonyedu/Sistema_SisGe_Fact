@@ -1,5 +1,5 @@
 <template>
-    <div class="my-demo-wrapper">
+    <div class="content-wrapper">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
                 <bs-card-body>
@@ -533,17 +533,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-
-    .small-box {
-        max-width: 480px;
-    }
-
-    .card-right {
-        margin-left: auto;
-    }
-}
-</style>

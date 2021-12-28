@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="content-wrapper">
         <div class="form-group">
             <div class="auto" id="auto" style="display: none">
                 holis {{ envio }}
@@ -304,13 +304,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-
-    .small-box {
-        max-width: 480px;
-    }
-}
-</style>

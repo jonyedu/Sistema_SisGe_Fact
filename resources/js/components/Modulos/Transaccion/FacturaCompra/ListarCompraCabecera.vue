@@ -1,6 +1,5 @@
 <template>
     <div class="content-wrapper">
-        <div class="my-demo-wrapper">
             <bs-card shadow>
                 <bs-card-body>
                     <bs-card-content class="text-right">
@@ -190,7 +189,7 @@
                     </template>
                 </bs-grid>
             </bs-card>
-        </div>
+        
         <bs-modal
             :open.sync="trueModalVisible"
             :overlay-close="false"

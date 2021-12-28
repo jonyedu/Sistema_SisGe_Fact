@@ -17,7 +17,7 @@ class CotizacionCabecera extends Model
      */
     // protected $connection = 'admin_db_sql';
     protected  $primaryKey = 'id';
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
         'id', 

@@ -1,6 +1,5 @@
 <template>
     <div class="content-wrapper">
-        <div class="my-demo-wrapper">
             <div class="row">
                 <div class="col-lg-12 offset-lg-12">
                     <bs-card shadow>
@@ -112,7 +111,7 @@
                     </bs-card>
                 </div>
             </div>
-        </div>
+  
         <bs-mask-loader :show="showLoader"></bs-mask-loader>
     </div>
 </template>
@@ -336,14 +335,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-
-    .btn {
-        margin-bottom: 16px;
-        margin-right: 8px;
-    }
-}
-</style>

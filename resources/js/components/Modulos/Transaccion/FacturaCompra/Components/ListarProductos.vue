@@ -1,5 +1,5 @@
 <template>
-    <div class="my-demo-wrapper">
+    <div class="content-wrapper">
         <bs-card-body>
             <bs-card-content class="text-left">
                 <form ref="myform" novalidate>
@@ -453,9 +453,6 @@ export default {
 </script>
 
 <style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-}
 .card-right {
     margin-left: auto;
 }

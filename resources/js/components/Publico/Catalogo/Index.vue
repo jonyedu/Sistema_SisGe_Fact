@@ -1,5 +1,5 @@
 <template>
-    <div class="my-demo-wrapper">
+    <div class="content-wrapper">
         <div class="row row-cols-1 row-cols-md-2">
             <div
                 class="col-lg-4 col-md-4 col-sm-12"

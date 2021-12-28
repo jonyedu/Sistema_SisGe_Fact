@@ -1,6 +1,5 @@
 <template>
     <div class="content-wrapper">
-        <div class="my-demo-wrapper">
             <bs-card shadow>
                 <bs-card-body>
                     <bs-card-content class="text-right">
@@ -114,7 +113,7 @@
                     </bs-tooltip>
                 </div>
             </bs-card>
-        </div>
+       
         <bs-mask-loader :show="showLoader"></bs-mask-loader>
     </div>
 </template>
@@ -453,14 +452,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-.my-demo-wrapper {
-    padding: 24px;
-
-    .btn {
-        margin-bottom: 16px;
-        margin-right: 8px;
-    }
-}
-</style>

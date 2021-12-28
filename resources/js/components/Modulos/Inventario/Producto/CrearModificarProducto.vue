@@ -1,6 +1,5 @@
 <template>
   <div class="content-wrapper">
-    <div class="my-demo-wrapper">
       <div class="row">
         <div class="col-lg-12 offset-lg-12">
           <bs-card shadow>
@@ -161,12 +160,6 @@
                           label="costo"
                           width="125"
                         ></bs-grid-column>
-                        <!-- <bs-grid-column
-                                            field="factor"
-                                            label="factor"
-                                            min-width="175"
-                                        >
-                                        </bs-grid-column> -->
                         <bs-grid-column
                           field="costoi"
                           label="costoi"
@@ -314,7 +307,7 @@
           </bs-card>
         </div>
       </div>
-    </div>
+    
     <bs-lightbox
       :items="singleItem"
       :open.sync="showSingleItem"
@@ -669,62 +662,6 @@ export default {
       this.productoForm.productosCarrito._items[0].rentabilidad =
         this.productoForm.productosCarrito._items[0].rentabilidad.toFixed(4);
     },
-    // cambiarIva() {
-    //     //varible para quita los decimales
-
-    //     var costo = 0;
-    //     var costeo = 0;
-
-    //     costo = this.productoForm.pvc * 1;
-    //     this.productoForm.productosCarrito._items[0].costo = costo;
-
-    //     if (this.productoForm.iva) {
-    //         this.productoForm.productosCarrito._items[0].costoi = costo + (costo * 12) / 100;
-    //         costeo = this.productoForm.productosCarrito._items[0].precioi / 1.12;
-
-    //         //        var costoiva = 0;
-    //         //  costoiva =  this.productoForm.productosCarrito._items[0].costo * 12/100;
-    //         //    this.productoForm.productosCarrito._items[0].costoi = Number(this.productoForm.productosCarrito._items[0].costo)+ parseFloat(costoiva);
-    //         //      //: Rentabilidad = (Ganancia / Inversión) x 100.
-    //         //     var ganacia = 0;
-    //         //     var rentabilidad = 0;
-    //         //     ganacia = this.productoForm.productosCarrito._items[0].precio -  this.productoForm.productosCarrito._items[0].costo;
-    //         //     rentabilidad = parseFloat(ganacia) /  parseFloat(this.productoForm.productosCarrito._items[0].costo) * 100;
-    //         //      this.productoForm.productosCarrito._items[0].rentabilidad = parseFloat(rentabilidad);
-    //     } else {
-    //         costeo = this.productoForm.productosCarrito._items[0].precioi;
-    //         this.productoForm.productosCarrito._items[0].costoi = costo;
-    //     }
-    //     //this.productoForm.productosCarrito._items[0].costoi = Number(this.productoForm.productosCarrito._items[0].costo);
-    //     this.productoForm.productosCarrito._items[0].precio = costeo;
-    //     this.productoForm.productosCarrito._items[0].preciou = costeo / 1;
-    //     this.productoForm.productosCarrito._items[0].utili = 100 * ((costeo - costo) / costo);
-    //     this.productoForm.productosCarrito._items[0].rentabilidad = 100 * ((costeo - costo) / costeo);
-
-    //     //proceso para quitar los decimales
-    //     this.productoForm.productosCarrito._items[0].costo = this.productoForm.productosCarrito._items[0].costo.toFixed(
-    //         4
-    //     );
-    //     this.productoForm.productosCarrito._items[0].costoi = this.productoForm.productosCarrito._items[0].costoi.toFixed(
-    //         4
-    //     );
-    //     this.productoForm.productosCarrito._items[0].preciou = this.productoForm.productosCarrito._items[0].preciou.toFixed(
-    //         4
-    //     );
-
-    //     this.productoForm.productosCarrito._items[0].precio = +this.productoForm.productosCarrito._items[0].precio;
-    //     this.productoForm.productosCarrito._items[0].precio = this.productoForm.productosCarrito._items[0].precio.toFixed(
-    //         4
-    //     );
-    //     //this.productoForm.productosCarrito._items[0].precioi = this.productoForm.productosCarrito._items[0].precioi.toFixed(4);
-
-    //     this.productoForm.productosCarrito._items[0].utili = this.productoForm.productosCarrito._items[0].utili.toFixed(
-    //         4
-    //     );
-    //     this.productoForm.productosCarrito._items[0].rentabilidad = this.productoForm.productosCarrito._items[0].rentabilidad.toFixed(
-    //         4
-    //     );
-    // },
     cambiarCosto() {
       this.productoForm.productosCarrito._items[0].costo =
         this.productoForm.pvc;
@@ -743,7 +680,7 @@ export default {
             //console.log(response.data.productos.costo);
             if (response.data.productos.length == 0) {
               that.productoForm.productosCarrito._items.push({
-                producto_id: id_pr,
+                producto_id: 0,
                 costo: 0,
                 factor: 0,
                 costoi: 0,
@@ -777,7 +714,7 @@ export default {
       } else {
         this.productoForm.productosCarrito._items = [];
         this.productoForm.productosCarrito._items.push({
-          producto_id: id_pr,
+          producto_id: 0,
           costo: 0,
           factor: 0,
           costoi: 0,
