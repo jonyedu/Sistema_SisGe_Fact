@@ -11,6 +11,10 @@ use App\Models\Modulos\Transaccion\FacturaCompra\CompraCabecera;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\Reportes;
+
+
 class FacturaCompraReporteController extends Controller
 {
     public function cargarPdfFacturaCompra($factura_compra_cabecera_id, $enviar)
@@ -130,7 +134,7 @@ class FacturaCompraReporteController extends Controller
         }
     }
 
-    public function cargarFechaCompra($fechadesde,$fechahasta)
+    public function cargarFechaCompra($fechadesde,$fechahasta,$id)
     {
         try {
             $factura_compra = CompraCabecera::select( 'id',
@@ -155,14 +159,28 @@ class FacturaCompraReporteController extends Controller
                     ->get();
               //return  response()->json(['factura' => $factura_compra, 'total' =>  $factura_compra->sum('totalapagar')], 200);
 
-
-                $pdf = PDF::loadView('reports.Transaccion.ReporteCompra.reporte', [
-                    'factura' => $factura_compra,
-                    'total' => $factura_compra->sum('totalapagar'),
-                    'nombre_reporte' =>  "REPORTE DE COMPRAS",
-                    
-                ]);
-                return $pdf->stream("REPORTE DE COMPRAS");
+                if ($id ==1) {
+                    # code...
+                    $pdf = PDF::loadView('reports.Transaccion.ReporteCompra.reporte', [
+                        'factura' => $factura_compra,
+                        'total' => $factura_compra->sum('totalapagar'),
+                        'nombre_reporte' =>  "REPORTE DE COMPRAS",
+                        
+                    ]);
+                    return $pdf->stream("REPORTE DE COMPRAS");
+                } else {
+                    # code...
+                          
+                $nameExcel = 'REPORTE DE COMPRAS' . $fechadesde . $fechahasta . '.xlsx';
+                return Excel::download(new Reportes($factura_compra,
+                $factura_compra->sum('totalapagar'),
+                $fechadesde, 
+                $fechahasta, 
+                'REPORTE DE COMPRAS'), $nameExcel);
+                }
+                
+                
+              
            // return  response()->json(['clientes' => $clientes, 'total' => sizeOf($clientes)], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);

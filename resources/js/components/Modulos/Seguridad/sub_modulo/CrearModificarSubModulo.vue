@@ -8,7 +8,7 @@
                             <bs-card-content class="text-right">
                                 <router-link
                                     :to="
-                                        prefijo +
+                                        $store.state.url_prefix +
                                             '/modulos/seguridad/sub_modulo/mostrar_sub_modulo'
                                     "
                                 >
@@ -18,7 +18,7 @@
                                     >
                                         <bs-button
                                             mode="icon"
-                                            icon="reply"
+                                            icon="list"
                                             icon-size="sm"
                                         >
                                         </bs-button>
@@ -147,7 +147,6 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
 import {BsModel} from "vue-mdbootstrap";
@@ -167,8 +166,6 @@ export default {
         return {
             //variable que controla el progreso
             showLoader: false,
-            //Variables para obtener el index
-            prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
             subModuloForm: new BsModel(
                 {
@@ -185,11 +182,11 @@ export default {
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
-                            url: "/modulos/seguridad/sub_modulo/guardar_sub_modulo",
+                            url: this.$store.state.url_prefix + "/modulos/seguridad/sub_modulo/guardar_sub_modulo",
                             method: "post"
                         },
                         update: {
-                            url: "/modulos/seguridad/sub_modulo/modificar_sub_modulo",
+                            url: this.$store.state.url_prefix + "/modulos/seguridad/sub_modulo/modificar_sub_modulo",
                             method: "post"
                         }
                     }
@@ -209,7 +206,7 @@ export default {
                         dataProperty: "empresas",
                         remoteSort: false,
                         restProxy: {
-                            browse:
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/seguridad/empresa/cargar_empresa_combo_box"
                         }
                     }),
@@ -225,7 +222,7 @@ export default {
                         dataProperty: "sucursales",
                         remoteSort: false,
                         restProxy: {
-                            browse:
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/seguridad/sucursal/cargar_sucursal_combo_box"
                         }
                     }),
@@ -240,7 +237,7 @@ export default {
                         dataProperty: "modulos",
                         remoteSort: false,
                         restProxy: {
-                            browse:
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/seguridad/modulo/cargar_modulo_combo_box"
                         }
                     }),
@@ -257,7 +254,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
         if (this.$store.getters.getSubModulo != null) {
             var modulo = this.$store.getters.getSubModulo;
             this.subModuloForm.sub_modulo_id = modulo.codigo;

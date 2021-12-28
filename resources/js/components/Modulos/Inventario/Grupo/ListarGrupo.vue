@@ -4,12 +4,12 @@
             <bs-card shadow>
                 <bs-card-body>
                     <bs-card-content class="text-right">
-                        <!-- <router-link
+                        <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/inventario/grupo/crear_modificar_grupo'
                             "
-                        > -->
+                        >
                          
                             <bs-tooltip
                                 content="Crear nuevos grupo"
@@ -91,7 +91,7 @@
                         >
                             <router-link
                                 :to="
-                                    prefijo +
+                                    $store.state.url_prefix +
                                         '/modulos/inventario/grupo/crear_modificar_grupo'
                                 "
                             >
@@ -155,12 +155,10 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import {BsStore} from "vue-mdbootstrap";
 export default {
     data: function() {
         return {
-            prefijo: "",
             trueModalVisible: false,
             grupos: new BsStore({
                 idProperty: "Id",
@@ -172,14 +170,13 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "descripcion", direction: "asc" }],
                 restProxy: {
-                    browse: "/modulos/inventario/grupo/cargar_grupo_table"
+                    browse: this.$store.state.url_prefix + "/modulos/inventario/grupo/cargar_grupo_table"
                 }
             }),
             item: {}
         };
     },
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy: function() {},
     methods: {
@@ -192,7 +189,7 @@ export default {
         },
         eliminar() {
             let that = this;
-            let url =
+            let url =  this.$store.state.url_prefix
                 "/modulos/inventario/grupo/eliminar_grupo/" + this.item.id;
             axios
                 .delete(url)

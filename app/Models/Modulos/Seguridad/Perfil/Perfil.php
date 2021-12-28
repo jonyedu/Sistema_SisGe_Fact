@@ -11,7 +11,7 @@ class Perfil extends Model
     /**
      * @var string
      */
-    protected $table = 'SEG_PERFIL';
+    protected $table = 'seg_perfil';
     /**
      * @var string
      */

@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 use App\Models\Modulos\Persona\Cliente\Cliente;
 
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\Reportes;
 use App\Models\Modulos\Persona\Proveedor\Proveedor;
 
 class ReporteProveedores extends Controller
 {
-    public function ReporteProveedor()
+    public function ReporteProveedor($id)
     {
         try {
             $proveedores = Proveedor::select(
@@ -29,13 +31,27 @@ class ReporteProveedores extends Controller
             )
                 ->where('status', 1)
                 ->get();
+
+                if ($id ==1) {
+                    # code...
+                    $pdf = PDF::loadView('reports.Transaccion.Persona.Proveedor', [
+                        'proveedores' => $proveedores,
+                        'nombre_reporte' =>  "Proveedores",
+                        
+                    ]);
+                    return $pdf->stream("Proveedor");
+                } else {
+                    # code...
+                    $nameExcel = 'REPORTE DE PROVEEDORES.xlsx';
+                    return Excel::download(new Reportes($proveedores,
+                   0,
+                   0, 
+                   0, 
+                    'REPORTE DE PROVEEDORES'), $nameExcel);
+                }
+                
             
-                $pdf = PDF::loadView('reports.Transaccion.Persona.Proveedor', [
-                    'proveedores' => $proveedores,
-                    'nombre_reporte' =>  "Proveedores",
-                    
-                ]);
-                return $pdf->stream("Proveedor");
+              
             return  response()->json(['proveedores' => $proveedores, 'total' => sizeOf($proveedores)], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);
@@ -43,19 +59,36 @@ class ReporteProveedores extends Controller
     }
 
 
-    public function cargarClienteAll()
+    public function cargarClienteAll($id)
     {
         try {
             $clientes = Cliente::select('cliente_id', 'nombres', 'apellidos',  'cedula', 'telefono', 'direccion', 'correo', 'status')
                 ->where('status', 1)
                 ->get();
+
+
+                if ($id ==1) {
+                    # code...
+                    $pdf = PDF::loadView('reports.Transaccion.cliente.Cliente', [
+                        'proveedores' => $clientes,
+                        'nombre_reporte' =>  "Clientes",
+                        
+                    ]);
+                    return $pdf->stream("Clientes");
+                } else {
+                    # code...
+                    $nameExcel = 'REPORTE DE CLIENTES.xlsx';
+                    return Excel::download(new Reportes($clientes,
+                   0,
+                   0, 
+                   0, 
+                    'REPORTE DE CLIENTES'), $nameExcel);
+                }
+
+
+
               // return  response()->json(['clientes' => $clientes, 'total' => sizeOf($clientes)], 200);
-                $pdf = PDF::loadView('reports.Transaccion.cliente.Cliente', [
-                    'proveedores' => $clientes,
-                    'nombre_reporte' =>  "Clientes",
-                    
-                ]);
-                return $pdf->stream("Clientes");
+              
            // return  response()->json(['clientes' => $clientes, 'total' => sizeOf($clientes)], 200);
         } catch (Exception $e) {
             return response()->json(['mensaje' => $e->getMessage()], 500);

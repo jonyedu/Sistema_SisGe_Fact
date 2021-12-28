@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/persona/proveedor/crear_modificar_proveedor'
                             "
                         >
@@ -95,7 +95,7 @@
                         >
                             <router-link
                                 :to="
-                                    prefijo +
+                                    $store.state.url_prefix +
                                         '/modulos/persona/proveedor/crear_modificar_proveedor'
                                 "
                             >
@@ -160,12 +160,10 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import {BsStore} from "vue-mdbootstrap";
 export default {
     data: function() {
         return {
-            prefijo: "",
             trueModalVisible: false,
             productos: new BsStore({
                 idProperty: "id",
@@ -176,8 +174,8 @@ export default {
                 remotePaging: false, // default is TRUE
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "nombre", direction: "asc" }],
-                restProxy: {
-                    browse: "/modulos/persona/proveedor/cargar_proveedor_all"
+                restProxy: { 
+                    browse: this.$store.state.url_prefix + "/modulos/persona/proveedor/cargar_proveedor_all"
                 }
             }),
             item: {}
@@ -185,7 +183,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy() {},
     methods: {
@@ -199,7 +196,7 @@ export default {
         },
         eliminarProducto() {
             let that = this;
-            let url =
+            let url = this.$store.state.url_prefix +
                 "/modulos/administracion/producto/eliminar_producto/" +
                 this.item.id;
             axios

@@ -20,7 +20,7 @@ class SegUsuario extends Authenticatable
     /**
      * @var string
      */
-    protected $table = 'SEG_USUARIO';
+    protected $table = 'seg_usuario';
     protected $primaryKey = 'codigo';
     /**
      * @var string

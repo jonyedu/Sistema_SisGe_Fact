@@ -11,7 +11,7 @@ class SgModulo extends Model
     /**
      * @var string
      */
-    protected $table = 'SEG_MODULO';
+    protected $table = 'seg_modulo';
     /**
      * @var string
      */

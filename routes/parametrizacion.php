@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::group(['prefix' => '/modulos/parametrizacion', 'middleware' => ['auth:web'], 'verified'], function () {
+Route::group(['prefix' => 'modulos/parametrizacion', 'middleware' => ['auth:web'], 'verified'], function () {
 
     Route::namespace('Modulos\Parametrizacion\TipoDocumento')->prefix('tipo_documento')->group(function () {
         Route::get('cargar_tipo_documento_combo_box', 'TipoDocumentoController@cargarTipoDocumentoComboBox');
@@ -28,3 +28,7 @@ Route::group(['prefix' => '/modulos/parametrizacion', 'middleware' => ['auth:web
 
 
 });
+
+$prefijo = config('global.router_prefix');
+Route::get($prefijo . '/{any}', 'AppController@index')->where('any', '.*');
+Route::get($prefijo, 'AppController@index')->where('any', '.*')->name('main');

@@ -13,7 +13,7 @@
                                     '/modulos/inventario/grupo/crear_modificar_grupo'
                             "
                         > -->
-                        <div class="row">
+                        <!-- <div class="row">
                              <div class="col-md-6 mb-3">
                          
                                <b> Fecha Inicio:</b>  <input type="date" name="" value="">
@@ -26,7 +26,7 @@
                                <b>Fecha Fin: </b>     <input type="date" name="" value="">
                             </div>
                         </div>
-                         
+                          -->
                          
                             <bs-tooltip
                                 content="Crear nuevos grupo"
@@ -41,6 +41,7 @@
                                             <bs-list-tile-title> <bs-button
                                                 mode="icon"
                                                 icon="folder-open"
+                                                @click="consultarPdf(2)"
                                                 icon-size="sm"
                                             ></bs-button> &nbsp; Excel</bs-list-tile-title>
                                             </bs-list-tile> 
@@ -48,6 +49,7 @@
                                             <bs-list-tile >
                                             <bs-list-tile-title><bs-button
                                                 mode="icon"
+                                                @click="consultarPdf(1)"
                                                 icon="folder-open"
                                                 icon-size="sm"
                                             ></bs-button>&nbsp; PDF</bs-list-tile-title>
@@ -69,3 +71,25 @@
      
     </div>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            fecha_desde:"",
+            fecha_hasta:"",
+        }
+    },
+    methods: {
+         consultarPdf(value){
+            // console.log(value);
+             
+            window.open(
+                         
+                            "/modulos/reporte/cliente/cargar_pdf_cliente/" + value
+                        );
+              
+
+            },
+    },
+}
+</script>

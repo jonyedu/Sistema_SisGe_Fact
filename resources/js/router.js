@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { prefix } from "./variables";
+import store from "./vueX/store";
 import VueRouter from "vue-router";
 
 //Modulo Banco
@@ -21,6 +21,8 @@ import ModificarCrearCliente from "./components/Modulos/Persona/Cliente/CrearMod
 import ProveedorReports from "./components/Modulos/Reportes/Proveedores/index";
 import ClienteReports from "./components/Modulos/Reportes/Clientes/index";
 import VentasReports from "./components/Modulos/Reportes/Ventas/index";
+import ComprasReports from "./components/Modulos/Reportes/Compras/index";
+
 
 
 
@@ -58,7 +60,7 @@ import IndexListaArqueCaja from "./components/Modulos/Transaccion/ArqueCaja/List
 
 
 Vue.use(VueRouter);
-let prefijo = prefix;
+let prefijo = store.state.url_prefix;
 export default new VueRouter({
     routes: [
 
@@ -120,7 +122,11 @@ export default new VueRouter({
             path: prefijo + "/modulos/reportres/cliente/mostrar_index",
             component: ClienteReports
         },
-
+        //ComprasReports
+        {
+            path: prefijo + "/modulos/reportres/compras/mostrar_index",
+            component: ComprasReports
+        },
         //Seguridad
         {
             path: prefijo + "/modulos/seguridad/usuario/mostrar_usuario",

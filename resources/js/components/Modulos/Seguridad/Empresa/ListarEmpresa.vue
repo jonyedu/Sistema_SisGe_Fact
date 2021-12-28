@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/seguridad/empresa/crear_modificar_empresa'
                             "
                         >
@@ -110,7 +110,7 @@
                         >
                             <router-link
                                 :to="
-                                    prefijo +
+                                    $store.state.url_prefix +
                                         '/modulos/seguridad/empresa/crear_modificar_empresa'
                                 "
                             >
@@ -174,12 +174,10 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import {BsStore} from "vue-mdbootstrap";
 export default {
     data: function() {
         return {
-            prefijo: "",
             trueModalVisible: false,
             empresas: new BsStore({
                 idProperty: "Empresa_Id",
@@ -191,14 +189,13 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "Empresa_Nombre", direction: "asc" }],
                 restProxy: {
-                    browse: "/modulos/seguridad/empresa/cargar_empresa_table"
+                    browse: this.$store.state.url_prefix + "/modulos/seguridad/empresa/cargar_empresa_table"
                 }
             }),
             item: {}
         };
     },
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy: function() {},
     methods: {
@@ -211,7 +208,7 @@ export default {
         },
         eliminar() {
             let that = this;
-            let url =
+            let url = this.$store.state.url_prefix +
                 "/modulos/seguridad/empresa/eliminar_empresa/" +
                 this.item.Empresa_Id;
             axios

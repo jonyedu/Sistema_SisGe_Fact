@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::group(['prefix' => 'modulos/seguridad', 'middleware' => ['auth:web'], 'verified'], function () {
 
     /* SubModulo Usuarios */
@@ -89,3 +88,8 @@ Route::group(['prefix' => 'modulos/seguridad', 'middleware' => ['auth:web'], 've
         Route::delete('eliminar_sucursal/{id}', 'SucursalController@eliminarSucursal');
     });
 });
+
+
+// $prefijo = config('global.router_prefix');
+// Route::get($prefijo . '/{any}', 'AppController@index')->where('any', '.*');
+// Route::get($prefijo, 'AppController@index')->where('any', '.*')->name('main');

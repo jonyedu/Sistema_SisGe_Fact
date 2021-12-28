@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/seguridad/usuario/crear_modificar_usuario'
                             "
                         >
@@ -110,7 +110,7 @@
                         >
                             <router-link
                                 :to="
-                                    prefijo +
+                                    $store.state.url_prefix +
                                         '/modulos/seguridad/usuario/crear_modificar_usuario'
                                 "
                             >
@@ -174,12 +174,10 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import {BsStore} from "vue-mdbootstrap";
 export default {
     data: function() {
         return {
-            prefijo: "",
             trueModalVisible: false,
             usuarios: new BsStore({
                 idProperty: "id",
@@ -191,14 +189,13 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "FULLNAME", direction: "asc" }],
                 restProxy: {
-                    browse: "/modulos/seguridad/usuario/cargar_usuario_table"
+                    browse: this.$store.state.url_prefix + "/modulos/seguridad/usuario/cargar_usuario_table"
                 }
             }),
             item: {}
         };
     },
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy: function() {},
     methods: {
@@ -211,7 +208,7 @@ export default {
         },
         eliminarUsuario() {
             let that = this;
-            let url =
+            let url = this.$store.state.url_prefix +
                 "/modulos/seguridad/usuario/eliminar_usuario/" +
                 this.item.codigo;
             axios

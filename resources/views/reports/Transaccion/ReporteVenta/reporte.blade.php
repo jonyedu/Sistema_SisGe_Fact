@@ -12,11 +12,11 @@
 
 <body>
     <!-- Cabecera  -->
-    @include('reports.Transaccion.ReporteCompra.partials.Header')
+    @include('reports.Transaccion.ReporteVenta.partials.Header')
     <br>
-    @include('reports.Transaccion.ReporteCompra.partials.Body')
+    @include('reports.Transaccion.ReporteVenta.partials.Body')
     <br>
     
-    @include('reports.Transaccion.ReporteCompra.partials.Footer')
+    @include('reports.Transaccion.ReporteVenta.partials.Footer')
      
 </body>

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::group(['prefix' => '/modulos/transaccion', 'middleware' => ['auth:web'], 'verified'], function () {
+Route::group(['prefix' => 'modulos/transaccion', 'middleware' => ['auth:web'], 'verified'], function () {
 
     //Submenu de Facturacion Compra
     Route::namespace('Modulos\Transaccion\FacturaCompra')->prefix('factura_compra')->group(function () {
@@ -65,8 +65,6 @@ Route::group(['prefix' => '/modulos/transaccion', 'middleware' => ['auth:web'], 
         //consultar_arqueo
         Route::get('consultar_arqueo', 'ArqueoCaja@consultar_arqueo');
     });
-
-
-
-
 });
+
+

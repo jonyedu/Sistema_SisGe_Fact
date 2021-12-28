@@ -41,7 +41,10 @@ date_default_timezone_set("America/Guayaquil");
 
 function getImgenEmpresa()
 {
-    $logo = Empresa::select(  'Empresa_Nombre', 'Empresa_Direccion','Empresa_Correo_Electronico','Empresa_Telefonos','Empresa_Ubicacion_Logo')->first();
+    $logo = Empresa::select('Empresa_Nombre', 
+    'Empresa_Direccion',
+    'Empresa_Correo_Electronico',
+    'Empresa_Telefonos','Empresa_Ubicacion_Logo')->first();
     return $logo;
 }
 function convertBase64ToBinary($data)

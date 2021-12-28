@@ -28,6 +28,7 @@ class Proveedor extends Model
         'razon_social',
         'direccion',
         'telefono',
+        'correo',
         'usu_created',
         'usu_update',
         'created_at',

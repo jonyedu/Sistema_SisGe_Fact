@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/transaccion/factura_venta/crear_modificar_factura_venta'
                             "
                         >
@@ -106,7 +106,7 @@
                         >
                             <router-link
                                 :to="
-                                    prefijo +
+                                    $store.state.url_prefix +
                                         '/modulos/transaccion/laboratorio/crear_modificar_laboratorio'
                                 "
                             >
@@ -199,13 +199,11 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import {BsStore} from "vue-mdbootstrap";
 
 export default {
     data: function() {
         return {
-            prefijo: "",
             trueModalVisible: false,
             productos: new BsStore({
                 idProperty: "id",
@@ -217,7 +215,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "fecha", direction: "asc" }],
                 restProxy: {
-                    browse:
+                    browse: this.$store.state.url_prefix +
                         "/modulos/transaccion/factura_venta/cargar_facturas_dia"
                 }
             }),
@@ -226,7 +224,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy() {},
     methods: {
@@ -240,7 +237,7 @@ export default {
         },
         eliminar() {
             let that = this;
-            let url =
+            let url = this.$store.state.url_prefix +
                 "/modulos/transaccion/factura_venta/eliminar_factura_venta/" +
                 this.item.id;
             axios
@@ -275,7 +272,7 @@ export default {
         },
         imprimirPdf(item) {
             if (item.id > 0) {
-                window.open("/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
+                window.open(this.$store.state.url_prefix + "/modulos/reporte/factura_venta/cargar_pdf_factura_venta/" +
                     item.id   +
                     "/" +
                     true + "/" +

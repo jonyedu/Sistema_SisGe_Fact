@@ -61,7 +61,7 @@ class ProveedorController extends Controller
 
     public function guardarModificarProveedor(Request $request)
     {
-        //return  response()->json(['datos' => $request->input()]);
+        //return  response()->json(['datos' => $request->input()], 500);
         try {
             $user = Auth::user();
             Proveedor::updateOrCreate(

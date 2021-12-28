@@ -8,7 +8,7 @@
                             <bs-card-content class="text-right">
                                 <router-link
                                     :to="
-                                        prefijo +
+                                        $store.state.url_prefix +
                                             '/modulos/persona/proveedor/mostrar_proveedor'
                                     "
                                 >
@@ -18,7 +18,7 @@
                                     >
                                         <bs-button
                                             mode="icon"
-                                            icon="reply"
+                                            icon="list"
                                             icon-size="sm"
                                         >
                                         </bs-button>
@@ -162,7 +162,6 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength, email } from "vuelidate/lib/validators";
 import {BsModel} from "vue-mdbootstrap";
@@ -182,8 +181,6 @@ export default {
         return {
             //variable que controla el progreso
             showLoader: false,
-            //Variables para obtener el index
-            prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
             proveedorForm: new BsModel(
                 {
@@ -204,12 +201,12 @@ export default {
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/persona/proveedor/guardar_modificar_proveedor",
                             method: "post"
                         },
                         update: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/persona/proveedor/guardar_modificar_proveedor",
                             method: "post"
                         }
@@ -232,7 +229,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
         if (this.$store.getters.getProveedor != null) {
             var proveedor = this.$store.getters.getProveedor;
             this.proveedorForm.proveedor_id = proveedor.id;

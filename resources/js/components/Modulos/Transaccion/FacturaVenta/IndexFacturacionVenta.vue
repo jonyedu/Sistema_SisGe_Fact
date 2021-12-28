@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/transaccion/factura_venta/mostrar_factura_venta'
                             "
                         >
@@ -16,7 +16,7 @@
                             >
                                 <bs-button
                                     mode="icon"
-                                    icon="reply"
+                                    icon="list"
                                     icon-size="sm"
                                 >
                                 </bs-button>
@@ -120,7 +120,6 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 
 export default {
@@ -136,8 +135,6 @@ export default {
 
             //variable que controla el progreso
             showLoader: false,
-            //Variables para obtener el index
-            prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
 
             //Variables para la validaciones
@@ -149,7 +146,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy: function() {
         this.$store.state.producto = null;

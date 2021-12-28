@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/seguridad/profesion/crear_modificar_profesion'
                             "
                         >
@@ -80,7 +80,7 @@
                         >
                             <router-link
                                 :to="
-                                    prefijo +
+                                    $store.state.url_prefix +
                                         '/modulos/seguridad/profesion/crear_modificar_profesion'
                                 "
                             >
@@ -144,12 +144,10 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import {BsStore} from "vue-mdbootstrap";
 export default {
     data: function() {
         return {
-            prefijo: "",
             trueModalVisible: false,
             profesiones: new BsStore({
                 idProperty: "codigo",
@@ -161,14 +159,13 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "descripcion", direction: "asc" }],
                 restProxy: {
-                    browse: "/modulos/seguridad/profesion/cargar_profesion_table"
+                    browse: this.$store.state.url_prefix + "/modulos/seguridad/profesion/cargar_profesion_table"
                 }
             }),
             item: {}
         };
     },
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy: function() {},
     methods: {
@@ -181,7 +178,7 @@ export default {
         },
         eliminar() {
             let that = this;
-            let url =
+            let url = this.$store.state.url_prefix +
                 "/modulos/seguridad/profesion/eliminar_profesion/" +
                 this.item.codigo;
             axios

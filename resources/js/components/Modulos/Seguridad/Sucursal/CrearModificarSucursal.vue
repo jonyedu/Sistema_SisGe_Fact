@@ -8,7 +8,7 @@
                             <bs-card-content class="text-right">
                                 <router-link
                                     :to="
-                                        prefijo +
+                                        $store.state.url_prefix +
                                             '/modulos/seguridad/sucursal/mostrar_sucursal'
                                     "
                                 >
@@ -18,7 +18,7 @@
                                     >
                                         <bs-button
                                             mode="icon"
-                                            icon="reply"
+                                            icon="list"
                                             icon-size="sm"
                                         >
                                         </bs-button>
@@ -137,7 +137,6 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required, email} from "vuelidate/lib/validators";
 import {BsModel} from "vue-mdbootstrap";
@@ -156,8 +155,6 @@ export default {
         return {
             //variable que controla el progreso
             showLoader: false,
-            //Variables para obtener el index
-            prefijo: "",
             //Objeto donde tendrá todas las variables del formulario
             sucursalForm: new BsModel(
                 {
@@ -175,12 +172,12 @@ export default {
                     //Variables para realizar las peticiones al servidor, save, update, fetch, delete
                     proxy: {
                         save: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/seguridad/sucursal/guardar_sucursal",
                             method: "post"
                         },
                         update: {
-                            url:
+                            url: this.$store.state.url_prefix +
                                 "/modulos/seguridad/sucursal/modificar_sucursal",
                             method: "post"
                         }
@@ -198,7 +195,7 @@ export default {
                         dataProperty: "empresas",
                         remoteSort: false,
                         restProxy: {
-                            browse:
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/seguridad/empresa/cargar_empresa_combo_box"
                         }
                     }),
@@ -218,7 +215,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
         if (this.$store.getters.getSucursal != null) {
             var sucursal = this.$store.getters.getSucursal;
             this.sucursalForm.sucursal_id = sucursal.Sucursal_Id;

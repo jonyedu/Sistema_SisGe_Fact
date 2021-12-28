@@ -196,7 +196,6 @@
     </div>
 </template>
 <script>
-import { prefix } from "../../../../../variables";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
 import {BsStore} from "vue-mdbootstrap";
@@ -258,7 +257,7 @@ export default {
                         totalProperty: "total",
                         pageSize: 15,
                         restProxy: {
-                            browse:
+                            browse: this.$store.state.url_prefix +
                                 "/modulos/persona/proveedor/cargar_proveedor_all"
                         }
                     }),
@@ -271,7 +270,7 @@ export default {
                         totalProperty: "total",
                         remoteSort: false,
                         restProxy: {
-                            fetch:
+                            fetch: this.$store.state.url_prefix +
                                 "/modulos/transaccion/factura_compra/cargar_producto_por_proveedor/{id}"
                         }
                     }),
@@ -291,7 +290,6 @@ export default {
         dataListarProducto: productoValidator
     },
     mounted: function() {
-        this.prefijo = prefix;
         if (this.$store.getters.getFacturaCompra == null) {
             this.agregarDetalle();
         }

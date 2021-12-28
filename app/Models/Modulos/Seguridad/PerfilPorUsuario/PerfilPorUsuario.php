@@ -11,7 +11,7 @@ class PerfilPorUsuario extends Model
     /**
      * @var string
      */
-    protected $table = 'SEG_OPCION_APLICACION_POR_PERFIL';
+    protected $table = 'seg_opcion_aplicacion_por_perfil';
     /**
      * @var string
      */

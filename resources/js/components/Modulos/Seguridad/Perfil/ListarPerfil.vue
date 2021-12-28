@@ -6,7 +6,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/seguridad/perfil/crear_modificar_perfil'
                             "
                         >
@@ -80,7 +80,7 @@
                         >
                             <router-link
                                 :to="
-                                    prefijo +
+                                    $store.state.url_prefix +
                                         '/modulos/seguridad/perfil/crear_modificar_perfil'
                                 "
                             >
@@ -144,12 +144,10 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 import {BsStore} from "vue-mdbootstrap";
 export default {
     data: function() {
         return {
-            prefijo: "",
             trueModalVisible: false,
             perfiles: new BsStore({
                 idProperty: "codigo",
@@ -161,14 +159,13 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "descripcion", direction: "asc" }],
                 restProxy: {
-                    browse: "/modulos/seguridad/perfil/cargar_perfil_table"
+                    browse: this.$store.state.url_prefix + "/modulos/seguridad/perfil/cargar_perfil_table"
                 }
             }),
             item: {}
         };
     },
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy: function() {},
     methods: {
@@ -181,7 +178,7 @@ export default {
         },
         eliminar() {
             let that = this;
-            let url =
+            let url = this.$store.state.url_prefix +
                 "/modulos/seguridad/perfil/eliminar_perfil/" +
                 this.item.codigo;
             axios

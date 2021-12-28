@@ -16,14 +16,18 @@
                         <div class="row">
                              <div class="col-md-6 mb-3">
                          
-                               <b> Fecha Inicio:</b>  <input type="date" name="" value="">
+                               <b> Fecha Inicio:</b>  <input type="date" name="" 
+                               v-model="fecha_desde"
+                               >
                                 
                             </div>
                         </div>
                         <div class="row">
                               <div class="col-md-6 mb-3">
                           
-                               <b>Fecha Fin: </b>     <input type="date" name="" value="">
+                               <b>Fecha Fin: </b>     <input type="date" name=""  
+                                v-model="fecha_hasta"
+                                        >
                             </div>
                         </div>
                          
@@ -42,6 +46,7 @@
                                                 mode="icon"
                                                 icon="folder-open"
                                                 icon-size="sm"
+                                                @click="consultarPdf(2)"
                                             ></bs-button> &nbsp; Excel</bs-list-tile-title>
                                             </bs-list-tile> 
                                                <bs-divider></bs-divider>
@@ -50,6 +55,7 @@
                                                 mode="icon"
                                                 icon="folder-open"
                                                 icon-size="sm"
+                                                @click="consultarPdf(1)"
                                             ></bs-button>&nbsp; PDF</bs-list-tile-title>
                                             </bs-list-tile>
                                              
@@ -69,3 +75,26 @@
      
     </div>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            fecha_desde:"",
+            fecha_hasta:"",
+        }
+    },
+    methods: {
+         consultarPdf(value){
+            // console.log(value);
+             
+            window.open(
+                         
+                            "/modulos/reporte/factura_venta/cargar_pdf_factura_venta_fecha/" +this.fecha_desde +
+                            "/" + this.fecha_hasta +"/" + value
+                        );
+              
+
+            },
+    },
+}
+</script>

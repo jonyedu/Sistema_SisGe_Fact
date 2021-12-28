@@ -7,7 +7,7 @@
                     <bs-card-content class="text-right">
                         <router-link
                             :to="
-                                prefijo +
+                                $store.state.url_prefix +
                                     '/modulos/transaccion/factura_arqueo/mostrar_arqueo'
                             "
                         >
@@ -112,11 +112,9 @@
 </template>
 
 <script>
-import { prefix } from "../../../../variables";
 export default {
     data: function() {
         return {
-            prefijo: "",
             trueModalVisible: false,
             productos: new BsStore({
                 idProperty: "id",
@@ -128,8 +126,7 @@ export default {
                 remoteSort: false, // default is TRUE
                 sorts: [{ property: "nombre", direction: "asc" }],
                 restProxy: {
-                    browse: "/modulos/transaccion/arque_caja/consultar_arqueo"
-                    //fetch: "/modulos/inventario/producto/producto_por_id",
+                    browse: this.$store.state.url_prefix + "/modulos/transaccion/arque_caja/consultar_arqueo"
                 }
             }),
             item: {}
@@ -137,7 +134,6 @@ export default {
     },
 
     mounted: function() {
-        this.prefijo = prefix;
     },
     beforeDestroy() {},
     methods: {
@@ -151,7 +147,7 @@ export default {
         eliminarProducto() {
             let that = this;
             let url =
-                "/modulos/inventario/producto/eliminar_producto/" +
+                this.$store.state.url_prefix + "/modulos/inventario/producto/eliminar_producto/" +
                 this.item.id;
             axios
                 .delete(url)
