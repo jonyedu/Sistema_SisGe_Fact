@@ -118,7 +118,7 @@
                                                 prepend-icon-outer="user"
                                                 floating-label
                                                 outlined
-                                                v-model="sucursalForm.direccion"
+                                                v-model="sucursalForm.administrador"
                                             >
                                                 <label>Administrador</label>
                                             </bs-text-field>

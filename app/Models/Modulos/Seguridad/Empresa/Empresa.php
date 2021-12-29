@@ -54,7 +54,7 @@ class Empresa extends Model
         'status',
     ];
 
-    /* protected $hidden = [
+     protected $hidden = [
         'Empresa_Ubicacion_Logo',
     ];
 
@@ -65,5 +65,5 @@ class Empresa extends Model
     public function getLOGOattribute()
     {
         return base64_encode($this->Empresa_Ubicacion_Logo);
-    } */
+    } 
 }

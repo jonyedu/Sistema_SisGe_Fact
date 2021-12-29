@@ -50,7 +50,9 @@ class ProveedorController extends Controller
     {
         try {
             $proveedor = Proveedor::where('status', 1)
-                ->where('cedula', $cedula)
+                ->where('cedula',  $cedula)
+                ->orWhere('apellido', $cedula)
+                ->orWhere('razon_social',  $cedula)
                 ->first();
             return  response()->json(['proveedor' => $proveedor], 200);
         } catch (Exception $e) {

@@ -11,6 +11,10 @@ use App\Models\Modulos\Transaccion\FacturaCompra\CompraCabecera;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\Reportes;
+
+
 class FacturaCompraReporteController extends Controller
 {
     public function cargarPdfFacturaCompra($factura_compra_cabecera_id, $enviar)
@@ -127,6 +131,59 @@ class FacturaCompraReporteController extends Controller
             ]);
 
             return $pdf->stream($nombreArchivo);
+        }
+    }
+
+    public function cargarFechaCompra($fechadesde,$fechahasta,$id)
+    {
+        try {
+            $factura_compra = CompraCabecera::select( 'id',
+            'id_documento',
+            'secuencia',
+ 
+            'id_proveedor',
+            'fecha_compra',
+             'totalapagar',
+            'id_pago',
+            'p_inicial')
+            ->whereBetween('fecha_compra',[ $fechadesde,$fechahasta])
+                    ->where('status', 1)
+                   
+                    ->with('proveedor:id,nombre,apellido,ruc,cedula,razon_social,direccion,correo')
+                    ->with('tipoPago:tipo_pago,descripcion')
+                    ->with('compraDetalle.producto:id,codigo,nombre')
+                    ->with(['compraDetalle' => function ($i) {
+                        $i->where('status', 1)->select('id', 'id_facturac', 'id_prod', 'costo', 'cantidad', 'total');
+                    }])
+                    
+                    ->get();
+              //return  response()->json(['factura' => $factura_compra, 'total' =>  $factura_compra->sum('totalapagar')], 200);
+
+                if ($id ==1) {
+                    # code...
+                    $pdf = PDF::loadView('reports.Transaccion.ReporteCompra.reporte', [
+                        'factura' => $factura_compra,
+                        'total' => $factura_compra->sum('totalapagar'),
+                        'nombre_reporte' =>  "REPORTE DE COMPRAS",
+                        
+                    ]);
+                    return $pdf->stream("REPORTE DE COMPRAS");
+                } else {
+                    # code...
+                          
+                $nameExcel = 'REPORTE DE COMPRAS' . $fechadesde . $fechahasta . '.xlsx';
+                return Excel::download(new Reportes($factura_compra,
+                $factura_compra->sum('totalapagar'),
+                $fechadesde, 
+                $fechahasta, 
+                'REPORTE DE COMPRAS'), $nameExcel);
+                }
+                
+                
+              
+           // return  response()->json(['clientes' => $clientes, 'total' => sizeOf($clientes)], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
         }
     }
 }

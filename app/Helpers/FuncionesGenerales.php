@@ -4,6 +4,8 @@ use App\DatosGenerales\Generalidades\IdentificacionesYUsuario;
 use App\Models\Modulos\Admision\Paciente;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Modulos\Seguridad\Empresa\Empresa;
+
 date_default_timezone_set("America/Guayaquil");
 /* function getNumeroAleatorioUser()
 {
@@ -37,7 +39,14 @@ date_default_timezone_set("America/Guayaquil");
     return $ano_diferencia;
 } */
 
-
+function getImgenEmpresa()
+{
+    $logo = Empresa::select('Empresa_Nombre', 
+    'Empresa_Direccion',
+    'Empresa_Correo_Electronico',
+    'Empresa_Telefonos','Empresa_Ubicacion_Logo')->first();
+    return $logo;
+}
 function convertBase64ToBinary($data)
 {
     $img  = file_get_contents($data);

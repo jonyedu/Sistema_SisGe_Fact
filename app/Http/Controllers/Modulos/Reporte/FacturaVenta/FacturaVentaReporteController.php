@@ -24,6 +24,9 @@ use App\Models\Modulos\Transaccion\FacturaVenta\VentasCredito;
 use App\Models\Modulos\Transaccion\FacturaVenta\VentasCreditoDetalle;
 use Illuminate\Support\Facades\Mail;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\Reportes;
+
 class FacturaVentaReporteController extends Controller
 {
     //
@@ -264,7 +267,70 @@ class FacturaVentaReporteController extends Controller
 
     }
 
+    public function cargarFechaVenta($fechadesde,$fechahasta,$id)
+    {
+        try {
+            $factura_venta = VentasCabecera::select(
+                'id_cliente',
+        'secuencia',
+        'id',
+       
+        'no_autorizacion',
+        'fecha',
+        'viva',
+        'iva',
+        'sub_total_12',
+        'sub_total_0',
+        'descuento',
+        'sub_total',
+        'iva_12',
+        'total',
+        'tipopago',
+        'formapago',
+        'caj',
+        'cambio',
+                 
+            )
+            ->whereBetween('fecha',[ $fechadesde,$fechahasta])
+                
+                ->where('status', 1)
+                ->with('clienteFact:cliente_id,nombres,apellidos,cedula,direccion,correo')
+                ->with('formapagoFactura:tipo_pago,descripcion')
+                ->with('DetalleVenta.producto:id,codigo,nombre')
 
+                
+                ->get();
+            //  return  response()->json(['factura' => $factura_venta, 'total' =>  $factura_venta->sum('totalapagar')], 200);
+                
+                if ($id==1) {
+                    # code...
+                    
+                $pdf = PDF::loadView('reports.Transaccion.ReporteVenta.reporte', [
+                    'factura' => $factura_venta,
+                    'total' => $factura_venta->sum('total'),
+                    'nombre_reporte' =>  "REPORTE DE VENTAS",
+                    
+                ]);
+                return $pdf->stream("REPORTE DE VENTAS");
+                }else{
+
+                    
+                $nameExcel = 'REPORTE DE VENTAS' . $fechadesde . $fechahasta . '.xlsx';
+                return Excel::download(new Reportes($factura_venta,
+                $factura_venta->sum('total'),
+                $fechadesde, 
+                $fechahasta, 
+                'REPORTE DE VENTAS'), $nameExcel);
+                }
+
+
+
+
+           // return  response()->json(['clientes' => $clientes, 'total' => sizeOf($clientes)], 200);
+        } catch (Exception $e) {
+            return response()->json(['mensaje' => $e->getMessage()], 500);
+        }
+    }
 
 
     public function cargarPdfFacturaVentaCredito($factura_venta_cabecera_id)

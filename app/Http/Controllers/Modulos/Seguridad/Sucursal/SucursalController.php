@@ -53,15 +53,9 @@ class SucursalController extends Controller
                     'Sucursal_Provincia' => $request->input('provincia'),
                     'Sucursal_Canton' => $request->input('canton'),
                     'Sucursal_Parroquia' => $request->input('parroquia'),
-                    'campo1' => ".",
-                    'campo2' => ".",
-                    'campo3' => "0.0",
-                    'registro' => date("Y-m-d H:i:s"),
-                    'usuario_ingreso' => $user->codigo,
-                    'fecha_ingreso' => date("Y-m-d H:i:s"),
-                    'usuario_modificacion' => $user->codigo,
-                    'fecha_modificacion' => date("Y-m-d H:i:s"),
-                    'name_pc' =>  $_SERVER["REMOTE_ADDR"],
+                    'usu_created' => $user->codigo,
+                    'usu_update' => $user->codigo,
+                    'pcip' =>  $_SERVER["REMOTE_ADDR"],
                     'status' => 1,
                 ]
             );
@@ -92,13 +86,9 @@ class SucursalController extends Controller
                         'Sucursal_Provincia' => $request->input('provincia'),
                         'Sucursal_Canton' => $request->input('canton'),
                         'Sucursal_Parroquia' => $request->input('parroquia'),
-                        'campo1' => ".",
-                        'campo2' => ".",
-                        'campo3' => "0.0",
-                        'registro' => date("Y-m-d H:i:s"),
-                        'usuario_modificacion' => $user->codigo,
-                        'fecha_modificacion' => date("Y-m-d H:i:s"),
-                        'name_pc' =>  $_SERVER["REMOTE_ADDR"],
+                        'usu_created' => $user->codigo,
+                        'usu_update' => $user->codigo,
+                        'pcip' =>  $_SERVER["REMOTE_ADDR"],
                         'status' => 1,
                     ]
                 );
@@ -115,9 +105,8 @@ class SucursalController extends Controller
                 ->where('Sucursal_Id', $id)
                 ->Update(
                     [
-                        'usuario_modificacion' => $user->codigo,
-                        'fecha_modificacion' => date("Y-m-d H:i:s"),
-                        'name_pc' =>  $_SERVER["REMOTE_ADDR"],
+                        'usu_update' => $user->codigo,
+                        'pcip' =>  $_SERVER["REMOTE_ADDR"],
                         'status' => 0,
                     ]
                 );

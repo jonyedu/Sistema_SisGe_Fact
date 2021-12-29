@@ -304,5 +304,87 @@ class SgOpcionAplicacionSeeder extends Seeder
         );
 
 
+
+        
+        //Modulo de reportres
+        $modulo = SgModulo::where('descripcion', 'Reporte')->first();
+        //Factura de Compra
+        SgOpcionAplicacion::updateOrCreate(
+            [
+                'descripcion' => "Reportes de Proveedores",
+            ],
+            [
+                'modulo' => $modulo->codigo,
+                'descripcion'  => 'Reportes de Proveedores',
+                'imagen' => 'fas fa-cart-plus',
+                'route' => '/modulos/reportres/proveedores/mostrar_index',
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+            ]
+        );
+
+
+        SgOpcionAplicacion::updateOrCreate(
+            [
+                'descripcion' => "Reportes de Clientes",
+            ],
+            [
+                'modulo' => $modulo->codigo,
+                'descripcion'  => 'Reportes de Clientes',
+                'imagen' => 'fas fa-cart-plus',
+                'route' => '/modulos/reportres/cliente/mostrar_index',
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+            ]
+        );
+
+        SgOpcionAplicacion::updateOrCreate(
+            [
+                'descripcion' => "Reportes de Ventas",
+            ],
+            [
+                'modulo' => $modulo->codigo,
+                'descripcion'  => 'Reportes de Ventas',
+                'imagen' => 'fas fa-cart-plus',
+                'route' => '/modulos/reportres/ventas/mostrar_index',
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+            ]
+        );
+
+
+        
+        SgOpcionAplicacion::updateOrCreate(
+            [
+                'descripcion' => "Reportes de Compras",
+            ],
+            [
+                'modulo' => $modulo->codigo,
+                'descripcion'  => 'Reportes de Compras',
+                'imagen' => 'fas fa-cart-plus',
+                'route' => '/modulos/reportres/compras/mostrar_index',
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+            ]
+        );
+
+
+
     }
 }

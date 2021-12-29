@@ -22,6 +22,7 @@ class PerfilPorUsuarioSeeder extends Seeder
         $perfil = Perfil::where('descripcion', 'Administrador')->first();
         $modulo = SgModulo::where('descripcion', 'Inventario')->first();
 
+        //!Inicio Inventario
         //Modulo Inventario - Grupo
         $sub_modulo = SgOpcionAplicacion::where('descripcion', 'Grupo')->first();
         PerfilPorUsuario::updateOrCreate(
@@ -67,6 +68,102 @@ class PerfilPorUsuarioSeeder extends Seeder
             ]
         );
 
+        //!Inicio Reporte
+        $modulo = SgModulo::where('descripcion', 'Reporte')->first();
+        //Modulo Reporte - Reportes de Proveedores
+        $sub_modulo = SgOpcionAplicacion::where('descripcion', 'Reportes de Proveedores')->first();
+        PerfilPorUsuario::updateOrCreate(
+            [
+                'perfil' => $perfil->codigo,
+                'modulo' => $modulo->codigo,
+                'opcion_aplicacion' => $sub_modulo->codigo,
+            ],
+            [
+                'empresa' => 1,
+                'sucursal' => 1,
+                'perfil' => $perfil->codigo,
+                'modulo' => $modulo->codigo,
+                'opcion_aplicacion' => $sub_modulo->codigo,
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+            ]
+        );
+
+        //Modulo Reporte - Reportes de Clientes
+        $sub_modulo = SgOpcionAplicacion::where('descripcion', 'Reportes de Clientes')->first();
+        PerfilPorUsuario::updateOrCreate(
+            [
+                'perfil' => $perfil->codigo,
+                'modulo' => $modulo->codigo,
+                'opcion_aplicacion' => $sub_modulo->codigo,
+            ],
+            [
+                'empresa' => 1,
+                'sucursal' => 1,
+                'perfil' => $perfil->codigo,
+                'modulo' => $modulo->codigo,
+                'opcion_aplicacion' => $sub_modulo->codigo,
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+            ]
+        );
+
+        //Modulo Reporte - Reportes de Compras
+        $sub_modulo = SgOpcionAplicacion::where('descripcion', 'Reportes de Compras')->first();
+        PerfilPorUsuario::updateOrCreate(
+            [
+                'perfil' => $perfil->codigo,
+                'modulo' => $modulo->codigo,
+                'opcion_aplicacion' => $sub_modulo->codigo,
+            ],
+            [
+                'empresa' => 1,
+                'sucursal' => 1,
+                'perfil' => $perfil->codigo,
+                'modulo' => $modulo->codigo,
+                'opcion_aplicacion' => $sub_modulo->codigo,
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+            ]
+        );
+
+        //Modulo Reporte - Reportes de Ventas
+        $sub_modulo = SgOpcionAplicacion::where('descripcion', 'Reportes de Ventas')->first();
+        PerfilPorUsuario::updateOrCreate(
+            [
+                'perfil' => $perfil->codigo,
+                'modulo' => $modulo->codigo,
+                'opcion_aplicacion' => $sub_modulo->codigo,
+            ],
+            [
+                'empresa' => 1,
+                'sucursal' => 1,
+                'perfil' => $perfil->codigo,
+                'modulo' => $modulo->codigo,
+                'opcion_aplicacion' => $sub_modulo->codigo,
+                'usu_created' => 1,
+                'created_at' => date("Y-m-d H:i:s"),
+                'usu_update' => 1,
+                'updated_at' => date("Y-m-d H:i:s"),
+                'pcip' => '192.168.1.196',
+                'status' => 1,
+            ]
+        );
+
+
+        //!Inicio Persona
         $modulo = SgModulo::where('descripcion', 'Persona')->first();
         //Modulo Persona - Cliente
         $sub_modulo = SgOpcionAplicacion::where('descripcion', 'Cliente')->first();
@@ -113,6 +210,7 @@ class PerfilPorUsuarioSeeder extends Seeder
             ]
         );
 
+        //!Inicio Seguridad
         $modulo = SgModulo::where('descripcion', 'Seguridad')->first();
         //Modulo Seguridad - Empresa
         $sub_modulo = SgOpcionAplicacion::where('descripcion', 'Empresa')->first();
@@ -291,6 +389,7 @@ class PerfilPorUsuarioSeeder extends Seeder
             ]
         );
 
+        //!Inicio Transaccion
         $modulo = SgModulo::where('descripcion', 'Transaccion')->first();
         //Modulo Transaccion - Factura de Compra
         $sub_modulo = SgOpcionAplicacion::where('descripcion', 'Factura de Compra')->first();
